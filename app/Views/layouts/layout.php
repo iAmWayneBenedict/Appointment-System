@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?= base_url('/src/css/app.css') ?>">
     <title>Appointment System</title>
 </head>
+<p>Test</p>
 
 <body>
     <script type="module" src="<?= base_url('/src/js/app.js') ?>"></script>
