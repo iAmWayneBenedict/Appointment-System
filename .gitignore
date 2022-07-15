@@ -2,7 +2,7 @@
 # Operating Specific Junk Files
 #-------------------------
 
-env
+.env
 app/Config/Database.php
 
 # OS X

@@ -37,6 +37,12 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+
+$routes->get('/scanner', 'Employee\EmployeeScanner::index');
+$routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
+$routes->match(['get', 'post'], '/get-employee', 'Employee\EmployeeScanner::get_employee');
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
