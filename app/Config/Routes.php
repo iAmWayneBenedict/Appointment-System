@@ -42,6 +42,13 @@ $routes->get('/scanner', 'Employee\EmployeeScanner::index');
 $routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
 $routes->match(['get', 'post'], '/get-employee', 'Employee\EmployeeScanner::get_employee');
 
+$routes->group('user', static function ($routes){
+    $routes->get('register', 'End_Users\UserController::index');
+    $routes->get('login', 'End_Users\UserController::login');
+    $routes->get('reminder/(:any)', 'End_Users\UserController::display_reminder_information/$1');
+    $routes->match(['get', 'post'], 'generate-id', 'End_Users\UserController::generate_user_id');
+    $routes->post('register-user', 'End_Users\UserController::register_user');
+});
 
 /*
  * --------------------------------------------------------------------
