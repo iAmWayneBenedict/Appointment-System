@@ -57,4 +57,15 @@ class UserModel extends Model
 
         return $data;
     }
+
+    public function login_users($data_arr){
+        $db = \Config\Database::connect();
+
+        $query = $db->table('users')
+            ->select('user_id, password')
+            ->where('user_id', $data_arr['user_id'])
+            ->get();
+        $data = $query->getRow();
+        return $data;
+    }
 }
