@@ -49,15 +49,19 @@ class UserModel extends Model
         $db = \Config\Database::connect();
 
         $query = $db->table('users')
-            ->select('user_id, name, identity')
+            ->select('*')
             ->where('user_id', $user_id)
             ->get();
 
-        $data = $query->getRowArray();
+        $data = $query->getRowArray(); //array
 
         return $data;
     }
 
+    /**
+     * get the user information for login process
+     * return 1 single row(array) data of user
+     */
     public function login_users($data_arr){
         $db = \Config\Database::connect();
 
@@ -65,7 +69,7 @@ class UserModel extends Model
             ->select('user_id, password')
             ->where('user_id', $data_arr['user_id'])
             ->get();
-        $data = $query->getRow();
+        $data = $query->getRow();//object
         return $data;
     }
 }
