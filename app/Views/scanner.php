@@ -31,6 +31,7 @@
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
         const QR_scanner = new Instascan.Scanner({video: document.querySelector('#preview'), mirror: false});
 
+        //auto update and display the employee and thier status
         display_employees();
         setInterval(() => {
             display_employees();
