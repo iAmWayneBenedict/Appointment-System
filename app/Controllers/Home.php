@@ -20,6 +20,10 @@ class Home extends BaseController
         return view('home');
     }
 
+    /**
+     * function for testing the sms 
+     * print te result on the browser for checkup
+     */
     public function test_sms() {
         $to_number = $this->request->getPost('to_number');
         $message = $this->request->getPost('message');
