@@ -25,7 +25,7 @@
         <input type="text" name="address" id="address" placeholder="address">
         <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                     message!</span><br>
-        <input type="email" name="email" id="email" placeholder="email / optional">
+        <input name="email" id="email" placeholder="email / optional">
         <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                     message!</span><br>
         <input type="text" name="number" id="number" placeholder="number | 09">
