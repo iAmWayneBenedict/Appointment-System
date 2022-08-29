@@ -53,6 +53,10 @@ $routes->group('user', static function ($routes) {
     $routes->post('login-user', 'End_Users\UserLoginController::login_user');
 });
 
+$routes->group('admin', static function ($routes) {
+    
+} );
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
