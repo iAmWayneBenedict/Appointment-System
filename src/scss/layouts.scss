@@ -1,0 +1,16 @@
+@media screen and (max-width: 768px) {
+	.nav-con {
+		img {
+			width: 15rem;
+		}
+	}
+}
+@media screen and (max-width: 576px) {
+	.nav-con {
+		padding: 0.5rem 0 !important;
+
+		img {
+			width: 13rem;
+		}
+	}
+}

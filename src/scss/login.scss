@@ -1,0 +1,16 @@
+.login-con {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 7rem;
+
+	.card > div {
+		display: flex;
+		flex-direction: column;
+
+		form {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}

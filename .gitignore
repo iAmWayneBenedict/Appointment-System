@@ -2,8 +2,9 @@
 # Operating Specific Junk Files
 #-------------------------
 
-env
+.env
 app/Config/Database.php
+app/Config/Email.php
 
 # OS X
 .DS_Store

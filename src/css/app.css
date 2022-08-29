@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*!
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"); /*!
  * Bootstrap v5.2.0-beta1 (https://getbootstrap.com/)
  * Copyright 2011-2022 The Bootstrap Authors
  * Copyright 2011-2022 Twitter, Inc.
@@ -49,10 +49,10 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg-rgb: 255, 255, 255;
-  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-sans-serif: "Inter";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-family: Inter;
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -5448,7 +5448,7 @@ textarea.form-control-lg {
   display: block;
   padding: var(--bs-tooltip-arrow-height);
   margin: var(--bs-tooltip-margin);
-  font-family: var(--bs-font-sans-serif);
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5558,7 +5558,7 @@ textarea.form-control-lg {
   z-index: var(--bs-popover-zindex);
   display: block;
   max-width: var(--bs-popover-max-width);
-  font-family: var(--bs-font-sans-serif);
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -10720,6 +10720,53 @@ textarea.form-control-lg {
   }
   .d-print-none {
     display: none !important;
+  }
+}
+body {
+  height: 100% !important;
+}
+
+.login-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 7rem;
+}
+.login-con .card > div {
+  display: flex;
+  flex-direction: column;
+}
+.login-con .card > div form {
+  display: flex;
+  flex-direction: column;
+}
+
+.center-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 7rem;
+}
+.center-con .card > div {
+  display: flex;
+  flex-direction: column;
+}
+.center-con .card > div form {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 768px) {
+  .nav-con img {
+    width: 15rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .nav-con {
+    padding: 0.5rem 0 !important;
+  }
+  .nav-con img {
+    width: 13rem;
   }
 }
 

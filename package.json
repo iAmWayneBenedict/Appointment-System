@@ -11,7 +11,8 @@
 		"test": "test"
 	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"sass-watch": "sass --watch src/scss/app.scss src/css/app.css"
 	},
 	"repository": {
 		"type": "git",

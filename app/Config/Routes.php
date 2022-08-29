@@ -35,7 +35,27 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Home::home');
+$routes->get('/test-sms', 'Home::index');
+$routes->post('/test-sms', 'Home::test_sms');
+
+
+$routes->get('/scanner', 'Employee\EmployeeScanner::index');
+$routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
+$routes->match(['get', 'post'], '/get-employee', 'Employee\EmployeeScanner::get_employee');
+
+$routes->group('user', static function ($routes) {
+    $routes->get('register', 'End_Users\UserController::index');
+    $routes->get('login', 'End_Users\UserLoginController::index');
+    $routes->get('reminder/(:any)', 'End_Users\UserController::display_reminder_information/$1');
+    $routes->match(['get', 'post'], 'generate-id', 'End_Users\UserController::generate_user_id');
+    $routes->post('register-user', 'End_Users\UserController::register_user');
+    $routes->post('login-user', 'End_Users\UserLoginController::login_user');
+});
+
+$routes->group('admin', static function ($routes) {
+    
+} );
 
 /*
  * --------------------------------------------------------------------
