@@ -11,21 +11,27 @@ class Home extends BaseController
     public function __construct()
     {
         //instanciate the library
-        $this->twilio_sms = new Twilio();
+        // $this->twilio_sms = new Twilio();
     }
 
-    
+
     public function index()
+    {
+        return view('test-sms');
+    }
+
+    public function home()
     {
         return view('home');
     }
 
-    public function test_sms() {
-        $to_number = $this->request->getPost('to_number');
-        $message = $this->request->getPost('message');
-        
-        $twilio_sms_response = $this->twilio_sms->sendSMS($to_number, $message);
-        //experiment what would be the return value of twilio
-        print_r($twilio_sms_response);
+    public function test_sms()
+    {
+        // $to_number = $this->request->getPost('to_number');
+        // $message = $this->request->getPost('message');
+
+        // $twilio_sms_response = $this->twilio_sms->sendSMS($to_number, $message);
+        // //experiment what would be the return value of twilio
+        // print_r($twilio_sms_response);
     }
 }
