@@ -10797,6 +10797,7 @@ body {
 .top-main-nav {
   position: fixed;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  z-index: 10;
 }
 
 .left-main-nav {
@@ -10946,6 +10947,20 @@ body {
 .scanner-container .employees {
   width: 90% !important;
   margin-top: 1rem;
+}
+
+.contact-list {
+  max-height: 20rem;
+  overflow-y: scroll;
+}
+.contact-list div {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-selected-recipient {
+  display: flex;
+  flex-direction: column;
 }
 
 /*# sourceMappingURL=app.css.map */
