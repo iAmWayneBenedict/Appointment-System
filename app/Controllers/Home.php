@@ -30,11 +30,16 @@ class Home extends BaseController
      */
     public function test_sms()
     {
-        // $to_number = $this->request->getPost('to_number');
-        // $message = $this->request->getPost('message');
+        $to_number = $this->request->getPost('to_number');
+        $message = $this->request->getPost('message');
 
-        // $twilio_sms_response = $this->twilio_sms->sendSMS($to_number, $message);
-        // //experiment what would be the return value of twilio
-        // print_r($twilio_sms_response);
+        // print_r($this->request->getPost());
+        // print_r($this->request->getPost());
+        // print_r(gettype($this->twilio_sms));
+        // echo $to_number . $message;
+
+        $twilio_sms_response = $this->twilio_sms->sendSMS($to_number, $message);
+        //experiment what would be the return value of twilio
+        print_r($twilio_sms_response);
     }
 }

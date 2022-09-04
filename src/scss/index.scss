@@ -1,0 +1,86 @@
+.img-profile-con {
+	width: 2rem;
+	height: 2rem;
+	overflow: hidden;
+	border-radius: 50%;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+.spread-container {
+	width: 40rem;
+
+	form {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+#qr-code {
+	img {
+		margin: 0 !important;
+		width: 23rem;
+		height: auto;
+	}
+}
+
+.center-vertical {
+	display: flex;
+	align-items: center;
+}
+
+.main-content {
+	padding: 5rem 0 0 21rem;
+	position: relative;
+}
+
+.popup-overlay {
+	position: absolute;
+	display: none;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 2.5rem;
+	background: white;
+}
+
+.popup-overlay.active {
+	display: block;
+}
+
+// .main-content::after {
+// 	position: absolute;
+// 	content: "";
+// 	background-color: rgba(0, 0, 0, 0.2);
+// 	top: 0;
+// 	left: 0;
+// 	width: 100vw;
+// 	height: 100vh;
+// 	z-index: 20;
+// }
+
+.employee-status-cell.active {
+	div {
+		background: rgb(162, 255, 162);
+		width: fit-content;
+		padding: 0.25rem 0.5rem;
+		border-radius: 0.25rem;
+		color: rgb(40, 146, 40);
+		font-weight: 600;
+	}
+}
+
+.employee-status-cell {
+	div {
+		background: rgb(255, 204, 204);
+		width: fit-content;
+		padding: 0.25rem 0.5rem;
+		border-radius: 0.25rem;
+		color: red;
+		font-weight: 600;
+	}
+}

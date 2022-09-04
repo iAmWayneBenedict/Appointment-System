@@ -6,6 +6,10 @@
 // Include any default variable overrides here (though functions won't be available)
 $font-family-base: "Inter";
 $font-family-sans-serif: "Inter";
+$nav-pills-link-active-bg: #e5efff;
+$nav-pills-link-active-color: #3879e9;
+
+// $primary: #10bb54;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
@@ -14,6 +18,11 @@ body {
 	height: 100% !important;
 }
 
-@import "./login.scss";
-@import "./home.scss";
+// variables
+$light: #fff;
+
+@import "./index.scss";
 @import "./layouts.scss";
+@import "./home.scss";
+@import "./login.scss";
+@import "./scanner.scss";

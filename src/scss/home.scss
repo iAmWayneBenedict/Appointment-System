@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding-top: 7rem;
+	// padding-top: 7rem;
 
 	.card > div {
 		display: flex;
@@ -12,5 +12,47 @@
 			display: flex;
 			flex-direction: column;
 		}
+	}
+}
+
+// .center-con {
+// 	justify-content: end;
+// }
+
+.home-cover {
+	width: 100%;
+	height: 100vh;
+	background-image: url("http://localhost/Appointment-System/src/img/Bato_Municipal_HAll_WTR.webp");
+	background-position: top;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+
+.home-cover::after {
+	position: absolute;
+	top: 0%;
+	left: 0;
+	content: "";
+	background-color: rgba(0, 0, 0, 0.2);
+	width: 100%;
+	height: 100%;
+}
+
+.home-cover > .card {
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+@media screen and (max-width: 576px) {
+	.home-cover > .card {
+		padding: 1.5rem !important;
+		margin: 1rem !important;
+	}
+}
+
+@media screen and (max-width: 300px) {
+	.home-cover > .card {
+		padding: 1rem !important;
+		margin: 0.5rem !important;
 	}
 }
