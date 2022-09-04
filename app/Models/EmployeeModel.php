@@ -4,11 +4,13 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class EmployeeModel extends Model{
+class EmployeeModel extends Model
+{
 
     private $db_connect;
 
-    public function __construct(){
+    public function __construct()
+    {
         //instantiate
         $this->db_connect = \Config\Database::connect();
     }
@@ -16,12 +18,13 @@ class EmployeeModel extends Model{
      * func: get all the list of employee in the database
      * @return $employee_data : array or list of employee 
      */
-    public function get_all_employees(){
+    public function get_all_employees()
+    {
 
-         $query = $this->db_connect->table('employee')
+        $query = $this->db_connect->table('employee')
             ->select('*')
             ->get();
-        
+
         $employee_data = $query->getResultArray();
         return $employee_data;
     }
@@ -32,7 +35,8 @@ class EmployeeModel extends Model{
      * @return int 1 = active, 0 = logout, 
      * @return null  
      */
-    public function update_attendance_status($employee_id){
+    public function update_attendance_status($employee_id)
+    {
 
         $query = $this->db_connect->table('employee')
             ->select('status')
@@ -40,27 +44,38 @@ class EmployeeModel extends Model{
             ->get()
             ->getRowArray();
 
-        if(!empty($query)){
-            if($query['status'] == 0){
+        if (!empty($query)) {
+            if ($query['status'] == 0) {
                 $this->db_connect->table('employee')
                     ->where('id', $employee_id)
                     ->update([
                         'status' => 1
                     ]);
-                
+
                 return 1;
-            }
-            else {
+            } else {
                 $this->db_connect->table('employee')
                     ->where('id', $employee_id)
                     ->update([
                         'status' => 0
                     ]);
-                
+
                 return 0;
             }
         }
 
         return;
+    }
+
+    public function add_employee($name, $role)
+    {
+        $builder = $this->db_connect->table('employee');
+
+        $response = $builder->insert([
+            'name' => $name,
+            'role' => $role
+        ]);
+
+        return $response;
     }
 }

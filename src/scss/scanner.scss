@@ -1,0 +1,14 @@
+.scanner-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	video {
+		width: 25%;
+	}
+
+	.employees {
+		width: 90% !important;
+		margin-top: 1rem;
+	}
+}

@@ -25,25 +25,12 @@
             }
             ?>
             <form action="<?= base_url('user/login-user') ?>" method="post" id="form-login" class="ml-4">
-                <div class="mb-3">
-                    <label for="user_id" class="form-label">User ID</label>
-                    <input type="text" class="form-control" id="user_id" name="user_id" placeholder="User ID">
-                </div>
+
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
-                <div>
-                    <input type="checkbox" name="checkbox" id="checkbox">
-                    <label for="checkbox">Show Password</label>
-                </div>
                 <input type="submit" class="btn btn-primary mt-5 my-3 rounded-5 py-2" value="Login" />
-                <center>
-                    <span>Already have an account?</span>
-                    <a href="<?= base_url("/user/register") ?>" class="text-decoration-none text-primary">
-                        <b>Register</b>
-                    </a>
-                </center>
             </form>
         </div>
     </div>

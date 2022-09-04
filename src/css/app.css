@@ -3594,8 +3594,8 @@ textarea.form-control-lg {
 
 .nav-pills {
   --bs-nav-pills-border-radius: 0.375rem;
-  --bs-nav-pills-link-active-color: #fff;
-  --bs-nav-pills-link-active-bg: #0d6efd;
+  --bs-nav-pills-link-active-color: #3879e9;
+  --bs-nav-pills-link-active-bg: #e5efff;
 }
 .nav-pills .nav-link {
   background: none;
@@ -10726,6 +10726,200 @@ body {
   height: 100% !important;
 }
 
+.img-profile-con {
+  width: 2rem;
+  height: 2rem;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.img-profile-con img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.spread-container {
+  width: 40rem;
+}
+.spread-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+#qr-code img {
+  margin: 0 !important;
+  width: 23rem;
+  height: auto;
+}
+
+.center-vertical {
+  display: flex;
+  align-items: center;
+}
+
+.main-content {
+  padding: 5rem 0 0 21rem;
+  position: relative;
+}
+
+.popup-overlay {
+  position: absolute;
+  display: none;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2.5rem;
+  background: white;
+}
+
+.popup-overlay.active {
+  display: block;
+}
+
+.employee-status-cell.active div {
+  background: rgb(162, 255, 162);
+  width: fit-content;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  color: rgb(40, 146, 40);
+  font-weight: 600;
+}
+
+.employee-status-cell div {
+  background: rgb(255, 204, 204);
+  width: fit-content;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  color: red;
+  font-weight: 600;
+}
+
+.top-main-nav {
+  position: fixed;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.left-main-nav {
+  position: fixed;
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  height: 100%;
+  background: #fff;
+  padding: 1rem 2rem;
+  z-index: 10;
+}
+.left-main-nav .side-logo {
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  height: fit-content;
+}
+.left-main-nav a.navbar-brand {
+  height: fit-content;
+}
+.left-main-nav a.navbar-brand img {
+  width: 15rem;
+}
+.left-main-nav .side-nav {
+  margin-top: 4rem;
+}
+.left-main-nav .side-nav a.nav-link {
+  display: flex !important;
+  align-items: center !important;
+}
+.left-main-nav .side-nav .icon-label {
+  font-weight: 600;
+}
+
+@media screen and (max-width: 1400px) {
+  .left-main-nav {
+    padding: 0;
+  }
+  .left-main-nav a.nav-link {
+    border-radius: unset !important;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+  }
+  .icon-label {
+    display: none !important;
+  }
+  .side-logo {
+    margin-top: 1rem !important;
+    border-bottom: unset !important;
+  }
+  .side-logo a.navbar-brand {
+    padding: 0 0.75rem;
+  }
+  .side-logo a.navbar-brand img {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+  .main-content {
+    padding: 5rem 0 0 6rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav-con img {
+    width: 15rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .nav-con {
+    padding: 0.5rem 0 !important;
+  }
+  .nav-con img {
+    width: 13rem;
+  }
+}
+.center-con {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center-con .card > div {
+  display: flex;
+  flex-direction: column;
+}
+.center-con .card > div form {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-cover {
+  width: 100%;
+  height: 100vh;
+  background-image: url("http://localhost/Appointment-System/src/img/Bato_Municipal_HAll_WTR.webp");
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.home-cover::after {
+  position: absolute;
+  top: 0%;
+  left: 0;
+  content: "";
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+}
+
+.home-cover > .card {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+@media screen and (max-width: 576px) {
+  .home-cover > .card {
+    padding: 1.5rem !important;
+    margin: 1rem !important;
+  }
+}
+@media screen and (max-width: 300px) {
+  .home-cover > .card {
+    padding: 1rem !important;
+    margin: 0.5rem !important;
+  }
+}
 .login-con {
   display: flex;
   justify-content: center;
@@ -10741,33 +10935,17 @@ body {
   flex-direction: column;
 }
 
-.center-con {
+.scanner-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding-top: 7rem;
 }
-.center-con .card > div {
-  display: flex;
-  flex-direction: column;
+.scanner-container video {
+  width: 25%;
 }
-.center-con .card > div form {
-  display: flex;
-  flex-direction: column;
-}
-
-@media screen and (max-width: 768px) {
-  .nav-con img {
-    width: 15rem;
-  }
-}
-@media screen and (max-width: 576px) {
-  .nav-con {
-    padding: 0.5rem 0 !important;
-  }
-  .nav-con img {
-    width: 13rem;
-  }
+.scanner-container .employees {
+  width: 90% !important;
+  margin-top: 1rem;
 }
 
 /*# sourceMappingURL=app.css.map */
