@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * use for login process 
+*/
+
 namespace App\Controllers\End_Users;
 
 use App\Controllers\BaseController;
@@ -7,14 +11,20 @@ use App\Models\UserModel;
 
 class UserLoginController extends BaseController{
 
+    protected $userModel;
+    protected $session;
+
+    function __construct()
+    {
+        $this->userModel = new UserModel();
+        $this->session = session();
+    }
+
     public function index(){
         return view('end-user/login');
     }
 
     public function login_user(){
-        $validators = \Config\Services::validation();
-        $session = session();
-        $user_model = new UserModel();
 
         $validator = $this->validate([
             'user_id' => [
@@ -27,30 +37,37 @@ class UserLoginController extends BaseController{
             ]
         ]);
 
-        if(!$validator){
-            $session->setFlashdata('form-error', $this->validator);
+        if(!$validator) {
+            $this->session->setFlashdata('form-error', $this->validator);
             return redirect()->back();
         }
-        else{
+        else {
+
             $login_data = [
-                'user_id' => $this->request->getPost('user_id'),
+                'code_id' => $this->request->getPost('user_id'),
                 'password' => $this->request->getPost('password')
             ];
 
-            $user_data = $user_model->login_users($login_data);
+            $user_data = $this->userModel->login_users($login_data);
 
             if(empty($user_data)){
-                $session->setFlashdata('invalid', 'User Id not found');
+                $this->session->setFlashdata('invalid', 'User Id not found');
                 return redirect()->back();
             }
 
             if(!password_verify($login_data['password'], $user_data->password)){
-                $session->setFlashdata('invalid', 'Invalid Password');
+                $this->session->setFlashdata('invalid', 'Invalid Password');
                 return redirect()->back();
             }
 
-            return redirect('user/register');
+            // create session for filter and accessing dashboard
+            $this->session->set([
+                'id' => $user_data->id,
+                'logged_in' => TRUE
+            ]);
 
+            // it should be user dashboard
+            return redirect('user/dashboard/main');
 
         }
     }
