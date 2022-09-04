@@ -20,39 +20,39 @@
                 <div class="mb-1">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                </div>
-                <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                     message!</span><br>
+                </div>
                 <div class="mb-1">
                     <label for="address" class="form-label">Address</label>
                     <input type="text" class="form-control" id="address" name="address" placeholder="Address">
-                </div>
-                <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                     message!</span><br>
+                </div>
                 <div class="mb-1">
                     <label for="email" class="form-label">Email <i class="text-primary">(optional)</i></label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email / optional">
-                </div>
-                <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                     message!</span><br>
+                </div>
                 <div class="mb-1">
                     <label for="number" class="form-label">Phone number</label>
                     <input type="text" class="form-control" id="number" name="number" placeholder="number | 09">
-                </div>
-                <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                     message!</span><br>
+                </div>
                 <div class="mb-1">
                     <label for="identity" class="form-label">Identity</label>
                     <input type="text" class="form-control" id="identity" name="identity" placeholder="Identity">
-                </div>
-                <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                     message!</span><br>
+                </div>
                 <div class="mb-1">
                     <label for="password" class="form-label">Password</label>
                     <input type="text" class="form-control" id="password" name="password" placeholder="Password">
-                </div>
-                <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                     message!</span><br>
+                </div>
                 <input type="submit" value="Register" id="submit" class="d-none btn btn-primary mt-3 rounded-5">
             </form>
         </div>

@@ -91,12 +91,13 @@ class UserController extends BaseController
         // arranged to an array for inserting to database
 
         $user_data = [
-            'user_id'   => $this->request->getPost('user_id'),
-            'name'      => $this->request->getPost('name'),
-            'email'     => $this->request->getPost('email'),
-            'number'    => $this->request->getPost('number'),
-            'identity'  => $this->request->getPost('identity'),
-            'password'  => $password
+            'code_id'           => $this->request->getPost('user_id'),
+            'name'              => $this->request->getPost('name'),
+            'address'           => $this->request->getPost('address'),
+            'contact_number'    => $this->request->getPost('number'),
+            'email'             => $this->request->getPost('email'),
+            'identity'          => $this->request->getPost('identity'),
+            'password'          => $password
         ];
 
         if(!$this->user_model->insert($user_data)){

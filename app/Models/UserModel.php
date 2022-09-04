@@ -9,10 +9,11 @@ class UserModel extends Model
     protected $table = 'users';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'user_id',
+        'code_id',
         'name',
+        'address',
+        'contact_number',
         'email',
-        'number',
         'identity',
         'password' 
     ];
@@ -44,13 +45,13 @@ class UserModel extends Model
         return $generated_id;
     }
 
-    public function get_user_info($user_id){
+    public function get_user_info($code_id){
         //this is for the reminder page 
         $db = \Config\Database::connect();
 
         $query = $db->table('users')
             ->select('*')
-            ->where('user_id', $user_id)
+            ->where('code_id', $code_id)
             ->get();
 
         $data = $query->getRowArray(); //array
@@ -66,8 +67,8 @@ class UserModel extends Model
         $db = \Config\Database::connect();
 
         $query = $db->table('users')
-            ->select('user_id, password')
-            ->where('user_id', $data_arr['user_id'])
+            ->select('code_id, password')
+            ->where('code_id', $data_arr['code_id'])
             ->get();
         $data = $query->getRow();//object
         return $data;

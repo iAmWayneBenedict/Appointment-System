@@ -1,4 +1,4 @@
-<div><?= $user_informations['user_id'] ?></div>
+<div><?= $user_informations['code_id'] ?></div>
 <div><?= $user_informations['name'] ?></div>
 <div><?= $user_informations['identity'] ?></div>
 
