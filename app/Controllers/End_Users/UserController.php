@@ -2,6 +2,7 @@
 
 namespace App\Controllers\End_Users;
 use App\Models\UserModel;
+use App\Libraries\NumberFormater;
 
 use App\Controllers\BaseController;
 
@@ -9,11 +10,13 @@ class UserController extends BaseController
 {
     protected $user_model;
     protected $validation;
+    protected $number_formater;
 
     function __construct()
     {
         $this->user_model = new UserModel();
         $this->validation = \Config\Services::validation();
+        //$this->number_formater = new NumberFormater();
     }
  
     public function index(){
@@ -75,16 +78,25 @@ class UserController extends BaseController
             ]);
         }
 
+
+        $generated_code = $this->request->getPost('user_id');
+        $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+        
+        
+        //number formater if need to start +63
+        // $formated_number = $this->number_formater
+        //         ->format_number($this->request->getPost('number'));
+        
         // get the inputed data from the register form page 
         // arranged to an array for inserting to database
-        $generated_code = $this->request->getPost('user_id');
+
         $user_data = [
             'user_id'   => $this->request->getPost('user_id'),
             'name'      => $this->request->getPost('name'),
             'email'     => $this->request->getPost('email'),
             'number'    => $this->request->getPost('number'),
             'identity'  => $this->request->getPost('identity'),
-            'password'  => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT) 
+            'password'  => $password
         ];
 
         if(!$this->user_model->insert($user_data)){
@@ -94,7 +106,7 @@ class UserController extends BaseController
             ]);
         }
        
-        // code 1 indicates true or successful inserted into daatabase
+        // code 1 indicates true or successful inserted into database
         return json_encode([
             'code' => 1,
             'user_id' => $generated_code
