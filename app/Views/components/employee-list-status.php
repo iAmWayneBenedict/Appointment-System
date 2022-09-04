@@ -1,9 +1,9 @@
 <?php
 foreach ($employees as $employee) {
     if ($employee['status'] == 1) {
-        $status = 'Present';
+        $status = 'Available';
     } else {
-        $status = 'Absent';
+        $status = 'Unavailable';
     }
 ?>
     <tr>

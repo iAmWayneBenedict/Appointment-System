@@ -116,6 +116,19 @@
                     el.classList.add("text-dark")
                 }
             })
+            let baseUrl = $('meta[name=base_url]').attr('content')
+            window.onresize = function(event) {
+                changeLogo()
+            }
+            changeLogo()
+
+            function changeLogo() {
+                if (this.innerWidth < 1400) {
+                    $('.left-main-nav').children().find('img').attr('src', baseUrl + "/src/img/Bato (CS).png")
+                } else {
+                    $('.left-main-nav').children().find('img').attr('src', baseUrl + "/src/img/Logo Center.svg")
+                }
+            }
         })
     </script>
 </body>

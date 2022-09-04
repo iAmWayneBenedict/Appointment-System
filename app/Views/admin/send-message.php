@@ -11,22 +11,57 @@
         </nav>
     </div>
     <div class="d-flex">
+
+        <!-- SMS sender -->
+
         <div class="spread-container" style="padding-right: 7rem; border-right: 1px solid rgba(0, 0, 0, 0.3)">
             <h4>SMS</h4><br>
             <form action="<?= base_url('/test-sms') ?>" method="post">
+                <div class="d-flex justify-content-between">
 
-                <div class="mb-3">
-                    <label for="to_number" class="form-label">Recipient Number</label>
-                    <input type="text" class="form-control" id="to_number" name="to_number" placeholder="+63 plus 10 digit number">
+                    <!-- Send to all contacts -->
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="contact-checkbox" checked="true" id="all-contacts" value="all" style="cursor: pointer;">
+                        <label class="form-check-label" style="cursor: pointer;" for="all-contacts">All Contacts</label>
+                    </div>
+
+                    <!-- Select a user contact -->
+
+                    <div class="d-flex">
+                        <div class="contact-selected-recipient me-2">
+                            <h6 class="m-0"><b>John Doe</b></h6>
+                            <span style="font-size: 12px">09123456789</span>
+                        </div>
+                        <button type="button" class="btn select-user-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                <line x1="23" y1="11" x2="17" y2="11"></line>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <!-- <textarea name="message" id="" cols="30" rows="10" placeholder="Message here"></textarea> -->
+                <br>
+
+                <!-- Manual Select -->
+
+                <div class="mb-3 recipient-contact">
+                    <label for="to_number" class="form-label">Recipient Number</label>
+                    <input type="text" class="form-control" id="to_number" name="to_number" placeholder="Input 11 digit phone number">
+                </div>
+
                 <div class="">
                     <label for="message" class="form-label">Message</label>
                     <textarea class="form-control" name="message" placeholder="Message here" id="message" style="height: 10rem"></textarea>
                 </div>
-                <input type="submit" class="btn btn-primary mt-4" value="Send">
+                <input type="submit" class="btn btn-primary sms-send-btn mt-4" value="Send to all">
             </form>
         </div>
+
+        <!-- Manual send email -->
+
         <div class="spread-container" style="padding-left: 7rem;">
             <h4>Email</h4><br>
             <form action="<?= base_url('/test-sms') ?>" method="post">
@@ -43,6 +78,153 @@
                 <input type="submit" class="btn btn-primary mt-4" value="Send">
             </form>
         </div>
+
+        <!-- select users overlay -->
+
+        <div class="popup-overlay select-users-con shadow-lg rounded-4">
+            <div class="card border-0" style="width: 25rem;">
+                <form action="" id="select-user-form">
+                    <div class="card-body d-flex flex-column gap-3">
+                        <h5 class="mb-3">
+                            <b>Select User</b>
+                        </h5>
+                        <div class="contact-list">
+                            <div class="list-group" style="--bs-list-group-bg: #F8F8F8">
+                                <div>
+                                    <label for="user-contact-1" style="cursor: pointer;">
+                                        <span class="list-group-item list-group-item-action d-flex border-0 justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">John John</div>
+                                                09123456789
+                                            </div>
+                                        </span>
+                                    </label>
+                                    <input type="radio" data-name="John John" data-number="09123456789" hidden name="user-contact" id="user-contact-1" class="user-contact">
+                                </div>
+                                <div>
+                                    <label for="user-contact" style="cursor: pointer;">
+                                        <span class="list-group-item list-group-item-action d-flex border-0 justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold">John Doe</div>
+                                                09123456789
+                                            </div>
+                                        </span>
+                                    </label>
+                                    <input type="radio" data-name="John Doe" data-number="09123456789" hidden name="user-contact" id="user-contact" class="user-contact">
+                                </div>
+
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Select</button>
+                        <button type="button" class="btn close-select-user-contact">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    $(() => {
+
+
+        let $allSelectUserSpan = $('.list-group').find('label').find('span')
+        let $allSelectUserRadio = $('.list-group').find('label').next()
+
+
+        allContactsHandler()
+        $('#all-contacts').change(allContactsHandler)
+
+        function allContactsHandler(event) {
+            if ($('#all-contacts').is(':checked')) {
+                $('.recipient-contact').addClass('d-none')
+
+                unCheckUserSelectRadio()
+
+                removeContactActiveStyling()
+
+                checkHasRadioValue()
+            } else {
+                $('.recipient-contact').removeClass('d-none')
+            }
+            activateManualBtnSend($('#all-contacts').is(':checked'))
+        }
+
+        function unCheckUserSelectRadio() {
+            $('.user-contact').each(function(index, element) {
+                $(this).prop('checked', false)
+            })
+        }
+
+        function removeContactActiveStyling() {
+            $allSelectUserSpan.each(function(index, element) {
+                $(this).removeClass('active')
+            })
+        }
+
+        function activateManualBtnSend(isAll) {
+            console.log(isAll)
+            if (isAll) {
+                $('.sms-send-btn').val("Send to all")
+            } else {
+                $('.sms-send-btn').val("Send")
+            }
+        }
+
+        $('.select-user-btn').click(function(event) {
+            $('.select-users-con').addClass('active')
+        })
+
+        $('.close-select-user-contact').click(function(event) {
+            $('.select-users-con').removeClass('active')
+        })
+
+        $('.user-contact').each(function(index, element) {
+            $(this).change(function(event) {
+                removeContactActiveStyling()
+                if ($(this).is(':checked')) {
+                    $(this).prev().children().first().addClass('active')
+                } else {
+                    $(this).prev().children().first().removeClass('active')
+                }
+            })
+        })
+
+        checkHasRadioValue()
+        $("#select-user-form").submit(function(event) {
+            event.preventDefault()
+            checkHasRadioValue()
+
+            $('.select-users-con').removeClass('active')
+        })
+
+        function checkHasRadioValue() {
+
+            let hasRadioValue = !!$(".contact-list").children().find(':checked').length
+            let checkedElement = $(".contact-list").children().find(':checked')
+            if (hasRadioValue) {
+                $('.contact-selected-recipient').children().first().html(checkedElement.data("name"))
+                $('.contact-selected-recipient').children().last().html(checkedElement.data("number"))
+                $("#to_number").val(checkedElement.data("number"))
+                $("#to_number").prop('disabled', true)
+
+                $('.contact-selected-recipient').removeClass('d-none')
+                $("#all-contacts").prop('checked', false)
+                $('.recipient-contact').removeClass('d-none')
+
+            } else {
+                $('.contact-selected-recipient').addClass('d-none')
+                $('.contact-selected-recipient').children().first().html("")
+                $('.contact-selected-recipient').children().last().html("")
+                $("#to_number").val("")
+                $("#to_number").prop('disabled', false)
+
+            }
+
+            activateManualBtnSend($('#all-contacts').is(':checked'))
+        }
+
+
+    })
+</script>
 <?= $this->endSection() ?>
