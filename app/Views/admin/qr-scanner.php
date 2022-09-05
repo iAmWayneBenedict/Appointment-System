@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/main_layouts') ?>
+<?= $this->extend('layouts/admin_layouts') ?>
 <?= $this->section('content') ?>
 <div class="main-content">
     <div class="mt-3 mb-5">
