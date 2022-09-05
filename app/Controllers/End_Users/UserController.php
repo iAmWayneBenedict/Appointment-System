@@ -123,4 +123,8 @@ class UserController extends BaseController
     {
         return view('end-user/dashboard/dashboard');
     }
+    public function employee_status()
+    {
+        return view('end-user/dashboard/employee-status');
+    }
 }
