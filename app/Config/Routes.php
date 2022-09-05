@@ -68,6 +68,10 @@ $routes->group('admin', static function ($routes) {
     $routes->get('employees', 'Admin\Admin::employees');
     $routes->get('qr-scanner', 'Admin\Admin::qr_scanner');
     $routes->get('send-message', 'Admin\Admin::sendMessage');
+
+    $routes->group('dashboard', static function ($routes) {
+       $routes->post('send-notification', 'Admin\Sendnotifications::send_sms');
+    });
 });
 
 /*

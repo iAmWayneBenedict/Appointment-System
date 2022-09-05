@@ -238,5 +238,13 @@
 
 
     })
+
+    $('.sms-send-btn').click(function (e) { 
+        e.preventDefault();
+        
+        if($(this).val()){
+            
+        }
+    });
 </script>
 <?= $this->endSection() ?>
