@@ -70,7 +70,8 @@ $routes->group('admin', static function ($routes) {
     $routes->get('send-message', 'Admin\Admin::sendMessage');
 
     $routes->group('dashboard', static function ($routes) {
-       $routes->post('send-notification', 'Admin\Sendnotifications::send_sms');
+       $routes->post('send-notification', 'Admin\SendNotifications::send_sms');
+       $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
     });
 });
 
