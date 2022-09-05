@@ -42,6 +42,8 @@ $routes->post('/test-sms', 'Home::test_sms');
 
 $routes->get('/scanner', 'Employee\EmployeeScanner::index');
 $routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
+$routes->post('/add-employee', 'Employee\EmployeeScanner::add_employee');
+$routes->match(['get', 'post'], '/get-employee-status', 'Employee\EmployeeScanner::get_employee_status');
 $routes->match(['get', 'post'], '/get-employee', 'Employee\EmployeeScanner::get_employee');
 
 $routes->group('user', static function ($routes) {
@@ -52,14 +54,19 @@ $routes->group('user', static function ($routes) {
     $routes->post('register-user', 'End_Users\UserController::register_user');
     $routes->post('login-user', 'End_Users\UserLoginController::login_user');
 
-    $routes->group('dashboard', ['filter' => 'userFilter'], static function ($routes){
-        
+
+    $routes->group('dashboard', static function ($routes) {
+        $routes->get('/', 'End_Users\UserController::dashboard');
     });
 });
 
 $routes->group('admin', static function ($routes) {
-    
-} );
+    $routes->get('login', 'Admin\Admin::login');
+    $routes->get('dashboard', 'Admin\Admin::index');
+    $routes->get('employees', 'Admin\Admin::employees');
+    $routes->get('qr-scanner', 'Admin\Admin::qr_scanner');
+    $routes->get('send-message', 'Admin\Admin::sendMessage');
+});
 
 /*
  * --------------------------------------------------------------------

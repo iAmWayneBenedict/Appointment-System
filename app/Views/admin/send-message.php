@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/main_layouts') ?>
+<?= $this->extend('layouts/admin_layouts') ?>
 <?= $this->section('content') ?>
 <div class="main-content">
     <div class="mt-3 mb-5">
@@ -16,13 +16,13 @@
 
         <div class="spread-container" style="padding-right: 7rem; border-right: 1px solid rgba(0, 0, 0, 0.3)">
             <h4>SMS</h4><br>
-            <form action="<?= base_url('/test-sms') ?>" method="post">
+            <form action="" id="sms-send-form" method="post">
                 <div class="d-flex justify-content-between">
 
                     <!-- Send to all contacts -->
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="contact-checkbox" checked="true" id="all-contacts" value="all" style="cursor: pointer;">
+                        <input class="form-check-input" type="checkbox" name="contact_all" checked="true" id="all-contacts" value="all" style="cursor: pointer;">
                         <label class="form-check-label" style="cursor: pointer;" for="all-contacts">All Contacts</label>
                     </div>
 
@@ -54,7 +54,7 @@
 
                 <div class="">
                     <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" name="message" placeholder="Message here" id="message" style="height: 10rem"></textarea>
+                    <textarea class="form-control" name="message" placeholder="Message here" id="message" required style="height: 10rem"></textarea>
                 </div>
                 <input type="submit" class="btn btn-primary sms-send-btn mt-4" value="Send to all">
             </form>
@@ -126,7 +126,6 @@
 
 <script>
     $(() => {
-
 
         let $allSelectUserSpan = $('.list-group').find('label').find('span')
         let $allSelectUserRadio = $('.list-group').find('label').next()
@@ -206,7 +205,7 @@
                 $('.contact-selected-recipient').children().first().html(checkedElement.data("name"))
                 $('.contact-selected-recipient').children().last().html(checkedElement.data("number"))
                 $("#to_number").val(checkedElement.data("number"))
-                $("#to_number").prop('disabled', true)
+                $("#to_number").prop('readonly', true)
 
                 $('.contact-selected-recipient').removeClass('d-none')
                 $("#all-contacts").prop('checked', false)
@@ -217,12 +216,25 @@
                 $('.contact-selected-recipient').children().first().html("")
                 $('.contact-selected-recipient').children().last().html("")
                 $("#to_number").val("")
-                $("#to_number").prop('disabled', false)
+                $("#to_number").prop('readonly', false)
 
             }
 
             activateManualBtnSend($('#all-contacts').is(':checked'))
         }
+
+        $('#sms-send-form').submit(function(event) {
+            event.preventDefault()
+            let formValues = Object.fromEntries(new FormData(this))
+            let data = {
+                contact_all: formValues.contact_all || "",
+                to_number: formValues.to_number,
+                message: formValues.message,
+                type: $(".sms-send-btn").val()
+            }
+
+            console.log(data)
+        })
 
 
     })

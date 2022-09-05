@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers\End_Users;
+
 use App\Models\UserModel;
 use App\Libraries\NumberFormater;
 
@@ -18,12 +19,14 @@ class UserController extends BaseController
         $this->validation = \Config\Services::validation();
         //$this->number_formater = new NumberFormater();
     }
- 
-    public function index(){
+
+    public function index()
+    {
         return view('end-user/register');
     }
 
-    public function display_reminder_information($user_id = false){
+    public function display_reminder_information($user_id = false)
+    {
         //add filter for this controller 
         //do not continue if current_url is not in register pag
 
@@ -32,7 +35,8 @@ class UserController extends BaseController
         return view('end-user/reminder', $data);
     }
 
-    public function generate_user_id(){
+    public function generate_user_id()
+    {
         /**
          * Func: make unique user_id for users when registering
          * @return int : 6 digit number.
@@ -40,7 +44,8 @@ class UserController extends BaseController
         return UserModel::generated_unique_id();
     }
 
-    public function register_user(){
+    public function register_user()
+    {
 
         $validate = $this->validate([
             'user_id' => [
@@ -58,7 +63,7 @@ class UserController extends BaseController
             ],
             'address' => [
                 'rules' => 'required'
-            ], 
+            ],
             'number' => [
                 'rules' => 'required|regex_match[/^(09)\d{9}$/]',
             ],
@@ -70,7 +75,7 @@ class UserController extends BaseController
             ]
         ]);
 
-        if(!$validate){
+        if (!$validate) {
             // return array of errors to ajax
             return json_encode([
                 'code' => 0,
@@ -81,12 +86,12 @@ class UserController extends BaseController
 
         $generated_code = $this->request->getPost('user_id');
         $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-        
-        
+
+
         //number formater if need to start +63
         // $formated_number = $this->number_formater
         //         ->format_number($this->request->getPost('number'));
-        
+
         // get the inputed data from the register form page 
         // arranged to an array for inserting to database
 
@@ -100,17 +105,22 @@ class UserController extends BaseController
             'password'          => $password
         ];
 
-        if(!$this->user_model->insert($user_data)){
+        if (!$this->user_model->insert($user_data)) {
             // internal error
             return json_encode([
                 'code' => 500
             ]);
         }
-       
+
         // code 1 indicates true or successful inserted into database
         return json_encode([
             'code' => 1,
             'user_id' => $generated_code
         ]);
+    }
+
+    public function dashboard()
+    {
+        return view('end-user/dashboard/dashboard');
     }
 }
