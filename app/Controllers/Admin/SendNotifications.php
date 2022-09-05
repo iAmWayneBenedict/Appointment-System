@@ -52,6 +52,7 @@ class SendNotifications extends BaseController
         $contact_number  = $this->request->getPost('number');
         $message = $this->request->getPost('message');
 
+        // $response = $this->send_sms->sendSMS($contact_number, $message);
         $response = $this->send_sms->sendSMS($contact_number, $message);
 
         print_r($response);

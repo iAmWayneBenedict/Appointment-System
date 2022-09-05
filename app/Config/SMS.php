@@ -47,13 +47,13 @@ class SMS extends BaseConfig
      */
 
     // api user given from the account
-    public $api_username = 'API3FHGQL5JND';
+    public $api_username = '';
 
     //api password from the account
-    public $api_password = 'API3FHGQL5JNDWTYNI';
+    public $api_password = '';
 
     //from it can be (sender name or sender number)
-    public $sms_from = 'Carlo';
+    public $sms_from = '';
 
     //MT URL port 10001
     public $gw_url = 'http://gateway.onewaysms.ph:10001/api.aspx?';
