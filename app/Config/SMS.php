@@ -26,4 +26,19 @@ class SMS extends BaseConfig
 
     // Purchased / or twillo account registered number +63 10digit
     public $number = '+15735334219';
+
+
+    /**
+     * description: I text mo sms config settings
+     */
+
+     //itext mo api register api code
+    public $api_code = '';
+
+
+    public $itextMo_password = '';
+
+    //itext mo api url (send sms)
+    public $itextMo_url = 'https://www.itexmo.com/php_api/api.php';
+
 }
