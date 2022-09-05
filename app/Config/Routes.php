@@ -44,6 +44,7 @@ $routes->get('/scanner', 'Employee\EmployeeScanner::index');
 $routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
 $routes->post('/add-employee', 'Employee\EmployeeScanner::add_employee');
 $routes->match(['get', 'post'], '/get-employee-status', 'Employee\EmployeeScanner::get_employee_status');
+$routes->match(['get', 'post'], '/get-employee-status-user', 'Employee\EmployeeScanner::get_employee_status_user');
 $routes->match(['get', 'post'], '/get-employee', 'Employee\EmployeeScanner::get_employee');
 
 $routes->group('user', static function ($routes) {
@@ -57,6 +58,7 @@ $routes->group('user', static function ($routes) {
 
     $routes->group('dashboard', static function ($routes) {
         $routes->get('/', 'End_Users\UserController::dashboard');
+        $routes->get('employee-status', 'End_Users\UserController::employee_status');
     });
 });
 
