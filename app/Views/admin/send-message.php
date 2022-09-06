@@ -89,29 +89,8 @@
                             <b>Select User</b>
                         </h5>
                         <div class="contact-list">
-                            <div class="list-group" style="--bs-list-group-bg: #F8F8F8">
-                                <div>
-                                    <label for="user-contact-1" style="cursor: pointer;">
-                                        <span class="list-group-item list-group-item-action d-flex border-0 justify-content-between align-items-start">
-                                            <div class="ms-2 me-auto">
-                                                <div class="fw-bold">John John</div>
-                                                09123456789
-                                            </div>
-                                        </span>
-                                    </label>
-                                    <input type="radio" data-name="John John" data-number="09123456789" hidden name="user-contact" id="user-contact-1" class="user-contact">
-                                </div>
-                                <div>
-                                    <label for="user-contact" style="cursor: pointer;">
-                                        <span class="list-group-item list-group-item-action d-flex border-0 justify-content-between align-items-start">
-                                            <div class="ms-2 me-auto">
-                                                <div class="fw-bold">John Doe</div>
-                                                09123456789
-                                            </div>
-                                        </span>
-                                    </label>
-                                    <input type="radio" data-name="John Doe" data-number="09123456789" hidden name="user-contact" id="user-contact" class="user-contact">
-                                </div>
+                            <div class="list-group sms-contact" style="--bs-list-group-bg: #F8F8F8">
+                                <!-- contact-list -->
 
                             </div>
                         </div>
@@ -127,6 +106,10 @@
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6063579e784fa2c4f9ae681c2c11629df9ac6e97
         let $allSelectUserSpan = $('.list-group').find('label').find('span')
         let $allSelectUserRadio = $('.list-group').find('label').next()
 
@@ -252,7 +235,21 @@
             }
         })
 
-
+        $.ajax({
+            type: "get",
+            url: `${url}/admin/dashboard/sms-contact`,
+            async: true,
+            success: function (response) {
+                console.log(response);
+                $('.sms-contact').html(response);
+            }
+        });
     })
+<<<<<<< HEAD
+=======
+
+    
+    
+>>>>>>> 6063579e784fa2c4f9ae681c2c11629df9ac6e97
 </script>
 <?= $this->endSection() ?>

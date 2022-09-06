@@ -3,7 +3,8 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Libraries\ItextMo;
+// use App\Libraries\ItextMo;
+use App\Libraries\OneWaySMS;
 use App\Libraries\Email;
 
 class SendNotifications extends BaseController
@@ -17,7 +18,8 @@ class SendNotifications extends BaseController
     {
         // Instantiate class from library
         $this->send_email = new Email();
-        $this->send_sms = new ItextMo();
+        // $this->send_sms = new ItextMo();
+        $this->send_sms = new OneWaySMS();
         $this->validation = \Config\Services::validation();
     }
 
@@ -51,7 +53,8 @@ class SendNotifications extends BaseController
         $contact_number  = $this->request->getPost('number');
         $message = $this->request->getPost('message');
 
-        $response = $this->send_sms->itexmo($contact_number, $message);
+        // $response = $this->send_sms->sendSMS($contact_number, $message);
+        $response = $this->send_sms->sendSMS($contact_number, $message);
 
         print_r($response);
     }
