@@ -32,13 +32,12 @@ class SMS extends BaseConfig
      * description: I text mo sms config settings
      */
 
-     //itext mo api register api code
-    public $api_code = '';
+    //itext mo api register api code
+    public $api_code = "TR-WAYNE891000_TI2CL";
 
 
-    public $itextMo_password = '';
+    public $itextMo_password = "BLackMama447";
 
     //itext mo api url (send sms)
-    public $itextMo_url = 'https://www.itexmo.com/php_api/api.php';
-
+    public $itextMo_url = "https://www.itexmo.com/php_api/api.php";
 }

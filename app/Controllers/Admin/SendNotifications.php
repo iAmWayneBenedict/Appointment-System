@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Libraries\ItextMo;
 use App\Libraries\Email;
 
-class SendNotifications extends BaseController 
+class SendNotifications extends BaseController
 
 {
     protected $send_email;
@@ -27,7 +27,8 @@ class SendNotifications extends BaseController
      * @param string $message
      * @return boolean  
      */
-    public function send_sms($number, $message){
+    public function send_sms()
+    {
 
         $validate = $this->validate([
             'number' => [
@@ -40,7 +41,7 @@ class SendNotifications extends BaseController
             ]
         ]);
 
-        if(!$validate){
+        if (!$validate) {
             return json_encode([
                 'code' => 0,
                 'errors' => $this->validation->getErrors()
@@ -50,9 +51,8 @@ class SendNotifications extends BaseController
         $contact_number  = $this->request->getPost('number');
         $message = $this->request->getPost('message');
 
-        $response = $this->send_sms->sendSMS($contact_number, $message);
+        $response = $this->send_sms->itexmo($contact_number, $message);
 
         print_r($response);
-
     }
 }
