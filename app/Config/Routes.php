@@ -55,10 +55,10 @@ $routes->group('user', static function ($routes) {
     $routes->post('register-user', 'End_Users\UserController::register_user');
     $routes->post('login-user', 'End_Users\UserLoginController::login_user');
 
-
-    $routes->group('dashboard', static function ($routes) {
+    $routes->group('dashboard', ['filter' => 'userLoginFilter'], static function ($routes) {
         $routes->get('/', 'End_Users\UserController::dashboard');
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
+        $routes->get('logout', 'End_Users\UserLoginController::logout_user');
     });
 });
 
@@ -69,10 +69,10 @@ $routes->group('admin', static function ($routes) {
     $routes->get('qr-scanner', 'Admin\Admin::qr_scanner');
     $routes->get('send-message', 'Admin\Admin::sendMessage');
 
-    $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
     $routes->group('dashboard', static function ($routes) {
-        $routes->post('send-notification', 'Admin\SendNotifications::send_sms');
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
+        $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
+        $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms');//this should be post(get for testing)
     });
 });
 

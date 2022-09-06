@@ -21,6 +21,10 @@ class OneWaySMS
         $this->url = $this->_config->gw_url;
     }
 
+    /**
+     * func : sample code given by the api provider
+     * @return json message and code [0 = fail, 1 = success]
+     */
     private function gw_send_sms($user, $pass, $from, $sms_to, $message){
 
         $query_string = "apiusername=".$user."&apipassword=".$pass;
@@ -52,7 +56,8 @@ class OneWaySMS
     }
 
     /**
-     * function: this is the one to use in controllers
+     * function: this is the one to use in controllers to accept input data
+     * and send sms
      * @return array contain response code and message from api
      */
     public function sendSMS($contact_number, $message){

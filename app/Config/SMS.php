@@ -53,7 +53,7 @@ class SMS extends BaseConfig
     public $api_password = '';
 
     //from it can be (sender name or sender number)
-    public $sms_from = '';
+    public $sms_from = 'Carlo-testing';
 
     //MT URL port 10001
     public $gw_url = 'http://gateway.onewaysms.ph:10001/api.aspx?';
@@ -63,4 +63,10 @@ class SMS extends BaseConfig
 
     //MT URL (port 443) 	
     public $gw_url3 = 'https://sgateway.onewaysms.com/apis10.aspx?';
+
+
+    /**
+     * semaphore sms
+     */
+
 }

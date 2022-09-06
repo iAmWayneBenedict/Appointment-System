@@ -67,7 +67,7 @@ class UserModel extends Model
         $db = \Config\Database::connect();
 
         $query = $db->table('users')
-            ->select('code_id, password')
+            ->select('id, code_id, password')
             ->where('code_id', $data_arr['code_id'])
             ->get();
         $data = $query->getRow();//object
