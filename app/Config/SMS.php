@@ -63,4 +63,10 @@ class SMS extends BaseConfig
 
     //MT URL (port 443) 	
     public $gw_url3 = 'https://sgateway.onewaysms.com/apis10.aspx?';
+
+
+    /**
+     * semaphore sms
+     */
+
 }

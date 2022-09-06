@@ -106,10 +106,7 @@
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
-<<<<<<< HEAD
-=======
 
->>>>>>> 6063579e784fa2c4f9ae681c2c11629df9ac6e97
         let $allSelectUserSpan = $('.list-group').find('label').find('span')
         let $allSelectUserRadio = $('.list-group').find('label').next()
 
@@ -233,6 +230,7 @@
                     }
                 });
             }
+            console.log(data.type)
         })
 
         $.ajax({
@@ -245,11 +243,8 @@
             }
         });
     })
-<<<<<<< HEAD
-=======
 
     
     
->>>>>>> 6063579e784fa2c4f9ae681c2c11629df9ac6e97
 </script>
 <?= $this->endSection() ?>
