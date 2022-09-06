@@ -67,7 +67,7 @@ class UserLoginController extends BaseController{
             ]);
 
             // it should be user dashboard
-            return redirect('user/dashboard/main');
+            return redirect('user/dashboard');
 
         }
     }
