@@ -24,6 +24,11 @@ class UserLoginController extends BaseController{
         return view('end-user/login');
     }
 
+    /**
+     * func: Login process, validate data
+     * @return redirect with session flashData for validation message
+     * @return redirect to dashboard if login success
+     */
     public function login_user(){
 
         $validator = $this->validate([
@@ -55,6 +60,7 @@ class UserLoginController extends BaseController{
                 return redirect()->back();
             }
 
+            //compare input password and password from database
             if(!password_verify($login_data['password'], $user_data->password)){
                 $this->session->setFlashdata('invalid', 'Invalid Password');
                 return redirect()->back();
@@ -70,5 +76,13 @@ class UserLoginController extends BaseController{
             return redirect('user/dashboard');
 
         }
+    }
+
+    public function logout_user(){
+    
+        $user_sessions = ['id', 'logged_in'];
+        $this->session->destroy($user_sessions);
+
+        return redirect()->to('/user/login'); 
     }
 }
