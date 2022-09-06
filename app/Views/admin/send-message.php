@@ -141,7 +141,7 @@
         }
 
         function activateManualBtnSend(isAll) {
-            console.log(isAll)
+
             if (isAll) {
                 $('.sms-send-btn').val("Send to all")
             } else {
@@ -157,24 +157,7 @@
             $('.select-users-con').removeClass('active')
         })
 
-        $('.user-contact').each(function(index, element) {
-            $(this).change(function(event) {
-                removeContactActiveStyling()
-                if ($(this).is(':checked')) {
-                    $(this).prev().children().first().addClass('active')
-                } else {
-                    $(this).prev().children().first().removeClass('active')
-                }
-            })
-        })
-
         checkHasRadioValue()
-        $("#select-user-form").submit(function(event) {
-            event.preventDefault()
-            checkHasRadioValue()
-
-            $('.select-users-con').removeClass('active')
-        })
 
         function checkHasRadioValue() {
 
@@ -247,6 +230,23 @@
             success: function(response) {
                 console.log(response);
                 $('.sms-contact').html(response);
+
+                $('.user-contact').each(function(index, element) {
+                    $(this).change(function(event) {
+                        removeContactActiveStyling()
+                        if ($(this).is(':checked')) {
+                            $(this).prev().children().first().addClass('active')
+                        } else {
+                            $(this).prev().children().first().removeClass('active')
+                        }
+                    })
+                })
+                $("#select-user-form").submit(function(event) {
+                    event.preventDefault()
+                    checkHasRadioValue()
+
+                    $('.select-users-con').removeClass('active')
+                })
             }
         });
     })
