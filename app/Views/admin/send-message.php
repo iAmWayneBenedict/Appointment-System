@@ -106,7 +106,6 @@
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
-
         let $allSelectUserSpan = $('.list-group').find('label').find('span')
         let $allSelectUserRadio = $('.list-group').find('label').next()
 
@@ -142,7 +141,7 @@
         }
 
         function activateManualBtnSend(isAll) {
-            console.log(isAll)
+
             if (isAll) {
                 $('.sms-send-btn').val("Send to all")
             } else {
@@ -158,24 +157,7 @@
             $('.select-users-con').removeClass('active')
         })
 
-        $('.user-contact').each(function(index, element) {
-            $(this).change(function(event) {
-                removeContactActiveStyling()
-                if ($(this).is(':checked')) {
-                    $(this).prev().children().first().addClass('active')
-                } else {
-                    $(this).prev().children().first().removeClass('active')
-                }
-            })
-        })
-
         checkHasRadioValue()
-        $("#select-user-form").submit(function(event) {
-            event.preventDefault()
-            checkHasRadioValue()
-
-            $('.select-users-con').removeClass('active')
-        })
 
         function checkHasRadioValue() {
 
@@ -245,14 +227,28 @@
             type: "get",
             url: `${url}/admin/dashboard/sms-contact`,
             async: true,
-            success: function (response) {
+            success: function(response) {
                 console.log(response);
                 $('.sms-contact').html(response);
+
+                $('.user-contact').each(function(index, element) {
+                    $(this).change(function(event) {
+                        removeContactActiveStyling()
+                        if ($(this).is(':checked')) {
+                            $(this).prev().children().first().addClass('active')
+                        } else {
+                            $(this).prev().children().first().removeClass('active')
+                        }
+                    })
+                })
+                $("#select-user-form").submit(function(event) {
+                    event.preventDefault()
+                    checkHasRadioValue()
+
+                    $('.select-users-con').removeClass('active')
+                })
             }
         });
     })
-
-    
-    
 </script>
 <?= $this->endSection() ?>
