@@ -75,6 +75,9 @@
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
 
+        // datatable initialization
+        let $table = $('#employees').DataTable();
+
         $('.add-employee-btn').click(function(event) {
             $('.add-employee-con').addClass("active")
         })
@@ -102,13 +105,16 @@
                 },
                 dataType: "json",
                 success: function(res) {
-                    alert(res.message)
                     display_employees()
                 }
             });
         }
 
+
+
         function display_employees() {
+            // destroy table before updating
+            $table.destroy()
 
             $.ajax({
                 type: 'get',
@@ -136,8 +142,8 @@
                     })
 
                     // after population of tbody
-                    // datatable initialization
-                    $('#employees').DataTable({
+                    // datatable reinitialization
+                    $table = $('#employees').DataTable({
                         "columnDefs": [{
                             "width": "30%",
                             "targets": 3
