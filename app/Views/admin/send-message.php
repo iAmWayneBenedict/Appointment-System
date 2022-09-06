@@ -105,157 +105,150 @@
 
 <script>
     $(() => {
-            const url = document.querySelector("meta[name = base_url]").getAttribute('content')
-            let $allSelectUserSpan = $('.list-group').find('label').find('span')
-            let $allSelectUserRadio = $('.list-group').find('label').next()
+        const url = document.querySelector("meta[name = base_url]").getAttribute('content')
+        let $allSelectUserSpan = $('.list-group').find('label').find('span')
+        let $allSelectUserRadio = $('.list-group').find('label').next()
 
 
-            allContactsHandler()
-            $('#all-contacts').change(allContactsHandler)
+        allContactsHandler()
+        $('#all-contacts').change(allContactsHandler)
 
-            function allContactsHandler(event) {
-                if ($('#all-contacts').is(':checked')) {
-                    $('.recipient-contact').addClass('d-none')
+        function allContactsHandler(event) {
+            if ($('#all-contacts').is(':checked')) {
+                $('.recipient-contact').addClass('d-none')
 
-                    unCheckUserSelectRadio()
+                unCheckUserSelectRadio()
 
-                    removeContactActiveStyling()
+                removeContactActiveStyling()
 
-                    checkHasRadioValue()
-                } else {
-                    $('.recipient-contact').removeClass('d-none')
-                }
-                activateManualBtnSend($('#all-contacts').is(':checked'))
-            }
-
-            function unCheckUserSelectRadio() {
-                $('.user-contact').each(function(index, element) {
-                    $(this).prop('checked', false)
-                })
-            }
-
-            function removeContactActiveStyling() {
-                $allSelectUserSpan.each(function(index, element) {
-                    $(this).removeClass('active')
-                })
-            }
-
-            function activateManualBtnSend(isAll) {
-                console.log(isAll)
-                if (isAll) {
-                    $('.sms-send-btn').val("Send to all")
-                } else {
-                    $('.sms-send-btn').val("Send")
-                }
-            }
-
-            $('.select-user-btn').click(function(event) {
-                $('.select-users-con').addClass('active')
-            })
-
-            $('.close-select-user-contact').click(function(event) {
-                $('.select-users-con').removeClass('active')
-            })
-
-            $('.user-contact').each(function(index, element) {
-                $(this).change(function(event) {
-                    removeContactActiveStyling()
-                    if ($(this).is(':checked')) {
-                        $(this).prev().children().first().addClass('active')
-                    } else {
-                        $(this).prev().children().first().removeClass('active')
-                    }
-                })
-            })
-
-            checkHasRadioValue()
-            $("#select-user-form").submit(function(event) {
-                event.preventDefault()
                 checkHasRadioValue()
+            } else {
+                $('.recipient-contact').removeClass('d-none')
+            }
+            activateManualBtnSend($('#all-contacts').is(':checked'))
+        }
 
-                $('.select-users-con').removeClass('active')
+        function unCheckUserSelectRadio() {
+            $('.user-contact').each(function(index, element) {
+                $(this).prop('checked', false)
             })
+        }
 
-            function checkHasRadioValue() {
+        function removeContactActiveStyling() {
+            $allSelectUserSpan.each(function(index, element) {
+                $(this).removeClass('active')
+            })
+        }
 
-                let hasRadioValue = !!$(".contact-list").children().find(':checked').length
-                let checkedElement = $(".contact-list").children().find(':checked')
-                if (hasRadioValue) {
-                    $('.contact-selected-recipient').children().first().html(checkedElement.data("name"))
-                    $('.contact-selected-recipient').children().last().html(checkedElement.data("number"))
-                    $("#to_number").val(checkedElement.data("number"))
-                    $("#to_number").prop('readonly', true)
+        function activateManualBtnSend(isAll) {
+            console.log(isAll)
+            if (isAll) {
+                $('.sms-send-btn').val("Send to all")
+            } else {
+                $('.sms-send-btn').val("Send")
+            }
+        }
 
-                    $('.contact-selected-recipient').removeClass('d-none')
-                    $("#all-contacts").prop('checked', false)
-                    $('.recipient-contact').removeClass('d-none')
+        $('.select-user-btn').click(function(event) {
+            $('.select-users-con').addClass('active')
+        })
 
+        $('.close-select-user-contact').click(function(event) {
+            $('.select-users-con').removeClass('active')
+        })
+
+        $('.user-contact').each(function(index, element) {
+            $(this).change(function(event) {
+                removeContactActiveStyling()
+                if ($(this).is(':checked')) {
+                    $(this).prev().children().first().addClass('active')
                 } else {
-                    $('.contact-selected-recipient').addClass('d-none')
-                    $('.contact-selected-recipient').children().first().html("")
-                    $('.contact-selected-recipient').children().last().html("")
-                    $("#to_number").val("")
-                    $("#to_number").prop('readonly', false)
-
+                    $(this).prev().children().first().removeClass('active')
                 }
+            })
+        })
 
-                activateManualBtnSend($('#all-contacts').is(':checked'))
+        checkHasRadioValue()
+        $("#select-user-form").submit(function(event) {
+            event.preventDefault()
+            checkHasRadioValue()
+
+            $('.select-users-con').removeClass('active')
+        })
+
+        function checkHasRadioValue() {
+
+            let hasRadioValue = !!$(".contact-list").children().find(':checked').length
+            let checkedElement = $(".contact-list").children().find(':checked')
+            if (hasRadioValue) {
+                $('.contact-selected-recipient').children().first().html(checkedElement.data("name"))
+                $('.contact-selected-recipient').children().last().html(checkedElement.data("number"))
+                $("#to_number").val(checkedElement.data("number"))
+                $("#to_number").prop('readonly', true)
+
+                $('.contact-selected-recipient').removeClass('d-none')
+                $("#all-contacts").prop('checked', false)
+                $('.recipient-contact').removeClass('d-none')
+
+            } else {
+                $('.contact-selected-recipient').addClass('d-none')
+                $('.contact-selected-recipient').children().first().html("")
+                $('.contact-selected-recipient').children().last().html("")
+                $("#to_number").val("")
+                $("#to_number").prop('readonly', false)
+
             }
 
-            $('#sms-send-form').submit(function(event) {
-                event.preventDefault()
-                let formValues = Object.fromEntries(new FormData(this))
-                let data = {
-                    contact_all: formValues.contact_all || "",
-                    number: formValues.to_number,
-                    message: formValues.message,
-                    type: $(".sms-send-btn").val()
-                }
+            activateManualBtnSend($('#all-contacts').is(':checked'))
+        }
 
-                if (data.type === "Send to all") {
-                    window.location.href = `${url}/admin/dashboard/send-all-sms`
-                    // $.ajax({
-                    //     type: "post",
-                    //     url: `${url}/admin/dashboard/send-all-sms`,
-                    //     // async: true,
-                    //     data: {
-                    //         message: formValues.message,
-                    //     },
-                    //     dataType: "json",
-                    //     success: function(response) {
-                    //         console.log(response)
-                    //     }
-                    // });
-                } else {
-                    $.ajax({
-                        type: "post",
-                        url: `${url}/admin/dashboard/send-sms`,
-                        // async: true,
-                        data: data,
-                        dataType: "json",
-                        success: function(response) {
-                            console.log(response)
-                        }
-                    });
-                }
-            })
+        $('#sms-send-form').submit(function(event) {
+            event.preventDefault()
+            let formValues = Object.fromEntries(new FormData(this))
+            let data = {
+                contact_all: formValues.contact_all || "",
+                number: formValues.to_number,
+                message: formValues.message,
+                type: $(".sms-send-btn").val()
+            }
 
-            $.ajax({
-                type: "get",
-                url: `${url}/admin/dashboard/sms-contact`,
-                async: true,
-                success: function(response) {
-                    console.log(response);
-                    $('.sms-contact').html(response);
-                }
-            });
-        }) <<
-        << << < HEAD ===
-        === =
+            if (data.type === "Send to all") {
+                window.location.href = `${url}/admin/dashboard/send-all-sms`
+                // $.ajax({
+                //     type: "post",
+                //     url: `${url}/admin/dashboard/send-all-sms`,
+                //     // async: true,
+                //     data: {
+                //         message: formValues.message,
+                //     },
+                //     dataType: "json",
+                //     success: function(response) {
+                //         console.log(response)
+                //     }
+                // });
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: `${url}/admin/dashboard/send-sms`,
+                    // async: true,
+                    data: data,
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response)
+                    }
+                });
+            }
+        })
 
-
-
-        >>>
-        >>> > e1ea7fc55b273b796bc7c46b4fb1ffd61c801c96
+        $.ajax({
+            type: "get",
+            url: `${url}/admin/dashboard/sms-contact`,
+            async: true,
+            success: function(response) {
+                console.log(response);
+                $('.sms-contact').html(response);
+            }
+        });
+    })
 </script>
 <?= $this->endSection() ?>
