@@ -106,9 +106,6 @@
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
-        let $allSelectUserSpan = $('.list-group').find('label').find('span')
-        let $allSelectUserRadio = $('.list-group').find('label').next()
-
 
         allContactsHandler()
         $('#all-contacts').change(allContactsHandler)
@@ -135,6 +132,7 @@
         }
 
         function removeContactActiveStyling() {
+            let $allSelectUserSpan = $('.list-group').find('label').find('span')
             $allSelectUserSpan.each(function(index, element) {
                 $(this).removeClass('active')
             })
@@ -163,6 +161,7 @@
 
             let hasRadioValue = !!$(".contact-list").children().find(':checked').length
             let checkedElement = $(".contact-list").children().find(':checked')
+            console.log(checkedElement)
             if (hasRadioValue) {
                 $('.contact-selected-recipient').children().first().html(checkedElement.data("name"))
                 $('.contact-selected-recipient').children().last().html(checkedElement.data("number"))
@@ -183,6 +182,22 @@
             }
 
             activateManualBtnSend($('#all-contacts').is(':checked'))
+        }
+
+        function clickContactHandler(event) {
+            removeContactActiveStyling()
+            if ($(this).is(':checked')) {
+                $(this).prev().children().first().addClass('active')
+            } else {
+                $(this).prev().children().first().removeClass('active')
+            }
+        }
+
+        function selectContact(event) {
+            event.preventDefault()
+            checkHasRadioValue()
+
+            $('.select-users-con').removeClass('active')
         }
 
         $('#sms-send-form').submit(function(event) {
@@ -232,21 +247,9 @@
                 $('.sms-contact').html(response);
 
                 $('.user-contact').each(function(index, element) {
-                    $(this).change(function(event) {
-                        removeContactActiveStyling()
-                        if ($(this).is(':checked')) {
-                            $(this).prev().children().first().addClass('active')
-                        } else {
-                            $(this).prev().children().first().removeClass('active')
-                        }
-                    })
+                    $(this).change(clickContactHandler)
                 })
-                $("#select-user-form").submit(function(event) {
-                    event.preventDefault()
-                    checkHasRadioValue()
-
-                    $('.select-users-con').removeClass('active')
-                })
+                $("#select-user-form").submit(selectContact)
             }
         });
     })
