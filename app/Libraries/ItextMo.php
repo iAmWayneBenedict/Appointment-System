@@ -2,7 +2,8 @@
 
 namespace App\Libraries;
 
-class ItextMo {
+class ItextMo
+{
 
     protected $api_code;
     protected $itextMo_password;
@@ -19,10 +20,10 @@ class ItextMo {
     }
 
     //itext mo sample code for sending sms
-    private function itexmo($number, $message, $apicode, $passwd)
+    public function itexmo($number, $message)
     {
         $url = $this->itextMo_url;
-        $itexmo = array('1' => $number, '2' => $message, '3' => $apicode, 'passwd' => $passwd);
+        $itexmo = array('1' => $number, '2' => $message, '3' => "TR-GENEI994408_RWNX7", 'passwd' => $this->itextMo_password);
         $param = array(
             'http' => array(
                 'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -38,16 +39,14 @@ class ItextMo {
     /**
      * function to use in controllers
      */
-    public function sendSMS($contact_number, $message){
+    public function sendSMS($contact_number, $message)
+    {
 
         return $this->itexmo(
-            $contact_number, 
-            $message, 
-            $this->api_code, 
+            $contact_number,
+            $message,
+            $this->api_code,
             $this->itextMo_password
         );
     }
-    
-    
-    
 }

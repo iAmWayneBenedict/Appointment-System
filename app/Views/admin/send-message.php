@@ -106,7 +106,10 @@
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6063579e784fa2c4f9ae681c2c11629df9ac6e97
         let $allSelectUserSpan = $('.list-group').find('label').find('span')
         let $allSelectUserRadio = $('.list-group').find('label').next()
 
@@ -208,12 +211,28 @@
             let formValues = Object.fromEntries(new FormData(this))
             let data = {
                 contact_all: formValues.contact_all || "",
-                to_number: formValues.to_number,
+                number: formValues.to_number,
                 message: formValues.message,
                 type: $(".sms-send-btn").val()
             }
 
-            console.log(data)
+            if (data.type === "Send to all") {
+
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: `${url}/admin/send-sms`,
+                    // async: true,
+                    data: {
+                        number: formValues.to_number,
+                        message: formValues.message,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        console.log(response)
+                    }
+                });
+            }
         })
 
         $.ajax({
@@ -226,8 +245,11 @@
             }
         });
     })
+<<<<<<< HEAD
+=======
 
     
     
+>>>>>>> 6063579e784fa2c4f9ae681c2c11629df9ac6e97
 </script>
 <?= $this->endSection() ?>
