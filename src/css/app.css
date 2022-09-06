@@ -10830,6 +10830,10 @@ body {
   font-weight: 600;
 }
 
+.notification-btn {
+  display: none;
+}
+
 @media screen and (max-width: 1400px) {
   .left-main-nav {
     padding: 0;
@@ -10856,6 +10860,11 @@ body {
   }
   .main-content {
     padding: 5rem 0 0 6rem;
+  }
+}
+@media screen and (max-width: 992px) {
+  .notification-btn {
+    display: flex;
   }
 }
 @media screen and (max-width: 768px) {
