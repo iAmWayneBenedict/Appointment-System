@@ -7,6 +7,7 @@ use App\Controllers\BaseController;
 use App\Libraries\OneWaySMS;
 use App\Libraries\Email;
 use App\Models\Admin\NotificationsModel;
+use App\Libraries\NumberFormater;
 
 class SendNotifications extends BaseController
 
@@ -15,6 +16,7 @@ class SendNotifications extends BaseController
     protected $send_sms;
     protected $validation;
     protected $notification_model;
+    protected $number_formatter;
 
     function __construct()
     {
@@ -24,12 +26,11 @@ class SendNotifications extends BaseController
         $this->send_sms = new OneWaySMS();
         $this->validation = \Config\Services::validation();
         $this->notification_model = new NotificationsModel();
+        $this->number_formatter = new NumberFormater();
     }
 
     /**
      * function: this is for one by one manual sending sms
-     * @param string $number
-     * @param string $message
      * @return boolean  
      */
     public function send_sms()
@@ -53,32 +54,64 @@ class SendNotifications extends BaseController
             ]);
         }
 
-        $contact_number  = $this->request->getPost('number');
+        $contact_number  = $this->number_formatter->format_number($this->request->getPost('number'));
         $message = $this->request->getPost('message');
-        $message_type = $this->request->getPost('type');
 
-        //single send sms
-        if($message_type != 'Send to all'){
-           // $response = $this->send_sms->sendSMS($contact_number, $message);
-            $response = $this->send_sms->sendSMS($contact_number, $message); 
-            print_r($response);
+        $response = $this->send_sms->sendSMS($contact_number, $message); 
+        return json_encode([
+            'code' => 1,
+            'msg' => $response
+        ]);
+
+    }
+
+    /**
+     * func: use to send sms to all registered users
+     * @return json response from the api
+     */
+    public function send_bulk_sms(){
+
+        $validate = $this->validate([
+            'message' => [
+                'label' => 'Message Body',
+                'rules' => 'required'
+            ]
+        ]);
+
+        if (!$validate) {
+            return json_encode([
+                'code' => 0,
+                'errors' => $this->validation->getErrors()
+            ]);
         }
 
-<<<<<<< HEAD
-        print_r($response);
-=======
+        $message = $this->request->getPost('message');
+
+        //get user data
         $user_data = $this->notification_model->get_user_data();
-        $response_array = []; 
-        foreach($user_data as $data){
 
-            sleep(5);//send sms every 5 seconds interval
-            $res = $this->send_sms->sendSMS($data['contact_number'], $message);
-            array_push($response_array, $res);
+        //make array of contact numbes only selected from user data
+        $numbers_only = array_column($user_data, 'contact_number');
 
-        } 
+        //chunk or devide numbers_only array into 10 elements every index
+        $all_contacts = array_chunk($numbers_only, 10);
+
+        //convert chunk array into string separated with comma
+        // send bulk messages
+        $responses = [];
+        foreach($all_contacts as $contacts){
+
+            $str_numbers = implode(',', $contacts);
+            //ouput example: "0912345678, 0912353458" 
+
+            $response = $this->send_sms->sendSMS($str_numbers, $message);
+            array_push($responses, $response);
+            sleep(5);
+        }
+
+        return json_encode($responses);
+
         
-        print_r($response_array);
-
     }
 
     public function send_email(){
@@ -110,6 +143,5 @@ class SendNotifications extends BaseController
         $subject = $this->request->getPost('subject');
         $message_type = $this->request->getPost('type');
 
->>>>>>> 2d0e8da (fix sms fucntions)
     }
 }

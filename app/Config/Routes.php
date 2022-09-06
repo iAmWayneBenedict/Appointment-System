@@ -69,10 +69,10 @@ $routes->group('admin', static function ($routes) {
     $routes->get('qr-scanner', 'Admin\Admin::qr_scanner');
     $routes->get('send-message', 'Admin\Admin::sendMessage');
 
-    $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
     $routes->group('dashboard', static function ($routes) {
-        $routes->post('send-notification', 'Admin\SendNotifications::send_sms');
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
+        $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
+        $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms');
     });
 });
 

@@ -214,23 +214,31 @@
             }
 
             if (data.type === "Send to all") {
-
+                window.location.href = `${url}/admin/dashboard/send-all-sms`
+                // $.ajax({
+                //     type: "post",
+                //     url: `${url}/admin/dashboard/send-all-sms`,
+                //     // async: true,
+                //     data: {
+                //         message: formValues.message,
+                //     },
+                //     dataType: "json",
+                //     success: function(response) {
+                //         console.log(response)
+                //     }
+                // });
             } else {
                 $.ajax({
                     type: "post",
-                    url: `${url}/admin/send-sms`,
+                    url: `${url}/admin/dashboard/send-sms`,
                     // async: true,
-                    data: {
-                        number: formValues.to_number,
-                        message: formValues.message,
-                    },
+                    data: data,
                     dataType: "json",
                     success: function(response) {
                         console.log(response)
                     }
                 });
             }
-            console.log(data.type)
         })
 
         $.ajax({
