@@ -42,7 +42,7 @@
             </a>
         </div>
         <div class="side-nav">
-            <nav class="nav nav-pills flex-column gap-3">
+            <nav class="nav nav-pills flex-column gap-1">
 
                 <!-- Dashboard -->
 
