@@ -18,24 +18,25 @@ class OneWaySMS
         $this->api_username = $this->_config->api_username;
         $this->api_password = $this->_config->api_password;
         $this->sms_from = $this->_config->sms_from;
-        $this->url = $this->_config->gw_url;
+        $this->url = $this->_config->gw_url2;
     }
 
     /**
      * func : sample code given by the api provider
      * @return json message and code [0 = fail, 1 = success]
      */
-    private function gw_send_sms($user, $pass, $from, $sms_to, $message){
+    private function gw_send_sms($user, $pass, $from, $sms_to, $message)
+    {
 
-        $query_string = "apiusername=".$user."&apipassword=".$pass;
-        $query_string .= "&senderid=".rawurlencode($from)."&mobileno=".rawurlencode($sms_to);
-        $query_string .= "&message=".rawurlencode(stripslashes($message)) . "&languagetype=1"; 
+        $query_string = "apiusername=" . $user . "&apipassword=" . $pass;
+        $query_string .= "&senderid=" . rawurlencode($from) . "&mobileno=" . rawurlencode($sms_to);
+        $query_string .= "&message=" . rawurlencode(stripslashes($message)) . "&languagetype=1";
 
         //concat url and the query string
-        $url = "{$this->url}{$query_string}";       
-        $fd = @implode ('', file ($url));
+        $url = "{$this->url}{$query_string}";
+        $fd = @implode('', file($url));
 
-        if (!$fd) {                       
+        if (!$fd) {
             return [
                 'message' => 'no contact with gateway',
                 'code'    => 0
@@ -47,8 +48,8 @@ class OneWaySMS
                 'message' => "Please refer to API on Error : {$fd}",
                 'code'    => 0
             ];
-        }        
-        
+        }
+
         return [
             'message' => "Success with MT ID : {$fd}",
             'code'    => 1
@@ -60,7 +61,8 @@ class OneWaySMS
      * and send sms
      * @return array contain response code and message from api
      */
-    public function sendSMS($contact_number, $message){
+    public function sendSMS($contact_number, $message)
+    {
 
         $send = $this->gw_send_sms(
             $this->api_username,
@@ -72,6 +74,4 @@ class OneWaySMS
 
         return $send;
     }
-
-
 }

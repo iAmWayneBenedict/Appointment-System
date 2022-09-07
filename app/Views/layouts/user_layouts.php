@@ -76,7 +76,7 @@
                         <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="#">Notifications</a>
                     </li>
                     <li class="nav-item mt-5">
-                        <a class="nav-link text-danger text-uppercase" style="font-weight: 700;" aria-current="page" href="#">Log out</a>
+                        <a class="nav-link text-danger text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/logout') ?>">Log out</a>
                     </li>
                 </ul>
             </div>

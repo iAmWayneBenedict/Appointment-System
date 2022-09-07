@@ -64,16 +64,21 @@
 
         <div class="spread-container" style="padding-left: 7rem;">
             <h4>Email</h4><br>
-            <form action="<?= base_url('/test-sms') ?>" method="post">
+            <form action="" id="email-form" method="post">
 
                 <div class="mb-3">
-                    <label for="to_number" class="form-label">To</label>
-                    <input type="text" class="form-control" id="to_number" name="to_number" placeholder="Recipient Email">
+                    <label for="recipient-email" class="form-label">To</label>
+                    <input type="text" class="form-control" id="recipient-email" name="recipient-email" placeholder="Recipient Email">
+                </div>
+
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
                 </div>
                 <!-- <textarea name="message" id="" cols="30" rows="10" placeholder="Message here"></textarea> -->
                 <div class="">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" name="message" placeholder="Message here" id="message" style="height: 10rem"></textarea>
+                    <label for="message-email" class="form-label">Message</label>
+                    <textarea class="form-control" name="message-email" placeholder="Message here" id="message-email" style="height: 10rem"></textarea>
                 </div>
                 <input type="submit" class="btn btn-primary mt-4" value="Send">
             </form>
@@ -233,6 +238,41 @@
                     dataType: "json",
                     success: function(response) {
                         console.log(response)
+                        if (response.code === 1) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+
+                            Toast.fire({
+                                icon: 'success',
+                                title: response.message
+                            })
+                        } else {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: response.errors.number
+                            })
+                        }
                     }
                 });
             }
@@ -243,7 +283,7 @@
             url: `${url}/admin/dashboard/sms-contact`,
             async: true,
             success: function(response) {
-                console.log(response);
+
                 $('.sms-contact').html(response);
 
                 $('.user-contact').each(function(index, element) {
@@ -252,6 +292,29 @@
                 $("#select-user-form").submit(selectContact)
             }
         });
+
+        $("#email-form").submit(function(event) {
+            event.preventDefault();
+
+            let email = $("#recipient-email").val()
+            let subject = $("#subject").val()
+            let message = $("#message-email").val()
+
+            $.ajax({
+                type: "post",
+                url: `${url}/admin/dashboard/send-email`,
+                // async: true,
+                data: {
+                    email,
+                    subject,
+                    message
+                },
+                success: function(response) {
+
+                    console.log(response)
+                }
+            });
+        })
     })
 </script>
 <?= $this->endSection() ?>

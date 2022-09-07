@@ -39,7 +39,7 @@ class SendNotifications extends BaseController
         $validate = $this->validate([
             'number' => [
                 'label' => 'Contact Number ',
-                'rules' =>  'required|regex_match[/^(09)\d{9}$/]'
+                'rules' =>  'required'
             ],
             'message' => [
                 'label' => 'Message Body',
@@ -57,19 +57,16 @@ class SendNotifications extends BaseController
         $contact_number  = $this->number_formatter->format_number($this->request->getPost('number'));
         $message = $this->request->getPost('message');
 
-        $response = $this->send_sms->sendSMS($contact_number, $message); 
-        return json_encode([
-            'code' => 1,
-            'msg' => $response
-        ]);
-
+        $response = $this->send_sms->sendSMS($contact_number, $message);
+        return json_encode($response);
     }
 
     /**
      * func: use to send sms to all registered users
      * @return json response from the api
      */
-    public function send_bulk_sms(){
+    public function send_bulk_sms()
+    {
 
         $validate = $this->validate([
             'message' => [
@@ -99,7 +96,7 @@ class SendNotifications extends BaseController
         //convert chunk array into string separated with comma
         // send bulk messages
         $responses = [];
-        foreach($all_contacts as $contacts){
+        foreach ($all_contacts as $contacts) {
 
             $str_numbers = implode(',', $contacts);
             //ouput example: "0912345678, 0912353458" 
@@ -110,15 +107,14 @@ class SendNotifications extends BaseController
         }
 
         return json_encode($responses);
-
-        
     }
 
-    public function send_email(){
+    public function send_email()
+    {
 
         $validate = $this->validate([
             'email' => [
-                'label' => 'Contact Number ',
+                'label' => 'Email ',
                 'rules' =>  'required|valid_email'
             ],
             'message' => [
@@ -131,7 +127,7 @@ class SendNotifications extends BaseController
             ]
         ]);
 
-        if(!$validate){
+        if (!$validate) {
             return json_encode([
                 'code' => 0,
                 'errors' => $this->validation->getErrors()
@@ -141,7 +137,19 @@ class SendNotifications extends BaseController
         $email  = $this->request->getPost('email');
         $message = $this->request->getPost('message');
         $subject = $this->request->getPost('subject');
-        $message_type = $this->request->getPost('type');
 
+        $response = $this->send_email->send_email($email, $message, $subject);
+
+        if (!$response) {
+            return json_encode([
+                'code' => 0,
+                'msg' => 'Email Not sent'
+            ]);
+        }
+
+        return json_encode([
+            'code' => 1,
+            'msg' => 'Email sent'
+        ]);
     }
 }
