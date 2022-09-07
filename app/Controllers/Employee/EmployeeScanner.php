@@ -91,11 +91,11 @@ class EmployeeScanner extends BaseController
             $reponse = $this->employee_model->update_attendance_status($employee_id);
             if ($reponse == 1) {
                 return json_encode([
-                    'msg' => 'login'
+                    'msg' => 'Logged in'
                 ]);
             } elseif ($reponse == 0) {
                 return json_encode([
-                    'msg' => 'logout'
+                    'msg' => 'Logged out'
                 ]);
             } else {
                 return json_encode([

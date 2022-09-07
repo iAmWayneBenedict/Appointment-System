@@ -65,6 +65,7 @@ $routes->group('user', static function ($routes) {
 $routes->group('admin', static function ($routes) {
     $routes->get('login', 'Admin\Admin::login');
     $routes->get('dashboard', 'Admin\Admin::index');
+    $routes->get('users', 'Admin\Admin::users');
     $routes->get('employees', 'Admin\Admin::employees');
     $routes->get('qr-scanner', 'Admin\Admin::qr_scanner');
     $routes->get('send-message', 'Admin\Admin::sendMessage');
@@ -72,7 +73,7 @@ $routes->group('admin', static function ($routes) {
     $routes->group('dashboard', static function ($routes) {
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
         $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
-        $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms');//this should be post(get for testing)
+        $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms'); //this should be post(get for testing)
     });
 });
 

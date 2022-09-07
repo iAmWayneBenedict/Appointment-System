@@ -20,9 +20,9 @@
                 <img src="<?= base_url('/src/img/Logo Center.svg') ?>" alt="">
                 <div class="d-flex flex-column mt-5">
                     <a href="<?= base_url("/user/login") ?>" class="btn btn-primary mt-3 rounded-5 py-2">User</a>
-                    <a href="" class="btn btn-primary mt-3 rounded-5 py-2">Employee</a>
-                    <a href="" class="btn btn-primary mt-3 rounded-5 py-2">Barangay Council</a>
-                    <a href="" class="btn btn-primary mt-3 rounded-5 py-2">Admin</a>
+                    <!-- <a href="" class="btn btn-primary mt-3 rounded-5 py-2">Guest</a> -->
+                    <a href="<?= base_url("/user/login") ?>" class="btn btn-primary mt-3 rounded-5 py-2">Barangay Council</a>
+                    <a href="<?= base_url('/admin/login') ?>" class="btn btn-primary mt-3 rounded-5 py-2">Admin</a>
                 </div>
             </div>
         </div>

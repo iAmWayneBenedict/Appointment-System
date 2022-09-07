@@ -15,11 +15,22 @@ class UserModel extends Model
         'contact_number',
         'email',
         'identity',
-        'password' 
+        'password'
     ];
 
-    
-    public static function generated_unique_id(){
+    public static function get_all_users()
+    {
+        $db = \Config\Database::connect();
+        $query = $db->table('users')
+            ->get();
+
+
+        return $query->getResultArray();
+    }
+
+
+    public static function generated_unique_id()
+    {
         /**
          * func: generate unique id(serve as user name) base on previous id in database
          * return: int 7 digits number
@@ -34,18 +45,18 @@ class UserModel extends Model
             ->limit(1)
             ->get()
             ->getRowArray();
-        
-        if(empty($query)){
+
+        if (empty($query)) {
             $generated_id = mt_rand(1000, 9999) . 1;
-        }
-        else{
+        } else {
             $generated_id = mt_rand(1000, 9999) . $query['id'] + 1;
         }
 
         return $generated_id;
     }
 
-    public function get_user_info($code_id){
+    public function get_user_info($code_id)
+    {
         //this is for the reminder page 
         $db = \Config\Database::connect();
 
@@ -63,14 +74,15 @@ class UserModel extends Model
      * get the user information for login process
      * return 1 single row(array) data of user
      */
-    public function login_users($data_arr){
+    public function login_users($data_arr)
+    {
         $db = \Config\Database::connect();
 
         $query = $db->table('users')
             ->select('id, code_id, password')
             ->where('code_id', $data_arr['code_id'])
             ->get();
-        $data = $query->getRow();//object
+        $data = $query->getRow(); //object
         return $data;
     }
 }
