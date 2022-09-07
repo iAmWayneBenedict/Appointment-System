@@ -8,6 +8,7 @@ class SMS extends BaseConfig
 {
 
     /**
+     TITLE: TWILIO
      * description: twillo configuration settings
      */
 
@@ -29,6 +30,7 @@ class SMS extends BaseConfig
 
 
     /**
+     TITLE: Itext mo
      * description: I text mo sms config settings
      */
 
@@ -43,6 +45,7 @@ class SMS extends BaseConfig
 
 
     /**
+     TITLE: ONEWAYSMS
      * description: onewaysms config settings
      */
 
@@ -53,7 +56,7 @@ class SMS extends BaseConfig
     public $api_password = '';
 
     //from it can be (sender name or sender number)
-    public $sms_from = 'Carlo-testing';
+    public $sms_from = 'Test SMS';
 
     //MT URL port 10001
     public $gw_url = 'http://gateway.onewaysms.ph:10001/api.aspx?';
