@@ -46,7 +46,7 @@
 
                 <!-- Dashboard -->
 
-                <a class="flex-sm-fill nav-link text-dark" aria-current="page" data-label href="<?= base_url('/admin/dashboard') ?>">
+                <a class="flex-sm-fill nav-link text-dark" aria-current="page" data-label href="<?= base_url('/admin/dashboard/') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -56,7 +56,7 @@
 
                 <!-- QR Scanner -->
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url('/admin/qr-scanner') ?>">
+                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url('/admin/dashboard/qr-scanner') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-qr-code-scan" viewBox="0 0 16 16">
                         <path d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0v-3Zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5ZM.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5Zm15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5ZM4 4h1v1H4V4Z" />
                         <path d="M7 2H2v5h5V2ZM3 3h3v3H3V3Zm2 8H4v1h1v-1Z" />
@@ -79,7 +79,7 @@
 
                 <!-- Employees -->
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/employees") ?>">
+                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/dashboard/employees") ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                         <circle cx="9" cy="7" r="4"></circle>
@@ -91,7 +91,7 @@
 
                 <!-- Send Message -->
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url('/admin/send-message') ?>">
+                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url('/admin/dashboard/send-message') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square">
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
