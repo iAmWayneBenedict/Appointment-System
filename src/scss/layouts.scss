@@ -26,7 +26,7 @@
 	}
 
 	.side-nav {
-		margin-top: 4rem;
+		margin-top: 10%;
 
 		a.nav-link {
 			display: flex !important;
@@ -36,6 +36,10 @@
 			font-weight: 600;
 		}
 	}
+}
+
+.notification-btn {
+	display: none;
 }
 
 @media screen and (max-width: 1400px) {
@@ -70,6 +74,12 @@
 
 	.main-content {
 		padding: 5rem 0 0 6rem;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.notification-btn {
+		display: flex;
 	}
 }
 

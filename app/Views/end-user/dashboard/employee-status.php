@@ -29,20 +29,14 @@
         }, 1000)
 
         function display_employees() {
+
             $.ajax({
                 type: 'get',
                 url: `${url}/get-employee-status-user`,
                 async: true,
                 success: function(response) {
                     $('.list').html(response);
-                    // datatable initialization
                     $('#employees').DataTable();
-                    // {
-                    //     lengthMenu: [
-                    //         [25, 50, -1],
-                    //         [25, 50, 'All'],
-                    //     ],
-                    // }
                 }
             });
         }

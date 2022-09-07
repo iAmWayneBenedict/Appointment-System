@@ -60,7 +60,7 @@
         <div class="card border-0" style="width: 25rem;">
             <div class="card-body d-flex flex-column gap-3">
                 <h5 class="mb-5">
-                    <b>Add Employee</b>
+                    <b>QR Code</b>
                 </h5>
                 <div id="qr-code"></div>
                 <a hidden id='qrdl' class="btn btn-primary">Download</a>

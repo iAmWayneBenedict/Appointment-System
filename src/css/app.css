@@ -10820,7 +10820,7 @@ body {
   width: 15rem;
 }
 .left-main-nav .side-nav {
-  margin-top: 4rem;
+  margin-top: 10%;
 }
 .left-main-nav .side-nav a.nav-link {
   display: flex !important;
@@ -10828,6 +10828,10 @@ body {
 }
 .left-main-nav .side-nav .icon-label {
   font-weight: 600;
+}
+
+.notification-btn {
+  display: none;
 }
 
 @media screen and (max-width: 1400px) {
@@ -10856,6 +10860,11 @@ body {
   }
   .main-content {
     padding: 5rem 0 0 6rem;
+  }
+}
+@media screen and (max-width: 992px) {
+  .notification-btn {
+    display: flex;
   }
 }
 @media screen and (max-width: 768px) {
