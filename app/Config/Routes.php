@@ -38,6 +38,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::home');
 $routes->get('/test-sms', 'Home::index');
 $routes->post('/test-sms', 'Home::test_sms');
+$routes->get('/qr-scanner', 'Admin\Admin::qr_scanner');
 
 
 $routes->get('/scanner', 'Employee\EmployeeScanner::index');
@@ -64,13 +65,11 @@ $routes->group('user', static function ($routes) {
 
 $routes->group('admin', static function ($routes) {
     $routes->get('login', 'Admin\Admin::login');
-
     $routes->post('admin-login', 'Admin\Admin::verify_admin');
 
     $routes->group('dashboard', static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
         $routes->get('employees', 'Admin\Admin::employees');
-        $routes->get('qr-scanner', 'Admin\Admin::qr_scanner');
         $routes->get('send-message', 'Admin\Admin::sendMessage');
 
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
