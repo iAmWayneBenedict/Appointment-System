@@ -30,13 +30,14 @@ class Admin extends BaseController
         return view('admin/login');
     }
 
-    public function verify_admin(){
+    public function verify_admin()
+    {
 
         $admin_password = $this->request->getPost('password');
 
         $admin_data = $this->admin_model->get_admin();
 
-        if($admin_data->password == $admin_password){
+        if ($admin_data->password == $admin_password) {
 
             $this->session->set([
                 'admin' => $admin_data->user_name,
@@ -50,7 +51,8 @@ class Admin extends BaseController
         return redirect()->back();
     }
 
-    public function admin_logout(){
+    public function admin_logout()
+    {
 
         $admin_session = ['admin', 'user_name'];
 
@@ -71,7 +73,7 @@ class Admin extends BaseController
 
     public function qr_scanner()
     {
-        return view('admin/qr-scanner');
+        return view('qr-scanner');
     }
 
     public function sendMessage()
