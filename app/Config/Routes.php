@@ -66,15 +66,17 @@ $routes->group('admin', static function ($routes) {
     $routes->get('login', 'Admin\Admin::login');
 
     $routes->post('admin-login', 'Admin\Admin::verify_admin');
-       
+
     $routes->group('dashboard', static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
         $routes->get('employees', 'Admin\Admin::employees');
         $routes->get('qr-scanner', 'Admin\Admin::qr_scanner');
         $routes->get('send-message', 'Admin\Admin::sendMessage');
+
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
         $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
-        $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms');//this should be post(get for testing)
+        $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms'); //this should be post(get for testing)
+        $routes->post('send-email', 'Admin\SendNotifications::send_email');
         $routes->get('logout', 'Admin\Admin::admin_logout');
     });
 });

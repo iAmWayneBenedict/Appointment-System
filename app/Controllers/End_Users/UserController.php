@@ -17,7 +17,7 @@ class UserController extends BaseController
     {
         $this->user_model = new UserModel();
         $this->validation = \Config\Services::validation();
-        $this->number_formater = new NumberFormater();
+        // $this->number_formater = new NumberFormater();
     }
 
     public function index()
@@ -89,8 +89,8 @@ class UserController extends BaseController
 
 
         // number formater if need to start +63
-        $formated_number = $this->number_formater
-                ->format_number($this->request->getPost('number'));
+        // $formated_number = $this->number_formater
+        //     ->format_number($this->request->getPost('number'));
 
         // get the inputed data from the register form page 
         // arranged to an array for inserting to database
@@ -99,7 +99,7 @@ class UserController extends BaseController
             'code_id'           => $this->request->getPost('user_id'),
             'name'              => $this->request->getPost('name'),
             'address'           => $this->request->getPost('address'),
-            'contact_number'    => $formated_number,
+            'contact_number'    => $this->request->getPost('number'),
             'email'             => $this->request->getPost('email'),
             'identity'          => $this->request->getPost('identity'),
             'password'          => $password
