@@ -30,7 +30,7 @@ class Admin extends BaseController
         return view('admin/login');
     }
 
-    public function verify_admin()
+    public function admin_login()
     {
 
         $admin_password = $this->request->getPost('password');
@@ -49,6 +49,25 @@ class Admin extends BaseController
 
         $this->session->setFlashdata('invalid', 'Invalid Password');
         return redirect()->back();
+    }
+
+    public function verify_admin()
+    {
+
+        $admin_password = $this->request->getPost('password');
+
+        $admin_data = $this->admin_model->get_admin();
+
+        if ($admin_data->password == $admin_password) {
+
+            return json_encode([
+                "status" => "success",
+            ]);
+        }
+
+        return json_encode([
+            "status" => "error",
+        ]);
     }
 
     public function admin_logout()
