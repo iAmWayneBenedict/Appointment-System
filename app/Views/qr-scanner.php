@@ -13,6 +13,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <!-- sweetalert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Appointment System | QR Scanner</title>
 </head>
@@ -67,27 +68,41 @@
                 },
                 confirmButtonText: 'Login',
                 showLoaderOnConfirm: true,
-                preConfirm: (login) => {
-                    return fetch(`//api.github.com/users/${login}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText)
+                preConfirm: (password) => {
+                    $.ajax({
+                        type: "post",
+                        url: `${url}/admin/verify-admin`,
+                        data: {
+                            password
+                        },
+                        async: true,
+                        dataType: "json",
+                        success: function(response) {
+                            try {
+                                if (response.status === "error") throw response.status
+                                else {
+                                    $(".qr-con").removeClass("d-none")
+                                    $(".swal2-container").remove()
+                                }
+                            } catch (err) {
+                                Swal.showValidationMessage(
+                                    "Invalid password!"
+                                )
+                                return false;
                             }
-                            $(".qr-con").removeClass("d-none")
-                            return response.json()
-                        })
-                        .catch(error => {
-                            Swal.showValidationMessage(
-                                `Request failed: ${error}`
-                            )
-                        })
+                        },
+                        error: function(err) {
+                            console.error(err)
+                        }
+                    });
+
+                    return false;
                 },
                 allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
-                        title: `${result.value.login}'s avatar`,
-                        imageUrl: result.value.avatar_url
+                        title: "Verified"
                     })
                 }
             })

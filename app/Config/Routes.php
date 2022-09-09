@@ -66,7 +66,8 @@ $routes->group('user', static function ($routes) {
 
 $routes->group('admin', static function ($routes) {
     $routes->get('login', 'Admin\Admin::login');
-    $routes->post('admin-login', 'Admin\Admin::verify_admin');
+    $routes->post('admin-login', 'Admin\Admin::admin_login');
+    $routes->post('verify-admin', 'Admin\Admin::verify_admin');
 
     $routes->group('dashboard', static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
