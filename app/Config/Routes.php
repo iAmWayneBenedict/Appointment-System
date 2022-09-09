@@ -40,6 +40,7 @@ $routes->get('/test-sms', 'Home::index');
 $routes->post('/test-sms', 'Home::test_sms');
 
 
+//see new group routes for new scanner page at the bottom thanks
 $routes->get('/scanner', 'Employee\EmployeeScanner::index');
 $routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
 $routes->post('/add-employee', 'Employee\EmployeeScanner::add_employee');
@@ -78,6 +79,15 @@ $routes->group('admin', static function ($routes) {
         $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms'); //this should be post(get for testing)
         $routes->post('send-email', 'Admin\SendNotifications::send_email');
         $routes->get('logout', 'Admin\Admin::admin_logout');
+    });
+});
+
+//dedicated page for employee scanner
+$routes->group('scanner', static function($routes) {
+    $routes->post('admin-login', 'Controller');
+    
+    $routes->group('main', static function($routes){ // this will hold the filter ['filter', scanner filter]
+        //main scanner here
     });
 });
 
