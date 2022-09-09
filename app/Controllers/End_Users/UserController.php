@@ -49,7 +49,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Function: Inserting and Validation
+     * Function: Inserting and Validating
      * Description: Validate Incoming data from user, send sms next is
      *              insert the data in database
      * @return array validation_errors
