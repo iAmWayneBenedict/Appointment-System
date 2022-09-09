@@ -32,7 +32,7 @@ class OneWaySMS
         $query_string .= "&senderid=" . rawurlencode($from) . "&mobileno=" . rawurlencode($sms_to);
         $query_string .= "&message=" . rawurlencode(stripslashes($message)) . "&languagetype=1";
 
-        //concat url and the query string
+        //concatinate url and the query string
         $url = "{$this->url}{$query_string}";
         $fd = @implode('', file($url));
 
@@ -43,7 +43,7 @@ class OneWaySMS
             ];
         }
 
-        if (!$fd > 0) {
+        if ($fd < 0) {
             return [
                 'message' => "Please refer to API on Error : {$fd}",
                 'code'    => 0
@@ -57,7 +57,8 @@ class OneWaySMS
     }
 
     /**
-     * function: this is the one to use in controllers to accept input data
+     * @Function: Send SMS
+     * Description: this is the one to use in controllers to accept input data
      * and send sms
      * @return array contain response code and message from api
      */

@@ -9,6 +9,7 @@
     <meta name="base_url" content="<?= base_url() ?>">
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Appointment System</title>
 </head>
 
