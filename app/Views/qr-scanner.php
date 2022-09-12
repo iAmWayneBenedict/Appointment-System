@@ -40,6 +40,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Name</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Time</th>
                         </tr>
                     </thead>
                     <tbody class="list">
@@ -134,7 +135,6 @@
                     },
                     dataType: "json",
                     success: function(res) {
-
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
@@ -153,22 +153,118 @@
                         })
 
                         // update employees after scan
-                        display_employees();
+                        display_employees(res);
                     }
                 });
             });
 
-            function display_employees() {
+
+            function display_employees(res = undefined) {
                 $.ajax({
                     type: 'get',
                     url: `${url}/get-employee-status`,
                     async: true,
                     success: function(response) {
                         $('.list').html(response);
+                        $('.id-con').each(function(index, element) {
+
+                            getTimeSession($(this), res)
+
+                        })
                         // datatable initialization
                         // $('#employees').DataTable();
                     }
                 });
+            }
+
+            function getCurrentTime() {
+                const currentDate = new Date()
+                let meridiem = currentDate.getHours() < 12 ? "am" : "pm";
+                const formatter = new Intl.NumberFormat(undefined, {
+                    minimumIntegerDigits: 2
+                })
+                return `${currentDate.getHours() % 12}:${formatter.format(currentDate.getMinutes())} ${meridiem}`;
+            }
+
+            function setTimeSession(user, time) {
+                // sessionStorage.clear()
+                let currentSessionData = sessionStorage.getItem('appointment-system')
+                if (currentSessionData) {
+                    let sessionData = JSON.parse(currentSessionData)
+                    let hasUserData = false;
+
+                    for (const users of sessionData) {
+                        if (users.user === user) {
+                            users.time = time
+                            hasUserData = true;
+                            break;
+                        }
+                        hasUserData = false;
+                    }
+
+                    if (hasUserData) {
+                        sessionStorage.setItem('appointment-system', JSON.stringify(sessionData))
+
+                    } else {
+                        sessionStorage.setItem('appointment-system', JSON.stringify([
+                            ...sessionData, {
+                                user,
+                                time
+                            }
+                        ]))
+                    }
+                } else {
+
+                    sessionStorage.setItem('appointment-system', JSON.stringify([{
+                        user,
+                        time
+                    }]))
+                }
+            }
+
+            function getTimeSession(self, res = undefined) {
+
+                let currentSessionData = JSON.parse(sessionStorage.getItem('appointment-system'))
+                if (currentSessionData) {
+                    for (const users of currentSessionData) {
+                        if (!self.next().next().hasClass('active')) {
+                            if (res) {
+
+                                setTimeSession(res.id, getCurrentTime())
+                                if (res.id === self.text())
+                                    self.parent().children().last().text(getUserTimeSession(res.id).time)
+                                else
+                                if (users.user === self.text()) {
+
+                                    self.parent().children().last().text(users.time)
+
+                                }
+                            } else {
+
+                                if (users.user === self.text()) {
+                                    self.parent().children().last().text(users.time)
+
+                                }
+                            }
+                        } else {
+                            self.parent().children().last().text("")
+                        }
+
+                    }
+                }
+            }
+
+            function getUserTimeSession(user) {
+                let currentSessionData = JSON.parse(sessionStorage.getItem('appointment-system'))
+                if (currentSessionData) {
+                    for (const users of currentSessionData) {
+
+                        if (users.user === user) {
+                            return users;
+                        }
+                    }
+                }
+                return 0
             }
         });
     </script>
