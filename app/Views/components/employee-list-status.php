@@ -7,10 +7,13 @@ foreach ($employees as $employee) {
     }
 ?>
     <tr>
-        <td><?= $employee['id'] ?></td>
+        <td class="id-con"><?= $employee['id'] ?></td>
         <td><?= $employee['name'] ?></td>
         <td class="employee-status-cell <?= $employee['status'] ? "active" : "" ?>">
             <div><?= $status ?></div>
+        </td>
+        <td class="inactive-time">
+            <!-- time -->
         </td>
     </tr>
 <?php
