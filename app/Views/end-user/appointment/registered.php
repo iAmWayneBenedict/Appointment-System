@@ -13,10 +13,10 @@
 <body>
     <div class="main">
         <form action="" method="post" id="form-submit">
-            <input type="text" name="name" id="name" placeholder="Name"><br>
-            <input type="text" name="address" id="address" placeholder="address" ><br>
-            <input type="text" name="c_number" id="c_number" placeholder="Contact Number" ><br>
-            <input type="text" name="social_pos" id="social_pos" placeholder="Social Position" ><br>
+            <input type="text" name="name" value="<?= $userData->name; ?>" id="name" placeholder="Name" readonly><br>
+            <input type="text" name="address" value="<?= $userData->address; ?>" id="address" placeholder="address"  readonly><br>
+            <input type="text" name="c_number" value="<?= $userData->contact_number; ?>" id="c_number" placeholder="Contact Number"  readonly><br>
+            <input type="text" name="social_pos" value="<?= $userData->social_pos; ?>" id="social_pos" placeholder="Social Position"  readonly><br>
             <select name="purpose" id="purpose">
                 <option value="p1">P!</option>
                 <option value="p2">p2</option>
@@ -51,7 +51,7 @@
                     formdata.delete('concern')
                 }
                
-                const user_type = 000//guest
+                const user_type = 001
                 $.ajax({
                     type: "post",
                     url: `${url}/appointments/${user_type}/submit-appointment`,
@@ -71,8 +71,7 @@
                     }
                 });
 
-                //see outgoing data inside from formdata
-                //note for development only
+
                 for( var val of formdata){
                     console.log(`${val[0]}: ${val[1]}`)
                 }

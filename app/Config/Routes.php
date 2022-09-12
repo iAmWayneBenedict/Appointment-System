@@ -49,6 +49,8 @@ $routes->match(['get', 'post'], '/get-employee-status', 'Employee\EmployeeScanne
 $routes->match(['get', 'post'], '/get-employee-status-user', 'Employee\EmployeeScanner::get_employee_status_user');
 $routes->match(['get', 'post'], '/get-employee', 'Employee\EmployeeScanner::get_employee');
 
+
+
 $routes->group('user', static function ($routes) {
     $routes->get('register', 'End_Users\UserController::index');
     $routes->get('login', 'End_Users\UserLoginController::index');
@@ -61,7 +63,13 @@ $routes->group('user', static function ($routes) {
         $routes->get('/', 'End_Users\UserController::dashboard');
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
         $routes->get('logout', 'End_Users\UserLoginController::logout_user');
+        $routes->get('set-appointment', 'End_Users\ClientAppointment::registered_client');
     });
+});
+
+$routes->group('appointments', static function($routes){
+    $routes->get('guest-user', 'End_Users\ClientAppointment::guest_client');
+    $routes->post('(:num)/submit-appointment', 'End_Users\ClientAppointment::create_appointment/$1');
 });
 
 $routes->group('admin', static function ($routes) {

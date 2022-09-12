@@ -55,17 +55,17 @@ class UserModel extends Model
         return $generated_id;
     }
 
-    public function get_user_info($code_id)
+    public function get_user_info($user_id)
     {
-        //this is for the reminder page 
+
         $db = \Config\Database::connect();
 
         $query = $db->table('users')
             ->select('*')
-            ->where('code_id', $code_id)
+            ->where('id', $user_id)
             ->get();
 
-        $data = $query->getRowArray(); //array
+        $data = $query->getRow(); //object
 
         return $data;
     }
