@@ -1,6 +1,6 @@
 <?= $this->extend('layouts/user_layouts') ?>
 <?= $this->section('content') ?>
-<div class="container-fluid">
+<div class="main-content">
     <div class="greetings mt-4">
         <h1>Good morning</h1>
         <h1>User</h1>
@@ -18,19 +18,21 @@
             <h3 class="fw-semibold font-recoleta">Upcoming Appointments</h3>
             <!-- <a href="" class="text-decoration-none">See all</a> -->
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4 mt-1">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 mt-1" style="max-width: 95%;">
             <!-- Appointments Card -->
             <div class="col">
                 <div class="card h-100">
                     <div class="card-body justify-content-between d-flex">
-                        <div class="d-flex justify-content-between" style="width: 100%;">
-                            <div>
-                                <h5 class="card-title fw-semibold font-recoleta">Jhon Doe</h5>
-                                <p class="card-text">Secretary</p>
-                            </div>
-                            <div class="card-status border border-secondary rounded-5 px-2">
-                                <div></div>
-                                <small class="ms-2">Available</small>
+                        <div class="d-flex flex-column" style="width: 100%;">
+                            <div class="d-flex justify-content-between my-2 me-3">
+                                <div>
+                                    <h5 class="card-title m-0 fw-semibold font-recoleta">Jhon Doe</h5>
+                                    <p class="card-text">Secretary</p>
+                                </div>
+                                <div class="card-status border border-secondary rounded-5 px-2">
+                                    <div></div>
+                                    <small class="ms-2">Available</small>
+                                </div>
                             </div>
                         </div>
                         <button type="button" class="btn options">

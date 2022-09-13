@@ -2,14 +2,15 @@
 
 /**
  * use for login process 
-*/
+ */
 
 namespace App\Controllers\End_Users;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
 
-class UserLoginController extends BaseController{
+class UserLoginController extends BaseController
+{
 
     protected $userModel;
     protected $session;
@@ -20,7 +21,8 @@ class UserLoginController extends BaseController{
         $this->session = session();
     }
 
-    public function index(){
+    public function index()
+    {
         return view('end-user/login');
     }
 
@@ -29,7 +31,8 @@ class UserLoginController extends BaseController{
      * @return redirect with session flashData for validation message
      * @return redirect to dashboard if login success
      */
-    public function login_user(){
+    public function login_user()
+    {
 
         $validator = $this->validate([
             'user_id' => [
@@ -42,11 +45,10 @@ class UserLoginController extends BaseController{
             ]
         ]);
 
-        if(!$validator) {
+        if (!$validator) {
             $this->session->setFlashdata('form-error', $this->validator);
             return redirect()->back();
-        }
-        else {
+        } else {
 
             $login_data = [
                 'code_id' => $this->request->getPost('user_id'),
@@ -55,13 +57,13 @@ class UserLoginController extends BaseController{
 
             $user_data = $this->userModel->login_users($login_data);
 
-            if(empty($user_data)){
+            if (empty($user_data)) {
                 $this->session->setFlashdata('invalid', 'User Id not found');
                 return redirect()->back();
             }
 
             //compare input password and password from database
-            if(!password_verify($login_data['password'], $user_data->password)){
+            if (!password_verify($login_data['password'], $user_data->password)) {
                 $this->session->setFlashdata('invalid', 'Invalid Password');
                 return redirect()->back();
             }
@@ -74,15 +76,15 @@ class UserLoginController extends BaseController{
 
             // it should be user dashboard
             return redirect('user/dashboard');
-
         }
     }
 
-    public function logout_user(){
-    
+    public function logout_user()
+    {
+
         $user_sessions = ['id', 'logged_in'];
         $this->session->destroy($user_sessions);
 
-        return redirect()->to('/user/login'); 
+        return redirect()->to('/user/login');
     }
 }
