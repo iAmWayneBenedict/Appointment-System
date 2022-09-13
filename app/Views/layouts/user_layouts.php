@@ -22,13 +22,16 @@
         <div class="container-fluid">
 
             <button class="btn navbar-toggler" id="side-nav-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                <span class="navbar-toggler-icon"></span>
+                <span class=""></span>
+                <span class=""></span>
+                <span class=""></span>
+                <span class=""></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a class="navbar-brand" href="#">Hidden brand</a>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="<?= base_url("/user/dashboard") ?>">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
@@ -62,7 +65,7 @@
             <div class="offcanvas-body d-none">
                 <ul class="nav align-items-center justify-content-center flex-column gap-2" style="margin-top: 20%;">
                     <li class="nav-item">
-                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="#">HOME</a>
+                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard') ?>">HOME</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="#">Profile</a>

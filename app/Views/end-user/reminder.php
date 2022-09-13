@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <div class="center-con flex-column mt-4">
                             <span>User ID</span>
-                            <h1 style="font-weight: 600;"><?= $user_informations['code_id'] ?></h1>
+                            <h1 style="font-weight: 600;"><?= $user_informations['id'] ?></h1>
                             <span class="alert alert-info d-flex align-items-center bg-transparent border-0 p-0 text-primary" style="font-size: 14px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle">
                                     <circle cx="12" cy="12" r="10"></circle>

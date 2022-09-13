@@ -15,9 +15,42 @@
 	}
 }
 
-// .center-con {
-// 	justify-content: end;
-// }
+.options {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 3px;
+	border: none;
+	outline: none;
+	background-color: none;
+	margin: none;
+	height: fit-content;
+
+	span:first-child {
+		background-color: #3879e9;
+	}
+
+	span {
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background-color: black;
+	}
+}
+
+.card-status {
+	display: flex;
+	height: fit-content;
+	justify-content: center;
+	align-items: center;
+
+	div {
+		width: 10px !important;
+		height: 10px !important;
+		background-color: green;
+		border-radius: 50%;
+	}
+}
 
 .home-cover {
 	width: 100%;

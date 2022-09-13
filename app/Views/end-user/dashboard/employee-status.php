@@ -12,7 +12,6 @@
                     <th scope="col">Name</th>
                     <th scope="col">Role</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Time</th>
                 </tr>
             </thead>
             <tbody class="list">

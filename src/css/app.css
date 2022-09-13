@@ -10726,6 +10726,10 @@ body {
   height: 100% !important;
 }
 
+@font-face {
+  font-family: Recoleta;
+  src: url("../fonts/recoleta-regulardemo.otf") format("opentype");
+}
 .img-profile-con {
   width: 2rem;
   height: 2rem;
@@ -10862,6 +10866,32 @@ body {
     padding: 5rem 0 0 6rem;
   }
 }
+.navbar-toggler {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 0.7rem;
+  row-gap: 0.7rem;
+  padding: 0.75rem;
+  margin: 0;
+  border: none;
+  outline: none;
+  background-color: #f1f6ff;
+  border-radius: 30%;
+  box-shadow: none;
+}
+.navbar-toggler:hover {
+  background-color: #d7e6ff;
+}
+.navbar-toggler span {
+  width: 6px;
+  height: 6px;
+  background-color: black;
+  border-radius: 50%;
+}
+.navbar-toggler span:first-child {
+  background: #3879e9;
+}
+
 @media screen and (max-width: 992px) {
   .notification-btn {
     display: flex;
@@ -10880,6 +10910,24 @@ body {
     width: 13rem;
   }
 }
+.greetings {
+  display: flex;
+  flex-direction: column;
+  font-family: "Recoleta", sans-serif;
+}
+.greetings h1:first-child, .greetings .h1:first-child {
+  font-weight: 800;
+  font-size: 2.5rem;
+}
+.greetings h1:last-child, .greetings .h1:last-child {
+  font-weight: 500;
+  font-size: 2.2rem;
+}
+
+.font-recoleta {
+  font-family: "Recoleta", sans-serif;
+}
+
 .center-con {
   display: flex;
   justify-content: center;
@@ -10892,6 +10940,40 @@ body {
 .center-con .card > div form {
   display: flex;
   flex-direction: column;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  border: none;
+  outline: none;
+  background-color: none;
+  margin: none;
+  height: fit-content;
+}
+.options span:first-child {
+  background-color: #3879e9;
+}
+.options span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.card-status {
+  display: flex;
+  height: fit-content;
+  justify-content: center;
+  align-items: center;
+}
+.card-status div {
+  width: 10px !important;
+  height: 10px !important;
+  background-color: green;
+  border-radius: 50%;
 }
 
 .home-cover {
