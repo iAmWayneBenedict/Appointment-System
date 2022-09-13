@@ -33,7 +33,7 @@
 <body>
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">
-            <div class="flex">
+            <div class="d-flex">
                 <a href="#" class="btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -41,6 +41,7 @@
                     </svg>
                 </a>
             </div>
+            <a class="nav-link text-danger text-uppercase ms-3" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/logout') ?>">Log out</a>
         </div>
     </nav>
     <aside class="left-main-nav">
@@ -82,17 +83,6 @@
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
                     <span class="ps-3 icon-label">Employee Status</span>
-                </a>
-
-                <!-- Logout -->
-
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/user/dashboard/logout") ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <polyline points="16 17 21 12 16 7"></polyline>
-                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
-                    <span class="ps-3 icon-label">Logout</span>
                 </a>
             </nav>
         </div>

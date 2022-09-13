@@ -67,7 +67,7 @@ $routes->group('user', static function ($routes) {
     });
 });
 
-$routes->group('appointments', static function($routes){
+$routes->group('appointments', static function ($routes) {
     $routes->get('guest-user', 'End_Users\ClientAppointment::guest_client');
     $routes->post('(:num)/submit-appointment', 'End_Users\ClientAppointment::create_appointment/$1');
 });
@@ -81,6 +81,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
         $routes->get('employees', 'Admin\Admin::employees');
         $routes->get('send-message', 'Admin\Admin::sendMessage');
+        $routes->get('users', 'Admin\Admin::users');
 
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
         $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
@@ -91,10 +92,10 @@ $routes->group('admin', static function ($routes) {
 });
 
 //dedicated page for employee scanner
-$routes->group('scanner', static function($routes) {
+$routes->group('scanner', static function ($routes) {
     $routes->post('admin-login', 'Controller');
-    
-    $routes->group('main', static function($routes){ // this will hold the filter ['filter', scanner filter]
+
+    $routes->group('main', static function ($routes) { // this will hold the filter ['filter', scanner filter]
         //main scanner here
     });
 });

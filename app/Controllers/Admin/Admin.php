@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\Admin\NotificationsModel;
 use App\Models\Admin\AdminModel;
+use App\Models\UserModel;
 
 class Admin extends BaseController
 {
@@ -17,6 +18,7 @@ class Admin extends BaseController
         //instantiate
         $this->notification = new NotificationsModel();
         $this->admin_model = new AdminModel();
+        $this->user_model = new UserModel();
         $this->session = session();
     }
 
