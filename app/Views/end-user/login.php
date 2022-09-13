@@ -34,8 +34,8 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
                 <div>
-                    <input type="checkbox" name="checkbox" id="checkbox">
-                    <label for="checkbox">Show Password</label>
+                    <input type="checkbox" name="show-password" id="show-password">
+                    <label for="show-password">Show Password</label>
                 </div>
                 <input type="submit" class="btn btn-primary mt-5 my-3 rounded-5 py-2" value="Login" />
                 <center>
@@ -48,4 +48,16 @@
         </div>
     </div>
 </div>
+<script>
+    $(() => {
+        $('#show-password').change(function(event) {
+            if ($(this).is(':checked')) {
+                $("#password").attr('type', 'text')
+            } else {
+                $("#password").attr('type', 'password')
+
+            }
+        })
+    })
+</script>
 <?= $this->endSection() ?>
