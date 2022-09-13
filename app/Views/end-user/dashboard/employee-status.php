@@ -1,11 +1,11 @@
 <?= $this->extend('layouts/user_layouts') ?>
 <?= $this->section('content') ?>
 
-<div class="container-fluid mt-5">
+<div class="main-content mt-5">
     <h5 class="text-uppercase" style="font-weight:700">employee status</h5>
 
-    <div class="employees">
-        <table id="employees" class="table table-striped" style="width:100%">
+    <div class="employees" style="width:98%">
+        <table id="employees" class="table">
             <thead>
                 <tr>
                     <!-- <th scope="col">ID</th> -->
@@ -36,7 +36,7 @@
                 async: true,
                 success: function(response) {
                     $('.list').html(response);
-                    $('#employees').DataTable();
+                    // $('#employees').DataTable();
                 }
             });
         }
