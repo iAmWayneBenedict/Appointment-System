@@ -23,7 +23,7 @@ class Encryption extends BaseConfig
      *
      * @var string
      */
-    public $key = '';
+    public $key = '2022_AgriculutristOfficeofBATO_BSIT4A';
 
     /**
      * --------------------------------------------------------------------------

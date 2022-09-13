@@ -41,6 +41,7 @@ $routes->post('/test-sms', 'Home::test_sms');
 $routes->get('/qr-scanner', 'Admin\Admin::qr_scanner');
 
 
+
 //see new group routes for new scanner page at the bottom thanks
 $routes->get('/scanner', 'Employee\EmployeeScanner::index');
 $routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
@@ -64,6 +65,12 @@ $routes->group('user', static function ($routes) {
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
         $routes->get('logout', 'End_Users\UserLoginController::logout_user');
         $routes->get('set-appointment', 'End_Users\ClientAppointment::registered_client');
+    });
+
+    $routes->group('my-account', ['filter' => 'userLoginFilter'], static function($routes){
+        $routes->get('/', 'End_Users\ManageAccount::account_page');
+        $routes->post('update', 'End_Users\ManageAccount::update_account');
+        $routes->post('password-update', 'End_Users\ManageAccount::update_password');
     });
 });
 
