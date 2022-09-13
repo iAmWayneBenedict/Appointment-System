@@ -6,12 +6,12 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class userLoginFilter implements FilterInterface 
+class userLoginFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
         // check if the logged_in session is true and id is set
-        if ( !session()->has('id') AND !session()->get('logged_in')){
+        if (!session()->has('id') and !session()->get('logged_in')) {
             return redirect('user/login');
         }
     }

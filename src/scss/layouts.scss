@@ -77,6 +77,35 @@
 	}
 }
 
+.navbar-toggler {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 0.7rem;
+	row-gap: 0.7rem;
+	padding: 0.75rem;
+	margin: 0;
+	border: none;
+	outline: none;
+	background-color: #f1f6ff;
+	border-radius: 30%;
+	box-shadow: none;
+
+	&:hover {
+		background-color: #d7e6ff;
+	}
+
+	span {
+		width: 6px;
+		height: 6px;
+		background-color: black;
+		border-radius: 50%;
+
+		&:first-child {
+			background: #3879e9;
+		}
+	}
+}
+
 @media screen and (max-width: 992px) {
 	.notification-btn {
 		display: flex;

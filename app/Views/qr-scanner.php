@@ -223,7 +223,6 @@
             }
 
             function getTimeSession(self, res = undefined) {
-
                 let currentSessionData = JSON.parse(sessionStorage.getItem('appointment-system'))
                 if (currentSessionData) {
                     for (const users of currentSessionData) {
@@ -250,6 +249,11 @@
                             self.parent().children().last().text("")
                         }
 
+                    }
+                } else {
+                    if (res) {
+
+                        setTimeSession(res.id, getCurrentTime())
                     }
                 }
             }

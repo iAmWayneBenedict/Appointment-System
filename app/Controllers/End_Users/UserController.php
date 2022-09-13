@@ -129,16 +129,16 @@ class UserController extends BaseController
         $message .= "Ang iyong userid: {$generated_code} \n";
         $message .= "ito ay importante dahil kailangan ito sa pag login sa inyong account";
 
-        $sms_response = $this->send_sms->sendSMS($c_number, $message);
+        // $sms_response = $this->send_sms->sendSMS($c_number, $message);
 
         //if sms is not sent execute this code
-        if($sms_response['code'] == 0 ){
-            return json_encode([
-                'code' => 3,
-                'msg' => 'You cant Register right now, please try again later',
-                'sms_res' => $sms_response['message']
-            ]); 
-        }
+        // if($sms_response['code'] == 0 ){
+        //     return json_encode([
+        //         'code' => 3,
+        //         'msg' => 'You cant Register right now, please try again later',
+        //         'sms_res' => $sms_response['message']
+        //     ]); 
+        // }
 
         //insert user data into Database
         $this->user_model->insert($user_data);
@@ -146,7 +146,7 @@ class UserController extends BaseController
         return json_encode([
             'code' => 1,
             'msg' => "We sent a message to your number: {$c_number}",
-            'sms_res' => $sms_response['message']  
+            // 'sms_res' => $sms_response['message']
         ]);
     }
 

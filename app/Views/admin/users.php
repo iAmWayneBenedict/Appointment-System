@@ -3,6 +3,8 @@
 <div class="main-content">
     <div class="mt-3 mb-5">
         <h2>Users</h2>
+
+        <!-- breadcrumbs -->
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?= base_url('/admin/dashboard') ?>">Dashboard</a></li>
@@ -10,6 +12,10 @@
             </ol>
         </nav>
     </div>
+    <!-- 
+        users data
+        DataTable implementation
+     -->
     <div style="width: 90%;">
         <div class="users">
             <table id="users" class="table table-striped" style="width:100%">
@@ -31,6 +37,8 @@
                             <td><?= $user['address'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['identity'] ?></td>
+
+                            <!-- remove user btn -->
                             <td>
                                 <button type="button" class="btn btn-danger">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
@@ -53,6 +61,7 @@
     $(document).ready(function() {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
 
+        // DataTable initialization
         $('#users').DataTable();
     });
 </script>

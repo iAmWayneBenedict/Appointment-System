@@ -12,7 +12,6 @@ foreach ($employees as $employee) {
         <td class="employee-status-cell <?= $employee['status'] ? "active" : "" ?>">
             <div><?= $status ?></div>
         </td>
-        <td>2:00pm</td>
     </tr>
 <?php
 }

@@ -1,0 +1,19 @@
+.greetings {
+	display: flex;
+	flex-direction: column;
+	font-family: "Recoleta", sans-serif;
+
+	h1:first-child {
+		font-weight: 800;
+		font-size: 2.5rem;
+	}
+
+	h1:last-child {
+		font-weight: 500;
+		font-size: 2.2rem;
+	}
+}
+
+.font-recoleta {
+	font-family: "Recoleta", sans-serif;
+}
