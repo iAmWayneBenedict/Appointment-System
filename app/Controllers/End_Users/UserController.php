@@ -45,7 +45,7 @@ class UserController extends BaseController
      */
     public function generate_user_id()
     {
-        return UserModel::generated_unique_id();
+        return $this->user_model->generated_unique_id();
     }
 
     /**
@@ -85,7 +85,10 @@ class UserController extends BaseController
                 'rules' => 'required'
             ],
             'password' => [
-                'rules' => 'required|min_length[6]'
+                'rules' => 'required|regex_match[^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$]',
+                'errors' => [
+                    'regex_match' => 'Password must atleast 6 characters, include uppercase, lowercase and number'
+                ]
             ]
         ]);
 

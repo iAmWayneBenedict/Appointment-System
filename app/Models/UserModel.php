@@ -18,10 +18,23 @@ class UserModel extends Model
         'password'
     ];
 
-    public static function get_all_users()
+    protected $db_conn;
+
+    function __construct()
     {
-        $db = \Config\Database::connect();
-        $query = $db->table('users')
+        $this->db_conn = \Config\Database::connect();
+    }
+
+    /**
+     * Function: Get all User in Database
+     * Description: Use to retrieve all registered user in the database this is for 
+     *              admin only to monitor or view all office clients that are registered
+     *              to the system
+     * @return array : clients data
+     */
+    public function get_all_users()
+    {
+        $query = $this->db_conn->table($this->table)
             ->get();
 
 
@@ -29,17 +42,16 @@ class UserModel extends Model
     }
 
 
-    public static function generated_unique_id()
+    public function generated_unique_id()
     {
         /**
          * func: generate unique id(serve as user name) base on previous id in database
-         * return: int 7 digits number
+         * @return int 4 to up digits number
          */
-        $db = \Config\Database::connect();
 
         $generated_id = null;
 
-        $query = $db->table('users')
+        $query = $this->db_conn->table($this->table)
             ->select('id')
             ->orderBy('id', 'desc')
             ->limit(1)
@@ -55,12 +67,11 @@ class UserModel extends Model
         return $generated_id;
     }
 
+    //retrieve user data
     public function get_user_info($user_id)
     {
 
-        $db = \Config\Database::connect();
-
-        $query = $db->table('users')
+        $query = $this->db_conn->table($this->table)
             ->select('*')
             ->where('id', $user_id)
             ->get();
@@ -71,14 +82,28 @@ class UserModel extends Model
     }
 
     /**
+     * Function: Update Data
+     * Description: Udate user's data in database 
+     * @param array $data: collection of uuser information
+     * @return bool : indicates if update is success or not
+     */
+    public function update_user_info(array $data, $user_id){
+        
+        $this->db_conn->table($this->table)
+            ->where('id', $user_id)
+            ->update($data);
+
+        return true;
+    }
+
+    /**
      * get the user information for login process
      * return 1 single row(array) data of user
      */
     public function login_users($data_arr)
     {
-        $db = \Config\Database::connect();
 
-        $query = $db->table('users')
+        $query = $this->db_conn->table($this->table)
             ->select('id, code_id, password')
             ->where('code_id', $data_arr['code_id'])
             ->get();
