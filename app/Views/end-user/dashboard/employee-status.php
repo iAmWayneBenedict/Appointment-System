@@ -15,6 +15,7 @@
                 </tr>
             </thead>
             <tbody class="list">
+                <!-- employee status insert here -->
             </tbody>
         </table>
     </div>
@@ -24,6 +25,7 @@
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
 
+        // update employees' status every second
         setInterval(() => {
             display_employees()
         }, 1000)
@@ -35,6 +37,9 @@
                 url: `${url}/get-employee-status-user`,
                 async: true,
                 success: function(response) {
+
+                    // populate the table with employee status
+
                     $('.list').html(response);
                     // $('#employees').DataTable();
                 }

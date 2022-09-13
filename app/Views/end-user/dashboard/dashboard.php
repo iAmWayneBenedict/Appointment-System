@@ -13,28 +13,41 @@
         <span class="ms-2">Make an Appointment</span>
     </button>
 
+    <!-- upcoming appointments section -->
+
     <div>
         <div class="d-flex justify-content-between">
             <h3 class="fw-semibold font-recoleta">Upcoming Appointments</h3>
             <!-- <a href="" class="text-decoration-none">See all</a> -->
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4 mt-1" style="max-width: 95%;">
+
             <!-- Appointments Card -->
+
             <div class="col">
                 <div class="card h-100">
                     <div class="card-body justify-content-between d-flex">
                         <div class="d-flex flex-column" style="width: 100%;">
                             <div class="d-flex justify-content-between my-2 me-3">
+
+                                <!-- employee name and role -->
+
                                 <div>
                                     <h5 class="card-title m-0 fw-semibold font-recoleta">Jhon Doe</h5>
                                     <p class="card-text">Secretary</p>
                                 </div>
+
+                                <!-- employee status -->
+
                                 <div class="card-status border border-secondary rounded-5 px-2">
                                     <div></div>
                                     <small class="ms-2">Available</small>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- options button -->
+
                         <button type="button" class="btn options">
                             <span></span>
                             <span></span>
@@ -45,6 +58,9 @@
                             <p class="btn btn-primary rounded-5" style="font-size: 14px;">8:30 am</p>
                         </div> -->
                     </div>
+
+                    <!-- date and time scheduled -->
+
                     <div class="card-footer d-flex gap-4">
                         <div>
                             <svg class="text-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
@@ -53,6 +69,9 @@
                                 <line x1="8" y1="2" x2="8" y2="6"></line>
                                 <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
+
+                            <!-- date scheduled -->
+
                             <small class="text-dark fw-semibold">August 20, 2022</small>
                         </div>
                         <div>
@@ -60,6 +79,9 @@
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
+
+                            <!-- time scheduled -->
+
                             <small class="text-dark fw-semibold">8:30 am</small>
                         </div>
                     </div>
@@ -67,6 +89,9 @@
             </div>
         </div>
     </div>
+
+    <!-- pending appointments section -->
+
     <div class="mt-5">
         <div class="d-flex justify-content-between">
             <h3 class="fw-semibold font-recoleta">Pending Appointments</h3>
@@ -79,16 +104,24 @@
                     <div class="card-body justify-content-between d-flex">
                         <div class="d-flex flex-column" style="width: 100%;">
                             <div class="d-flex justify-content-between my-2 me-3">
+
+                                <!-- employee name and role -->
+
                                 <div>
                                     <h5 class="card-title m-0 fw-semibold font-recoleta">Jhon Doe</h5>
                                     <p class="card-text">Secretary</p>
                                 </div>
+
+                                <!-- employee status -->
+
                                 <div class="card-status border border-secondary rounded-5 px-2">
                                     <div></div>
                                     <small class="ms-2">Available</small>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- options button -->
                         <button type="button" class="btn options">
                             <span></span>
                             <span></span>
@@ -99,6 +132,8 @@
                             <p class="btn btn-primary rounded-5" style="font-size: 14px;">8:30 am</p>
                         </div> -->
                     </div>
+                    <!-- date and time scheduled -->
+
                     <div class="card-footer d-flex gap-4">
                         <div>
                             <svg class="text-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
@@ -107,6 +142,9 @@
                                 <line x1="8" y1="2" x2="8" y2="6"></line>
                                 <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
+
+                            <!-- date scheduled -->
+
                             <small class="text-dark fw-semibold">August 20, 2022</small>
                         </div>
                         <div>
@@ -114,6 +152,9 @@
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
+
+                            <!-- time scheduled -->
+
                             <small class="text-dark fw-semibold">8:30 am</small>
                         </div>
                     </div>

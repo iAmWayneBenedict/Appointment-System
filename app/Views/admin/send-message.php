@@ -115,6 +115,8 @@
         allContactsHandler()
         $('#all-contacts').change(allContactsHandler)
 
+        // if all contact is checked, then disable manual sending option and remove styling for manual sending overlay
+        // else, show the manual sending option
         function allContactsHandler(event) {
             if ($('#all-contacts').is(':checked')) {
                 $('.recipient-contact').addClass('d-none')
@@ -127,15 +129,21 @@
             } else {
                 $('.recipient-contact').removeClass('d-none')
             }
+
+            // change button value 
+            // if true, then change value to send to all
+            // else, then change value to send
             activateManualBtnSend($('#all-contacts').is(':checked'))
         }
 
+        // uncheck all radio inputs in select contact overlay
         function unCheckUserSelectRadio() {
             $('.user-contact').each(function(index, element) {
                 $(this).prop('checked', false)
             })
         }
 
+        // remove all styling in select contact overlay
         function removeContactActiveStyling() {
             let $allSelectUserSpan = $('.list-group').find('label').find('span')
             $allSelectUserSpan.each(function(index, element) {
@@ -143,6 +151,8 @@
             })
         }
 
+        // change send button value relative to the parameter
+        // parameter: boolean
         function activateManualBtnSend(isAll) {
 
             if (isAll) {
@@ -152,21 +162,28 @@
             }
         }
 
+        // if clicked, show select contact overlay
         $('.select-user-btn').click(function(event) {
             $('.select-users-con').addClass('active')
         })
 
+        // if clicked, hide select contact overlay
         $('.close-select-user-contact').click(function(event) {
             $('.select-users-con').removeClass('active')
         })
 
+        // check if there are radio inputs are being selected
         checkHasRadioValue()
 
         function checkHasRadioValue() {
-
+            // check the length of all checked contact list
+            // convert into boolean
             let hasRadioValue = !!$(".contact-list").children().find(':checked').length
+            // find all checked element
             let checkedElement = $(".contact-list").children().find(':checked')
-            console.log(checkedElement)
+
+            // it there is selected contact, show selected contact
+            // else, hide
             if (hasRadioValue) {
                 $('.contact-selected-recipient').children().first().html(checkedElement.data("name"))
                 $('.contact-selected-recipient').children().last().html(checkedElement.data("number"))
@@ -186,10 +203,16 @@
 
             }
 
+            // change button value 
+            // if true, then change value to send to all
+            // else, then change value to send
             activateManualBtnSend($('#all-contacts').is(':checked'))
         }
 
+        // if checked, then add an ective styling
+        // else, remove active styling
         function clickContactHandler(event) {
+            // remove select contact styling
             removeContactActiveStyling()
             if ($(this).is(':checked')) {
                 $(this).prev().children().first().addClass('active')
@@ -198,15 +221,21 @@
             }
         }
 
+        // select user contact
         function selectContact(event) {
             event.preventDefault()
+            // check if there are radio inputs are being selected
             checkHasRadioValue()
-
+            // remove active styling
             $('.select-users-con').removeClass('active')
         }
 
+        // sms submit handler
         $('#sms-send-form').submit(function(event) {
             event.preventDefault()
+
+            // get all form values
+            // and store in data variable
             let formValues = Object.fromEntries(new FormData(this))
             let data = {
                 contact_all: formValues.contact_all || "",
@@ -216,6 +245,8 @@
             }
 
             if (data.type === "Send to all") {
+
+                // send to all handler
                 window.location.href = `${url}/admin/dashboard/send-all-sms`
                 // $.ajax({
                 //     type: "post",
@@ -230,6 +261,8 @@
                 //     }
                 // });
             } else {
+
+                // manual send handler
                 $.ajax({
                     type: "post",
                     url: `${url}/admin/dashboard/send-sms`,
@@ -278,6 +311,7 @@
             }
         })
 
+        // get all user contact information
         $.ajax({
             type: "get",
             url: `${url}/admin/dashboard/sms-contact`,
@@ -293,6 +327,7 @@
             }
         });
 
+        // manual sending email handler
         $("#email-form").submit(function(event) {
             event.preventDefault();
 
