@@ -17,6 +17,16 @@ $(document).ready(function () {
 	$("#user-form").submit(function (e) {
 		e.preventDefault();
 		$(".text-danger").addClass("d-none");
+
+		if ($("#c_password").val() !== $("#password").val()) {
+			$("#c_password").next().removeClass("d-none");
+			$("#c_password").next().text("Password not match");
+
+			return;
+		} else {
+			$("#c_password").next().addClass("d-none");
+		}
+		console.log($("#social_pos").val());
 		$.ajax({
 			type: "post",
 			url: `${base_url}/user/register-user`,
@@ -26,7 +36,7 @@ $(document).ready(function () {
 				address: $("#address").val(),
 				email: $("#email").val(),
 				number: $("#number").val(),
-				identity: $("#identity").val(),
+				social_pos: $("#social_pos").val(),
 				password: $("#password").val(),
 			},
 			dataType: "json",
@@ -37,6 +47,7 @@ $(document).ready(function () {
 				$(".loading").removeClass("d-none");
 			},
 			success: function (res) {
+				console.log(res);
 				if (res.code == 0) {
 					$.each(res.errors, function (key, val) {
 						$(`#${key}`).next().text(val).removeClass("d-none");
@@ -62,6 +73,9 @@ $(document).ready(function () {
 				//hide loading gif
 				console.log("Sent");
 				$(".loading").addClass("d-none");
+			},
+			error: function (err) {
+				console.log(err);
 			},
 		});
 	});

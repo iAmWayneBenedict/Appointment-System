@@ -53,9 +53,17 @@
         <div class="side-nav">
             <nav class="nav nav-pills flex-column gap-1">
 
+                <a href="<?= base_url("/user/dashboard/set-appointment") ?>" class="add-appointment-btn btn btn-primary my-5 d-flex justify-content-md-center center-vertical flex-sm-fill mx-md-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" data-bs-title="Add appointment">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span class="ps-3 icon-label">Add Appointment</span>
+                </a>
+
                 <!-- Dashboard -->
 
-                <a class="flex-sm-fill nav-link text-dark" aria-current="page" data-label href="<?= base_url('/user/dashboard/') ?>">
+                <a class="flex-sm-fill nav-link text-dark" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" data-bs-title="Dashboard" href="<?= base_url('/user/dashboard/') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -65,7 +73,7 @@
 
                 <!-- Users -->
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/users") ?>">
+                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/users") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" data-bs-title="Profile">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
@@ -75,7 +83,7 @@
 
                 <!-- Employees -->
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/user/dashboard/employee-status") ?>">
+                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/user/dashboard/employee-status") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" data-bs-title="Employee Status">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                         <circle cx="9" cy="7" r="4"></circle>
@@ -144,6 +152,9 @@
 
     <script>
         $(() => {
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
             let currentUrl = window.location.pathname.split('/')
             $("#side-nav-toggler").click(toggleSideNav)
             $(".side-nav-close-btn").click(toggleSideNav)
