@@ -71,14 +71,14 @@
                     <span class="ps-3 icon-label">Dashboard</span>
                 </a>
 
-                <!-- Users -->
+                <!-- My Account -->
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/users") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" data-bs-title="Profile">
+                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/user/my-account") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="custom-tooltip" data-bs-title="Profile">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
-                    <span class="ps-3 icon-label">Profile</span>
+                    <span class="ps-3 icon-label">My Account</span>
                 </a>
 
                 <!-- Employees -->
