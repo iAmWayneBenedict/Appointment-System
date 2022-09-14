@@ -1,86 +1,147 @@
 <?= $this->extend('layouts/user_layouts') ?>
 <?= $this->section('content') ?>
-<div class="main-content">
-    <h3>My Account</h3>
+<div class="main-content mt-4">
+    <div>
+        <div class="pb-5">
+            <h3 class="font-recoleta fw-bold">My Account</h3>
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="<?= base_url('/user/dashboard/') ?>">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">My Account</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <!-- basic updates please put placeholer-->
-    <form action="" method="post" id="acc-form">
-        <input type="text" name="" id="" value="<?= $userData->code_id ?>" disabled><br>
-        <input type="text" name="name" id="name" value="<?= $userData->name ?>"><br>
-        <input type="text" name="address" id="address" value="<?= $userData->address ?>"><br>
-        <input type="text" name="c_number" id="c_number" value="<?= $userData->contact_number ?>"><br>
-        <input type="text" name="email" id="email" value="<?= $userData->email ?>"><br>
-        <input type="text" name="social_pos" id="social_pos" value="<?= $userData->social_pos ?>"><br>
-        <input type="submit" value="UPDATE">
-    </form>
-    <br>
-    <h3>Change Password</h3>
-    <!-- for password update -->
-    <form action="" method="post" id="pass-form">
-        <input type="password" name="o_password" id="o_password" placeholder="Old Password"><br>
-        <input type="password" name="n_password" id="n_password" placeholder="New Password"><br>
-        <input type="button" value="Show" id="show">
-        <input type="submit" value="Change">
-    </form>
-    <script>
-        $(() => {
-            const base_url = document.querySelector("meta[name = base_url]").getAttribute('content');
+    <div class="d-flex flex-column flex-md-row me-md-4">
+        <div class="flex-fill me-md-3 me-lg-5" style="max-width: 40rem;">
+            <form action="" method="post" id="acc-form">
+                <div class="d-flex flex-column">
+                    <h4 class="mb-4">Personal Information</h4>
+                    <div class="pb-3">
+                        <label for="user-id" class="form-label">User ID</label>
+                        <input type="text" class="form-control" name="user-id" value="<?= $userData->code_id ?>" id="user-id" placeholder="User ID" disabled>
+                    </div>
+                    <div class="pb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="name" value="<?= $userData->name ?>" id="name" placeholder="Full Name">
+                    </div>
+                    <div class="pb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" name="address" value="<?= $userData->address ?>" id="address" placeholder="Address">
+                    </div>
 
-            $('#show').click(function(e) {
-                e.preventDefault();
-                if ($('#o_password').attr('type') == 'text' && $('#n_password').attr('type') == 'text') {
-                    $('#o_password').attr('type', 'password');
-                    $('#n_password').attr('type', 'password');
-                } else {
-                    $('#o_password').attr('type', 'text');
-                    $('#n_password').attr('type', 'text');
+                    <div class="pb-3">
+                        <label for="c_number" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" name="c_number" value="<?= $userData->contact_number ?>" id="c_number" placeholder="Contact Number">
+                    </div>
+                    <div class="pb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" name="email" value="<?= $userData->email ?>" id="email" placeholder="Email">
+                    </div>
+                    <div class="pb-3">
+                        <label for="social_pos" class="form-label">Social Position</label>
+                        <input type="text" class="form-control" name="social_pos" value="<?= $userData->social_pos ?>" id="social_pos" placeholder="Social Position">
+                    </div>
+                    <input class="btn btn-primary mt-5" type="submit" value="UPDATE">
+                </div>
+            </form>
+        </div>
+
+        <div class="flex-fill mt-5 mt-md-0 ms-md-3 ms-lg-5" style="max-width: 40rem;">
+            <!-- for password update -->
+            <form action="" method="post" id="pass-form">
+                <div class="d-flex flex-column">
+                    <!-- password -->
+                    <h4 class="mb-4">Change Password</h4>
+
+                    <div class="mb-1">
+                        <label for="o_password" class="form-label">Old Password</label>
+                        <input type="password" class="form-control" id="o_password" name="o_password" placeholder="Old Password">
+                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                            message!</span><br>
+                    </div>
+
+                    <!-- confirm password -->
+
+                    <div class="mb-1">
+                        <label for="n_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="n_password" name="n_password" placeholder="New Password">
+                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                            message!</span><br>
+                    </div>
+
+                    <!-- show password -->
+
+                    <div>
+                        <input type="checkbox" name="show-password" id="show-password">
+                        <label for="show-password">Show Password</label>
+                    </div>
+                    <input class="btn btn-primary mt-5" type="submit" value="Change">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(() => {
+        const base_url = document.querySelector("meta[name = base_url]").getAttribute('content');
+
+        $('#show-password').change(function(e) {
+            e.preventDefault();
+            if ($(this).is(':checked')) {
+                $('#o_password').attr('type', 'text');
+                $('#n_password').attr('type', 'text');
+            } else {
+                $('#o_password').attr('type', 'password');
+                $('#n_password').attr('type', 'password');
+            }
+        });
+
+        //ajax for main account(basic data)
+        $('#acc-form').submit(function(e) {
+            e.preventDefault();
+
+            let formdata = $(this).serializeArray();
+
+            $.ajax({
+                type: "post",
+                url: `${base_url}/user/my-account/update`,
+                data: formdata,
+                dataType: "json",
+                success: function(response) {
+                    console.log(response) //this should ba an alert
+
+                    if (response.code == 1 || response.code == 0) {
+                        $(this).trigger('reset');
+                    }
+                }
+            });
+        });
+
+        //ajax for password
+        $('#pass-form').submit(function(e) {
+            e.preventDefault();
+
+            let formdata = $(this).serializeArray();
+
+            $.ajax({
+                type: "post",
+                url: `${base_url}/user/my-account/password-update`,
+                data: formdata,
+                dataType: "json",
+                success: function(response) {
+                    console.log(response) //this should ba an alert
+
+                    if (response.code == 1 || response.code == 0) {
+                        $(this).trigger('reset');
+                    }
                 }
             });
 
-            //ajax for main account(basic data)
-            $('#acc-form').submit(function(e) {
-                e.preventDefault();
-
-                let formdata = $(this).serializeArray();
-
-                $.ajax({
-                    type: "post",
-                    url: `${base_url}/user/my-account/update`,
-                    data: formdata,
-                    dataType: "json",
-                    success: function(response) {
-                        console.log(response) //this should ba an alert
-
-                        if (response.code == 1 || response.code == 0) {
-                            $(this).trigger('reset');
-                        }
-                    }
-                });
-            });
-
-            //ajax for password
-            $('#pass-form').submit(function(e) {
-                e.preventDefault();
-
-                let formdata = $(this).serializeArray();
-
-                $.ajax({
-                    type: "post",
-                    url: `${base_url}/user/my-account/password-update`,
-                    data: formdata,
-                    dataType: "json",
-                    success: function(response) {
-                        console.log(response) //this should ba an alert
-
-                        if (response.code == 1 || response.code == 0) {
-                            $(this).trigger('reset');
-                        }
-                    }
-                });
-
-            });
-
-            $
         });
-    </script>
 
-    <?= $this->endSection() ?>
+        $
+    });
+</script>
+
+<?= $this->endSection() ?>

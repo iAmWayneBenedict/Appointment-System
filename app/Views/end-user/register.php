@@ -66,11 +66,11 @@
                         message!</span><br>
                 </div>
 
-                <!-- identification -->
+                <!-- Social Position -->
 
                 <div class="mb-1">
-                    <label for="identity" class="form-label">Identification</label>
-                    <input type="text" class="form-control" id="identity" name="identity" placeholder="Identity">
+                    <label for="social_pos" class="form-label">Social Position</label>
+                    <input type="text" class="form-control" id="social_pos" name="social_pos" placeholder="Social Position">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>

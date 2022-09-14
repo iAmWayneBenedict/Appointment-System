@@ -81,7 +81,7 @@ class UserController extends BaseController
                     'is_unique' => 'This number has been already registered, please use other number to continue'
                 ]
             ],
-            'identity' => [
+            'social_pos' => [
                 'rules' => 'required'
             ],
             'password' => [
@@ -113,7 +113,7 @@ class UserController extends BaseController
         // arranged to an array for inserting to database
         $c_number = $this->request->getPost('number');
         $name = $this->request->getPost('name');
-        $identity = $this->request->getPost('identity');
+        $social_pos = $this->request->getPost('social_pos');
 
         $user_data = [
             'code_id'           => $this->request->getPost('user_id'),
@@ -121,7 +121,7 @@ class UserController extends BaseController
             'address'           => $this->request->getPost('address'),
             'contact_number'    => $c_number,
             'email'             => $this->request->getPost('email'),
-            'identity'          => $identity,
+            'social_pos'          => $social_pos,
             'password'          => $password
         ];
 

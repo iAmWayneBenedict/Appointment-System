@@ -14,7 +14,7 @@ class UserModel extends Model
         'address',
         'contact_number',
         'email',
-        'identity',
+        'social_pos',
         'password'
     ];
 
@@ -87,8 +87,9 @@ class UserModel extends Model
      * @param array $data: collection of uuser information
      * @return bool : indicates if update is success or not
      */
-    public function update_user_info(array $data, $user_id){
-        
+    public function update_user_info(array $data, $user_id)
+    {
+
         $this->db_conn->table($this->table)
             ->where('id', $user_id)
             ->update($data);
