@@ -42,7 +42,6 @@ $routes->get('/qr-scanner', 'Admin\Admin::qr_scanner');
 $routes->get('/schedule', 'Admin\Admin::schedule');
 
 
-
 //see new group routes for new scanner page at the bottom thanks
 $routes->get('/scanner', 'Employee\EmployeeScanner::index');
 $routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
@@ -91,11 +90,20 @@ $routes->group('admin', static function ($routes) {
         $routes->get('send-message', 'Admin\Admin::sendMessage');
         $routes->get('users', 'Admin\Admin::users');
 
+        //notifications
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
         $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
         $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms'); //this should be post(get for testing)
         $routes->post('send-email', 'Admin\SendNotifications::send_email');
+
+        //logout
         $routes->get('logout', 'Admin\Admin::admin_logout');
+        
+        //manage appointments
+        $routes->get('pending-appointments', 'Admin\ManageAppointment::pending_appointments');
+        $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
+        $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
+        $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
     });
 });
 
