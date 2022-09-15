@@ -39,6 +39,7 @@ $routes->get('/', 'Home::home');
 $routes->get('/test-sms', 'Home::index');
 $routes->post('/test-sms', 'Home::test_sms');
 $routes->get('/qr-scanner', 'Admin\Admin::qr_scanner');
+$routes->get('/schedule', 'Admin\Admin::schedule');
 
 
 
@@ -67,7 +68,7 @@ $routes->group('user', static function ($routes) {
         $routes->get('set-appointment', 'End_Users\ClientAppointment::registered_client');
     });
 
-    $routes->group('my-account', ['filter' => 'userLoginFilter'], static function($routes){
+    $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {
         $routes->get('/', 'End_Users\ManageAccount::account_page');
         $routes->post('update', 'End_Users\ManageAccount::update_account');
         $routes->post('password-update', 'End_Users\ManageAccount::update_password');

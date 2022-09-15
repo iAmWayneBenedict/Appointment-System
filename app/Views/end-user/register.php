@@ -103,6 +103,15 @@
                 <!-- submit button -->
 
                 <input type="submit" value="Register" id="submit" class="d-none btn btn-primary mt-3 rounded-5">
+
+                <!-- register option -->
+
+                <center class="my-5">
+                    <span>Already have an account?</span>
+                    <a href="<?= base_url("/user/register") ?>" class="text-decoration-none text-primary">
+                        <b>Register</b>
+                    </a>
+                </center>
             </form>
         </div>
     </div>

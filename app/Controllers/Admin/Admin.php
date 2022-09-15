@@ -97,6 +97,11 @@ class Admin extends BaseController
         return view('qr-scanner');
     }
 
+    public function schedule()
+    {
+        return view('admin/schedule');
+    }
+
     public function sendMessage()
     {
         return view('admin/send-message');
