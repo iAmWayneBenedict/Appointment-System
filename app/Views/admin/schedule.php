@@ -208,6 +208,31 @@
                     populateAppointmentDetails(approvedData)
 
                     // console.log(getAllDates)
+                    $('.view-btn').each(function() {
+                        $(this).click(viewAppointmentDetails)
+                    })
+                }
+            });
+        }
+
+        function viewAppointmentDetails(event) {
+            event.preventDefault()
+            let id = $(this).val()
+            $.ajax({
+                type: "get",
+                url: `${url}/admin/dashboard/get-appointment-details/${id}`,
+                success: function(response) {
+                    $('#view-body').html(response)
+
+                    $('.complete').click(function() {
+                        if (!$("#appointment_id").val()) {
+                            $("#appointment_id").next().removeClass("d-none")
+                            $("#appointment_id").next().html("Appointment ID is required")
+                        } else {
+                            $("#appointment_id").next().addClass("d-none")
+
+                        }
+                    })
                 }
             });
         }
@@ -237,31 +262,6 @@
                         updateDisplayedDate(convertDayToName(currentDayOfTheWeek), $('#month').val(), self)
                         retrieveAppointments()
                     }
-                })
-            })
-
-            $('.view-btn').each(function() {
-                $(this).click(function(event) {
-                    event.preventDefault()
-                    let id = $(this).val()
-                    $.ajax({
-                        type: "get",
-                        url: `${url}/admin/dashboard/get-appointment-details/${id}`,
-                        success: function(response) {
-                            $('#view-body').html(response)
-
-                            $('.complete').click(function() {
-                                if (!$("#appointment_id").val()) {
-                                    $("#appointment_id").next().removeClass("d-none")
-                                    $("#appointment_id").next().html("Appointment ID is required")
-                                } else {
-                                    $("#appointment_id").next().addClass("d-none")
-
-                                }
-                            })
-                        }
-                    });
-
                 })
             })
         }, 1000)
