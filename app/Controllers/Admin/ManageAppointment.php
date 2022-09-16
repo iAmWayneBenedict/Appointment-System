@@ -26,7 +26,8 @@ class ManageAppointment extends BaseController
      * Description: Display all the pending appointments into views
      * @return view with data 
      */
-    public function pending_appointments(){
+    public function pending_appointments()
+    {
 
         $data['pending'] = $this->manage_appointment->get_pending_appointment();
 
@@ -38,14 +39,53 @@ class ManageAppointment extends BaseController
 
     /**
      * Function: Display
+     * Description: Display all the pending appointments into views
+     * @return view with data 
+     */
+    public function approved_appointments()
+    {
+        return view('admin/approved-appointments');
+    }
+
+    /**
+     * Function: Get Approved Data
+     * Description: Display all the pending appointments into views
+     * @return JSON with data 
+     */
+
+    public function get_all_approved_appointments()
+    {
+
+        $data['approved'] = $this->manage_appointment->get_approved_appointment();
+
+        // echo '<pre>';
+        // print_r($data);
+        // echo '<pre>';
+        if ($data['approved']) {
+            return json_encode([
+                'code' => 1,
+                'data' => $data,
+                'msg' => "Successfully retrieved data"
+            ]);
+        } else {
+            return json_encode([
+                'code' => 1,
+                'msg' => "Cannot retrieve data",
+            ]);
+        }
+    }
+
+    /**
+     * Function: Display
      * Description: Display spesific data of appointments base what admin choose
      *              to review
      * @param appointment_id : 
      * @return view : with data
      */
-    public function review_appointment($appointment_id = NULL){
-        
-        if($appointment_id != NULL){
+    public function review_appointment($appointment_id = NULL)
+    {
+
+        if ($appointment_id != NULL) {
             $data['appointment'] = $this->manage_appointment->get_appointment_info($appointment_id);
             return view('components/review', $data);
         }
@@ -56,12 +96,13 @@ class ManageAppointment extends BaseController
      * Desciption: approve reviewed appointment then send the clinet a SMS
      * @return json : code 1 for success and 0 for not
      */
-    public function approve_appointment(){
+    public function approve_appointment()
+    {
 
         $appointment_id = $this->request->getPost('id');
         $appointment_data = $this->manage_appointment->get_appointment_info($appointment_id);
 
-        if(!$this->manage_appointment->move_to_approve($appointment_id)){           
+        if (!$this->manage_appointment->move_to_approve($appointment_id)) {
             return json_encode([
                 'code' => 0,
                 'msg' => 'System can\'t process right now'
@@ -78,7 +119,7 @@ class ManageAppointment extends BaseController
         $message .= "Purpose : {$appointment_data->purpose}";
 
         //enable this sms later ⬇⬇⬇⬇⬇⬇
-        
+
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
         //if sms is not sent execute this code
@@ -89,12 +130,11 @@ class ManageAppointment extends BaseController
         //         'sms_res' => $sms_response['message']
         //     ]); 
         // }
-        
+
         return json_encode([
             'code' => 1,
             'msg' => $message,
         ]);
-
     }
 
     /**
@@ -103,12 +143,13 @@ class ManageAppointment extends BaseController
      *              the appointment will be deleted on database
      * @return json : : code 1 for success and 0 for not
      */
-    public function reject_appointment(){
+    public function reject_appointment()
+    {
 
         $appointment_id = $this->request->getPost('id');
         $appointment_data = $this->manage_appointment->get_appointment_info($appointment_id);
 
-        if(!$this->manage_appointment->remove_appointment($appointment_id)){           
+        if (!$this->manage_appointment->remove_appointment($appointment_id)) {
             return json_encode([
                 'code' => 0,
                 'msg' => 'System can\'t process right now'

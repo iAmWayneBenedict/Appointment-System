@@ -39,7 +39,6 @@ $routes->get('/', 'Home::home');
 $routes->get('/test-sms', 'Home::index');
 $routes->post('/test-sms', 'Home::test_sms');
 $routes->get('/qr-scanner', 'Admin\Admin::qr_scanner');
-$routes->get('/schedule', 'Admin\Admin::schedule');
 
 
 //see new group routes for new scanner page at the bottom thanks
@@ -98,9 +97,12 @@ $routes->group('admin', static function ($routes) {
 
         //logout
         $routes->get('logout', 'Admin\Admin::admin_logout');
-        
+
         //manage appointments
         $routes->get('pending-appointments', 'Admin\ManageAppointment::pending_appointments');
+        $routes->get('approved-appointments', 'Admin\ManageAppointment::approved_appointments');
+        $routes->get('approved-appointments/schedule', 'Admin\Admin::schedule');
+        $routes->get('get-all-approved-appointments', 'Admin\ManageAppointment::get_all_approved_appointments');
         $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');

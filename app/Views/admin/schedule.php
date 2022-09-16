@@ -12,8 +12,9 @@
     </div>
     <div class="calendar">
         <center>
-            <div style="width: fit-content;">
-                <select class="form-select fs-5 fw-bold border-0 shadow-none" style="cursor: pointer;" id="month">
+            <div class="d-flex align-items-center" style="width: fit-content;">
+                <label for="month" class="fw-semibold" style="white-space:nowrap">Select Month:</label>
+                <select class="form-select fs-5 fw-bold border-0 shadow-none" style="cursor: pointer;" name="month" id="month">
                     <option value="January">January</option>
                     <option value="February">February</option>
                     <option value="March">March</option>
@@ -28,127 +29,46 @@
                     <option value="December">December</option>
                 </select>
             </div>
-            <div class="calendar-grid per-week p-0" style="max-width: 30rem">
-                <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-center">1</th>
-                            <th scope="col" class="text-center">2</th>
-                            <th scope="col" class="text-center">3</th>
-                            <th scope="col" class="text-center">4</th>
-                            <th scope="col" class="text-center">5</th>
-                            <th scope="col" class="text-center">6</th>
-                            <th scope="col" class="text-center">7</th>
-                        </tr>
-                    </thead>
-                    <tbody class="days-entries">
-                        <tr>
-                            <td class="text-center">Sun</td>
-                            <td class="text-center">Mon</td>
-                            <td class="text-center">Tue</td>
-                            <td class="text-center center">Wed</td>
-                            <td class="text-center">Thu</td>
-                            <td class="text-center">Fri</td>
-                            <td class="text-center">Sat</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="d-flex align-items-center" style="width: fit-content;">
+                <label for="days" class="fw-semibold" style="white-space:nowrap">Select Day:</label>
+                <select class="form-select fs-6 fw-bold border-0 shadow-none" style="cursor: pointer;" name="days" id="days">
+                    <!-- days in a month insert here -->
+                </select>
+            </div>
+            <div class="my-5" style="width: fit-content;">
+                <h2 class="fw-bold font-recoleta current-date">Thu, September 1, 2022</h2>
             </div>
         </center>
-        <div class="main-schedule mt-5 me-3 rounded-4" style="height: 100vh;">
+        <div class="main-schedule me-3 rounded-4" style="min-height: 100vh;">
             <div>
-                <div class="current-day">
+                <div class="current-day d-flex flex-column align-items-center">
                     <span>Mon</span>
                     <h1>4</h1>
                 </div>
             </div>
             <div class="d-flex appointment-details-card-con" style="height: fit-content; gap:3rem">
-                <div class="card appointment-details-card active" style="min-width: 30rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title fw-semibold">John Doe</h5>
-                            <small>9:00 am</small>
-                        </div>
-                        <div class="d-flex justify-content-between mt-5">
-                            <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>Filing of Insurance</button>
-                            <a href="#" class="btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card appointment-details-card" style="min-width: 30rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title fw-semibold">John Doe</h5>
-                            <small>9:00 am</small>
-                        </div>
-                        <div class="d-flex justify-content-between mt-5">
-                            <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>Filing of Insurance</button>
-                            <a href="#" class="btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card appointment-details-card" style="min-width: 30rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title fw-semibold">John Doe</h5>
-                            <small>9:00 am</small>
-                        </div>
-                        <div class="d-flex justify-content-between mt-5">
-                            <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>Filing of Insurance</button>
-                            <a href="#" class="btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card appointment-details-card" style="min-width: 30rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title fw-semibold">John Doe</h5>
-                            <small>9:00 am</small>
-                        </div>
-                        <div class="d-flex justify-content-between mt-5">
-                            <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>Filing of Insurance</button>
-                            <a href="#" class="btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card appointment-details-card" style="min-width: 30rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title fw-semibold">John Doe</h5>
-                            <small>9:00 am</small>
-                        </div>
-                        <div class="d-flex justify-content-between mt-5">
-                            <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>Filing of Insurance</button>
-                            <a href="#" class="btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card appointment-details-card" style="min-width: 30rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title fw-semibold">John Doe</h5>
-                            <small>9:00 am</small>
-                        </div>
-                        <div class="d-flex justify-content-between mt-5">
-                            <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>Filing of Insurance</button>
-                            <a href="#" class="btn btn-primary">View</a>
-                        </div>
-                    </div>
-                </div>
+                <!-- appointment cards insert here -->
             </div>
         </div>
     </div>
 </div>
 <script>
     $(() => {
+        const url = document.querySelector("meta[name = base_url]").getAttribute('content')
         let date = new Date()
+        let params = new URLSearchParams(window.location.search)
 
         $('#month').children().each(function() {
             if ($(this).val() === convertMonthToName(date.getMonth())) {
                 $(this).attr("selected", true)
             }
         })
-        populateCalendar(getDate(date.getMonth()), date.getMonth())
+
+        if (params.has('month') && params.has('day')) {
+            let month = parseInt(params.get('month')) - 1
+
+            populateCalendar(getDate(month), month)
+        }
 
         function convertMonthToNumber(monthName) {
             let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -168,66 +88,129 @@
             return false
         }
 
+        function convertDayToName(dayNumber) {
+            let week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+            for (let index = 0; index < week.length; index++) {
+                if (index === dayNumber - 1) return week[index]
+            }
+
+            return false
+        }
+
         function getDate(month) {
             let date = new Date();
             let firstDay = new Date(date.getFullYear(), month, 1);
             let lastDay = new Date(date.getFullYear(), month + 1, 0);
 
-            return [firstDay.getDay() + 1, lastDay.getUTCDate()]
-
+            return lastDay.getDate()
         }
 
-        function populateCalendar([firstDay, lastUTCDay], month) {
-            // let allDates = ''
-            // let isFirstWeekDone = false;
+        function getCurrentDayOfTheWeek(month, day) {
+            let dayOfTheWeek = new Date(date.getFullYear(), convertMonthToNumber(month), day);
 
-            // let openingTR = '<tr>'
-            // let closingTR = '</tr>'
-            // let currentDay = ''
+            return dayOfTheWeek.getDay() + 1;
+        }
 
-            // // populate first week of the month
-            // for (let index2 = 1; index2 < firstDay; index2++) {
-            //     currentDay += '<td></td>'
+        function populateCalendar(lastUTCDay, month) {
+            populateDaysSelection(lastUTCDay)
+            let currentDayOfTheWeek = getCurrentDayOfTheWeek($('#month').val(), $('#days').val())
+            updateDisplayedDate(convertDayToName(currentDayOfTheWeek), convertMonthToName(month), $('#days').val())
+        }
 
-            //     if (index2 === firstDay - 1) {
-            //         isFirstWeekDone = true;
-            //     }
-            // }
+        function updateDisplayedDate(dayOfTheWeek, month, day) {
+            let date = new Date()
+            $('.current-date').html(`${dayOfTheWeek}, ${month} ${day}, ${date.getFullYear()}`)
+            $('.current-day').children().first().html(dayOfTheWeek)
+            $('.current-day').children().last().html(day)
+        }
 
-            // // populate the remaining weeks
-            // for (let index = firstDay, days = 1; index <= lastUTCDay + firstDay; index++, days++) {
+        function populateDaysSelection(lastUTCDay) {
+            $('#days').html('')
+            let day = parseInt(params.get('day'))
+            let selectedMonth = parseInt(params.get('month')) - 1
+            let date = new Date()
 
-            //     if (date.getUTCDate() === days && date.getMonth() === month) {
-            //         currentDay += '<td class="active">' + days + '</td>'
+            for (let index = 1; index <= lastUTCDay; index++) {
+                if (index === day && convertMonthToName(selectedMonth) === $("#month").val()) {
+                    $('#days').append('<option value="' + index + '" selected="selected">' + index + '</option>')
+                } else {
+                    $('#days').append('<option value="' + index + '">' + index + '</option>')
+                }
+            }
+        }
 
-            //     } else {
-            //         currentDay += '<td>' + days + '</td>'
+        function populateAppointmentDetails(approvedData) {
+            $('.appointment-details-card-con').html("")
+            let approvedLength = approvedData.length
 
-            //     }
+            for (const key in approvedData) {
+                let [date, time] = approvedData[key].schedule.split(" ")
+                let [year, month, day] = date.split("-")
 
-            //     if (index % 7 === 0) {
-            //         allDates += openingTR + currentDay + closingTR
-            //         currentDay = ''
-            //     }
+                if (parseInt(month - 1) === convertMonthToNumber($('#month').val()) && parseInt(day) === parseInt($('#days').val())) {
 
-            //     if (index === lastUTCDay + firstDay) {
-            //         allDates += openingTR + currentDay + closingTR
-            //         currentDay = ''
-            //     }
+                    $('.appointment-details-card-con').append(`<div class="card appointment-details-card" style="min-width: 25rem;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title fw-semibold">${approvedData[key].name}</h5>
+                                <small>${time}</small>
+                            </div>
+                            <div class="d-flex justify-content-between mt-5">
+                                <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>${approvedData[key].purpose}</button>
+                                <a href="#" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>`)
+                }
+            }
+        }
 
-            // }
+        retrieveAppointments()
 
-            // $('.days-entries').append(allDates)
+        function retrieveAppointments() {
+            $.ajax({
+                type: 'get',
+                url: `${url}/admin/dashboard/get-all-approved-appointments`,
+                async: true,
+                success: function(response) {
+                    let rawData = JSON.parse(response)
+                    let approvedData = JSON.parse(response).data.approved
+
+                    populateAppointmentDetails(approvedData)
+
+                    // console.log(getAllDates)
+                }
+            });
         }
 
         $('#month').change(function(event) {
-            $('.days-entries').html('')
             $('#month').children().each(function() {
                 $(this).removeAttr("selected")
             })
 
-            populateCalendar(getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val()))
+            retrieveAppointments()
         })
+
+        setTimeout(function() {
+            $('#days').change(function(event) {
+                let self = $(this).val()
+                populateCalendar(getDate(convertMonthToNumber($('#month').val())), convertMonthToNumber($('#month').val()))
+
+                $(this).children().each(function() {
+                    $(this).removeAttr("selected")
+                })
+
+                $(this).children().each(function() {
+                    if ($(this).val() === self) {
+                        $(this).attr('selected', "selected")
+
+                        let currentDayOfTheWeek = getCurrentDayOfTheWeek($('#month').val(), self)
+                        updateDisplayedDate(convertDayToName(currentDayOfTheWeek), $('#month').val(), self)
+                        retrieveAppointments()
+                    }
+                })
+            })
+        }, 1000)
     })
 </script>
 

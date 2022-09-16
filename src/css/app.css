@@ -10768,6 +10768,7 @@ body {
   padding-right: 5rem;
 }
 .calendar-grid .table td div {
+  height: 100px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -10944,7 +10945,7 @@ td.active {
   }
   .left-main-nav a.nav-link {
     border-radius: unset !important;
-    padding: 2rem 0;
+    padding: 1.5rem 0;
     display: flex;
     justify-content: center;
   }
