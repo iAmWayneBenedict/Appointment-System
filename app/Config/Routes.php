@@ -102,6 +102,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('pending-appointments', 'Admin\ManageAppointment::pending_appointments');
         $routes->get('approved-appointments', 'Admin\ManageAppointment::approved_appointments');
         $routes->get('approved-appointments/schedule', 'Admin\Admin::schedule');
+        $routes->get('get-appointment-details/(:num)', 'Admin\ManageAppointment::get_appointment_details/$1');
         $routes->get('get-all-approved-appointments', 'Admin\ManageAppointment::get_all_approved_appointments');
         $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');

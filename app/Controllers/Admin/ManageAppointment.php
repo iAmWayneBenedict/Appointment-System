@@ -92,6 +92,22 @@ class ManageAppointment extends BaseController
     }
 
     /**
+     * Function: Display
+     * Description: Display spesific data of appointments base what admin choose
+     *              to review
+     * @param appointment_id : 
+     * @return view : with data
+     */
+    public function get_appointment_details($appointment_id = NULL)
+    {
+
+        if ($appointment_id != NULL) {
+            $data['appointment'] = $this->manage_appointment->get_appointment_info($appointment_id);
+            return view('components/view-appointment-details', $data);
+        }
+    }
+
+    /**
      * Function: Approve Appointment
      * Desciption: approve reviewed appointment then send the clinet a SMS
      * @return json : code 1 for success and 0 for not

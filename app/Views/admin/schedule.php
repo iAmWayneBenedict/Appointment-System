@@ -3,10 +3,12 @@
 
 <div class="main-content">
     <div class="mt-3 mb-5">
-        <h2>Dashboard</h2>
+        <h2>Daily Schedule</h2>
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?= base_url('/admin/dashboard/') ?>">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="<?= base_url('/admin/dashboard/approved-appointments') ?>">Approved Appointments</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Daily Schedule</li>
             </ol>
         </nav>
     </div>
@@ -46,8 +48,23 @@
                     <h1>4</h1>
                 </div>
             </div>
-            <div class="d-flex appointment-details-card-con" style="height: fit-content; gap:3rem">
+            <div class="d-flex appointment-details-card-con">
                 <!-- appointment cards insert here -->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">View Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="view-body">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,6 +143,7 @@
 
         function populateDaysSelection(lastUTCDay) {
             $('#days').html('')
+            // console.log("asd")
             let day = parseInt(params.get('day'))
             let selectedMonth = parseInt(params.get('month')) - 1
             let date = new Date()
@@ -142,13 +160,13 @@
         function populateAppointmentDetails(approvedData) {
             $('.appointment-details-card-con').html("")
             let approvedLength = approvedData.length
-
+            let hasData = false;
             for (const key in approvedData) {
                 let [date, time] = approvedData[key].schedule.split(" ")
                 let [year, month, day] = date.split("-")
 
                 if (parseInt(month - 1) === convertMonthToNumber($('#month').val()) && parseInt(day) === parseInt($('#days').val())) {
-
+                    hasData = true
                     $('.appointment-details-card-con').append(`<div class="card appointment-details-card" style="min-width: 25rem;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
@@ -157,11 +175,22 @@
                             </div>
                             <div class="d-flex justify-content-between mt-5">
                                 <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>${approvedData[key].purpose}</button>
-                                <a href="#" class="btn btn-primary">View</a>
+                                <button type="button" class="view-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" value="${approvedData[key].id}">
+                                    View
+                                </button>
                             </div>
                         </div>
                     </div>`)
                 }
+            }
+
+            if (!hasData) {
+                $('.appointment-details-card-con').append(`<div style="width:100%">
+                    <center>
+                        <h1 class="text-secondary">No Appointments</h1>
+                        <lottie-player src="https://assets7.lottiefiles.com/datafiles/AXZrSWB3sH4av1w/data.json"  background="transparent"  speed="1"  style="width: 500px; height: 500px;"  autoplay></lottie-player>
+                    </center>
+                </div>`)
             }
         }
 
@@ -188,13 +217,13 @@
                 $(this).removeAttr("selected")
             })
 
+            populateCalendar(getDate(convertMonthToNumber($('#month').val())), convertMonthToNumber($('#month').val()))
             retrieveAppointments()
         })
 
         setTimeout(function() {
             $('#days').change(function(event) {
                 let self = $(this).val()
-                populateCalendar(getDate(convertMonthToNumber($('#month').val())), convertMonthToNumber($('#month').val()))
 
                 $(this).children().each(function() {
                     $(this).removeAttr("selected")
@@ -210,7 +239,34 @@
                     }
                 })
             })
+
+            $('.view-btn').each(function() {
+                $(this).click(function(event) {
+                    event.preventDefault()
+                    let id = $(this).val()
+                    $.ajax({
+                        type: "get",
+                        url: `${url}/admin/dashboard/get-appointment-details/${id}`,
+                        success: function(response) {
+                            $('#view-body').html(response)
+
+                            $('.complete').click(function() {
+                                if (!$("#appointment_id").val()) {
+                                    $("#appointment_id").next().removeClass("d-none")
+                                    $("#appointment_id").next().html("Appointment ID is required")
+                                } else {
+                                    $("#appointment_id").next().addClass("d-none")
+
+                                }
+                            })
+                        }
+                    });
+
+                })
+            })
         }, 1000)
+
+
     })
 </script>
 
