@@ -103,6 +103,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
+        $routes->get('testing', 'Admin\ManageAppointment::display_approved_appointments');
     });
 });
 
@@ -114,6 +115,9 @@ $routes->group('scanner', static function ($routes) {
         //main scanner here
     });
 });
+
+//routes for cron job
+$routes->get('client-incoming-appointment', 'Admin\ManageAppointment::sms_incoming_appointment');
 
 /*
  * --------------------------------------------------------------------

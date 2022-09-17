@@ -24,11 +24,11 @@ class greetings {
 
 
         if ( $Hour >= 5 && $Hour <= 11 ) {
-            return "Good Morning ";
+            return "Good Morning, ";
         } else if ( $Hour >= 12 && $Hour <= 18 ) {
-            return "Good Afternoon ";
+            return "Good Afternoon, ";
         } else if ( $Hour >= 19 || $Hour <= 4 ) {
-            return "Good Evening ";
+            return "Good Evening, ";
         }
     }
 }
