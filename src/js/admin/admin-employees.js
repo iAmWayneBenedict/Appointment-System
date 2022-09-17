@@ -22,20 +22,32 @@ $(() => {
 
 		$(".cancel-add-empoyee-btn").click();
 
-		console.log($(this).serializeArray());
+		let incharge_to = [];
 
-		// $.ajax({
-		// 	type: "post",
-		// 	url: `${url}/add-employee`,
-		// 	data: {
-		// 		name: $("#name").val(),
-		// 		role: $("#role").val(),
-		// 	},
-		// 	dataType: "json",
-		// 	success: function (res) {
-		// 		display_employees();
-		// 	},
-		// });
+		let name = $(".name").val();
+		let role = $(".role").val();
+
+		$(".incharge-con input").each(function () {
+			incharge_to.push($(this).val());
+		});
+
+		$.ajax({
+			type: "post",
+			url: `${url}/add-employee`,
+			data: {
+				name,
+				role,
+				incharge_to,
+			},
+			// dataType: "json",
+			success: function (res) {
+				console.log(res);
+				display_employees();
+			},
+			error: function (err) {
+				console.error(err);
+			},
+		});
 	}
 
 	function display_employees() {
