@@ -105,4 +105,17 @@ class ManageAppointmentModel extends Model
 
         return true;
     }
+
+    public function get_approved_appointments()
+    {
+
+        $query = $this->db_conn->table('approved_appointments')
+            ->select('id, schedule, purpose')
+            ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+            ->get();
+
+        $data = $query->getResultObject(); //object access using ->col_name
+
+        return $data;
+    }
 }
