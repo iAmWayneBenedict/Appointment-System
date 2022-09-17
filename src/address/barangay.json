@@ -1,0 +1,134 @@
+[
+	{
+		"code": "01",
+		"name": "Agos"
+	},
+	{
+		"code": "02",
+		"name": "Bacolod"
+	},
+	{
+		"code": "03",
+		"name": "Buluang"
+	},
+	{
+		"code": "04",
+		"name": "Caricot"
+	},
+	{
+		"code": "05",
+		"name": "Cawacagan"
+	},
+	{
+		"code": "06",
+		"name": "Cotmon"
+	},
+	{
+		"code": "07",
+		"name": "Cristo Rey"
+	},
+	{
+		"code": "08",
+		"name": "Del Rosario"
+	},
+	{
+		"code": "09",
+		"name": "Divina Pastora (Pob.)"
+	},
+	{
+		"code": "10",
+		"name": "Goyudan"
+	},
+	{
+		"code": "11",
+		"name": "Lobong"
+	},
+	{
+		"code": "12",
+		"name": "Lubigan"
+	},
+	{
+		"code": "13",
+		"name": "Mainit"
+	},
+	{
+		"code": "14",
+		"name": "Manga (Mangga)"
+	},
+	{
+		"code": "15",
+		"name": "Masoli"
+	},
+	{
+		"code": "16",
+		"name": "Neighborhood"
+	},
+	{
+		"code": "17",
+		"name": "Niño Jesus"
+	},
+	{
+		"code": "18",
+		"name": "Pagatpatan"
+	},
+	{
+		"code": "19",
+		"name": "Palo"
+	},
+	{
+		"code": "20",
+		"name": "Payak"
+	},
+	{
+		"code": "23",
+		"name": "Sagrada (Sagrada Familia)"
+	},
+	{
+		"code": "24",
+		"name": "Salvacion"
+	},
+	{
+		"code": "25",
+		"name": "San Isidro (Pob.)"
+	},
+	{
+		"code": "26",
+		"name": "San Juan"
+	},
+	{
+		"code": "27",
+		"name": "San Miguel"
+	},
+	{
+		"code": "28",
+		"name": "San Rafael (Pob.)"
+	},
+	{
+		"code": "29",
+		"name": "San Roque"
+	},
+	{
+		"code": "30",
+		"name": "San Vicente"
+	},
+	{
+		"code": "31",
+		"name": "Santa Cruz (Pob.)"
+	},
+	{
+		"code": "32",
+		"name": "Santiago (Pob.)"
+	},
+	{
+		"code": "33",
+		"name": "Sooc"
+	},
+	{
+		"code": "34",
+		"name": "Tagpolo"
+	},
+	{
+		"code": "35",
+		"name": "Tres Reyes (Pob.)"
+	}
+]

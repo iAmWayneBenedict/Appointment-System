@@ -82,6 +82,8 @@
                 formdata.delete('concern')
             }
 
+            console.log(Object.entries(formdata))
+
             const user_type = 001
             $.ajax({
                 type: "post",

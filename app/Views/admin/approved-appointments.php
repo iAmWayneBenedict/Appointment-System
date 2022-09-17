@@ -3,10 +3,11 @@
 
 <div class="main-content">
     <div class="mt-3 mb-5">
-        <h2>Dashboard</h2>
+        <h2>Approved Appointments</h2>
         <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?= base_url('/admin/dashboard/') ?>">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Approved Appointments</li>
             </ol>
         </nav>
     </div>
@@ -100,8 +101,10 @@
         </div>
     </div>
 </div>
+
 <script>
     $(() => {
+        const url = document.querySelector("meta[name = base_url]").getAttribute('content')
         let date = new Date()
 
         $('#month').children().each(function() {
@@ -110,7 +113,43 @@
                 $(this).addClass("selected")
             }
         })
-        populateCalendar(getDate(date.getMonth()), date.getMonth())
+        // populateCalendar(getDate(date.getMonth()), date.getMonth())
+        getApprovedData()
+
+        function getApprovedData(controlledDate = undefined) {
+            $.ajax({
+                type: 'get',
+                url: `${url}/admin/dashboard/get-all-approved-appointments`,
+                async: true,
+                success: function(response) {
+                    let rawData = JSON.parse(response)
+                    let approvedData = JSON.parse(response).data.approved
+                    let approvedLength = approvedData.length
+                    let getAllDates = [];
+                    for (const key in approvedData) {
+                        let [date, time] = approvedData[key].schedule.split(" ")
+                        let [year, month, day] = date.split("-")
+
+                        getAllDates.push({
+                            month,
+                            day
+                        })
+                    }
+
+                    if (controlledDate) {
+                        populateCalendar(controlledDate[0], controlledDate[1], {
+                            approvedLength,
+                            getAllDates
+                        })
+                    } else {
+                        populateCalendar(getDate(date.getMonth()), date.getMonth(), {
+                            approvedLength,
+                            getAllDates
+                        })
+                    }
+                }
+            });
+        }
 
         function convertMonthToNumber(monthName) {
             let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -143,7 +182,11 @@
             return `<span class="pending-alert ${status}"><small class="pending-count">${number}</small></span>`
         }
 
-        function populateCalendar([firstDay, lastUTCDay], month) {
+        function approvedHTMLTemplate(number, status) {
+            return `<span class="approved-alert ${status}"><small class="approved-count">${number}</small></span>`
+        }
+
+        function populateCalendar([firstDay, lastUTCDay], month, approvedData = undefined) {
             $('.days-entries').html('')
 
             let allDates = ''
@@ -152,7 +195,6 @@
             let openingTR = '<tr>'
             let closingTR = '</tr>'
             let currentDay = ''
-            let approvedTemplate = '<span class="approved-alert "><small class="approved-count">2</small></span>'
 
             // populate first week of the month
             for (let index2 = 1; index2 < firstDay; index2++) {
@@ -163,31 +205,98 @@
                 }
             }
 
+            let approvedDates = approvedData.getAllDates
             // populate the remaining weeks
-            for (let index = firstDay, days = 1; index <= lastUTCDay + firstDay; index++, days++) {
-                let pending = pendingHTMLTemplate(2, '')
-
+            console.log(firstDay)
+            for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
                 if (date.getUTCDate() === days && date.getMonth() === month) {
-                    currentDay += '<td class="active"><div><h4>' + days + '</h4>' + pending + approvedTemplate + '</div></td>'
+
+                    let hasApprovedDate = false;
+                    let hasApprovedAlert = false;
+                    for (let i = 0; i < approvedDates.length; i++) {
+                        let approvedDateMonth = parseInt(approvedDates[i].month)
+                        let approvedDateDay = parseInt(approvedDates[i].day)
+                        let {
+                            hasSimilarDate,
+                            similarCounter
+                        } = getAppointmentPerDay(approvedDates, approvedDateMonth, approvedDateDay)
+                        // console.log(approvedData, date.getMonth())
+
+                        let approved = approvedHTMLTemplate(similarCounter, '')
+                        if (hasApprovedAlert) break
+
+                        if (approvedDateMonth === month + 1 && approvedDateDay === days) {
+                            hasApprovedDate = true
+                            hasApprovedAlert = true
+                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
+                        }
+                    }
+
+                    if (hasApprovedDate) continue;
+                    // Date today
+
+                    currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
 
                 } else {
-                    currentDay += '<td class=""><div><h4>' + days + '</h4>' + pending + approvedTemplate + '</div></td>'
+                    let hasApprovedDate = false;
+                    let hasApprovedAlert = false;
+                    for (let i = 0; i < approvedDates.length; i++) {
+                        let approvedDateMonth = parseInt(approvedDates[i].month)
+                        let approvedDateDay = parseInt(approvedDates[i].day)
+                        let {
+                            hasSimilarDate,
+                            similarCounter
+                        } = getAppointmentPerDay(approvedDates, approvedDateMonth, approvedDateDay)
+                        // console.log(approvedData, date.getMonth())
+
+                        let approved = approvedHTMLTemplate(similarCounter, '')
+                        if (hasApprovedAlert) break
+
+                        if (approvedDateMonth === month + 1 && approvedDateDay === days) {
+                            hasApprovedDate = true
+                            hasApprovedAlert = true
+                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
+                        }
+                    }
+
+                    if (hasApprovedDate) continue;
+                    // Date today
+
+                    currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
 
                 }
 
-                if (index % 7 === 0) {
+                if (j % 7 === 0) {
                     allDates += openingTR + currentDay + closingTR
                     currentDay = ''
                 }
 
-                if (index === lastUTCDay + firstDay) {
+                if (j === lastUTCDay + firstDay) {
                     allDates += openingTR + currentDay + closingTR
                     currentDay = ''
                 }
+
 
             }
 
             $('.days-entries').append(allDates)
+        }
+
+        function getAppointmentPerDay(approvedDates, month, day) {
+            let hasSimilarDate = false
+            let similarCounter = 0
+            for (let index = 0; index < approvedDates.length; index++) {
+                if (parseInt(approvedDates[index].month) === month && parseInt(approvedDates[index].day) === day) {
+                    hasSimilarDate = true;
+                    similarCounter++
+                }
+
+            }
+
+            return {
+                hasSimilarDate,
+                similarCounter
+            }
         }
 
         $('#month').change(function(event) {
@@ -195,7 +304,7 @@
                 $(this).removeAttr("selected")
             })
 
-            populateCalendar(getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val()))
+            getApprovedData([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
         })
     })
 </script>

@@ -66,7 +66,7 @@ $routes->group('user', static function ($routes) {
         $routes->get('set-appointment', 'End_Users\ClientAppointment::registered_client');
     });
 
-    $routes->group('my-account', ['filter' => 'userLoginFilter'], static function($routes){
+    $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {
         $routes->get('/', 'End_Users\ManageAccount::account_page');
         $routes->post('update', 'End_Users\ManageAccount::update_account');
         $routes->post('password-update', 'End_Users\ManageAccount::update_password');
@@ -97,9 +97,13 @@ $routes->group('admin', static function ($routes) {
 
         //logout
         $routes->get('logout', 'Admin\Admin::admin_logout');
-        
+
         //manage appointments
         $routes->get('pending-appointments', 'Admin\ManageAppointment::pending_appointments');
+        $routes->get('approved-appointments', 'Admin\ManageAppointment::approved_appointments');
+        $routes->get('approved-appointments/schedule', 'Admin\Admin::schedule');
+        $routes->get('get-appointment-details/(:num)', 'Admin\ManageAppointment::get_appointment_details/$1');
+        $routes->get('get-all-approved-appointments', 'Admin\ManageAppointment::get_all_approved_appointments');
         $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');

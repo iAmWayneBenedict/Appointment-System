@@ -36,7 +36,7 @@
                             <td><?= $user['name'] ?></td>
                             <td><?= $user['address'] ?></td>
                             <td><?= $user['email'] ?></td>
-                            <td><?= $user['identity'] ?></td>
+                            <td><?= $user['social_pos'] ?></td>
 
                             <!-- remove user btn -->
                             <td>

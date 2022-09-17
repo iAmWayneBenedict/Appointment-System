@@ -53,14 +53,31 @@
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
                     </div>
 
                     <!-- role -->
 
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" name="role" placeholder="Role">
+                        <input type="text" class="form-control" id="role" name="role" placeholder="Role" required>
+                    </div>
+
+                    <!-- Incharge to -->
+
+                    <div class="incharge-con">
+                        <div class="mb-3">
+                            <label for="incharge_to" class="form-label">Incharge to</label>
+                            <div class="d-flex gap-2 align-items-center">
+                                <input type="text" class="form-control" id="incharge_to" name="incharge_to" placeholder="Incharge to" required>
+                                <a class="btn btn-primary add-new-incharge">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- submit button -->

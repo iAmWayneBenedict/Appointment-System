@@ -56,7 +56,7 @@
                 <!-- register option -->
 
                 <center>
-                    <span>Already have an account?</span>
+                    <span>Don't have an account?</span>
                     <a href="<?= base_url("/user/register") ?>" class="text-decoration-none text-primary">
                         <b>Register</b>
                     </a>

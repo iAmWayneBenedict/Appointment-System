@@ -1,109 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= base_url('/src/css/app.css') ?>">
-    <meta name="base_url" content="<?= base_url() ?>">
-    <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Document</title>
-</head>
-<body>
-    <table id="pending">
-        <tr>
-            <th>ID</th>
-            <th>User Type</th>
-            <th>Schedule</th>
-            <th>Date Created</th>
-        </tr>
-        <?php
-            foreach($pending as $data){
-        ?>
-        <tr>
-            <td><?= $data->user_type ?></td>
-            <td><?= $data->schedule ?></td>
-            <td><?= $data->date_created ?></td>
-            <td><button class="rev" value="<?= $data->id ?>">Review</button></td>
-        </tr>
-        <?php
-            }
-        ?>
+<?= $this->extend('layouts/admin_layouts') ?>
+<?= $this->section('content') ?>
 
-    </table>
-    
-    <div id="review">
+<div class="main-content">
+    <div class="mt-3 mb-5">
+        <h2>Pending Appointments</h2>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<?= base_url('/admin/dashboard/') ?>">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Pending Appointments</li>
+            </ol>
+        </nav>
+    </div>
+    <div style="width: 90%;">
+        <table class="table table-striped" id="pending">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">User Type</th>
+                    <th scope="col">Schedule</th>
+                    <th scope="col">Date Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($pending as $data) {
+                ?>
+                    <tr>
+                        <td><?= $data->user_type ?></td>
+                        <td><?= $data->schedule ?></td>
+                        <td><?= $data->date_created ?></td>
+                        <td>
+                            <button type="button" class="rev btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" value="<?= $data->id ?>">
+                                Review
+                            </button>
+                        </td>
 
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+
+        </table>
     </div>
 
-    <script>
-        $(() => {
-            const url = document.querySelector("meta[name = base_url]").getAttribute("content");
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 50%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="review">
 
-            $('.rev').click(function (e) { 
-                e.preventDefault();
-                let id = $(this).attr('value')
-                $.ajax({
-                    type: "get",
-                    url: `${url}/admin/dashboard/${id}/review`,
-                    success: function (response) {
-                        $('#review').html(response)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                        $('.approve').click(function (e) { 
-                            e.preventDefault();
-                            $.ajax({
-                                type: "post",
-                                url: `${url}/admin/dashboard/approve`,
-                                data: {
-                                    id: id
-                                },
-                                dataType: "json",
-                                success: function (res) {
-                                    console.log(res)
+<script>
+    $(() => {
+        const url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
-                                    if(res.code == 0){
-                                        alert(res.msg)
-                                        return;
-                                    }
+        // datatable initialization
+        let $table = $("#pending").DataTable();
 
+        $('.rev').click(function(e) {
+            e.preventDefault();
+            let id = $(this).attr('value')
+            $.ajax({
+                type: "get",
+                url: `${url}/admin/dashboard/${id}/review`,
+                success: function(response) {
+                    $('#review').html(response)
+
+                    $('.approve').click(function(e) {
+                        e.preventDefault();
+                        $.ajax({
+                            type: "post",
+                            url: `${url}/admin/dashboard/approve`,
+                            data: {
+                                id: id
+                            },
+                            dataType: "json",
+                            success: function(res) {
+                                console.log(res)
+
+                                if (res.code == 0) {
                                     alert(res.msg)
-                                    location.reload();//reload page after success
-
+                                    return;
                                 }
-                            });
-                        });
 
-                        $('.reject').click(function (e) { 
-                            e.preventDefault();
-                            $.ajax({
-                                type: "post",
-                                url: `${url}/admin/dashboard/reject`,
-                                data: {
-                                    id: id
-                                },
-                                dataType: "json",
-                                success: function (res) {
-                                    console.log(res)
-
-                                    if(res.code == 0){
-                                        alert(res.msg)
-                                        return;
+                                Swal.fire({
+                                    text: res.msg,
+                                    icon: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Ok'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload(); //reload page after success
                                     }
+                                })
 
-                                    alert(res.msg)
-                                    location.reload();//reload page after success
-
-                                }
-                            });
+                            }
                         });
-                    }
-                });
+                    });
 
-               
+                    $('.reject').click(function(e) {
+                        e.preventDefault();
+                        $.ajax({
+                            type: "post",
+                            url: `${url}/admin/dashboard/reject`,
+                            data: {
+                                id: id
+                            },
+                            dataType: "json",
+                            success: function(res) {
+                                console.log(res)
+
+                                if (res.code == 0) {
+                                    alert(res.msg)
+                                    return;
+                                }
+
+                                Swal.fire({
+                                    text: res.msg,
+                                    icon: 'success',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Ok'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload(); //reload page after success
+                                    }
+                                })
+
+                            }
+                        });
+                    });
+                }
             });
+
+
         });
-    </script>
-</body>
-</html>
+    });
+</script>
+<?= $this->endSection() ?>

@@ -58,11 +58,17 @@ $sched = date_format($date, 'F d, Y g:i A')
                 message!</span><br>
         </div>
 
+        <div class="">
+            <label for="appointment_id" class="form-label">Appointment ID</label>
+            <input type="text" class="form-control" id="appointment_id" name="appointment_id" placeholder="Appointment ID">
+            <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                message!</span><br>
+        </div>
+
     </div>
 </div>
-<div class="d-flex justify-content-end gap-2">
-    <button class="reject btn btn-danger" value="<?= $appointment->id ?>">REJECT</button>
-    <button class="approve btn btn-primary" value="<?= $appointment->id ?>">APPROVE</button>
+<div class="d-flex justify-content-end">
+    <button class="complete btn btn-primary mt-3" value="<?= $appointment->id ?>">Complete</button>
 </div>
 <?php
 
