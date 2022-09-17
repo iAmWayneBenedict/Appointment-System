@@ -22,18 +22,20 @@ $(() => {
 
 		$(".cancel-add-empoyee-btn").click();
 
-		$.ajax({
-			type: "post",
-			url: `${url}/add-employee`,
-			data: {
-				name: $("#name").val(),
-				role: $("#role").val(),
-			},
-			dataType: "json",
-			success: function (res) {
-				display_employees();
-			},
-		});
+		console.log($(this).serializeArray());
+
+		// $.ajax({
+		// 	type: "post",
+		// 	url: `${url}/add-employee`,
+		// 	data: {
+		// 		name: $("#name").val(),
+		// 		role: $("#role").val(),
+		// 	},
+		// 	dataType: "json",
+		// 	success: function (res) {
+		// 		display_employees();
+		// 	},
+		// });
 	}
 
 	function display_employees() {
@@ -89,4 +91,24 @@ $(() => {
 		event.preventDefault();
 		qrCode.makeCode(data); // admin scan
 	}
+
+	$(".add-new-incharge").click(function () {
+		let id = $(".incharge-con").children().length;
+		$(".incharge-con").append(`<div class="mb-3 added-incharge">
+			<div class="d-flex gap-2 align-items-center">
+				<input type="text" class="form-control" id="additional_${id}" name="additional_${id}" placeholder="Additional incharge to">
+				<a class="btn">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+						<line x1="5" y1="12" x2="19" y2="12"></line>
+					</svg>
+				</a>
+			</div>
+		</div>`);
+
+		$(".added-incharge .btn").each(function () {
+			$(this).click(function () {
+				$(this).parent().parent().remove();
+			});
+		});
+	});
 });
