@@ -111,6 +111,7 @@
     </div>
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script src="<?= base_url("/src/js/qrcode.min.js") ?>"></script>
 <script src="<?= base_url('/src/js/admin/admin-employees.js') ?>"></script>
 <?= $this->endSection() ?>

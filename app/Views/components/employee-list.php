@@ -4,7 +4,7 @@ foreach ($employees as $employee) {
     <tr>
         <td><?= $employee['id'] ?></td>
         <td><?= $employee['name'] ?></td>
-        <td><?= $employee['role'] ?></td>
+        <td><?= $employee['designation'] ?></td>
         <td>
             <button type="button" class="btn btn-primary generate-qrcode-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-qr-code-scan" viewBox="0 0 16 16">

@@ -8,17 +8,20 @@ namespace App\Controllers\Employee;
 
 use App\Controllers\BaseController;
 use App\Models\EmployeeModel;
+use App\Libraries\DeEncrypter;
 
 class EmployeeScanner extends BaseController
 {
 
 
     private $employee_model;
+    private $encrypter;
 
     //Instantiate
     public function __construct()
     {
         $this->employee_model = new EmployeeModel();
+        $this->encrypter = new DeEncrypter();
     }
 
     public function index()
@@ -32,7 +35,9 @@ class EmployeeScanner extends BaseController
         $name = $this->request->getPost('name');
         $role = $this->request->getPost('role');
 
-        $response = $this->employee_model->add_employee($name, $role);
+        $incharge_to = $this->request->getPost('incharge_to');
+        
+        $response = $this->employee_model->add_employee($name, $role, $incharge_to);
 
         if ($response == 1) {
             return json_encode([
@@ -109,5 +114,11 @@ class EmployeeScanner extends BaseController
         return json_encode([
             'msg' => 'Cannot Process'
         ]);
+    }
+
+    public function encrypt_me(){
+
+        $data = $this->request->getPost('qr');
+        return $this->encrypter->encrypt_text($data);
     }
 }

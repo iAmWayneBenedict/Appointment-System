@@ -67,15 +67,27 @@ class EmployeeModel extends Model
         return;
     }
 
-    public function add_employee($name, $role)
+    public function add_employee($name, $role, $incharge_to)
     {
         $builder = $this->db_connect->table('employee');
 
         $response = $builder->insert([
             'name' => $name,
-            'role' => $role
+            'designation' => $role
         ]);
 
-        return $response;
+        $last_id = $this->db_connect->insertID();
+
+        foreach($incharge_to as $incharge){
+            $this->db_connect->table('emp_incharge')
+                ->insert([
+                    'emp_id' => $last_id,
+                    'incharge_to' => $incharge
+                ]);
+        }
+
+        return true;
     }
+
+
 }
