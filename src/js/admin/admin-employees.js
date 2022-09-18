@@ -64,6 +64,12 @@ $(() => {
 					$(this).click(function () {
 						$(".generated-qrcode-con").addClass("active");
 						const id = $(this).parent().parent().children()[0].textContent;
+<<<<<<< HEAD
+						const secret = "/.,;[]+_-*$#@12~|";
+						let encrypted = CryptoJS.AES.encrypt(id, secret).toString();
+
+						generateQr(encrypted);
+=======
 						const name = $(this).parent().parent().children()[1].textContent;
 						let qrCodeData = JSON.stringify({
 							id,
@@ -81,6 +87,7 @@ $(() => {
 							}
 						});
 						// generateQr(qrCodeData);
+>>>>>>> cfb0ae5cf8049a5930d6aae8593c257aa72522c3
 						setTimeout(() => {
 							let qr = $("#qr-code").children("img").attr("src");
 							$("#qrdl").attr("href", qr);
