@@ -118,4 +118,23 @@ class ManageAppointmentModel extends Model
 
         return $data;
     }
+
+    /**
+     * Function: Retrieve
+     * Descreption: get appointments that already approved and eqals
+     *              to 2 hoours advance date, it is to limit the data incoming to
+     *              controller insteads of fetching all data
+     * @param string $advanceDate date format
+     * @return array object contains appointment data
+     */
+    public function get_upcoming_appointments($advanceDate){
+
+        $query = $this->db_conn->table('approved_appointments')
+            ->select('id, name, contact_number, schedule')
+            ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+            ->where("DATE_FORMAT(schedule, '%Y-%m-%d %H')", $advanceDate)
+            ->get();
+        
+        return $query->getResultObject();
+    }
 }

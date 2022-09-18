@@ -97,7 +97,6 @@ $routes->group('admin', static function ($routes) {
         $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
-        $routes->get('testing', 'Admin\ManageAppointment::display_approved_appointments');
 
         //employee
         $routes->post('/add-employee', 'Employee\EmployeeScanner::add_employee');
