@@ -30,7 +30,7 @@
 
                     <!-- rediract to admin login -->
 
-                    <a href="<?= base_url('/admin/login') ?>" class="btn btn-primary mt-3 rounded-5 py-2">Admin</a>
+                    <a href="<?= base_url('/admin') ?>" class="btn btn-primary mt-3 rounded-5 py-2">Admin</a>
                 </div>
             </div>
         </div>

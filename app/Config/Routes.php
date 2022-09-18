@@ -38,19 +38,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::home');
 $routes->get('/test-sms', 'Home::index');
 $routes->post('/test-sms', 'Home::test_sms');
-$routes->get('/qr-scanner', 'Admin\Admin::qr_scanner');
 
-
-//see new group routes for new scanner page at the bottom thanks
-$routes->get('/scanner', 'Employee\EmployeeScanner::index');
-$routes->post('/track-employee', 'Employee\EmployeeScanner::track_employee');
-$routes->post('/add-employee', 'Employee\EmployeeScanner::add_employee');
-$routes->match(['get', 'post'], '/get-employee-status', 'Employee\EmployeeScanner::get_employee_status');
-$routes->match(['get', 'post'], '/get-employee-status-user', 'Employee\EmployeeScanner::get_employee_status_user');
-$routes->match(['get', 'post'], '/get-employee', 'Employee\EmployeeScanner::get_employee');
-
-//
-$routes->post('/encrypt-data', 'Employee\EmployeeScanner::encrypt_me');
 
 
 $routes->group('user', static function ($routes) {
@@ -81,7 +69,7 @@ $routes->group('appointments', static function ($routes) {
 });
 
 $routes->group('admin', static function ($routes) {
-    $routes->get('login', 'Admin\Admin::login');
+    $routes->get('/', 'Admin\Admin::login');
     $routes->post('admin-login', 'Admin\Admin::admin_login');
     $routes->post('verify-admin', 'Admin\Admin::verify_admin');
 
@@ -110,16 +98,19 @@ $routes->group('admin', static function ($routes) {
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
         $routes->get('testing', 'Admin\ManageAppointment::display_approved_appointments');
+
+        //employee
+        $routes->post('/add-employee', 'Employee\EmployeeScanner::add_employee');
     });
 });
 
 //dedicated page for employee scanner
 $routes->group('scanner', static function ($routes) {
-    $routes->post('admin-login', 'Controller');
-
-    $routes->group('main', static function ($routes) { // this will hold the filter ['filter', scanner filter]
-        //main scanner here
-    });
+    $routes->get('/', 'Admin\Admin::qr_scanner');
+    $routes->post('track-employee', 'Employee\EmployeeScanner::track_employee');
+    $routes->match(['get', 'post'], 'get-employee-status', 'Employee\EmployeeScanner::get_employee_status');
+    $routes->match(['get', 'post'], 'get-employee-status-user', 'Employee\EmployeeScanner::get_employee_status_user');
+    $routes->match(['get', 'post'], 'get-employee', 'Employee\EmployeeScanner::get_employee');
 });
 
 //routes for cron job

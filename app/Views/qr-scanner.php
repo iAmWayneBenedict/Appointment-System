@@ -38,8 +38,7 @@
                 <table id="employees" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Employee Name</th>
                             <th scope="col">Status</th>
                             <th scope="col">Time</th>
                         </tr>
@@ -135,7 +134,7 @@
 
                 $.ajax({
                     type: "post",
-                    url: `${url}/track-employee`,
+                    url: `${url}/scanner/track-employee`,
                     data: {
                         emp_ID: id
                     },
@@ -168,7 +167,7 @@
             function display_employees(res = undefined) {
                 $.ajax({
                     type: 'get',
-                    url: `${url}/get-employee-status`,
+                    url: `${url}/scanner/get-employee-status`,
                     async: true,
                     success: function(response) {
                         $('.list').html(response);

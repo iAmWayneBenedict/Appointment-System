@@ -79,7 +79,7 @@ class Admin extends BaseController
 
         $this->session->destroy($admin_session);
 
-        return redirect()->to('/admin/login');
+        return redirect()->to('/admin');
     }
 
     public function employees()

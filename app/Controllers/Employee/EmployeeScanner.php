@@ -8,20 +8,17 @@ namespace App\Controllers\Employee;
 
 use App\Controllers\BaseController;
 use App\Models\EmployeeModel;
-use App\Libraries\DeEncrypter;
 
 class EmployeeScanner extends BaseController
 {
 
 
     private $employee_model;
-    private $encrypter;
 
     //Instantiate
     public function __construct()
     {
         $this->employee_model = new EmployeeModel();
-        $this->encrypter = new DeEncrypter();
     }
 
     public function index()
@@ -116,9 +113,4 @@ class EmployeeScanner extends BaseController
         ]);
     }
 
-    public function encrypt_me(){
-
-        $data = $this->request->getPost('qr');
-        return $this->encrypter->encrypt_text($data);
-    }
 }

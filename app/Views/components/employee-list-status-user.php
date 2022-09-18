@@ -8,9 +8,11 @@ foreach ($employees as $employee) {
 ?>
     <tr>
         <td><?= $employee['name'] ?></td>
-        <td><?= $employee['role'] ?></td>
         <td class="employee-status-cell <?= $employee['status'] ? "available" : "" ?>">
             <div><?= $status ?></div>
+        </td>
+        <td>
+            <?= date('g:i A', strtotime($employee['log_time'])) ?>
         </td>
     </tr>
 <?php

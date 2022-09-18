@@ -33,7 +33,7 @@ $(() => {
 
 		$.ajax({
 			type: "post",
-			url: `${url}/add-employee`,
+			url: `${url}/admin/dashboard/add-employee`,
 			data: {
 				name: name,
 				role: role,
@@ -56,7 +56,7 @@ $(() => {
 
 		$.ajax({
 			type: "get",
-			url: `${url}/get-employee`,
+			url: `${url}/scanner/get-employee`,
 			async: true,
 			success: function (response) {
 				$(".list").html(response);

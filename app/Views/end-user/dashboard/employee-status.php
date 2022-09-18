@@ -17,8 +17,8 @@
                 <tr>
                     <!-- <th scope="col">ID</th> -->
                     <th scope="col">Name</th>
-                    <th scope="col">Role</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Log Time</th>
                 </tr>
             </thead>
             <tbody class="list">
@@ -41,7 +41,7 @@
 
             $.ajax({
                 type: 'get',
-                url: `${url}/get-employee-status-user`,
+                url: `${url}/scanner/get-employee-status-user`,
                 async: true,
                 success: function(response) {
 
