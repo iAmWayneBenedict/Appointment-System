@@ -95,6 +95,7 @@
 
                     alert(response.msg)
                     console.log(response)
+                    location.reload();
                 }
             });
 

@@ -24,9 +24,10 @@ class SendNotifications extends BaseController
         $this->send_email = new Email();
         // $this->send_sms = new ItextMo();
         $this->send_sms = new OneWaySMS();
+        $this->number_formatter = new NumberFormater();
+
         $this->validation = \Config\Services::validation();
         $this->notification_model = new NotificationsModel();
-        $this->number_formatter = new NumberFormater();
     }
 
     /**
@@ -62,7 +63,7 @@ class SendNotifications extends BaseController
     }
 
     /**
-     * func: use to send sms to all registered users
+     * Function: use to send sms to all registered users
      * @return json response from the api
      */
     public function send_bulk_sms()
@@ -109,6 +110,10 @@ class SendNotifications extends BaseController
         return json_encode($responses);
     }
 
+    /**
+     * Function: Send Email
+     * @return json
+     */
     public function send_email()
     {
 

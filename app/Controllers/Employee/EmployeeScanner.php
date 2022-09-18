@@ -53,14 +53,8 @@ class EmployeeScanner extends BaseController
         }
     }
 
-    /**
-     * func: get and display all employee inside the database
-     * @return view with data (employees data)
-     */
-
     public function get_employee_status()
     {
-
         $data['employees'] = $this->employee_model->get_all_employees();
         // return json_encode($data);
         return view('components/employee-list-status', $data);
@@ -68,7 +62,6 @@ class EmployeeScanner extends BaseController
 
     public function get_employee_status_user()
     {
-
         $data['employees'] = $this->employee_model->get_all_employees();
         // return json_encode($data);
         return view('components/employee-list-status-user', $data);
@@ -80,6 +73,7 @@ class EmployeeScanner extends BaseController
         // return json_encode($data);
         return view('components/employee-list', $data);
     }
+
     /**
      * func: the proces where the data is from QR code
      * @return string message(msg) to the user 
