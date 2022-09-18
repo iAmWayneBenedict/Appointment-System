@@ -13,6 +13,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- sweetalert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Appointment System | QR Scanner</title>
@@ -126,12 +127,17 @@
             });
 
             QR_scanner.addListener('scan', function(data) {
-                $('.data').val(parseInt(JSON.parse(data).id));
+                const secret = "/.,;[]+_-*$#@12~|";
+                let bytes = CryptoJS.AES.decrypt(data, secret);
+                let id = bytes.toString(CryptoJS.enc.Utf8);
+                console.log(JSON.parse(id));
+                $('.data').val(data);
+
                 $.ajax({
                     type: "post",
                     url: `${url}/track-employee`,
                     data: {
-                        emp_ID: parseInt(JSON.parse(data).id)
+                        emp_ID: id
                     },
                     dataType: "json",
                     success: function(res) {
@@ -226,7 +232,7 @@
                 let currentSessionData = JSON.parse(sessionStorage.getItem('appointment-system'))
                 if (currentSessionData) {
                     for (const users of currentSessionData) {
-                        if (!self.next().next().hasClass('active')) {
+                        if (!self.next().next().hasClass('available')) {
                             if (res) {
 
                                 setTimeSession(res.id, getCurrentTime())

@@ -10884,7 +10884,7 @@ td.active {
   display: block;
 }
 
-.employee-status-cell.active div {
+.employee-status-cell.available div {
   background: rgb(162, 255, 162);
   width: fit-content;
   padding: 0.25rem 0.5rem;
