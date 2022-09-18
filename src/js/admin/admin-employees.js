@@ -24,8 +24,8 @@ $(() => {
 
 		let incharge_to = [];
 
-		let name = $(".name").val();
-		let role = $(".role").val();
+		let name = $("#name").val();
+		let role = $("#role").val();
 
 		$(".incharge-con input").each(function () {
 			incharge_to.push($(this).val());
@@ -35,9 +35,9 @@ $(() => {
 			type: "post",
 			url: `${url}/add-employee`,
 			data: {
-				name,
-				role,
-				incharge_to,
+				name : name,
+				role : role,
+				incharge_to : incharge_to,
 			},
 			// dataType: "json",
 			success: function (res) {
@@ -64,10 +64,30 @@ $(() => {
 					$(this).click(function () {
 						$(".generated-qrcode-con").addClass("active");
 						const id = $(this).parent().parent().children()[0].textContent;
+<<<<<<< HEAD
 						const secret = "/.,;[]+_-*$#@12~|";
 						let encrypted = CryptoJS.AES.encrypt(id, secret).toString();
 
 						generateQr(encrypted);
+=======
+						const name = $(this).parent().parent().children()[1].textContent;
+						let qrCodeData = JSON.stringify({
+							id,
+							name,
+						});
+						$.ajax({
+							type: "post",
+							url: `${url}/encrypt-data`,
+							data: {
+								qr : qrCodeData
+							},
+							success: function (response) {							
+								console.log(response);
+								new QRious(document.getElementById("qr-code"), response);
+							}
+						});
+						// generateQr(qrCodeData);
+>>>>>>> cfb0ae5cf8049a5930d6aae8593c257aa72522c3
 						setTimeout(() => {
 							let qr = $("#qr-code").children("img").attr("src");
 							$("#qrdl").attr("href", qr);
@@ -94,12 +114,17 @@ $(() => {
 
 	// generate qr code
 	let qrForm = document.querySelector("form");
-	let qrCode = new QRCode(document.getElementById("qr-code"));
+	// let qrCode = new QRCode(document.getElementById("qr-code"));
 	// qrForm.addEventListener("submit", generateQr);
 
-	function generateQr(data) {
-		event.preventDefault();
-		qrCode.makeCode(data); // admin scan
+	// function generateQr(data) {
+	// 	event.preventDefault();
+	// 	// qrCode.makeCode(data); // admin scan
+	// 	new QRCode(document.getElementById("qr-code"), data)
+	// }
+
+	function generateQrv2(data){
+		new QRious({element: document.getElementById("qr-code"), value: data });
 	}
 
 	$(".add-new-incharge").click(function () {

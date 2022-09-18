@@ -49,6 +49,8 @@ $routes->match(['get', 'post'], '/get-employee-status', 'Employee\EmployeeScanne
 $routes->match(['get', 'post'], '/get-employee-status-user', 'Employee\EmployeeScanner::get_employee_status_user');
 $routes->match(['get', 'post'], '/get-employee', 'Employee\EmployeeScanner::get_employee');
 
+//
+$routes->post('/encrypt-data', 'Employee\EmployeeScanner::encrypt_me');
 
 
 $routes->group('user', static function ($routes) {
