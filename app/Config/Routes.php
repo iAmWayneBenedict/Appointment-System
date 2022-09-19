@@ -99,7 +99,15 @@ $routes->group('admin', static function ($routes) {
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
 
         //employee
-        $routes->post('/add-employee', 'Employee\EmployeeScanner::add_employee');
+        $routes->post('add-employee', 'Employee\EmployeeScanner::add_employee');
+
+        //stocks
+        $routes->get('stock-management','Admin\StocksController::index');
+        $routes->post('add-stock', 'Admin\StocksController::add_stock');
+        $routes->get('get-all-stocks', 'Admin\StocksController::display_stocks');
+        $routes->get('get-a-stock/(:any)', 'Admin\StocksController::display_update_form/$1');
+        $routes->post('update-a-stock', 'Admin\StocksController::update_stock');
+        $routes->get('delete-a-stock/(:any)', 'Admin\StocksController::delete_stock/$1');
     });
 });
 
