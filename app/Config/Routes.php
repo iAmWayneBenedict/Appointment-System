@@ -43,7 +43,7 @@ $routes->post('/test-sms', 'Home::test_sms');
 
 $routes->group('user', static function ($routes) {
     $routes->get('register', 'End_Users\UserController::index');
-    $routes->get('login', 'End_Users\UserLoginController::index');
+    $routes->get('login', 'End_Users\UserLoginController::index', ['filter' => 'userIsLoggedIn']);
     $routes->get('reminder/(:any)', 'End_Users\UserController::display_reminder_information/$1');
     $routes->match(['get', 'post'], 'generate-id', 'End_Users\UserController::generate_user_id');
     $routes->post('register-user', 'End_Users\UserController::register_user');
@@ -73,7 +73,7 @@ $routes->group('admin', static function ($routes) {
     $routes->post('admin-login', 'Admin\Admin::admin_login');
     $routes->post('verify-admin', 'Admin\Admin::verify_admin');
 
-    $routes->group('dashboard', static function ($routes) {
+    $routes->group('dashboard', ['filter' => 'adminLoginFilter'],static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
         $routes->get('employees', 'Admin\Admin::employees');
         $routes->get('send-message', 'Admin\Admin::sendMessage');

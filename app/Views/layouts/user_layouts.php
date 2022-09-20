@@ -29,8 +29,17 @@
         }
     }
 </style>
-
 <body>
+    <?php
+        if(session()->has('invalid')){
+    ?>
+            <script type="text/javascript">
+                alert('<?= session('invalid')?>')
+                console.log('<?= session('invalid')?>')
+            </script>
+    <?php
+        }
+    ?>
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">
             <div class="d-flex">
