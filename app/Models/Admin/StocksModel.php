@@ -33,6 +33,7 @@ class StocksModel extends Model
     public function get_a_stock($stock_id){
         $query = $this->db_conn->table('stocks')
             ->select('*')
+            ->join('stock_releaseDate', 'stock_releaseDate.stock_id = stocks.id', 'right')
             ->where('id', $stock_id)
             ->get();
 
@@ -52,6 +53,26 @@ class StocksModel extends Model
         $this->db_conn->table('stocks')
             ->where('id', $stock_id)
             ->delete();
+
+        return true;
+    }
+
+
+    public function set_release_date(array $data){
+
+        $this->db_conn->table('stock_releaseDate')
+            ->insert($data);
+
+        return true;
+    }
+
+    public function update_release_date($data, $id){
+
+        $this->db_conn->table('stock_releaseDate')
+            ->where('stock_id', $id)
+            ->update([
+                'release_date' => $data
+            ]);
 
         return true;
     }

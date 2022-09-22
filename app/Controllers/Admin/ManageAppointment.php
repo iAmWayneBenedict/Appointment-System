@@ -8,6 +8,7 @@ use App\Libraries\OneWaySMS;
 use App\Libraries\greetings;
 use CodeIgniter\I18n\Time;
 
+use function PHPUnit\Framework\isFalse;
 
 class ManageAppointment extends BaseController
 {
@@ -197,31 +198,15 @@ class ManageAppointment extends BaseController
         ]);
     }
 
+    // use when appointment is done manaually by admin 
+    //@param required appointment ID
     public function mark_as_done($appointment_id = NULL)
     {
-
+        $this->manage_appointment->remove_appointment($appointment_id);
+        session()->setFlashdata('done', 'Appointment Is Done');
+        return redirect()->back();
     }
 
-    /**
-       Function: Remove appointments
-     * Description: removed appointment if it schedule is passed already after a day,
-     *              it will automatic remove approved appointments only 
-     *              for example if the schedule is sept 09 and it not marked as done
-     *              it will compare to current time or if it is passed  = > one day
-                    This function will call via Cron job every day 
-     */
-    public function check_passed_appointments()
-    {
-
-        $all_approved_appointments = $this->manage_appointment->get_approved_appointments();
-
-        foreach ($all_approved_appointments as $approved) {
-            if (strtotime($approved->schedule) < strtotime('-1 day')) {
-                $this->manage_appointment->remove_appointment($approved->id);
-            }
-            continue; //do nothing
-        }
-    }
 
     /**
        Function: reminder auto send SMS
@@ -285,5 +270,84 @@ class ManageAppointment extends BaseController
         }
 
         return json_encode($res); //array of results
+    }
+
+    /**
+        Function: Notify Client
+     * Description: This is to notify client of thier passed appointments after 5 hours
+     *              that thier appointment is not being done.
+     *              the system will send sms to them that they need to reschedule
+                    this function will call every hour in cron job
+     */
+    public function check_resched_appointment(){
+
+        $auth = $this->request->getGet('auth');
+        $authKey = 'agriculturist_2022';
+
+        if (empty($auth) || $auth != $authKey) {
+            return 'Someone accessing the url';
+        }
+
+        $passed_appointments = $this->manage_appointment->get_passed_appointment();
+
+        $res = [];
+        foreach ($passed_appointments as $approved) {
+
+            $date = date_create($approved->schedule);
+            $sched = date_format($date, 'F d, Y g:i A');
+
+            $message = "{$this->greet->greet()} {$approved->name} Your appointment has passed.\n";
+            $message .= "Scheduled: {$sched}, Go to your account to reschedule or removed it\n";
+            $message .= "reminder from Agriculture Office of Bato \n";
+            $message .= "Appointment ID: {$approved->id}";            
+            
+            //enable this sms later ⬇⬇⬇⬇⬇⬇
+
+            //$sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
+
+            //if sms is not sent execute this code
+            // if($sms_response['code'] == 0 ){
+            //     array_push($res, $sms_response['message'])
+            // }
+            
+            $this->manage_appointment->set_passed($approved->id);
+            return $message;
+
+        }
+        // return json_encode($res); 
+
+    }
+
+    /**
+       Function: Remove appointments
+     * Description: removed appointment if it schedule is passed already after a day,
+     *              it will automatic remove approved appointments only 
+     *              for example if the schedule is sept 09 and it not marked as done
+     *              it will compare to current time or if it is passed  = > one day
+                    This function will call via Cron job every day at 12am
+     */
+    public function removed_passed_appointments(){
+
+        $auth = $this->request->getGet('auth');
+        $authKey = 'agriculturist_2022';
+
+        if (empty($auth) || $auth != $authKey) {
+            return 'Someone accessing the url';
+        }
+
+        $all_approved_appointments = $this->manage_appointment->get_resched_appointments();
+        $guest_passed_appointments = $this->manage_appointment->guest_passed_appointments();
+
+        foreach ($all_approved_appointments as $approved) {
+            if (strtotime($approved->schedule) < strtotime('-3 day')) {
+                $this->manage_appointment->remove_appointment($approved->id);
+            }
+        }
+
+        foreach ($guest_passed_appointments as $guest){
+            if (strtotime($guest->schedule) < strtotime('-3 day')) {
+                $this->manage_appointment->remove_appointment($guest->id);
+            }
+        }
     }
 }

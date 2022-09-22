@@ -35,11 +35,19 @@
     ?>
             <script type="text/javascript">
                 alert('<?= session('invalid')?>')
-                console.log('<?= session('invalid')?>')
+            </script>
+    <?php
+        }
+        if(session()->has('success')){
+    ?>
+            <script type="text/javascript">
+                alert('<?= session('success')?>')
             </script>
     <?php
         }
     ?>
+    ?>
+
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">
             <div class="d-flex">

@@ -110,10 +110,38 @@ class ManageAppointmentModel extends Model
     {
 
         $query = $this->db_conn->table('approved_appointments')
-            ->select('id, schedule, purpose')
+            ->select('*')
             ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
             ->get();
 
+        $data = $query->getResultObject(); //object access using ->col_name
+
+        return $data;
+    }
+
+    public function get_resched_appointments()
+    {
+
+        $query = $this->db_conn->table('approved_appointments')
+            ->select('*')
+            ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+            ->where('resched_status', 1)
+            ->get();
+
+        $data = $query->getResultObject(); //object access using ->col_name
+
+        return $data;
+    }
+
+    public function guest_passed_appointments(){
+
+        $query = $this->db_conn->table('approved_appointments')
+            ->select('*')
+            ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+            ->where('resched_status', 0)
+            ->where('user_type', 'Guest')
+            ->get();
+        
         $data = $query->getResultObject(); //object access using ->col_name
 
         return $data;
@@ -136,5 +164,51 @@ class ManageAppointmentModel extends Model
             ->get();
         
         return $query->getResultObject();
+    }
+
+    public function get_passed_appointment(){
+
+        $time =  date('Y-m-d H', strtotime('-5 hours'));     //current time -1 day
+        $time2 =  date('Y-m-d H', strtotime('-6 hours'));   //current time -2 days
+
+        $query = $this->db_conn->table('approved_appointments')
+            ->select('*')
+            ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+            ->where("DATE_FORMAT(schedule, '%Y-%m-%d %H') <=", $time)
+            ->where("DATE_FORMAT(schedule, '%Y-%m-%d %H') >", $time2)
+            ->where('user_type', 'Registered')
+            ->get();
+    
+        return $query->getResultObject();
+    }
+
+    private function approved_resched_status($appointment_id){
+
+        $this->db_conn->table('approved_appointments')
+            ->where('set_appointment_id', $appointment_id)
+            ->delete();
+    }
+
+    //update approved is_passed to true if appointment already passed 1 hour
+    public function set_passed($appointment_id){
+        $this->db_conn->table('approved_appointments')
+            ->where('set_appointment_id', $appointment_id)
+            ->update([
+                'is_passed' => 'true'
+            ]);
+    }
+
+    public function reschedule_appointment($appointment_id, $new_schedule){
+
+        $this->db_conn->table('set_appointments')
+            ->where('id', $appointment_id)
+            ->update([
+                'schedule' => $new_schedule
+            ]);
+
+        $this->insert_to_resched($appointment_id, $new_schedule);
+        $this->approved_resched_status($appointment_id);
+
+        return true;
     }
 }

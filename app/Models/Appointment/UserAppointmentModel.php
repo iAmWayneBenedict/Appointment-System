@@ -51,6 +51,53 @@ class UserAppointmentModel extends Model {
         return true;
     }
 
+    //retrieve passed approved appointment
+    public function get_passed_appointment($user_id){
+
+        $query = $this->database->table('approved_appointments')
+            ->select('*')
+            ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+            ->where('user_id', $user_id)
+            ->where('is_passed', 'true')
+            ->where('resched_status', 0)
+            ->get();
+
+        return $query->getResultObject();
+
+    }
+
+    //update status on approved appointments
+    private function reschedule_status($appointment_id){
+
+        $this->database->table('approved_appointments')
+            ->where('set_appointment_id', $appointment_id)
+            ->update([
+                'resched_status' => 1
+            ]);
+    }
+
+    //set new schedule on set schedule table
+    public function reschedule_appointment($appointment_id, $new_schedule){
+
+        $this->database->table('set_appointments')
+            ->where('id', $appointment_id)
+            ->update([
+                'schedule' => $new_schedule
+            ]);
+
+        $this->reschedule_status($appointment_id);
+
+        return true;
+    }
+
+    //remove appointments permarnently
+    public function delete_appointment($appointment_id){
+
+        $this->database->table('set_appointments')
+            ->where('id', $appointment_id)
+            ->delete();
+    }
+
     
 
 }

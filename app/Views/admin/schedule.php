@@ -225,13 +225,20 @@
                     $('#view-body').html(response)
 
                     $('.complete').click(function() {
+                        const id = $(this).attr('value');
                         if (!$("#appointment_id").val()) {
                             $("#appointment_id").next().removeClass("d-none")
                             $("#appointment_id").next().html("Appointment ID is required")
                         } else {
                             $("#appointment_id").next().addClass("d-none")
-
+                            if( id != $("#appointment_id").val()){
+                                $("#appointment_id").next().removeClass("d-none")
+                                $("#appointment_id").next().html("Id not Match")
+                                return
+                            }
+                            window.location.href = `${url}/admin/dashboard/complete/${id}`
                         }
+                        
                     })
                 }
             });

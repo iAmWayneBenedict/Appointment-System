@@ -70,4 +70,47 @@ class StocksController extends BaseController
         session()->setFlashdata('success', 'Deleted');
         return redirect()->back();
     }
+
+    public function display_release($stock_id = NULL){
+        
+        $data['stocks'] = $this->stock_model->get_a_stock($stock_id);
+        return view('components/release-form', $data); 
+    }
+
+    public function set_release(){
+
+        $stock_id = $this->request->getPost('id');
+        $set_date = $this->request->getPost('r_date');
+
+        $formated_date = date('Y-m-d', strtotime($set_date));
+
+        if($this->stock_model->set_release_date([
+            'stock_id' => $stock_id,
+            'release_date' => $formated_date
+        ])){
+            session()->setFlashdata('success', 'Release date set');
+            return redirect()->back();
+        }
+
+        session()->setFlashdata('invalid', 'Please try again later');
+        return redirect()->back();
+        
+    }
+
+    public function update_release(){
+
+        $stock_id = $this->request->getPost('id');
+        $set_date = $this->request->getPost('r_date');
+
+        $formated_date = date('Y-m-d', strtotime($set_date));
+
+        if($this->stock_model->update_release_date($formated_date, $stock_id)){
+            session()->setFlashdata('success', 'Release Date updated');
+            return redirect()->back();
+        }
+
+        session()->setFlashdata('invalid', 'Please try again later');
+        return redirect()->back();
+        
+    }
 }
