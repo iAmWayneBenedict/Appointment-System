@@ -152,7 +152,7 @@ class ManageAppointment extends BaseController
 
         return json_encode([
             'code' => 1,
-            'msg' => $message,
+            'msg' => 'Appointment Approved',
         ]);
     }
 
@@ -193,27 +193,13 @@ class ManageAppointment extends BaseController
 
         return json_encode([
             'code' => 1,
-            'msg' => $message
+            'msg' => 'Appointment Rejected'
         ]);
-    }
-
-    //depends on js
-    public function display_approved_appointments()
-    {
-
-        $data['approved'] = $this->manage_appointment->get_approved_appointments();
-
-        //return $data;
-        //or
-        //return view('');
-
-        echo '<pre>';
-        print_r($data);
-        echo '<pre>';
     }
 
     public function mark_as_done($appointment_id = NULL)
     {
+
     }
 
     /**
@@ -258,9 +244,9 @@ class ManageAppointment extends BaseController
         $now = $this->time->now();
 
         //parse cur date to CI time
-        $parseTime = $this->time->parse('2022-09-14 7:50:01');
+        $parseTime = $this->time->parse($now);
 
-        // add 2 hour to current time
+        // add 2 hour(s) to current time
         $addTime = $parseTime->addHours(2);
         $newTime = $addTime->toDateTimeString();
 
@@ -270,38 +256,34 @@ class ManageAppointment extends BaseController
 
         $res = [];
 
-        $approved_appointments = $this->manage_appointment->get_approved_appointments();
+        $resuls = $this->manage_appointment->get_upcoming_appointments($advanceCurrentTime);
 
-        foreach ($approved_appointments as $appointment) {
-
-            $dbparseTime = $this->time->parse($appointment->schedule);
-            $appointmentTime = date('Y-m-d H', strtotime($dbparseTime));
-
-            if ($advanceCurrentTime == $appointmentTime) {
-                $appointment_data = $this->manage_appointment->get_appointment_info($appointment->id);
-
-                //format the date in SMS for better readability
-                $date = date_create($appointment_data->schedule);
-                $sched = date_format($date, 'F d, Y g:i A');
-
-                $message = "{$this->greet->greet()} {$appointment_data->name} You have incoming appointment \n";
-                $message .= "Schedule: {$sched}, Make Sure to see employee availabilty status before you go.";
-                $message .= "reminder from Agriculture Office of Bato";
-
-                //enable this sms later ⬇⬇⬇⬇⬇⬇
-
-                //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
-
-                //if sms is not sent execute this code
-                // if($sms_response['code'] == 0 ){
-                //     array_push($res, $sms_response['message'])
-                // }
-
-            }
-            continue;
+        if(empty($resuls)){
+            return;
         }
 
-        //return that can be save in cron job, for future review and debugging
-        return json_encode($res);
+        foreach($resuls as $result){
+
+            //format the date in SMS for better readability
+            $date = date_create($result->schedule);
+            $sched = date_format($date, 'F d, Y g:i A');
+
+            $message = "{$this->greet->greet()} {$result->name} You have incoming appointment \n";
+            $message .= "Schedule: {$sched}, Make Sure to see employee availabilty status before you go.";
+            $message .= "reminder from Agriculture Office of Bato \n";
+            $message .= "Appointment ID: {$result->id}";
+
+            //enable this sms later ⬇⬇⬇⬇⬇⬇
+
+            //$sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
+
+            //if sms is not sent execute this code
+            // if($sms_response['code'] == 0 ){
+            //     array_push($res, $sms_response['message'])
+            // }
+
+        }
+
+        return json_encode($res); //array of results
     }
 }

@@ -32,6 +32,11 @@ class Admin extends BaseController
         return view('admin/login');
     }
 
+    /**
+     * Function: Aunthentication Check / validation
+     * Description: Compare and validate admin input from viewpage
+     *              to data from DB for the system can give access to admin
+     */
     public function admin_login()
     {
 
@@ -72,6 +77,7 @@ class Admin extends BaseController
         ]);
     }
 
+    //logout and destroy admin session
     public function admin_logout()
     {
 
@@ -79,13 +85,14 @@ class Admin extends BaseController
 
         $this->session->destroy($admin_session);
 
-        return redirect()->to('/admin/login');
+        return redirect()->to('/admin');
     }
 
     public function employees()
     {
         return view('admin/employees');
     }
+
     public function users()
     {
         $response['users'] = $this->user_model->get_all_users();
@@ -107,6 +114,7 @@ class Admin extends BaseController
         return view('admin/send-message');
     }
 
+    //display sms contact to viewpage
     public function display_sms_contact()
     {
         $data['user_data'] = $this->notification->get_user_data();
