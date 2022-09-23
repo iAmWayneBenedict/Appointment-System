@@ -67,6 +67,16 @@ class EmployeeModel extends Model
         return;
     }
 
+    /**
+     * Function: Insert
+     * Description : Add employee to employee and incharge_to table
+     *               every employee have many incharge task it iterate the values
+     *               to be inserted in table
+     * @param name : varchar : name of employe
+     * @param role : role of the employee in office
+     * @param incharge_to : array of values
+     * @return boolean
+     */
     public function add_employee($name, $role, $incharge_to)
     {
         $builder = $this->db_connect->table('employee');
@@ -87,6 +97,25 @@ class EmployeeModel extends Model
         }
 
         return true;
+    }
+
+    /**
+     * Function: retrieve incharge employee
+     * Descirption : every appointment has a purpose every purpose have many incharge employee
+     *               this data will use to display employees incharge with this purpose
+     * @param purpose : use to find all employee inchrage to it
+     * @return array:$data array objects employee data
+     */
+    public function get_incharge_employee($purpose){
+        
+        $query = $this->db_connect->table('emp_incharge')
+            ->select('*')
+            ->join('employee', 'employee.id = emp_incharge.emp_id')
+            ->where('incharge_to', $purpose)
+            ->get();
+
+        $data = $query->getResultObject();
+        return $data;
     }
 
 
