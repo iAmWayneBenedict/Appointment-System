@@ -45,10 +45,11 @@
         <div class="card border-0" style="width: 25rem;">
             <div class="card-body">
                 <h5 class="mb-5">
-                    <b>Add Employee</b>
+                    <b id="popup-overlay-title">Add Employee</b>
                 </h5>
                 <form action="" method="post" id="form-add-employee" class="ml-4">
 
+                    <input type="hidden" id="id" name="id">
                     <!-- name -->
 
                     <div class="mb-3">
@@ -69,7 +70,15 @@
                         <div class="mb-3">
                             <label for="incharge_to" class="form-label">Incharge to</label>
                             <div class="d-flex gap-2 align-items-center">
-                                <input type="text" class="form-control" id="incharge_to" name="incharge_to" placeholder="Incharge to" required>
+                                <div class="position-relative flex-fill">
+                                    <input type="text" class="form-control" id="incharge_to" name="incharge_to" placeholder="Incharge to" required>
+                                    <div class="choose-designation" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                    </div>
+                                </div>
                                 <a class="btn btn-primary add-new-incharge">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
                                         <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -84,7 +93,7 @@
 
                     <div class="d-flex justify-content-end gap-3">
                         <input type="button" class="cancel-add-empoyee-btn btn mt-5 py-2" value="Cancel" />
-                        <input type="submit" class="btn btn-primary mt-5 py-2 px-4" value="Add" />
+                        <input type="submit" class="add-employee-submit-btn btn btn-primary mt-5 py-2 px-4" data-user-value="0" value="Add" />
                     </div>
                 </form>
             </div>
@@ -106,6 +115,27 @@
                 <a hidden id='qrdl' class="btn btn-primary">Download</a>
                 <!-- hide overlay -->
                 <button type="button" class="btn close-qr-generated">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Choose Incharge to</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group incharge-to-list-container">
+                        <!-- list of incharge to insert here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-transparent" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save-changes">Save changes</button>
+                </div>
             </div>
         </div>
     </div>

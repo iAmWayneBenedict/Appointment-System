@@ -97,6 +97,16 @@ class UserModel extends Model
         return true;
     }
 
+    public function delete_user($user_code_id)
+    {
+
+        $this->db_conn->table($this->table)
+            ->where('code_id', $user_code_id)
+            ->delete();
+
+        return true;
+    }
+
     /**
      * get the user information for login process
      * return 1 single row(array) data of user

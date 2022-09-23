@@ -11032,6 +11032,19 @@ td.active {
   font-family: "Recoleta", sans-serif;
 }
 
+.choose-designation {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.incharge-to-list-container {
+  max-height: 30rem;
+  overflow-y: scroll;
+}
+
 .center-con {
   display: flex;
   justify-content: center;

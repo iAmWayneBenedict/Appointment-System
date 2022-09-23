@@ -33,7 +33,7 @@ class EmployeeScanner extends BaseController
         $role = $this->request->getPost('role');
 
         $incharge_to = $this->request->getPost('incharge_to');
-        
+
         $response = $this->employee_model->add_employee($name, $role, $incharge_to);
 
         if ($response == 1) {
@@ -51,6 +51,39 @@ class EmployeeScanner extends BaseController
                 "response_code" => 304,
             ]);
         }
+    }
+
+    public function update_employee()
+    {
+        $id = $this->request->getPost('id');
+        $name = $this->request->getPost('name');
+        $role = $this->request->getPost('role');
+
+        $incharge_to = $this->request->getPost('incharge_to');
+
+        $response = $this->employee_model->update_employee($id, $name, $role, $incharge_to);
+
+        if ($response == 1) {
+            return json_encode([
+                'success' => true,
+                'error' => false,
+                'message' => "Employee successfully added!",
+                "response_code" => 201,
+            ]);
+        } else {
+            return json_encode([
+                'success' => false,
+                'error' => true,
+                'message' => "Adding Employee Unsuccessful!",
+                "response_code" => 304,
+            ]);
+        }
+    }
+    public function delete_employee($id)
+    {
+        $response = $this->employee_model->delete_employee($id);
+
+        return $response;
     }
 
     public function get_employee_status()
@@ -106,5 +139,4 @@ class EmployeeScanner extends BaseController
             'msg' => 'Cannot Process'
         ]);
     }
-
 }
