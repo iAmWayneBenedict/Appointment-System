@@ -135,6 +135,20 @@
                             });
                         });
 
+                        $('.release-form').click(function (e) { 
+                            e.preventDefault();
+                            var stock_id = $(this).attr('value');
+
+                            $.ajax({
+                                type: "get",
+                                url: `${url}/admin/dashboard/display-release/${stock_id}`,
+                                async: true,
+                                success: function (res) {
+                                    $('.update').html(res)
+                                }
+                            });
+                        });
+
                     }
                 });
             }

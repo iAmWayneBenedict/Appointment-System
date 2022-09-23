@@ -20,6 +20,15 @@
 </head>
 
 <body>
+<?php
+    if(session()->has('done')){
+?>
+    <script>
+        alert(<?= session('done')?>)
+    </script>
+<?php
+    }
+?>
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">
             <div class="flex">

@@ -9,6 +9,7 @@
         <td><?= $total_avail ?></td>
         <td>
             <button id="update" class = "show-update" value="<?= $stock->id ?>">Update</button>
+            <button id="update" class = "release-form" value="<?= $stock->id ?>">Set Release</button>
             <a href="<?= base_url("admin/dashboard/delete-a-stock/{$stock->id}") ?>">DELETE</a>
         </td>
     </tr>

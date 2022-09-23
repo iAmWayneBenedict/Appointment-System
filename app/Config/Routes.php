@@ -54,6 +54,9 @@ $routes->group('user', static function ($routes) {
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
         $routes->get('logout', 'End_Users\UserLoginController::logout_user');
         $routes->get('set-appointment', 'End_Users\ClientAppointment::registered_client');
+        $routes->get('passed-appointment', 'End_Users\ClientAppointment::get_passed_appointment');
+        $routes->post('reschedule-appointment', 'End_Users\ClientAppointment::reschedule_appointment');
+        $routes->get('delete-passed-appointment/(:any)', 'End_Users\ClientAppointment::delete_passed_apointment/$1');
     });
 
     $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {
@@ -100,6 +103,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
+        $routes->get('complete/(:any)', 'Admin\ManageAppointment::mark_as_done/$1');
 
         //employee
         $routes->post('add-employee', 'Employee\EmployeeScanner::add_employee');
@@ -115,6 +119,9 @@ $routes->group('admin', static function ($routes) {
         $routes->get('get-a-stock/(:any)', 'Admin\StocksController::display_update_form/$1');
         $routes->post('update-a-stock', 'Admin\StocksController::update_stock');
         $routes->get('delete-a-stock/(:any)', 'Admin\StocksController::delete_stock/$1');
+        $routes->get('display-release/(:any)', 'Admin\StocksController::display_release/$1');
+        $routes->post('set-release-date', 'Admin\StocksController::set_release');
+        $routes->post('update-release-date', 'Admin\StocksController::update_release');
     });
 });
 
@@ -129,6 +136,8 @@ $routes->group('scanner', static function ($routes) {
 
 //routes for cron job
 $routes->get('client-incoming-appointment', 'Admin\ManageAppointment::sms_incoming_appointment');
+$routes->get('removed-passed-appointment', 'Admin\ManageAppointment::removed_passed_appointments');
+$routes->get('checke-reschedule-appoointment', 'Admin\ManageAppointment::check_resched_appointment');
 
 /*
  * --------------------------------------------------------------------

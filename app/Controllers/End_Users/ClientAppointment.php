@@ -73,16 +73,41 @@ class ClientAppointment extends BaseController {
             ]);
         }
 
+
         //get form data
         $name = $this->request->getPost('name');
         $address = $this->request->getPost('address');
         $contact_number = $this->request->getPost('c_number');
         $social_pos = $this->request->getPost('social_pos');
         $purpose = $this->request->getPost('purpose');
-        $schedule = $this->request->getPost('schedule');
+        $schedule = $this->request->getPost('sched');
+
+        //get current date
+        $now = $this->time->now();
+        //parse current and given schendule date to CI time
+        $parseTimeNow = $this->time->parse($now);
+        $parseTimeSched = $this->time->parse($schedule);
+
+        // subtract 2 hour(s) to sched time and convert to string
+        $subTime = $parseTimeSched->subDays(3);
+        $subTime = $subTime->toDateTimeString();
+
+        //current date convert to string
+        $curTime = $parseTimeNow->toDateString();
+
+        //format date and time with day only
+        $subtractedTime = date('Y-m-d', strtotime($subTime));
+        $currentTime = date('Y-m-d', strtotime($curTime));
+
+        if(!$currentTime <= $subtractedTime){
+            return json_encode([
+                'code' => 0,
+                'msg'  => 'Appointment should be 3 days or more before schedule'
+            ]);
+        }
 
         //format date before inserting to database
-        $formated_sched = date('Y-m-d H:i:s'); 
+        $formated_sched = date('Y-m-d H:i:s', strtotime($schedule)); 
 
         //identify if guest or registered
         $user_id = NULL;
@@ -116,9 +141,73 @@ class ClientAppointment extends BaseController {
             'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment"
         ]);
 
+    }
 
+    //get and display passed appointments
+    public function get_passed_appointment(){
 
+        $user_id = $this->session->get('id');
+        $data['myAppointment'] = $this->userAppointment->get_passed_appointment($user_id);
+        return view('end-user/dashboard/passed-appointment', $data);
+    }
 
+    /**
+     * Function: Reschedule
+     * Description: Recieve and process the new appointment schedule
+     * @return json response
+     */
+    public function reschedule_appointment(){
+
+        $appointment_id = $this->request->getPost('id');
+        $new_sched = $this->request->getPost('new_sched');
+
+        //get current date
+        $now = $this->time->now();
+        //parse cur date to CI time
+        $parseTimeNow = $this->time->parse($now);
+        $parseTimeSched = $this->time->parse($new_sched);
+
+        // subtract 2 hour(s) to sched time
+        $subTime = $parseTimeSched->subDays(3);
+        $subTime = $subTime->toDateTimeString();
+
+        //current data
+        $curTime = $parseTimeNow->toDateString();
+
+        //format date and time with day only
+        $subtractedTime = date('Y-m-d', strtotime($subTime));
+        $currentTime = date('Y-m-d', strtotime($curTime));
+
+        if(!$currentTime <= $subtractedTime){
+            return json_encode([
+                'code' => 0,
+                'msg'  => 'Appointment should be 3 days or more before schedule'
+            ]);
+        }
+
+        $formated_sched = date('Y-m-d H:i:s', strtotime($new_sched)); 
+
+        if(!$this->userAppointment->reschedule_appointment($appointment_id, $formated_sched)){
+            return json_encode([
+                'code' => 500,
+                'msg'  => 'Our System is having an issue please try again later'
+            ]);
+        }
+
+        return json_encode([
+            'code' => 1,
+            'msg'  => 'Appointment has been Resheduled'
+        ]);
+        
+    }
+
+    //delete appointment base from ID
+    public function delete_passed_apointment($appointment_id = NULL){
+        
+        $this->userAppointment->delete_appointment($appointment_id);
+
+        session()->setFlashdata('success', 'Passed Appointment Removed');
+        return redirect('user/dashboard');
     }
 
 

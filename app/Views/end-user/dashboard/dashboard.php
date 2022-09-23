@@ -21,7 +21,9 @@
             <!-- <a href="" class="text-decoration-none">See all</a> -->
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4 mt-1" style="max-width: 95%;">
-
+        <div class="passed-appointments">
+            <a href="<?= base_url('user/dashboard/passed-appointment') ?>">PASSED APPOINTMENT</a>
+        </div>
             <!-- Appointments Card -->
 
             <div class="col">
