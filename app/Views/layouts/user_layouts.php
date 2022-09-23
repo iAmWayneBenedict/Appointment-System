@@ -29,23 +29,23 @@
         }
     }
 </style>
+
 <body>
     <?php
-        if(session()->has('invalid')){
+    if (session()->has('invalid')) {
     ?>
-            <script type="text/javascript">
-                alert('<?= session('invalid')?>')
-            </script>
+        <script type="text/javascript">
+            alert('<?= session('invalid') ?>')
+        </script>
     <?php
-        }
-        if(session()->has('success')){
+    }
+    if (session()->has('success')) {
     ?>
-            <script type="text/javascript">
-                alert('<?= session('success')?>')
-            </script>
+        <script type="text/javascript">
+            alert('<?= session('success') ?>')
+        </script>
     <?php
-        }
-    ?>
+    }
     ?>
 
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">

@@ -42,4 +42,11 @@ class Employee extends BaseController
 
         return view('components/incharge-list', $result);
     }
+
+    public function get_incharge_employee($purpose)
+    {
+        $response = $this->employee_model->get_incharge_employee($purpose);
+
+        return json_encode($response);
+    }
 }

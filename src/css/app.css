@@ -10784,6 +10784,10 @@ body {
   padding: 0 10px;
 }
 
+.calendar-set-appointment .table td div {
+  height: auto !important;
+}
+
 .pending-legend,
 .approved-legend {
   margin-bottom: 1rem;

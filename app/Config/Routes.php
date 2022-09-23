@@ -52,6 +52,7 @@ $routes->group('user', static function ($routes) {
     $routes->group('dashboard', ['filter' => 'userLoginFilter'], static function ($routes) {
         $routes->get('/', 'End_Users\UserController::dashboard');
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
+        $routes->get('get-incharge-employee/(:any)', 'Employee\Employee::get_incharge_employee/$1');
         $routes->get('logout', 'End_Users\UserLoginController::logout_user');
         $routes->get('set-appointment', 'End_Users\ClientAppointment::registered_client');
         $routes->get('passed-appointment', 'End_Users\ClientAppointment::get_passed_appointment');

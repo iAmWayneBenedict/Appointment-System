@@ -64,6 +64,17 @@
 		}
 	}
 }
+
+.calendar-set-appointment {
+	// .calendar-grid {
+	.table {
+		td div {
+			height: auto !important;
+			// display: none !important;
+		}
+	}
+	// }
+}
 .pending-legend,
 .approved-legend {
 	margin-bottom: 1rem;
