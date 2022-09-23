@@ -57,6 +57,11 @@ $routes->group('user', static function ($routes) {
         $routes->get('passed-appointment', 'End_Users\ClientAppointment::get_passed_appointment');
         $routes->post('reschedule-appointment', 'End_Users\ClientAppointment::reschedule_appointment');
         $routes->get('delete-passed-appointment/(:any)', 'End_Users\ClientAppointment::delete_passed_apointment/$1');
+
+        $routes->match(['get', 'post'], 'cancel-appointment/(:any)', 'End_Users\ClientAppointment::cancel_appointment/$1');
+        $routes->post('edit-appointment', 'End_Users\ClientAppointment::edit_appointment');
+        $routes->get('pending-appointment', 'End_Users\ClientAppointment::get_pending_appointment');
+        $routes->get('approved-appointment', 'End_Users\ClientAppointment::get_approved_appointment');
     });
 
     $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {

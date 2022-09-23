@@ -7,6 +7,7 @@ use App\Models\Admin\ManageAppointmentModel;
 use App\Libraries\OneWaySMS;
 use App\Libraries\greetings;
 use CodeIgniter\I18n\Time;
+use App\Libraries\OnAppNotification;
 
 use function PHPUnit\Framework\isFalse;
 
@@ -16,6 +17,7 @@ class ManageAppointment extends BaseController
     protected $send_sms;
     protected $greet;
     protected $time;
+    protected $appNotif;
 
     function __construct()
     {
@@ -23,6 +25,7 @@ class ManageAppointment extends BaseController
         $this->send_sms = new OneWaySMS();
         $this->greet = new greetings();
         $this->time = new Time();
+        $this->appNotif = new OnAppNotification();
     }
 
     /**
@@ -138,8 +141,10 @@ class ManageAppointment extends BaseController
         $message .= "Scheduled on : {$sched} \n";
         $message .= "Purpose : {$appointment_data->purpose}";
 
-        //enable this sms later ⬇⬇⬇⬇⬇⬇
+        //on app notification
+        $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
 
+        //enable this sms later ⬇⬇⬇⬇⬇⬇
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
         //if sms is not sent execute this code
@@ -179,6 +184,8 @@ class ManageAppointment extends BaseController
         $message = "{$this->greet->greet()} {$appointment_data->name} Your Appointment had been rejected \n";
         $message .= "Please Select another date and time schedule for your appointment";
 
+        //on app notification
+        $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
         //enable this sms later ⬇⬇⬇⬇⬇⬇
 
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
@@ -258,6 +265,8 @@ class ManageAppointment extends BaseController
             $message .= "reminder from Agriculture Office of Bato \n";
             $message .= "Appointment ID: {$result->id}";
 
+            //on app notification
+            $this->appNotif->sent_app_notification($result->user_id, $message);
             //enable this sms later ⬇⬇⬇⬇⬇⬇
 
             //$sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
@@ -299,7 +308,10 @@ class ManageAppointment extends BaseController
             $message = "{$this->greet->greet()} {$approved->name} Your appointment has passed.\n";
             $message .= "Scheduled: {$sched}, Go to your account to reschedule or removed it\n";
             $message .= "reminder from Agriculture Office of Bato \n";
-            $message .= "Appointment ID: {$approved->id}";            
+            $message .= "Appointment ID: {$approved->id}";  
+            
+            //on app notification
+            $this->appNotif->sent_app_notification($approved->user_id, $message);
             
             //enable this sms later ⬇⬇⬇⬇⬇⬇
 

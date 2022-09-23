@@ -51,6 +51,39 @@ class UserAppointmentModel extends Model {
         return true;
     }
 
+    public function update_appointment($user_id, array $data){
+        
+        $this->database->table('set_appointments')
+            ->where('user_id', $user_id)
+            ->update($data);
+        
+        return true;
+    }
+
+    //retrieve client's pending appointment
+    public function get_pending($user_id){
+
+        $query = $this->database->table('pending_appointments')
+            ->select('*')
+            ->join('set_appointments', 'set_appointments.id = pending_appointments.set_appointment_id')
+            ->where('user_id', $user_id)
+            ->get();
+
+        return $query->getResultObject();
+    }
+
+    //retrieve client's approved appointment
+    public function get_approved($user_id){
+
+        $query = $this->database->table('pending_appointments')
+            ->select('*')
+            ->join('set_appointments', 'set_appointments.id = pending_appointments.set_appointment_id')
+            ->where('user_id', $user_id)
+            ->get();
+
+        return $query->getResultObject();
+    }
+
     //retrieve passed approved appointment
     public function get_passed_appointment($user_id){
 

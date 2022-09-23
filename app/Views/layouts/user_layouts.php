@@ -46,7 +46,6 @@
     <?php
         }
     ?>
-    ?>
 
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">

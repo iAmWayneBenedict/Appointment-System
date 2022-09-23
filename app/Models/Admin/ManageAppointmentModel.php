@@ -158,7 +158,7 @@ class ManageAppointmentModel extends Model
     public function get_upcoming_appointments($advanceDate){
 
         $query = $this->db_conn->table('approved_appointments')
-            ->select('id, name, contact_number, schedule')
+            ->select('*')
             ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
             ->where("DATE_FORMAT(schedule, '%Y-%m-%d %H')", $advanceDate)
             ->get();
