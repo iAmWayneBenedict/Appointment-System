@@ -204,7 +204,6 @@
 
             let approvedDates = approvedData.getAllDates
             // populate the remaining weeks
-            console.log(firstDay)
             for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
                 if (date.getUTCDate() === days && date.getMonth() === month) {
 
@@ -256,10 +255,11 @@
                         }
                     }
 
-                    if (hasApprovedDate) continue;
-                    // Date today
+                    if (!hasApprovedDate) {
+                        // Date today
 
-                    currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                        currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                    }
 
                 }
 

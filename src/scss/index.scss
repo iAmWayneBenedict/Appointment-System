@@ -68,9 +68,16 @@
 .calendar-set-appointment {
 	// .calendar-grid {
 	.table {
-		td div {
-			height: auto !important;
-			// display: none !important;
+		th {
+			width: calc(100% / 7);
+		}
+
+		td {
+			width: calc(100% / 7);
+			div {
+				height: auto !important;
+				// display: none !important;
+			}
 		}
 	}
 	// }

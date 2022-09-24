@@ -10784,6 +10784,12 @@ body {
   padding: 0 10px;
 }
 
+.calendar-set-appointment .table th {
+  width: 14.2857142857%;
+}
+.calendar-set-appointment .table td {
+  width: 14.2857142857%;
+}
 .calendar-set-appointment .table td div {
   height: auto !important;
 }
