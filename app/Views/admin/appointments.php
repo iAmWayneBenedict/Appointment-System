@@ -19,6 +19,7 @@
                     <th scope="col">User Type</th>
                     <th scope="col">Schedule</th>
                     <th scope="col">Date Created</th>
+                    <th scope="col">Options</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,7 @@
                 foreach ($pending as $data) {
                 ?>
                     <tr>
+                        <td><?= $data->id ?></td>
                         <td><?= $data->user_type ?></td>
                         <td><?= $data->schedule ?></td>
                         <td><?= $data->date_created ?></td>

@@ -88,7 +88,7 @@ class EmployeeModel extends Model
 
         $last_id = $this->db_connect->insertID();
 
-        foreach($incharge_to as $incharge){
+        foreach ($incharge_to as $incharge) {
             $this->db_connect->table('emp_incharge')
                 ->insert([
                     'emp_id' => $last_id,
@@ -106,8 +106,9 @@ class EmployeeModel extends Model
      * @param purpose : use to find all employee inchrage to it
      * @return array:$data array objects employee data
      */
-    public function get_incharge_employee($purpose){
-        
+    public function get_incharge_employee($purpose)
+    {
+
         $query = $this->db_connect->table('emp_incharge')
             ->select('*')
             ->join('employee', 'employee.id = emp_incharge.emp_id')
@@ -118,5 +119,62 @@ class EmployeeModel extends Model
         return $data;
     }
 
+    public function update_employee($id, $name, $role, $incharge_to)
+    {
+        $builder = $this->db_connect->table('employee');
 
+        $response = $builder->where('id', $id)->update([
+            'name' => $name,
+            'designation' => $role
+        ]);
+
+        $this->delete_employee_incharge($id);
+
+        foreach ($incharge_to as $incharge) {
+            $this->db_connect->table('emp_incharge')
+                ->insert([
+                    'emp_id' => $id,
+                    'incharge_to' => $incharge
+                ]);
+        }
+
+        return true;
+    }
+
+    public function delete_employee($id)
+    {
+        $builder = $this->db_connect->table('employee');
+
+        $response = $builder->where('id', $id)->delete();
+        $this->delete_employee_incharge($id);
+
+
+        return $response;
+    }
+
+    private function delete_employee_incharge($id)
+    {
+        $this->db_connect->table('emp_incharge')
+            ->where('emp_id', $id)
+            ->delete();
+    }
+
+    public function get_employee($id)
+    {
+        $builder = $this->db_connect->table('employee')->join('emp_incharge', 'emp_incharge.emp_id = employee.id', 'left');
+        $query   = $builder->select('id, name, designation, incharge_to')->getWhere(['id' => $id]);
+        $response = $query->getResultArray();
+
+        return $response;
+    }
+
+    public function get_all_incharge_to()
+    {
+        $query = $this->db_connect->table('emp_incharge')
+            ->select('incharge_to')
+            ->get();
+
+        $incharge_data = $query->getResultArray();
+        return $incharge_data;
+    }
 }

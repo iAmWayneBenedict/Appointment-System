@@ -10784,6 +10784,16 @@ body {
   padding: 0 10px;
 }
 
+.calendar-set-appointment .table th {
+  width: 14.2857142857%;
+}
+.calendar-set-appointment .table td {
+  width: 14.2857142857%;
+}
+.calendar-set-appointment .table td div {
+  height: auto !important;
+}
+
 .pending-legend,
 .approved-legend {
   margin-bottom: 1rem;
@@ -11030,6 +11040,19 @@ td.active {
 
 .font-recoleta {
   font-family: "Recoleta", sans-serif;
+}
+
+.choose-designation {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.incharge-to-list-container {
+  max-height: 30rem;
+  overflow-y: scroll;
 }
 
 .center-con {

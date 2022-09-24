@@ -7,7 +7,8 @@ use App\Controllers\BaseController;
 use App\Models\UserModel;
 use PHPUnit\Util\Json;
 
-class ManageAccount extends BaseController{
+class ManageAccount extends BaseController
+{
 
     protected $userModel;
     protected $session;
@@ -24,20 +25,21 @@ class ManageAccount extends BaseController{
     }
 
     //display account page with data
-    public function account_page(){
+    public function account_page()
+    {
 
         $user_id = $this->session->get('id');
 
         $data['userData'] = $this->userModel->get_user_info($user_id);
 
         return view('end-user/dashboard/my-account', $data);
-
     }
 
     /**
      * Function: Update user basics information 
      */
-    public function update_account(){
+    public function update_account()
+    {
 
         $validate = $this->validate([
             'name' => [
@@ -48,7 +50,7 @@ class ManageAccount extends BaseController{
                 'rules' => 'required'
             ],
             'c_number' => [
-                'label' => 'Contact Number', 
+                'label' => 'Contact Number',
                 'rules' => 'required|regex_match[/^(09)\d{9}$/]'
             ],
             'email' => [
@@ -57,10 +59,10 @@ class ManageAccount extends BaseController{
             'social_pos' => [
                 'label' => 'Social Position',
                 'rules' => 'required'
-            ], 
+            ],
         ]);
 
-        if(!$validate){
+        if (!$validate) {
             return json_encode($this->validation->getErrors());
         }
 
@@ -74,7 +76,7 @@ class ManageAccount extends BaseController{
             'social_pos'     => $this->request->getPost('social_pos'),
         ];
 
-        if(!$this->userModel->update_user_info($data, $user_id)){
+        if (!$this->userModel->update_user_info($data, $user_id)) {
             return json_encode([
                 'code' => 0,
                 'msg' => 'Please try again later!'
@@ -85,7 +87,11 @@ class ManageAccount extends BaseController{
             'code' => 1,
             'msg' => 'Updated Successfuly'
         ]);
+    }
 
+    function delete_user($user_code_id)
+    {
+        $this->userModel->delete_user($user_code_id);
     }
 
     /**
@@ -95,7 +101,8 @@ class ManageAccount extends BaseController{
      * @return json: validation errors
      *               code and msg
      */
-    public function update_password(){
+    public function update_password()
+    {
 
         $validate = $this->validate([
             'o_password' => [
@@ -111,7 +118,7 @@ class ManageAccount extends BaseController{
             ],
         ]);
 
-        if(!$validate){
+        if (!$validate) {
             return json_encode($this->validation->getErrors());
         }
 
@@ -121,11 +128,11 @@ class ManageAccount extends BaseController{
         $old_password = $this->request->getPost('o_password');
         $new_password = password_hash($this->request->getPost('n_password'), PASSWORD_DEFAULT);
 
-        if(!password_verify($old_password, $user_data->password)){
+        if (!password_verify($old_password, $user_data->password)) {
             return json_encode('Current password not match');
         }
 
-        if(!$this->userModel->update_user_info(['password' => $new_password], $user_id)){
+        if (!$this->userModel->update_user_info(['password' => $new_password], $user_id)) {
             return json_encode([
                 'code' => 0,
                 'msg' => 'Please try again later!'
@@ -137,5 +144,4 @@ class ManageAccount extends BaseController{
             'msg' => 'Password Updated'
         ]);
     }
-
 }

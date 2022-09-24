@@ -52,6 +52,7 @@ $routes->group('user', static function ($routes) {
     $routes->group('dashboard', ['filter' => 'userLoginFilter'], static function ($routes) {
         $routes->get('/', 'End_Users\UserController::dashboard');
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
+        $routes->get('get-incharge-employee/(:any)', 'Employee\Employee::get_incharge_employee/$1');
         $routes->get('logout', 'End_Users\UserLoginController::logout_user');
         $routes->get('set-appointment', 'End_Users\ClientAppointment::registered_client');
         $routes->get('passed-appointment', 'End_Users\ClientAppointment::get_passed_appointment');
@@ -81,11 +82,14 @@ $routes->group('admin', static function ($routes) {
     $routes->post('admin-login', 'Admin\Admin::admin_login');
     $routes->post('verify-admin', 'Admin\Admin::verify_admin');
 
-    $routes->group('dashboard', ['filter' => 'adminLoginFilter'],static function ($routes) {
+    $routes->group('dashboard', ['filter' => 'adminLoginFilter'], static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
         $routes->get('employees', 'Admin\Admin::employees');
         $routes->get('send-message', 'Admin\Admin::sendMessage');
+
+        //users
         $routes->get('users', 'Admin\Admin::users');
+        $routes->get('delete-user/(:num)', 'End_Users\ManageAccount::delete_user/$1');
 
         //notifications
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
@@ -109,9 +113,13 @@ $routes->group('admin', static function ($routes) {
 
         //employee
         $routes->post('add-employee', 'Employee\EmployeeScanner::add_employee');
+        $routes->get('get-employee/(:num)', 'Employee\Employee::get_employee/$1');
+        $routes->post('update-employee', 'Employee\EmployeeScanner::update_employee');
+        $routes->get('delete-employee/(:num)', 'Employee\EmployeeScanner::delete_employee/$1');
+        $routes->get('get-all-incharge-to', 'Employee\Employee::get_all_incharge_to');
 
         //stocks
-        $routes->get('stock-management','Admin\StocksController::index');
+        $routes->get('stock-management', 'Admin\StocksController::index');
         $routes->post('add-stock', 'Admin\StocksController::add_stock');
         $routes->get('get-all-stocks', 'Admin\StocksController::display_stocks');
         $routes->get('get-a-stock/(:any)', 'Admin\StocksController::display_update_form/$1');

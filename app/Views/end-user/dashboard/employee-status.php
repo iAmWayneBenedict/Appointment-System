@@ -17,6 +17,7 @@
                 <tr>
                     <!-- <th scope="col">ID</th> -->
                     <th scope="col">Name</th>
+                    <th scope="col">Designation</th>
                     <th scope="col">Status</th>
                     <th scope="col">Log Time</th>
                 </tr>

@@ -86,10 +86,6 @@
                     </span>
                     <div class="card-body">
                         <p class="card-text">
-                        <div class="pending-legend">
-                            <p>Pending Appointments</p>
-                            <div></div>
-                        </div>
                         <div class="approved-legend">
                             <p>Approved Appointments</p>
                             <div></div>
@@ -208,7 +204,6 @@
 
             let approvedDates = approvedData.getAllDates
             // populate the remaining weeks
-            console.log(firstDay)
             for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
                 if (date.getUTCDate() === days && date.getMonth() === month) {
 
@@ -229,7 +224,7 @@
                         if (approvedDateMonth === month + 1 && approvedDateDay === days) {
                             hasApprovedDate = true
                             hasApprovedAlert = true
-                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
+                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
                         }
                     }
 
@@ -260,10 +255,11 @@
                         }
                     }
 
-                    if (hasApprovedDate) continue;
-                    // Date today
+                    if (!hasApprovedDate) {
+                        // Date today
 
-                    currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                        currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                    }
 
                 }
 
