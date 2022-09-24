@@ -151,7 +151,8 @@ class ClientAppointment extends BaseController
      Function: Retrieve Client's Pending Appointment
      * Description : client can view pending appointment 
      */
-    public function get_pending_appointment(){
+    public function get_pending_appointment()
+    {
 
         $user_id = $this->session->get('id');
         $data['myAppointment'] = $this->userAppointment->get_pending($user_id);
@@ -161,7 +162,8 @@ class ClientAppointment extends BaseController
      Function: Retrieve Client's Approved Appointment
      * Description : client can view pending appointment 
      */
-    public function get_approved_appointment(){
+    public function get_approved_appointment()
+    {
 
         $user_id = $this->session->get('id');
         $data['myAppointment'] = $this->userAppointment->get_approved($user_id);
@@ -173,7 +175,8 @@ class ClientAppointment extends BaseController
      *              Data client can modify such as schedule, purpose and contact Number
      * @return json:respone 
      */
-    public function edit_appointment(){
+    public function edit_appointment()
+    {
 
         $validate = $this->validate([
             'c_number' => [
@@ -190,7 +193,7 @@ class ClientAppointment extends BaseController
             ],
         ]);
 
-        if(!$validate){
+        if (!$validate) {
             return json_encode([
                 'errors' => $this->validation->getErrors(),
                 'code' => 0
@@ -219,7 +222,7 @@ class ClientAppointment extends BaseController
         $subtractedTime = date('Y-m-d', strtotime($subTime));
         $currentTime = date('Y-m-d', strtotime($curTime));
 
-        if($currentTime >= $subtractedTime){
+        if ($currentTime >= $subtractedTime) {
             return json_encode([
                 'code' => 0,
                 'errors'  => 'Appointment should be 3 days or more before schedule'
@@ -235,7 +238,7 @@ class ClientAppointment extends BaseController
             'schedule' => $formated_sched,
         ];
 
-        if(!$this->userAppointment->update_appointment($current_user, $data)){
+        if (!$this->userAppointment->update_appointment($current_user, $data)) {
             return json_encode([
                 'code' => 0,
                 'errors' => 'Sorry!, Please make a try later, Something went worng in our server'
@@ -246,7 +249,6 @@ class ClientAppointment extends BaseController
             'code' => 1,
             'msg' => "Appointment Updated\nPlease wait for a Text message for an update on your appointment"
         ]);
-
     }
 
     //get and display passed appointments
@@ -286,11 +288,7 @@ class ClientAppointment extends BaseController
         $subtractedTime = date('Y-m-d', strtotime($subTime));
         $currentTime = date('Y-m-d', strtotime($curTime));
 
-<<<<<<< HEAD
-        if (!$currentTime <= $subtractedTime) {
-=======
-        if($currentTime >= $subtractedTime){
->>>>>>> f77bd1c30b21ef85616aeb20b2b3f3fc4d451847
+        if ($currentTime >= $subtractedTime) {
             return json_encode([
                 'code' => 0,
                 'msg'  => 'Appointment should be 3 days or more before schedule'
@@ -321,9 +319,6 @@ class ClientAppointment extends BaseController
         session()->setFlashdata('success', 'Passed Appointment Removed');
         return redirect('user/dashboard');
     }
-<<<<<<< HEAD
-}
-=======
 
     /**
      Function: Cancel Appointment
@@ -333,14 +328,12 @@ class ClientAppointment extends BaseController
      * @param appointment_id : appointment unique identification
      * @return session : flash reminder
      */
-    public function cancel_appointment($appointment_id = NULL){
+    public function cancel_appointment($appointment_id = NULL)
+    {
 
         $this->userAppointment->delete_appointment($appointment_id);
 
         session()->setFlashdata('success', 'Appointment Canceles');
         return redirect('user/dashboard');
     }
-
-
 }
->>>>>>> f77bd1c30b21ef85616aeb20b2b3f3fc4d451847
