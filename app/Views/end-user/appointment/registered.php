@@ -25,13 +25,12 @@
                         <input type="text" class="form-control" name="address" value="<?= $userData->address; ?>" id="address" placeholder="address" readonly>
                     </div>
                     <div class="pb-3">
-                        <label for="c_number" class="form-label">Contact number</label>
-                        <input type="text" class="form-control" name="c_number" value="<?= $userData->contact_number; ?>" id="c_number" placeholder="Contact Number" readonly>
-                    </div>
-
-                    <div class="pb-3">
                         <label for="social_pos" class="form-label">Social Position</label>
                         <input type="text" class="form-control" name="social_pos" value="<?= $userData->social_pos; ?>" id="social_pos" placeholder="Social Position" readonly>
+                    </div>
+                    <div class="pb-3">
+                        <label for="c_number" class="form-label">Contact number</label>
+                        <input type="text" class="form-control" name="c_number" value="<?= $userData->contact_number; ?>" id="c_number" placeholder="Contact Number">
                     </div>
                     <div class="pb-3">
                         <label for="purpose" class="form-label">Purpose</label>

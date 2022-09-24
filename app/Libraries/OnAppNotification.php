@@ -38,5 +38,15 @@ class OnAppNotification {
     public function delete_message($notification_id){
         $this->notif_model->delete($notification_id);
     }
+
+    public function get_client_notification($client_id = NULL){
+
+        $data['notifications'] = $this->notif_model->get_notifications($client_id);
+
+       // return view('notification page or something', $data);
+                        //OR return data only
+        // return $data;
+
+    }
     
 }
