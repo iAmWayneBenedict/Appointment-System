@@ -61,8 +61,9 @@ $routes->group('user', static function ($routes) {
 
         $routes->match(['get', 'post'], 'cancel-appointment/(:any)', 'End_Users\ClientAppointment::cancel_appointment/$1');
         $routes->post('edit-appointment', 'End_Users\ClientAppointment::edit_appointment');
-        $routes->get('pending-appointment', 'End_Users\ClientAppointment::get_pending_appointment');
-        $routes->get('approved-appointment', 'End_Users\ClientAppointment::get_approved_appointment');
+        $routes->get('pending-appointment', 'End_Users\ClientAppointment::pending_appointment');
+        $routes->get('approved-appointment', 'End_Users\ClientAppointment::approved_appointment');
+        $routes->get('appointment-summary/(:num)', 'End_Users\ClientAppointment::approved_appointment/$1');
     });
 
     $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {
@@ -106,6 +107,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('approved-appointments/schedule', 'Admin\Admin::schedule');
         $routes->get('get-appointment-details/(:num)', 'Admin\ManageAppointment::get_appointment_details/$1');
         $routes->get('get-all-approved-appointments', 'Admin\ManageAppointment::get_all_approved_appointments');
+        $routes->get('get-all-events', 'Admin\ManageAppointment::get_all_events');
         $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');

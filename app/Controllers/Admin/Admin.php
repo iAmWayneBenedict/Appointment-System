@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\Admin\NotificationsModel;
 use App\Models\Admin\AdminModel;
+use App\Models\Admin\ManageAppointmentModel;
 use App\Models\UserModel;
 
 class Admin extends BaseController
@@ -19,12 +20,19 @@ class Admin extends BaseController
         $this->notification = new NotificationsModel();
         $this->admin_model = new AdminModel();
         $this->user_model = new UserModel();
+        $this->manage_appointment = new ManageAppointmentModel();
         $this->session = session();
     }
 
     public function index()
     {
-        return view('admin/dashboard');
+        $approved = $this->manage_appointment->get_approved_appointment();
+        $pending = $this->manage_appointment->get_pending_appointment();
+
+        $data['approvedCount'] = count($approved);
+        $data['pendingCount'] = count($pending);
+        $data['total'] = $data['approvedCount'] + $data['pendingCount'];
+        return view('admin/dashboard', $data);
     }
 
     public function login()

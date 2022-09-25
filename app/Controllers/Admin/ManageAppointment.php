@@ -83,6 +83,34 @@ class ManageAppointment extends BaseController
     }
 
     /**
+     * Function: Get Events Data
+     * Description: Display all the pending appointments into views
+     * @return JSON with data 
+     */
+
+    public function get_all_events()
+    {
+        $data['pending'] = $this->manage_appointment->get_pending_appointment();
+        $data['approved'] = $this->manage_appointment->get_approved_appointment();
+
+        // echo '<pre>';
+        // print_r($data);
+        // echo '<pre>';
+        if ($data['pending']) {
+            return json_encode([
+                'code' => 1,
+                'data' => $data,
+                'msg' => "Successfully retrieved data"
+            ]);
+        } else {
+            return json_encode([
+                'code' => 1,
+                'msg' => "Cannot retrieve data",
+            ]);
+        }
+    }
+
+    /**
      * Function: Display
      * Description: Display spesific data of appointments base what admin choose
      *              to review
@@ -250,11 +278,11 @@ class ManageAppointment extends BaseController
 
         $resuls = $this->manage_appointment->get_upcoming_appointments($advanceCurrentTime);
 
-        if(empty($resuls)){
+        if (empty($resuls)) {
             return;
         }
 
-        foreach($resuls as $result){
+        foreach ($resuls as $result) {
 
             //format the date in SMS for better readability
             $date = date_create($result->schedule);
@@ -288,7 +316,8 @@ class ManageAppointment extends BaseController
      *              the system will send sms to them that they need to reschedule
                     this function will call every hour in cron job
      */
-    public function check_resched_appointment(){
+    public function check_resched_appointment()
+    {
 
         $auth = $this->request->getGet('auth');
         $authKey = 'agriculturist_2022';
@@ -308,11 +337,11 @@ class ManageAppointment extends BaseController
             $message = "{$this->greet->greet()} {$approved->name} Your appointment has passed.\n";
             $message .= "Scheduled: {$sched}, Go to your account to reschedule or removed it\n";
             $message .= "reminder from Agriculture Office of Bato \n";
-            $message .= "Appointment ID: {$approved->id}";  
-            
+            $message .= "Appointment ID: {$approved->id}";
+
             //on app notification
             $this->appNotif->sent_app_notification($approved->user_id, $message);
-            
+
             //enable this sms later ⬇⬇⬇⬇⬇⬇
 
             //$sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
@@ -321,10 +350,9 @@ class ManageAppointment extends BaseController
             // if($sms_response['code'] == 0 ){
             //     array_push($res, $sms_response['message'])
             // }
-            
+
             $this->manage_appointment->set_passed($approved->id);
             return $message;
-
         }
         // return json_encode($res); 
 
@@ -338,7 +366,8 @@ class ManageAppointment extends BaseController
      *              it will compare to current time or if it is passed  = > one day
                     This function will call via Cron job every day at 12am
      */
-    public function removed_passed_appointments(){
+    public function removed_passed_appointments()
+    {
 
         $auth = $this->request->getGet('auth');
         $authKey = 'agriculturist_2022';
@@ -356,7 +385,7 @@ class ManageAppointment extends BaseController
             }
         }
 
-        foreach ($guest_passed_appointments as $guest){
+        foreach ($guest_passed_appointments as $guest) {
             if (strtotime($guest->schedule) < strtotime('-3 day')) {
                 $this->manage_appointment->remove_appointment($guest->id);
             }

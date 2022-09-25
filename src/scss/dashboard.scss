@@ -30,3 +30,13 @@
 	max-height: 30rem;
 	overflow-y: scroll;
 }
+
+.dashboard-icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	color: white;
+}

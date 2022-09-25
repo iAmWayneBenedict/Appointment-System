@@ -7,6 +7,7 @@ use App\Libraries\NumberFormater;
 use App\Libraries\OneWaySMS;
 
 use App\Controllers\BaseController;
+use App\Controllers\End_Users\ClientAppointment;
 
 class UserController extends BaseController
 {
@@ -20,6 +21,7 @@ class UserController extends BaseController
         $this->user_model = new UserModel();
         $this->validation = \Config\Services::validation();
         $this->send_sms = new OneWaySMS();
+        $this->client_appointment = new ClientAppointment();
         // $this->number_formater = new NumberFormater();
     }
 
@@ -152,7 +154,9 @@ class UserController extends BaseController
 
     public function dashboard()
     {
-        return view('end-user/dashboard/dashboard');
+        $data['approved'] = $this->client_appointment->get_approved_appointment();
+        $data['pending'] = $this->client_appointment->get_pending_appointment();
+        return view('end-user/dashboard/dashboard', $data);
     }
     public function employee_status()
     {

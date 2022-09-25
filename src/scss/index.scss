@@ -82,6 +82,8 @@
 	}
 	// }
 }
+.event-legend,
+.holiday-legend,
 .pending-legend,
 .approved-legend {
 	margin-bottom: 1rem;
@@ -93,6 +95,18 @@
 	div {
 		width: 20px !important;
 		height: 20px !important;
+	}
+}
+
+.event-legend {
+	div {
+		background-color: rgb(118, 255, 118);
+	}
+}
+
+.holiday-legend {
+	div {
+		background-color: red;
 	}
 }
 

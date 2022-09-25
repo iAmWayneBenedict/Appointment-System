@@ -10794,19 +10794,33 @@ body {
   height: auto !important;
 }
 
+.event-legend,
+.holiday-legend,
 .pending-legend,
 .approved-legend {
   margin-bottom: 1rem;
 }
+.event-legend p,
+.holiday-legend p,
 .pending-legend p,
 .approved-legend p {
   font-weight: 600;
   margin: 0;
 }
+.event-legend div,
+.holiday-legend div,
 .pending-legend div,
 .approved-legend div {
   width: 20px !important;
   height: 20px !important;
+}
+
+.event-legend div {
+  background-color: rgb(118, 255, 118);
+}
+
+.holiday-legend div {
+  background-color: red;
 }
 
 .pending-legend div {
@@ -11053,6 +11067,16 @@ td.active {
 .incharge-to-list-container {
   max-height: 30rem;
   overflow-y: scroll;
+}
+
+.dashboard-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  color: white;
 }
 
 .center-con {
