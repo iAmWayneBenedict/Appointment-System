@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\Appointment\UserAppointmentModel;
 use App\Models\UserModel;
 use CodeIgniter\I18n\Time;
+use App\Models\Admin\AdminReportModel;
+use App\Models\Admin\ManageAppointmentModel;
 
 class ClientAppointment extends BaseController
 {
@@ -133,14 +135,15 @@ class ClientAppointment extends BaseController
             'schedule' => $formated_sched,
             'user_type' => $_user
         ];
-
-        if (!$this->userAppointment->insert_appointment($data)) {
+        
+        if(!$this->userAppointment->insert_appointment($data)){
             return json_encode([
                 'code' => 0,
                 'errors' => 'Sorry!, Please make a try later, Something went worng in our server'
             ]);
         }
 
+        AdminReportModel::increment_appointment_made();
         return json_encode([
             'code' => 1,
             'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment"
@@ -320,16 +323,51 @@ class ClientAppointment extends BaseController
         return redirect('user/dashboard');
     }
 
+    //delete appointment base from ID if it is already done and insert it on report table
+    public function delete1_passed_apointment($appointment_id = NULL){
+        
+        $mng = new ManageAppointmentModel();
+        $info = $mng->get_appointment_info($appointment_id);
+
+        $data = [
+            'schedule'    => $info->schedule,
+            'client_name' => $info->name,
+            'social_pos'  => $info->social_pos,
+            'purpose'     => $info->purpose,
+            'state'       => 'done'
+        ];
+
+        AdminReportModel::insert_report($data);
+
+        $this->userAppointment->delete_appointment($appointment_id);
+
+        session()->setFlashdata('success', 'Passed Appointment Removed');
+        return redirect('user/dashboard');
+    }
+
     /**
      Function: Cancel Appointment
      * Description: client appointment cancel for both pending and approved
      *              appointment, if the client cancel the appointment it will remove 
-     *              database and must include it on report
+     *              database and  include it on report
      * @param appointment_id : appointment unique identification
      * @return session : flash reminder
      */
     public function cancel_appointment($appointment_id = NULL)
     {
+
+        $mng = new ManageAppointmentModel();
+        $info = $mng->get_appointment_info($appointment_id);
+
+        $data = [
+            'schedule'    => $info->schedule,
+            'client_name' => $info->name,
+            'social_pos'  => $info->social_pos,
+            'purpose'     => $info->purpose,
+            'state'       => 'canceled'
+        ];
+
+        AdminReportModel::insert_report($data);
 
         $this->userAppointment->delete_appointment($appointment_id);
 

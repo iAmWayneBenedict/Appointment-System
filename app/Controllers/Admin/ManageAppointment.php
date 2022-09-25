@@ -8,6 +8,7 @@ use App\Libraries\OneWaySMS;
 use App\Libraries\greetings;
 use CodeIgniter\I18n\Time;
 use App\Libraries\OnAppNotification;
+use App\Models\Admin\AdminReportModel;
 
 use function PHPUnit\Framework\isFalse;
 
@@ -29,7 +30,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-     * Function: Display
+     Function: PENDING APPOINTMENTS DISPLAY
      * Description: Display all the pending appointments into views
      * @return view with data 
      */
@@ -45,7 +46,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-     * Function: Display
+     Function: APPROVED APPOINTMENTS DISPLAY
      * Description: Display all the pending appointments into views
      * @return view with data 
      */
@@ -55,7 +56,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-     * Function: Get Approved Data
+     Function: GET ALL APPROVED APPOINTMENTS
      * Description: Display all the pending appointments into views
      * @return JSON with data 
      */
@@ -83,7 +84,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-     * Function: Display
+     Function: REVIEW APPOINTMENT
      * Description: Display spesific data of appointments base what admin choose
      *              to review
      * @param appointment_id : 
@@ -99,7 +100,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-     * Function: Display
+     Function: GET APPOINTMENT DETAILS
      * Description: Display spesific data of appointments base what admin choose
      *              to review
      * @param appointment_id : 
@@ -115,7 +116,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-     * Function: Approve Appointment
+     Function: APPROVED APPOINTMENT 
      * Desciption: approve reviewed appointment then send the clinet a SMS
      * @return json : code 1 for success and 0 for not
      */
@@ -163,7 +164,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-     * Function: remove
+     Function: REJECT APPOINTMENT
      * Description: admin reject the appoinment and send a sms notification
      *              the appointment will be deleted on database
      * @return json : : code 1 for success and 0 for not
@@ -205,10 +206,26 @@ class ManageAppointment extends BaseController
         ]);
     }
 
-    // use when appointment is done manaually by admin 
-    //@param required appointment ID
+    /**
+     FUNCTION: MARK DONE APPOINTMENT
+     * use when appointment is done manaually by admin after mark it done
+     * the information of appointment will store to database for report purposes
+     * @param required appointment ID
+     */
     public function mark_as_done($appointment_id = NULL)
     {
+        $info = $this->manage_appointment->get_appointment_info($appointment_id);
+
+        $data = [
+            'schedule'    => $info->schedule,
+            'client_name' => $info->name,
+            'social_pos'  => $info->social_pos,
+            'purpose'     => $info->purpose,
+            'state'       => 'done'
+        ];
+
+        AdminReportModel::insert_report($data);
+
         $this->manage_appointment->remove_appointment($appointment_id);
         session()->setFlashdata('done', 'Appointment Is Done');
         return redirect()->back();
@@ -216,7 +233,7 @@ class ManageAppointment extends BaseController
 
 
     /**
-       Function: reminder auto send SMS
+       Function: SMS INCOMING APPOINTMENTS
      * Description: send a sms reminder 1 hour before the appointment schedule
      *              it takes all approved appointments and checks all schedule 
      *              that will match to current time plus hour. 
@@ -282,7 +299,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-        Function: Notify Client
+        Function: CHECKED RESCHED APPOINTMENT
      * Description: This is to notify client of thier passed appointments after 5 hours
      *              that thier appointment is not being done.
      *              the system will send sms to them that they need to reschedule
@@ -306,7 +323,7 @@ class ManageAppointment extends BaseController
             $sched = date_format($date, 'F d, Y g:i A');
 
             $message = "{$this->greet->greet()} {$approved->name} Your appointment has passed.\n";
-            $message .= "Scheduled: {$sched}, Go to your account to reschedule or removed it\n";
+            $message .= "Scheduled: {$sched}, Check it on your account page\n";
             $message .= "reminder from Agriculture Office of Bato \n";
             $message .= "Appointment ID: {$approved->id}";  
             
@@ -331,7 +348,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-       Function: Remove appointments
+       Function: REMOVED PASSED APPOINTMENTS
      * Description: removed appointment if it schedule is passed already after a day,
      *              it will automatic remove approved appointments only 
      *              for example if the schedule is sept 09 and it not marked as done

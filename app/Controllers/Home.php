@@ -17,7 +17,7 @@ class Home extends BaseController
 
     public function index()
     {
-        return view('test-sms');
+        return view('components/reportPdf');
     }
 
     public function home()

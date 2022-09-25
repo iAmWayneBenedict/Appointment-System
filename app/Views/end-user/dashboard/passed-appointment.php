@@ -28,7 +28,8 @@ foreach($myAppointment as $appointment){
         <label for="">Reschedule</label>
         <input type="datetime-local" name="new_sched" id="new_sched" required>
         <input type="submit" value="Resched">
-        <a href="<?= base_url("user/dashboard/delete-passed-appointment/{$appointment->id}") ?>">Delete</a>
+        <a href="<?= base_url("user/dashboard/delete-passed-appointment/{$appointment->id}") ?>">Remove</a>
+        <a href="<?= base_url("user/dashboard/delete1-passed-appointment/{$appointment->id}") ?>">Already Done</a>
     </form>
 
 <?php
