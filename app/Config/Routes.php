@@ -36,9 +36,8 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::home');
-$routes->get('/test-sms', 'Home::index');
-$routes->post('/test-sms', 'Home::test_sms');
-
+// $routes->get('/test-pdf', 'Home::index');
+// $routes->post('/test-sms', 'Home::test_sms');
 
 
 $routes->group('user', static function ($routes) {
@@ -58,6 +57,7 @@ $routes->group('user', static function ($routes) {
         $routes->get('passed-appointment', 'End_Users\ClientAppointment::get_passed_appointment');
         $routes->post('reschedule-appointment', 'End_Users\ClientAppointment::reschedule_appointment');
         $routes->get('delete-passed-appointment/(:any)', 'End_Users\ClientAppointment::delete_passed_apointment/$1');
+        $routes->get('delete1-passed-appointment/(:any)', 'End_Users\ClientAppointment::delete1_passed_apointment/$1');
 
         $routes->match(['get', 'post'], 'cancel-appointment/(:any)', 'End_Users\ClientAppointment::cancel_appointment/$1');
         $routes->post('edit-appointment', 'End_Users\ClientAppointment::edit_appointment');
@@ -131,6 +131,12 @@ $routes->group('admin', static function ($routes) {
         $routes->get('get-all-release-dates', 'Admin\StocksController::get_all_release_dates');
         $routes->post('set-release-date', 'Admin\StocksController::set_release');
         $routes->post('update-release-date', 'Admin\StocksController::update_release');
+
+        //report
+        $routes->get('report', 'Admin\AdminReport::report_template');
+        $routes->post('preview', 'Admin\AdminReport::display_preview');
+        $routes->post('generate-pdf', 'Admin\AdminReport::create_pdf');
+        // $routes->get('incre', 'Admin\AdminReport::test_incre');
     });
 });
 
