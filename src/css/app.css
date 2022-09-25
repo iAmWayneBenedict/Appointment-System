@@ -10783,6 +10783,11 @@ body {
   border-radius: 5px;
   padding: 0 10px;
 }
+.calendar-grid .table td div .release-alert {
+  background-color: rgb(118, 255, 118);
+  border-radius: 5px;
+  padding: 0 10px;
+}
 
 .calendar-set-appointment .table th {
   width: 14.2857142857%;
@@ -10792,6 +10797,13 @@ body {
 }
 .calendar-set-appointment .table td div {
   height: auto !important;
+}
+
+.calendar-grid.dashboard .table th {
+  width: 14.2857142857%;
+}
+.calendar-grid.dashboard .table td {
+  width: 14.2857142857%;
 }
 
 .event-legend,

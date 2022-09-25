@@ -64,7 +64,7 @@
             <h4>Calendar of Events</h4>
             <div class="d-flex">
                 <div class="calendar flex-fill">
-                    <div class="calendar-grid m-0">
+                    <div class="calendar-grid dashboard m-0">
                         <center>
                             <div style="width: fit-content;">
                                 <select class="form-select fs-5 fw-bold border-0 shadow-none" style="cursor: pointer;" id="month">
@@ -172,36 +172,42 @@
             }
         })
         // populateCalendar(getDate(date.getMonth()), date.getMonth())
-        getApprovedData()
+        getStocksReleaseData()
 
-        function getApprovedData(controlledDate = undefined) {
+        function getStocksReleaseData(controlledDate = undefined) {
             $.ajax({
                 type: 'get',
-                url: `${url}/admin/dashboard/get-all-approved-appointments`,
+                url: `${url}/admin/dashboard/get-all-release-dates`,
                 async: true,
                 success: function(response) {
                     let rawData = JSON.parse(response)
-                    let approvedData = JSON.parse(response).data.approved
-                    let approvedLength = approvedData.length
+                    console.log(rawData)
+                    let stocksReleaseData = JSON.parse(response).data
+                    let getAllDescription = [];
                     let getAllDates = [];
-                    for (const key in approvedData) {
-                        let [date, time] = approvedData[key].schedule.split(" ")
-                        let [year, month, day] = date.split("-")
+                    for (const key in stocksReleaseData) {
+                        // console.log(stocksReleaseData['release_date'])
+                        // let date = stocksReleaseData['release_date'].split(" ")
+                        let [year, month, day] = stocksReleaseData[key].release_date.split("-")
 
                         getAllDates.push({
                             month,
                             day
                         })
+
+                        getAllDescription.push({
+                            description: stocksReleaseData[key].description
+                        })
                     }
 
                     if (controlledDate) {
                         populateCalendar(controlledDate[0], controlledDate[1], {
-                            approvedLength,
+                            getAllDescription,
                             getAllDates
                         })
                     } else {
                         populateCalendar(getDate(date.getMonth()), date.getMonth(), {
-                            approvedLength,
+                            getAllDescription,
                             getAllDates
                         })
                     }
@@ -237,15 +243,11 @@
 
         }
 
-        function pendingHTMLTemplate(number, status) {
-            return `<span class="pending-alert ${status}"><small class="pending-count">${number}</small></span>`
+        function releaseHTMLTemplate(description) {
+            return `<span class="release-alert">${description}</span>`
         }
 
-        function approvedHTMLTemplate(number, status) {
-            return `<span class="approved-alert ${status}"><small class="approved-count">${number}</small></span>`
-        }
-
-        function populateCalendar([firstDay, lastUTCDay], month, approvedData = undefined) {
+        function populateCalendar([firstDay, lastUTCDay], month, stocksReleaseData = undefined) {
             $('.days-entries').html('')
 
             let allDates = ''
@@ -264,64 +266,52 @@
                 }
             }
 
-            let approvedDates = approvedData.getAllDates
+            let stocksReleaseDates = stocksReleaseData.getAllDates
+            let stocksDescriptions = stocksReleaseData.getAllDescription
             // populate the remaining weeks
             for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
                 if (date.getUTCDate() === days && date.getMonth() === month) {
 
-                    let hasApprovedDate = false;
-                    let hasApprovedAlert = false;
-                    for (let i = 0; i < approvedDates.length; i++) {
-                        let approvedDateMonth = parseInt(approvedDates[i].month)
-                        let approvedDateDay = parseInt(approvedDates[i].day)
-                        let {
-                            hasSimilarDate,
-                            similarCounter
-                        } = getAppointmentPerDay(approvedDates, approvedDateMonth, approvedDateDay)
-                        // console.log(approvedData, date.getMonth())
+                    let hasStocksReleaseDate = false;
+                    let hasStocksReleaseAlert = false;
+                    for (let i = 0; i < stocksReleaseDates.length; i++) {
+                        let stocksReleaseDateMonth = parseInt(stocksReleaseDates[i].month)
+                        let stocksReleaseDateDay = parseInt(stocksReleaseDates[i].day)
+                        let release = releaseHTMLTemplate(stocksDescriptions[i].description)
+                        if (hasStocksReleaseAlert) break
 
-                        let approved = approvedHTMLTemplate(similarCounter, '')
-                        if (hasApprovedAlert) break
-
-                        if (approvedDateMonth === month + 1 && approvedDateDay === days) {
-                            hasApprovedDate = true
-                            hasApprovedAlert = true
-                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
+                        if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
+                            hasStocksReleaseDate = true
+                            hasStocksReleaseAlert = true
+                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
                         }
                     }
 
-                    if (hasApprovedDate) continue;
+                    if (hasStocksReleaseDate) continue;
                     // Date today
 
                     currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
 
                 } else {
-                    let hasApprovedDate = false;
-                    let hasApprovedAlert = false;
-                    for (let i = 0; i < approvedDates.length; i++) {
-                        let approvedDateMonth = parseInt(approvedDates[i].month)
-                        let approvedDateDay = parseInt(approvedDates[i].day)
-                        let {
-                            hasSimilarDate,
-                            similarCounter
-                        } = getAppointmentPerDay(approvedDates, approvedDateMonth, approvedDateDay)
-                        // console.log(approvedData, date.getMonth())
+                    let hasStocksReleaseDate = false;
+                    let hasStocksReleaseAlert = false;
+                    for (let i = 0; i < stocksReleaseDates.length; i++) {
+                        let stocksReleaseDateMonth = parseInt(stocksReleaseDates[i].month)
+                        let stocksReleaseDateDay = parseInt(stocksReleaseDates[i].day)
+                        let release = releaseHTMLTemplate(stocksDescriptions[i].description)
+                        if (hasStocksReleaseAlert) break
 
-                        let approved = approvedHTMLTemplate(similarCounter, '')
-                        if (hasApprovedAlert) break
-
-                        if (approvedDateMonth === month + 1 && approvedDateDay === days) {
-                            hasApprovedDate = true
-                            hasApprovedAlert = true
-                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
+                        if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
+                            hasStocksReleaseDate = true
+                            hasStocksReleaseAlert = true
+                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
                         }
                     }
 
-                    if (!hasApprovedDate) {
-                        // Date today
+                    if (hasStocksReleaseDate) continue;
+                    // Date today
 
-                        currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
-                    }
+                    currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
 
                 }
 
@@ -341,11 +331,11 @@
             $('.days-entries').append(allDates)
         }
 
-        function getAppointmentPerDay(approvedDates, month, day) {
+        function getAppointmentPerDay(stocksReleaseDates, month, day) {
             let hasSimilarDate = false
             let similarCounter = 0
-            for (let index = 0; index < approvedDates.length; index++) {
-                if (parseInt(approvedDates[index].month) === month && parseInt(approvedDates[index].day) === day) {
+            for (let index = 0; index < stocksReleaseDates.length; index++) {
+                if (parseInt(stocksReleaseDates[index].month) === month && parseInt(stocksReleaseDates[index].day) === day) {
                     hasSimilarDate = true;
                     similarCounter++
                 }

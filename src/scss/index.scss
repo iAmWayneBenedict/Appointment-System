@@ -61,6 +61,12 @@
 				border-radius: 5px;
 				padding: 0 10px;
 			}
+
+			.release-alert {
+				background-color: rgb(118, 255, 118);
+				border-radius: 5px;
+				padding: 0 10px;
+			}
 		}
 	}
 }
@@ -78,6 +84,20 @@
 				height: auto !important;
 				// display: none !important;
 			}
+		}
+	}
+	// }
+}
+
+.calendar-grid.dashboard {
+	// .calendar-grid {
+	.table {
+		th {
+			width: calc(100% / 7);
+		}
+
+		td {
+			width: calc(100% / 7);
 		}
 	}
 	// }

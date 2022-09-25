@@ -128,6 +128,7 @@ $routes->group('admin', static function ($routes) {
         $routes->post('update-a-stock', 'Admin\StocksController::update_stock');
         $routes->get('delete-a-stock/(:any)', 'Admin\StocksController::delete_stock/$1');
         $routes->get('display-release/(:any)', 'Admin\StocksController::display_release/$1');
+        $routes->get('get-all-release-dates', 'Admin\StocksController::get_all_release_dates');
         $routes->post('set-release-date', 'Admin\StocksController::set_release');
         $routes->post('update-release-date', 'Admin\StocksController::update_release');
     });

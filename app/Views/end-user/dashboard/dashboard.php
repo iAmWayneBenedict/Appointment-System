@@ -16,8 +16,10 @@
     <!-- upcoming appointments section -->
 
     <div>
-        <div class="passed-appointments">
-            <a href="<?= base_url('user/dashboard/passed-appointment') ?>">PASSED APPOINTMENT</a>
+        <div class="passed-appointments my-5">
+            <h5>You have unattened appointments!</h5>
+            <p>Click the button below to reschedule</p>
+            <a href="<?= base_url('user/dashboard/passed-appointment') ?>" class="btn btn-warning">Unattened Appointments</a>
         </div>
         <div class="d-flex justify-content-between">
             <h3 class="fw-semibold font-recoleta">Upcoming Appointments</h3>
