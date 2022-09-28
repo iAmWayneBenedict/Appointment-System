@@ -138,7 +138,7 @@
 
                         <div class="pb-3">
                             <label for="purpose" class="form-label">Purpose</label>
-                            <select class="form-select" name="purpose" id="purpose">
+                            <select class="form-select" name="purpose" id="purpose" disabled>
                                 <?php
                                 foreach ($allIncharge as $incharge) {
                                 ?>
@@ -168,27 +168,17 @@
                         ?>
                             <div class="mb-4">
                                 <label for="concern" class="form-label">Other Concerns</label>
-                                <textarea class="form-control" name="concern" id="concern" cols="30" rows="10" disabled><?= $approved[0]->purpose ?></textarea>
+                                <textarea class="form-control" name="concern" id="concern" cols="30" rows="10" readonly><?= $approved[0]->purpose ?></textarea>
                             </div>
                         <?php
                         }
                         ?>
                         <div class="">
-                            <label for="sched" class="form-label">Schedule</label><br>
-                            <input type="text" hidden class="form-control" id="sched" name="sched">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Select Date
-                            </button>
-                            <br>
-                            <br>
+
                             <div class="pb-1 selected-date-con">
                                 <label for="selected-date" class="form-label">Selected Date</label><br>
                                 <input type="text" disabled class="form-control selected-date" value="<?= date_format(date_create($approved[0]->schedule), 'D, F j, Y g:i a') ?>" id="selected-date" name="selected-date">
                             </div>
-                        </div>
-                        <div class="mt-5 d-flex justify-content-end gap-3">
-                            <input type="submit" class="btn btn-primary" value="UPDATE">
-                            <input type="button" class="btn btn-danger" value="DELETE">
                         </div>
                     </div>
                 </form>

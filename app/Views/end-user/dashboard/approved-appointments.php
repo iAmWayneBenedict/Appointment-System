@@ -29,7 +29,7 @@
                 $employee_incharge_counter++;
             }
         ?>
-            <div class="col">
+            <div class="col" data-id="<?= $user->id ?>">
                 <div class="card h-100">
                     <div class="card-body justify-content-between d-flex">
                         <div class="d-flex flex-column" style="width: 100%;">
@@ -102,4 +102,14 @@
         ?>
     </div>
 </div>
+<script>
+    $(() => {
+        const url = document.querySelector("meta[name = base_url]").getAttribute('content')
+        $('.col').each(function() {
+            $(this).click(function() {
+                location.href = url + "/user/dashboard/appointment-details/" + $(this).data('id')
+            })
+        })
+    })
+</script>
 <?= $this->endSection() ?>
