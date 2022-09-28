@@ -21,7 +21,7 @@
                     </div>
                     <div>
                         <small class="card-title m-0">Total Appointments</small>
-                        <h1 class="m-0"><?= $total ?></h1>
+                        <h3 class="m-0"><?= $total ?></h3>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <small class="card-title m-0">Approved Appointments</small>
-                        <h1 class="m-0"><?= $approvedCount ?></h1>
+                        <h3 class="m-0"><?= $approvedCount ?></h3>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     </div>
                     <div>
                         <small class="card-title m-0">Pending Appointments</small>
-                        <h1 class="m-0"><?= $pendingCount ?></h1>
+                        <h3 class="m-0"><?= $pendingCount ?></h3>
                     </div>
                 </div>
             </div>
@@ -353,7 +353,9 @@
                 $(this).removeAttr("selected")
             })
 
-            getApprovedData([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
+            console.log()
+            // getApprovedData([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
+            getStocksReleaseData([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
         })
     })
 </script>

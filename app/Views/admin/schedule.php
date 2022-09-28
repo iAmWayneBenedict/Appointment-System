@@ -75,16 +75,22 @@
         let date = new Date()
         let params = new URLSearchParams(window.location.search)
 
-        $('#month').children().each(function() {
-            if ($(this).val() === convertMonthToName(date.getMonth())) {
-                $(this).attr("selected", true)
-            }
-        })
+
 
         if (params.has('month') && params.has('day')) {
             let month = parseInt(params.get('month')) - 1
-
+            $('#month').children().each(function() {
+                if ($(this).val() === convertMonthToName(month)) {
+                    $(this).attr("selected", true)
+                }
+            })
             populateCalendar(getDate(month), month)
+        } else {
+            $('#month').children().each(function() {
+                if ($(this).val() === convertMonthToName(date.getMonth())) {
+                    $(this).attr("selected", true)
+                }
+            })
         }
 
         function convertMonthToNumber(monthName) {
@@ -162,25 +168,53 @@
             let approvedLength = approvedData.length
             let hasData = false;
             for (const key in approvedData) {
-                let [date, time] = approvedData[key].schedule.split(" ")
-                let [year, month, day] = date.split("-")
+                let [dateTime, time] = approvedData[key].schedule.split(" ")
+                let [year, month, day] = dateTime.split("-")
 
                 if (parseInt(month - 1) === convertMonthToNumber($('#month').val()) && parseInt(day) === parseInt($('#days').val())) {
                     hasData = true
-                    $('.appointment-details-card-con').append(`<div class="card appointment-details-card" style="min-width: 25rem;">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="card-title fw-semibold">${approvedData[key].name}</h5>
-                                <small>${time}</small>
+                    let [hours, minutes, seconds] = time.split(':')
+                    minutes = parseInt(minutes) + 15 === 60 ? "00" : parseInt(minutes) + 15
+                    let currentTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+
+                    // is time active
+                    if (currentTime >= time && currentTime <= `${hours}:${minutes}:${seconds}` && parseInt(month - 1) === date.getMonth() && parseInt(day) === date.getDay() + 1) {
+                        $('.appointment-details-card-con').append(`<div class="card appointment-details-card active" style="width: 30rem;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-muted m-0">Appointment time</p>
+                                    <small class="fw-bold">${getTimeStamps(time)}</small>
+                                </div>
+                                <div class="mt-3">
+                                    <h5 class="card-title fw-semibold">${approvedData[key].name}</h5>
+                                    <button type="button" class="btn-outline-primary mt-3 px-3 bg-transparent text-dark rounded-5" disabled>${approvedData[key].purpose}</button>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <button type="button" class="view-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" value="${approvedData[key].id}">
+                                        View
+                                    </button>
+                                </div>
                             </div>
-                            <div class="d-flex justify-content-between mt-5">
-                                <button type="button" class="btn-outline-primary px-3 bg-transparent text-dark rounded-5" disabled>${approvedData[key].purpose}</button>
-                                <button type="button" class="view-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" value="${approvedData[key].id}">
-                                    View
-                                </button>
+                        </div>`)
+                    } else {
+                        $('.appointment-details-card-con').append(`<div class="card appointment-details-card" style="width: 30rem;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-muted m-0">Appointment time</p>
+                                    <small class="fw-bold">${getTimeStamps(time)}</small>
+                                </div>
+                                <div class="mt-3">
+                                    <h5 class="card-title fw-semibold">${approvedData[key].name}</h5>
+                                    <button type="button" class="btn-outline-primary mt-3 px-3 bg-transparent text-dark rounded-5" disabled>${approvedData[key].purpose}</button>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <button type="button" class="view-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" value="${approvedData[key].id}">
+                                        View
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </div>`)
+                        </div>`)
+                    }
                 }
             }
 
@@ -192,6 +226,18 @@
                     </center>
                 </div>`)
             }
+        }
+
+        function getTimeStamps(time) {
+            let [hour, minutes, seconds] = time.split(':');
+            let parsedHour = parseInt(hour);
+            let parsedMinutes = parseInt(minutes);
+
+            let meridiem = parsedHour < 12 ? 'am' : 'pm';
+            let formatedHour = parsedHour % 12
+            let formatedMinutes = parsedMinutes < 10 ? "0" + parsedMinutes : parsedMinutes;
+
+            return `${formatedHour}:${formatedMinutes} ${meridiem}`
         }
 
         retrieveAppointments()
@@ -231,14 +277,14 @@
                             $("#appointment_id").next().html("Appointment ID is required")
                         } else {
                             $("#appointment_id").next().addClass("d-none")
-                            if( id != $("#appointment_id").val()){
+                            if (id != $("#appointment_id").val()) {
                                 $("#appointment_id").next().removeClass("d-none")
                                 $("#appointment_id").next().html("Id not Match")
                                 return
                             }
                             window.location.href = `${url}/admin/dashboard/complete/${id}`
                         }
-                        
+
                     })
                 }
             });

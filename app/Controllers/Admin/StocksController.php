@@ -43,8 +43,7 @@ class StocksController extends BaseController
     {
 
         $data['stocks'] = $this->stock_model->get_all_stocks();
-
-        return $data;
+        return json_encode($data);
     }
 
     public function get_all_stocks()
@@ -86,9 +85,13 @@ class StocksController extends BaseController
 
     public function get_all_release_dates()
     {
-
         $data['data'] = $this->stock_model->get_all_stocks_release();
         return json_encode($data);
+    }
+
+    public function stocks_monitor()
+    {
+        return view('end-user/dashboard/stocks-monitor');
     }
 
     public function display_release($stock_id = NULL)

@@ -178,6 +178,7 @@
     </div>
 
 </div>
+<!-- <script src="<?= base_url('/src/js/calendar.js') ?>"></script> -->
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')

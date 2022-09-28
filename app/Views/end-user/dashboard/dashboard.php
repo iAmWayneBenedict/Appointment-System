@@ -25,7 +25,7 @@
             <h3 class="fw-semibold font-recoleta">Upcoming Appointments</h3>
             <!-- <a href="" class="text-decoration-none">See all</a> -->
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4 mt-1" style="max-width: 95%;">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4 mt-1 mx-0" style="max-width: 99%;">
             <!-- Appointments Card -->
 
             <?php
@@ -43,7 +43,7 @@
                     $employee_incharge_counter++;
                 }
             ?>
-                <div class="col">
+                <div class="col p-0 p-sm-1">
                     <div class="card h-100">
                         <div class="card-body justify-content-between d-flex">
                             <div class="d-flex flex-column" style="width: 100%;">

@@ -139,6 +139,7 @@ class ManageAppointment extends BaseController
 
         if ($appointment_id != NULL) {
             $data['appointment'] = $this->manage_appointment->get_appointment_info($appointment_id);
+            $data['incharge'] = $this->manage_appointment->get_approved_appointments($data['appointment']->purpose);
             return view('components/view-appointment-details', $data);
         }
     }

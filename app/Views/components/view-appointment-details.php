@@ -67,6 +67,24 @@ $sched = date_format($date, 'F d, Y g:i A')
 
     </div>
 </div>
+<div>
+    <h5>Employee Incharge:</h3>
+        <ol class="list-group list-group-numbered">
+
+            <?php
+            foreach ($incharge as $employee) {
+            ?>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold"><?= $employee->name ?></div>
+                        <?= $employee->designation ?>
+                    </div>
+                </li>
+            <?php
+            }
+            ?>
+        </ol>
+</div>
 <div class="d-flex justify-content-end">
     <button class="complete btn btn-primary mt-3" value="<?= $appointment->id ?>">Complete</button>
 </div>

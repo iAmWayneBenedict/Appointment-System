@@ -106,12 +106,26 @@ class ManageAppointmentModel extends Model
         return true;
     }
 
-    public function get_approved_appointments()
+    public function get_all_approved_appointments()
     {
 
         $query = $this->db_conn->table('approved_appointments')
             ->select('*')
             ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+            ->get();
+
+        $data = $query->getResultObject(); //object access using ->col_name
+
+        return $data;
+    }
+
+    public function get_approved_appointments($purpose)
+    {
+
+        $query = $this->db_conn->table('employee')
+            ->select('*')
+            ->join('emp_incharge', 'emp_incharge.emp_id = employee.id')
+            ->where('incharge_to', $purpose)
             ->get();
 
         $data = $query->getResultObject(); //object access using ->col_name

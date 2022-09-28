@@ -167,7 +167,7 @@ td.active {
 
 .appointment-details-card {
 	border: 0;
-	border-radius: unset;
+	border-radius: 0.5rem;
 	background: #edeef3;
 	border-left: 4px solid #e4e4e4;
 
@@ -176,8 +176,8 @@ td.active {
 	}
 
 	&.active {
-		background: #dde9ff;
-		border-left: 4px solid #b3cfff;
+		background: #fefefe;
+		border-left: 4px solid #0d6efd;
 
 		button {
 			border: 1px solid #3879e9;

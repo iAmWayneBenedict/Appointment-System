@@ -1,11 +1,16 @@
-
-<form action="<?= base_url('admin/dashboard/update-a-stock')?>" method="post">
-<h4>Update Stocks (pop up)</h4>
-    <h4><?= ucfirst($stocks->sub_category)?> Stocks</h4>
-    <label for="available">Available to Clients:</label>
-    <input type="number" name="quantity" id="quantity" value="<?= $stocks->available ?>"><br>
-    <label for="available">Allocated:</label>
-    <input type="number" name="allocated" id="allocated" value="<?= $stocks->allocated ?>"><br>
-    <input type="hidden" name="stock_id" value="<?= $stocks->id?>">
-    <input type="submit" value="Update">
-</form>
+<div>
+    <h4><?= ucfirst($stocks->sub_category) ?> Stocks</h4>
+    <div class="">
+        <label for="quantity" class="form-label">Available to Clients</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" value="<?= $stocks->available ?>">
+        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+            message!</span><br>
+    </div>
+    <div class="">
+        <label for="allocated" class="form-label">Allocated</label>
+        <input type="number" class="form-control" id="allocated" name="allocated" value="<?= $stocks->allocated ?>">
+        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+            message!</span><br>
+    </div>
+    <input type="hidden" name="stock_id" value="<?= $stocks->id ?>">
+</div>
