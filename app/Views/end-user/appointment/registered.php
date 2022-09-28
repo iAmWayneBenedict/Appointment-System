@@ -30,7 +30,7 @@
                     </div>
                     <div class="pb-3">
                         <label for="c_number" class="form-label">Contact number</label>
-                        <input type="text" class="form-control" name="c_number" value="<?= $userData->contact_number; ?>" id="c_number" placeholder="Contact Number">
+                        <input type="text" class="form-control" name="c_number" value="<?= $userData->contact_number; ?>" id="c_number" placeholder="Contact Number" readonly>
                     </div>
                     <div class="pb-3">
                         <label for="purpose" class="form-label">Purpose</label>
@@ -64,6 +64,12 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Select Date
                         </button>
+                        <br>
+                        <br>
+                        <div class="pb-1 selected-date-con d-none">
+                            <label for="selected-date" class="form-label">Selected Date</label><br>
+                            <input type="text" disabled class="form-control selected-date" id="selected-date" name="selected-date">
+                        </div>
                     </div>
                     <input type="submit" class="btn btn-primary mt-5" value="SUBMIT">
                 </div>
@@ -136,10 +142,17 @@
                                             <option value="30">30</option>
                                             <option value="45">45</option>
                                         </select>
-                                        <div>
+                                        <div class="datetime">
                                             pm
                                         </div>
                                     </div>
+                                    <!-- <div class="spinner-border text-primary mt-3" style="width: 20px; height: 20px" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div class="alert text-danger py-2" role="alert">
+                                        <small>asd</small>
+                                    </div> -->
+
                                 </div>
                             </div>
                         </div>
@@ -165,6 +178,7 @@
     </div>
 
 </div>
+<!-- <script src="<?= base_url('/src/js/calendar.js') ?>"></script> -->
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
@@ -180,12 +194,12 @@
 
         }
 
-        populateCalendar(getDate(date.getMonth(), date.getFullYear()), date.getMonth(), date)
+        populateCalendar(getDate(date.getMonth(), date.getFullYear()), date.getMonth(), global_year)
         $('.day').each(function() {
             $(this).click(handleClickDay)
         })
 
-        function populateCalendar([firstDay, lastUTCDay], month, currentDate) {
+        function populateCalendar([firstDay, lastUTCDay], month, year) {
             $('.days-entries').html('')
 
             let allDates = ''
@@ -210,7 +224,7 @@
             // populate the remaining weeks
 
             for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
-                let currentDayOfTheWeekNumber = getCurrentDayOfTheWeek(month, days, currentDate);
+                let currentDayOfTheWeekNumber = getCurrentDayOfTheWeek(month, days, year);
                 let currentDayOfTheWeekName = convertDayToName(currentDayOfTheWeekNumber);
                 if (date.getUTCDate() === days && date.getMonth() === month) {
                     isCurrentDayFound = true;
@@ -272,7 +286,7 @@
 
             $(this).addClass('opacity-25')
             $(".next-month").removeClass('opacity-25')
-            populateCalendar(getDate(date.getMonth(), date.getFullYear()), date.getMonth(), date)
+            populateCalendar(getDate(date.getMonth(), date.getFullYear()), date.getMonth(), global_year)
             $('.day').each(function() {
                 $(this).click(handleClickDay)
             })
@@ -295,8 +309,8 @@
             $(this).addClass('opacity-25')
 
             $(".prev-month").removeClass('opacity-25')
-            populateCalendar(getDate(nextDate.getMonth(), nextDate.getFullYear()), nextDate.getMonth(), nextDate)
             global_year = nextDate.getFullYear()
+            populateCalendar(getDate(nextDate.getMonth(), nextDate.getFullYear()), nextDate.getMonth(), global_year)
             $('.day').each(function() {
                 $(this).click(handleClickDay)
             })
@@ -318,8 +332,8 @@
             return false
         }
 
-        function getCurrentDayOfTheWeek(month, day, date) {
-            let dayOfTheWeek = new Date(date.getFullYear(), month, day);
+        function getCurrentDayOfTheWeek(month, day, year) {
+            let dayOfTheWeek = new Date(year, month, day);
 
             return dayOfTheWeek.getDay() + 1;
         }
@@ -349,8 +363,7 @@
             $(this).parent().addClass('bg-primary')
             $(this).removeClass('text-dark')
             $(this).addClass('text-light')
-            // $('.save-date-btn').data("date", `${global_year}-${$('.calendar-title').data('month')}-${$(this).find('h6').text()} ${$('.save-date-btn').data('hour')}:${$('.save-date-btn').data('minutes')}`)
-            $('#sched').val(`${global_year}-${$('.calendar-title').data('month')+1}-${$(this).find('h6').text()} ${$('.save-date-btn').data('hour')}:${$('.save-date-btn').data('minutes')}`)
+            $('.save-date-btn').data("day", $(this).find('h6').text())
             prevDayElement = $(this);
         }
 
@@ -359,6 +372,10 @@
 
         function changeHour() {
             $('.save-date-btn').data("hour", $('.hour').val())
+            if ($('.hour').val() > 12)
+                $('.datetime').text('pm')
+            else
+                $('.datetime').text('am')
         }
 
         $('.minutes').change(changeMinutes)
@@ -369,6 +386,31 @@
         }
 
         $('.save-date-btn').click(function() {
+            // get all date values
+            let month = $('.calendar-title').data('month') + 1
+            let day = $(this).data('day')
+            let hour = $('.save-date-btn').data('hour')
+            let minutes = $('.save-date-btn').data('minutes')
+
+            // convert date values
+            let currentDayOfTheWeekNumber = getCurrentDayOfTheWeek(month - 1, day, global_year);
+            let currentDayOfTheWeekName = convertDayToName(currentDayOfTheWeekNumber);
+            let selectedDate = `${global_year}-${month}-${day} ${hour}:${minutes}`
+            let datetime = hour > 12 ? 'pm' : 'am';
+
+            // $.ajax({
+            //     type: "get",
+            //     url: `${url}/user/dashboard/get-incharge-employee/${purpose}`,
+            //     // dataType: "json",
+            //     success: function(response) {
+            //         console.log(response)
+            //     }
+            // });
+
+            // redefine elements
+            $('.selected-date-con').removeClass('d-none')
+            $('#sched').val(selectedDate)
+            $('.selected-date').val(`${currentDayOfTheWeekName}, ${convertMonthToName(month-1)} ${parseInt(day)}, ${global_year} ${hour % 12}:${minutes} ${datetime}`)
             $(this).prev().click()
         })
 

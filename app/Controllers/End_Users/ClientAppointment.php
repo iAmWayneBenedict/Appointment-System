@@ -5,6 +5,7 @@ namespace App\Controllers\End_Users;
 use App\Controllers\BaseController;
 use App\Models\Appointment\UserAppointmentModel;
 use App\Models\UserModel;
+use App\Models\EmployeeModel;
 use CodeIgniter\I18n\Time;
 use App\Models\Admin\AdminReportModel;
 use App\Models\Admin\ManageAppointmentModel;
@@ -23,6 +24,7 @@ class ClientAppointment extends BaseController
         //instantiate
         $this->userModel = new UserModel();
         $this->userAppointment = new UserAppointmentModel();
+        $this->employeeModel = new EmployeeModel();
         $this->session = \Config\Services::session();
         $this->validation = \Config\Services::validation();
         $this->time = new Time();
@@ -159,6 +161,20 @@ class ClientAppointment extends BaseController
 
         $user_id = $this->session->get('id');
         $data['myAppointment'] = $this->userAppointment->get_pending($user_id);
+
+        $data['allIncharge'] = $this->employeeModel->get_all_incharge();
+
+        return $data;
+    }
+
+    /**
+     Function: Retrieve Client's Pending Appointment
+     * Description : client can view pending appointment 
+     */
+    public function pending_appointment()
+    {
+        $data['pending'] = $this->get_pending_appointment();
+        return view('end-user/dashboard/pending-appointments', $data);
     }
 
     /**
@@ -170,6 +186,17 @@ class ClientAppointment extends BaseController
 
         $user_id = $this->session->get('id');
         $data['myAppointment'] = $this->userAppointment->get_approved($user_id);
+        $data['allIncharge'] = $this->employeeModel->get_all_incharge();
+
+        return $data;
+    }
+
+    public function approved_appointment()
+    {
+
+        $data['approved'] = $this->get_approved_appointment();
+
+        return view('end-user/dashboard/approved-appointments', $data);
     }
 
     /**

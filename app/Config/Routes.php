@@ -61,8 +61,12 @@ $routes->group('user', static function ($routes) {
 
         $routes->match(['get', 'post'], 'cancel-appointment/(:any)', 'End_Users\ClientAppointment::cancel_appointment/$1');
         $routes->post('edit-appointment', 'End_Users\ClientAppointment::edit_appointment');
-        $routes->get('pending-appointment', 'End_Users\ClientAppointment::get_pending_appointment');
-        $routes->get('approved-appointment', 'End_Users\ClientAppointment::get_approved_appointment');
+        $routes->get('pending-appointment', 'End_Users\ClientAppointment::pending_appointment');
+        $routes->get('approved-appointment', 'End_Users\ClientAppointment::approved_appointment');
+        $routes->get('appointment-summary/(:num)', 'End_Users\ClientAppointment::approved_appointment/$1');
+
+        $routes->get('stocks-monitor', 'Admin\StocksController::stocks_monitor');
+        $routes->get('get-all-release-dates', 'Admin\StocksController::get_all_release_dates');
     });
 
     $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {
@@ -106,6 +110,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('approved-appointments/schedule', 'Admin\Admin::schedule');
         $routes->get('get-appointment-details/(:num)', 'Admin\ManageAppointment::get_appointment_details/$1');
         $routes->get('get-all-approved-appointments', 'Admin\ManageAppointment::get_all_approved_appointments');
+        $routes->get('get-all-events', 'Admin\ManageAppointment::get_all_events');
         $routes->get('(:any)/review', 'Admin\ManageAppointment::review_appointment/$1');
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
@@ -121,11 +126,12 @@ $routes->group('admin', static function ($routes) {
         //stocks
         $routes->get('stock-management', 'Admin\StocksController::index');
         $routes->post('add-stock', 'Admin\StocksController::add_stock');
-        $routes->get('get-all-stocks', 'Admin\StocksController::display_stocks');
+        $routes->get('get-all-stocks', 'Admin\StocksController::get_all_stocks');
         $routes->get('get-a-stock/(:any)', 'Admin\StocksController::display_update_form/$1');
         $routes->post('update-a-stock', 'Admin\StocksController::update_stock');
         $routes->get('delete-a-stock/(:any)', 'Admin\StocksController::delete_stock/$1');
         $routes->get('display-release/(:any)', 'Admin\StocksController::display_release/$1');
+        $routes->get('get-all-release-dates', 'Admin\StocksController::get_all_release_dates');
         $routes->post('set-release-date', 'Admin\StocksController::set_release');
         $routes->post('update-release-date', 'Admin\StocksController::update_release');
 

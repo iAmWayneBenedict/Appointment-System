@@ -1,14 +1,17 @@
 <?php
+
 /**
  * File: User Appoitnment Model
  * Description: This is to hold all the process CRUD of user's appointment
  *              it is connected to ClientAppointment controller
  */
+
 namespace App\Models\Appointment;
 
 use CodeIgniter\Model;
 
-class UserAppointmentModel extends Model {
+class UserAppointmentModel extends Model
+{
 
     protected $database;
 
@@ -24,14 +27,15 @@ class UserAppointmentModel extends Model {
      * @param array $data: orgnized dta from user input processed in controller
      * @return bool : true for success and false if something error happen 
      */
-    public static function insert_appointment(array $data){
-        
-        $db_conn = \Config\Database::connect();//static cant use instance variable
+    public static function insert_appointment(array $data)
+    {
+
+        $db_conn = \Config\Database::connect(); //static cant use instance variable
 
         $insert_query = $db_conn->table('set_appointments')
             ->insert($data);
-        
-        if(!$insert_query){
+
+        if (!$insert_query) {
             return false;
         }
 
@@ -43,25 +47,27 @@ class UserAppointmentModel extends Model {
             ->insert([
                 'set_appointment_id' => $last_id
             ]);
-        
-        if(!$pending){
+
+        if (!$pending) {
             return false;
         }
 
         return true;
     }
 
-    public function update_appointment($user_id, array $data){
-        
+    public function update_appointment($user_id, array $data)
+    {
+
         $this->database->table('set_appointments')
             ->where('user_id', $user_id)
             ->update($data);
-        
+
         return true;
     }
 
     //retrieve client's pending appointment
-    public function get_pending($user_id){
+    public function get_pending($user_id)
+    {
 
         $query = $this->database->table('pending_appointments')
             ->select('*')
@@ -73,11 +79,12 @@ class UserAppointmentModel extends Model {
     }
 
     //retrieve client's approved appointment
-    public function get_approved($user_id){
+    public function get_approved($user_id)
+    {
 
-        $query = $this->database->table('pending_appointments')
+        $query = $this->database->table('approved_appointments')
             ->select('*')
-            ->join('set_appointments', 'set_appointments.id = pending_appointments.set_appointment_id')
+            ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
             ->where('user_id', $user_id)
             ->get();
 
@@ -85,7 +92,8 @@ class UserAppointmentModel extends Model {
     }
 
     //retrieve passed approved appointment
-    public function get_passed_appointment($user_id){
+    public function get_passed_appointment($user_id)
+    {
 
         $query = $this->database->table('approved_appointments')
             ->select('*')
@@ -96,11 +104,11 @@ class UserAppointmentModel extends Model {
             ->get();
 
         return $query->getResultObject();
-
     }
 
     //update status on approved appointments
-    private function reschedule_status($appointment_id){
+    private function reschedule_status($appointment_id)
+    {
 
         $this->database->table('approved_appointments')
             ->where('set_appointment_id', $appointment_id)
@@ -110,7 +118,8 @@ class UserAppointmentModel extends Model {
     }
 
     //set new schedule on set schedule table
-    public function reschedule_appointment($appointment_id, $new_schedule){
+    public function reschedule_appointment($appointment_id, $new_schedule)
+    {
 
         $this->database->table('set_appointments')
             ->where('id', $appointment_id)
@@ -124,13 +133,11 @@ class UserAppointmentModel extends Model {
     }
 
     //remove appointments permarnently
-    public function delete_appointment($appointment_id){
+    public function delete_appointment($appointment_id)
+    {
 
         $this->database->table('set_appointments')
             ->where('id', $appointment_id)
             ->delete();
     }
-
-    
-
 }

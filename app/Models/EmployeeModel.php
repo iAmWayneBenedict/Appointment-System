@@ -119,6 +119,18 @@ class EmployeeModel extends Model
         return $data;
     }
 
+    public function get_all_incharge()
+    {
+
+        $query = $this->db_connect->table('emp_incharge')
+            ->select('name, designation, incharge_to')
+            ->join('employee', 'employee.id = emp_incharge.emp_id')
+            ->get();
+
+        $data = $query->getResultObject();
+        return $data;
+    }
+
     public function update_employee($id, $name, $role, $incharge_to)
     {
         $builder = $this->db_connect->table('employee');

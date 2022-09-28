@@ -1,160 +1,297 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= base_url('/src/css/app.css') ?>">
-    <meta name="base_url" content="<?= base_url() ?>">
-    <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Document</title>
-</head>
-<body>
+<?= $this->extend('layouts/admin_layouts') ?>
+<?= $this->section('content') ?>
+
+<div class="main-content">
+    <div class="mt-3 mb-5">
+        <h2>Stocks Management</h2>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<?= base_url('/admin/dashboard/') ?>">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Stocks Management</li>
+            </ol>
+        </nav>
+    </div>
     <!-- swalfire -->
     <?php
-        if(session()->has('success')){
+    if (session()->has('success')) {
     ?>
         <script type="text/javascript">
-            alert('<?= session('success')?>')
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: '<?= session('success') ?>'
+            })
         </script>
     <?php
-        }
-        if(session()->has('invalid')){
-        ?>
-            <script type="text/javascript">
-                alert('<?= session('invalid')?>')
-            </script>
-        <?php
-        }
+    }
+    if (session()->has('invalid')) {
     ?>
-    <div class="cards" style="text-align: center;">
-        <hr>
-        <h4>Available to clients</h4>
-        <tr class="available-to-client" style="border: none;">
-            <td>corn seed: 45</td>
-            <td>corn seed: 47</td>
-            <td>corn seed: 25</td>
-            <td>corn seed: 5</td>
-        </tr>
-        <hr>
-    </div>
-    <h1>Add stocks (pop-up modal)</h1>
-    <form action="" id="stock-form">
-        <input type="text" name="category" placeholder="category" required>
-        <input type="text" name="sub_category" placeholder="sub category" required>
-        <h4>Stocks</h4>
-        <label for="available">Quantity:</label>
-        <input type="number" name="quantity" id="quantity" required><br>
-        <label for="available">Allocated:</label>
-        <input type="number" name="allocated" id="allocated" required><br>
-        <label for="available">Available for clients:</label>
-        <input type="number" name="available" id="avail-c" value="" readonly><br>
-        <label for="">Short Description:</label><br>
-        <textarea name="des" id="" cols="30" rows="10"></textarea>
+        <script type="text/javascript">
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
 
-        <input type="submit" value="Add">
-    </form>
+            Toast.fire({
+                icon: 'error',
+                title: '<?= session('invalid') ?>'
+            })
+        </script>
+    <?php
+    }
+    ?>
+    <!-- Button trigger modal -->
+    <div class="my-5">
+        <h3>Add Stocks</h3>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStocksModal">
+            Add Stock
+        </button>
+    </div>
+
 
     <div class="view-stocks" style="margin-top: 1rem;">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Category</th>
-                    <th>Sub Cat.</th>
-                    <th>Total Stocks</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody class="stock-list">
-                
-            </tbody>
-        </table>
+        <!-- DataTable -->
+
+        <div style="width: 90%;">
+            <table id="stocks" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Sub Cat.</th>
+                        <th scope="col">Total Stocks</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="stock-list">
+                    <!-- employee data insert here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="update">
+    <!-- modal for add stocks -->
+    <div class="modal fade" id="addStocksModal" tabindex="-1" aria-labelledby="addStocks" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 70%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStocks">Add Stocks</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" id="stock-form" class="">
+                    <div class="modal-body">
+                        <div class="d-flex gap-3">
+                            <div class="flex-fill">
+                                <div class="">
+                                    <label for="category" class="form-label">Category</label>
+                                    <input type="text" class="form-control" id="category" name="category" placeholder="Category" required>
+                                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                                        message!</span><br>
+                                </div>
+                                <div class="">
+                                    <label for="sub_category" class="form-label">Sub Category</label>
+                                    <input type="text" class="form-control" id="sub_category" name="sub_category" placeholder="Sub Category" required>
+                                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                                        message!</span><br>
+                                </div>
 
+                                <div class="">
+                                    <label for="quantity" class="form-label">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
+                                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                                        message!</span><br>
+                                </div>
+                                <div class="">
+                                    <label for="allocated" class="form-label">Allocated</label>
+                                    <input type="number" class="form-control" id="allocated" name="allocated" placeholder="Allocated" required>
+                                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                                        message!</span><br>
+                                </div>
+                            </div>
+                            <div class="flex-fill">
+                                <div class="">
+                                    <label for="available" class="form-label">Sub Category</label>
+                                    <input type="number" class="form-control" id="avail-c" name="available" placeholder="Sub Category" readonly>
+                                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                                        message!</span><br>
+                                </div>
+                                <div class="">
+                                    <label for="des" class="form-label">Short Description</label>
+                                    <textarea class="form-control" name="des" id="des" cols="30" rows="10" placeholder="Other Concerns"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-transparent" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" value="Add">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <script>
-        $(() => {
-            const url = document.querySelector("meta[name = base_url]").getAttribute("content");
+    <!-- modal for update stocks -->
+    <div class="modal fade" id="updateStocksModal" tabindex="-1" aria-labelledby="updateStocks" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 30rem;">
+            <div class="modal-content">
+                <form action="<?= base_url('admin/dashboard/update-a-stock') ?>" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateStocks">Update Stocks</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="update">
 
-            setInterval(function(){
-                display_stock();
-            }, 1000);
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-transparent" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" value="Update">Save changes</button>
+                    </div>
+                </form>
+            </div>
 
-            var quantity
-            var allocated
+        </div>
+    </div>
+    <!-- modal for release stocks -->
+    <div class="modal fade" id="releaseStocksModal" tabindex="-1" aria-labelledby="releaseStocks" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 40%;">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="update-sched"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-            $("#quantity, #allocated").on("keyup change", function () { 
-                quantity = $('#quantity').val();
-                allocated = $('#allocated').val();
-                set_val();
-            });
+<script>
+    $(() => {
+        const url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
-            function set_val(){
-                return $('#avail-c').val(quantity - allocated)         
-            }
+        // datatable initialization
+        let $table = $("#stocks").DataTable();
 
+        // setInterval(function() {
+        display_stock();
+        // }, 5000);
 
-            $('#stock-form').submit(function (e) { 
-                e.preventDefault();
-                console.log($(this).serialize())
-                $.ajax({
-                    type: "post",
-                    url: `${url}/admin/dashboard/add-stock`,
-                    data: $(this).serialize(),
-                    dataType: "json",
-                    success: function (response) {
-                        console.log(response)
-                    }
-                });
-            });
+        var quantity
+        var allocated
 
-            function display_stock(){
-                $.ajax({
-                    type: "get",
-                    url: `${url}/admin/dashboard/get-all-stocks`,
-                    async: true,
-                    success: function (response) {
-                        $('.stock-list').html(response)
-
-                        $('.show-update').click(function (e) { 
-                            e.preventDefault();
-                            var stock_id = $(this).attr('value');
-                            $.ajax({
-                                type: "get",
-                                url: `${url}/admin/dashboard/get-a-stock/${stock_id}`,
-                                async: true,
-                                success: function (res) {
-                                    $('.update').html(res)
-                                }
-                            });
-                        });
-
-                        $('.release-form').click(function (e) { 
-                            e.preventDefault();
-                            var stock_id = $(this).attr('value');
-
-                            $.ajax({
-                                type: "get",
-                                url: `${url}/admin/dashboard/display-release/${stock_id}`,
-                                async: true,
-                                success: function (res) {
-                                    $('.update').html(res)
-                                }
-                            });
-                        });
-
-                    }
-                });
-            }
-
-            
+        $("#quantity, #allocated").on("keyup change", function() {
+            quantity = $('#quantity').val();
+            allocated = $('#allocated').val();
+            set_val();
         });
-    </script>
-</body>
-</html>
+
+        function set_val() {
+            return $('#avail-c').val(quantity - allocated)
+        }
+
+
+        $('#stock-form').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "post",
+                url: `${url}/admin/dashboard/add-stock`,
+                data: $(this).serialize(),
+                dataType: "json",
+                success: function(response) {
+                    console.log(response)
+                    location.reload()
+                }
+            });
+        });
+
+        function display_stock() {
+            $table.destroy()
+            $.ajax({
+                type: "get",
+                url: `${url}/admin/dashboard/get-all-stocks`,
+                async: true,
+                success: function(response) {
+                    console.log(response)
+                    $('.stock-list').html(response)
+
+                    // after population of tbody
+                    // datatable reinitialization
+                    $table = $("#stocks").DataTable({
+                        columnDefs: [{
+                            width: "30%",
+                            targets: 4,
+                        }, ],
+                    });
+
+                    $('.show-update').click(function(e) {
+                        e.preventDefault();
+                        var stock_id = $(this).attr('value');
+                        $.ajax({
+                            type: "get",
+                            url: `${url}/admin/dashboard/get-a-stock/${stock_id}`,
+                            async: true,
+                            success: function(res) {
+                                $('.update').html(res)
+                            }
+                        });
+                    });
+
+                    $('.release-form').click(function(e) {
+                        e.preventDefault();
+                        var stock_id = $(this).attr('value');
+
+                        $.ajax({
+                            type: "get",
+                            url: `${url}/admin/dashboard/display-release/${stock_id}`,
+                            async: true,
+                            success: function(res) {
+                                $('.update-sched').html(res)
+                            }
+                        });
+                    });
+
+                    $('.remove-stock').click(function(event) {
+                        event.preventDefault()
+                        let deleteURL = this.href
+
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#ff0000",
+                            cancelButtonColor: "#d0d0d0d",
+                            confirmButtonText: "Yes, delete it!",
+                        }).then((result) => {
+                            location.href = deleteURL;
+                        });
+                    })
+
+                }
+            });
+        }
+
+
+    });
+</script>
+<?= $this->endSection() ?>

@@ -10783,6 +10783,11 @@ body {
   border-radius: 5px;
   padding: 0 10px;
 }
+.calendar-grid .table td div .release-alert {
+  background-color: rgb(118, 255, 118);
+  border-radius: 5px;
+  padding: 0 10px;
+}
 
 .calendar-set-appointment .table th {
   width: 14.2857142857%;
@@ -10794,19 +10799,40 @@ body {
   height: auto !important;
 }
 
+.calendar-grid.dashboard .table th {
+  width: 14.2857142857%;
+}
+.calendar-grid.dashboard .table td {
+  width: 14.2857142857%;
+}
+
+.event-legend,
+.holiday-legend,
 .pending-legend,
 .approved-legend {
   margin-bottom: 1rem;
 }
+.event-legend p,
+.holiday-legend p,
 .pending-legend p,
 .approved-legend p {
   font-weight: 600;
   margin: 0;
 }
+.event-legend div,
+.holiday-legend div,
 .pending-legend div,
 .approved-legend div {
   width: 20px !important;
   height: 20px !important;
+}
+
+.event-legend div {
+  background-color: rgb(118, 255, 118);
+}
+
+.holiday-legend div {
+  background-color: red;
 }
 
 .pending-legend div {
@@ -10841,7 +10867,7 @@ td.active {
 
 .appointment-details-card {
   border: 0;
-  border-radius: unset;
+  border-radius: 0.5rem;
   background: #edeef3;
   border-left: 4px solid #e4e4e4;
 }
@@ -10849,8 +10875,8 @@ td.active {
   border: 1px solid #b1b1b1;
 }
 .appointment-details-card.active {
-  background: #dde9ff;
-  border-left: 4px solid #b3cfff;
+  background: #fefefe;
+  border-left: 4px solid #0d6efd;
 }
 .appointment-details-card.active button {
   border: 1px solid #3879e9;
@@ -11053,6 +11079,16 @@ td.active {
 .incharge-to-list-container {
   max-height: 30rem;
   overflow-y: scroll;
+}
+
+.dashboard-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  color: white;
 }
 
 .center-con {
