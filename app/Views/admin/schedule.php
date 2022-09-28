@@ -69,6 +69,8 @@
         </div>
     </div>
 </div>
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')

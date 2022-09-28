@@ -173,12 +173,15 @@
         $('.form-submit').each(function() {
             $(this).submit(function(e) {
                 e.preventDefault();
-                const formdata = $(this).serialize()
-
+                const formdata = $(this).serializeArray()
+                console.log(formdata)
                 $.ajax({
                     type: "post",
                     url: `${url}/user/dashboard/reschedule-appointment`,
-                    data: formdata,
+                    data: {
+                        id: formdata[0].value,
+                        new_sched: formdata[3].value,
+                    },
                     dataType: "json",
                     success: function(response) {
                         if (response.code == 500) {
