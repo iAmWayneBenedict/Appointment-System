@@ -58,6 +58,7 @@ $routes->group('user', static function ($routes) {
         $routes->post('reschedule-appointment', 'End_Users\ClientAppointment::reschedule_appointment');
         $routes->get('delete-passed-appointment/(:any)', 'End_Users\ClientAppointment::delete_passed_apointment/$1');
         $routes->get('delete1-passed-appointment/(:any)', 'End_Users\ClientAppointment::delete1_passed_apointment/$1');
+        $routes->get('appointment-details/(:any)', 'End_Users\ClientAppointment::appointment_details/$1');
 
         $routes->match(['get', 'post'], 'cancel-appointment/(:any)', 'End_Users\ClientAppointment::cancel_appointment/$1');
         $routes->post('edit-appointment', 'End_Users\ClientAppointment::edit_appointment');

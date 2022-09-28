@@ -16,11 +16,17 @@
     <!-- upcoming appointments section -->
 
     <div>
-        <div class="passed-appointments my-5">
-            <h5>You have unattened appointments!</h5>
-            <p>Click the button below to reschedule</p>
-            <a href="<?= base_url('user/dashboard/passed-appointment') ?>" class="btn btn-warning">Unattened Appointments</a>
-        </div>
+        <?php
+        if ($myAppointment) {
+        ?>
+            <div class="passed-appointments my-5">
+                <h5>You have unattened appointments!</h5>
+                <p>Click the button below to reschedule</p>
+                <a href="<?= base_url('user/dashboard/passed-appointment') ?>" class="btn btn-warning">Unattened Appointments</a>
+            </div>
+        <?php
+        }
+        ?>
         <div class="d-flex justify-content-between">
             <h3 class="fw-semibold font-recoleta">Upcoming Appointments</h3>
             <!-- <a href="" class="text-decoration-none">See all</a> -->
@@ -43,7 +49,7 @@
                     $employee_incharge_counter++;
                 }
             ?>
-                <div class="col p-0 p-sm-1">
+                <div class="col p-0 p-sm-1" data-id="<?= $user->id ?>">
                     <div class="card h-100">
                         <div class="card-body justify-content-between d-flex">
                             <div class="d-flex flex-column" style="width: 100%;">
@@ -52,12 +58,20 @@
                                     <!-- employee name and role -->
 
                                     <div>
-                                        <h5 class="card-title m-0 fw-semibold font-recoleta"><?= $employee_incharge ?></h5>
-                                        <p class="card-text"><?= $employee->designation ?></p>
+                                        <?php
+                                        if ($employee_incharge) {
+                                        ?>
+                                            <h5 class="card-title m-0 fw-semibold font-recoleta"><?= $employee_incharge ?></h5>
+                                            <p class="card-text"><?= $employee->designation ?></p>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <h5 class="card-title m-0 fw-semibold font-recoleta">Proceed to walk in based on the given date</h5>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <?php
-                                if ($employee_incharge_counter - 1) {
+                                if ($employee_incharge_counter - 1 > 0) {
                                 ?>
                                     <small class="fw-semibold text-primary">and <?= $employee_incharge_counter - 1 ?> other people</small>
                                 <?php
@@ -124,7 +138,7 @@
             <h3 class="fw-semibold font-recoleta">Pending Appointments</h3>
             <!-- <a href="" class="text-decoration-none">See all</a> -->
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4 mt-1" style="max-width: 95%;">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4 mt-1 mx-0" style="max-width: 99%;">
             <!-- Appointments Card -->
             <?php
             $employee_incharge_counter = 0;
@@ -141,7 +155,7 @@
                     $employee_incharge_counter++;
                 }
             ?>
-                <div class="col">
+                <div class="col p-0 p-sm-1" data-id="<?= $user->id ?>">
                     <div class="card h-100">
                         <div class="card-body justify-content-between d-flex">
                             <div class="d-flex flex-column" style="width: 100%;">
@@ -155,7 +169,7 @@
                                     </div>
                                 </div>
                                 <?php
-                                if ($employee_incharge_counter - 1) {
+                                if ($employee_incharge_counter - 1 > 0) {
                                 ?>
                                     <small class="fw-semibold text-primary">and <?= $employee_incharge_counter - 1 ?> other people</small>
                                 <?php
@@ -215,4 +229,14 @@
         </div>
     </div>
 </div>
+<script>
+    $(() => {
+        const url = document.querySelector("meta[name = base_url]").getAttribute('content')
+        $('.col').each(function() {
+            $(this).click(function() {
+                location.href = url + "/user/dashboard/appointment-details/" + $(this).data('id')
+            })
+        })
+    })
+</script>
 <?= $this->endSection() ?>

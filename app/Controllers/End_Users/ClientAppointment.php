@@ -137,8 +137,8 @@ class ClientAppointment extends BaseController
             'schedule' => $formated_sched,
             'user_type' => $_user
         ];
-        
-        if(!$this->userAppointment->insert_appointment($data)){
+
+        if (!$this->userAppointment->insert_appointment($data)) {
             return json_encode([
                 'code' => 0,
                 'errors' => 'Sorry!, Please make a try later, Something went worng in our server'
@@ -284,7 +284,6 @@ class ClientAppointment extends BaseController
     //get and display passed appointments
     public function get_passed_appointment()
     {
-
         $user_id = $this->session->get('id');
         $data['myAppointment'] = $this->userAppointment->get_passed_appointment($user_id);
         return view('end-user/dashboard/passed-appointment', $data);
@@ -351,8 +350,9 @@ class ClientAppointment extends BaseController
     }
 
     //delete appointment base from ID if it is already done and insert it on report table
-    public function delete1_passed_apointment($appointment_id = NULL){
-        
+    public function delete1_passed_apointment($appointment_id = NULL)
+    {
+
         $mng = new ManageAppointmentModel();
         $info = $mng->get_appointment_info($appointment_id);
 
@@ -400,5 +400,21 @@ class ClientAppointment extends BaseController
 
         session()->setFlashdata('success', 'Appointment Canceles');
         return redirect('user/dashboard');
+    }
+
+    public function appointment_details($id)
+    {
+        $approved = $this->userAppointment->get_approved_appointment($id);
+        $pending = $this->userAppointment->get_pending_appointment($id);
+
+        $data['allIncharge'] = $this->employeeModel->get_all_incharge();
+
+        if ($pending) {
+            $data['pending'] = $pending;
+            return view('end-user/dashboard/appointment-details', $data);
+        } else {
+            $data['approved'] = $approved;
+            return view('end-user/dashboard/appointment-details', $data);
+        }
     }
 }
