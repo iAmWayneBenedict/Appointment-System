@@ -91,6 +91,32 @@ class UserAppointmentModel extends Model
         return $query->getResultObject();
     }
 
+    //retrieve client's pending appointment
+    public function get_pending_appointment($id)
+    {
+
+        $query = $this->database->table('pending_appointments')
+            ->select('*')
+            ->join('set_appointments', 'set_appointments.id = pending_appointments.set_appointment_id')
+            ->where('id', $id)
+            ->get();
+
+        return $query->getResultObject();
+    }
+
+    //retrieve client's approved appointment
+    public function get_approved_appointment($id)
+    {
+
+        $query = $this->database->table('approved_appointments')
+            ->select('*')
+            ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+            ->where('id', $id)
+            ->get();
+
+        return $query->getResultObject();
+    }
+
     //retrieve passed approved appointment
     public function get_passed_appointment($user_id)
     {

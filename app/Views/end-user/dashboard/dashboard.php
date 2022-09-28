@@ -16,11 +16,17 @@
     <!-- upcoming appointments section -->
 
     <div>
-        <div class="passed-appointments my-5">
-            <h5>You have unattened appointments!</h5>
-            <p>Click the button below to reschedule</p>
-            <a href="<?= base_url('user/dashboard/passed-appointment') ?>" class="btn btn-warning">Unattened Appointments</a>
-        </div>
+        <?php
+        if ($myAppointment) {
+        ?>
+            <div class="passed-appointments my-5">
+                <h5>You have unattened appointments!</h5>
+                <p>Click the button below to reschedule</p>
+                <a href="<?= base_url('user/dashboard/passed-appointment') ?>" class="btn btn-warning">Unattened Appointments</a>
+            </div>
+        <?php
+        }
+        ?>
         <div class="d-flex justify-content-between">
             <h3 class="fw-semibold font-recoleta">Upcoming Appointments</h3>
             <!-- <a href="" class="text-decoration-none">See all</a> -->
@@ -52,12 +58,20 @@
                                     <!-- employee name and role -->
 
                                     <div>
-                                        <h5 class="card-title m-0 fw-semibold font-recoleta"><?= $employee_incharge ?></h5>
-                                        <p class="card-text"><?= $employee->designation ?></p>
+                                        <?php
+                                        if ($employee_incharge) {
+                                        ?>
+                                            <h5 class="card-title m-0 fw-semibold font-recoleta"><?= $employee_incharge ?></h5>
+                                            <p class="card-text"><?= $employee->designation ?></p>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <h5 class="card-title m-0 fw-semibold font-recoleta">Proceed to walk in based on the given date</h5>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <?php
-                                if ($employee_incharge_counter - 1) {
+                                if ($employee_incharge_counter - 1 > 0) {
                                 ?>
                                     <small class="fw-semibold text-primary">and <?= $employee_incharge_counter - 1 ?> other people</small>
                                 <?php
@@ -155,7 +169,7 @@
                                     </div>
                                 </div>
                                 <?php
-                                if ($employee_incharge_counter - 1) {
+                                if ($employee_incharge_counter - 1 > 0) {
                                 ?>
                                     <small class="fw-semibold text-primary">and <?= $employee_incharge_counter - 1 ?> other people</small>
                                 <?php
