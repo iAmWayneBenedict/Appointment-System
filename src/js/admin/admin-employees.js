@@ -125,6 +125,12 @@ $(() => {
 		$(this).addClass("active");
 	}
 
+	async function fetchQROptions(url) {
+		let options = await fetch(url);
+
+		return await options.json();
+	}
+
 	function display_employees() {
 		// destroy table before updating
 		$table.destroy();
@@ -143,13 +149,18 @@ $(() => {
 						const secret = "/.,;[]+_-*$#@12~|";
 						let encrypted = CryptoJS.AES.encrypt(id, secret).toString();
 
-						generateQr(encrypted);
-						setTimeout(() => {
-							let qr = $("#qr-code").children("img").attr("src");
-							$("#qrdl").attr("href", qr);
-							$("#qrdl").attr("download", "employee-qr-code.png");
-							$("#qrdl").removeAttr("hidden");
-						}, 500);
+						// fetch custom qr styling
+						fetchQROptions(`${url}/src/json/options.json`).then((options) => {
+							options.data = encrypted;
+							const qr = new QRCodeStyling(options);
+							document.getElementById("qr-code").innerHTML = "";
+							qr.append(document.getElementById("qr-code"));
+
+							// download qr code
+							$("#qrdl").click(function () {
+								qr.download({ name: "qr-code", extension: "png" });
+							});
+						});
 					});
 				});
 

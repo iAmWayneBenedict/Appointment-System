@@ -182,13 +182,19 @@
                         <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard') ?>">HOME</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="#">Profile</a>
+                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url("/user/my-account") ?>">My Account</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="#">Appointments</a>
+                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/pending-appointment/') ?>">Pending Appointments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/approved-appointment/') ?>">Approved Appointments</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/employee-status') ?>">Employee Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/stocks-monitor') ?>">Stocks Monitor</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="#">Notifications</a>

@@ -108,11 +108,11 @@
                 <h5 class="mb-5">
                     <b>QR Code</b>
                 </h5>
-                <div id="qr-code">
+                <div id="qr-code" class="d-flex justify-content-center align-items-center mb-3">
                     <!-- qr code insert here -->
                 </div>
                 <!-- download qr code button -->
-                <a hidden id='qrdl' class="btn btn-primary">Download</a>
+                <button type="button" id='qrdl' class="btn btn-primary">Download</button>
                 <!-- hide overlay -->
                 <button type="button" class="btn close-qr-generated">Close</button>
             </div>
@@ -143,5 +143,6 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script src="<?= base_url("/src/js/qrcode.min.js") ?>"></script>
+<script src="<?= base_url("/src/js/qr-code-styling.js") ?>"></script>
 <script src="<?= base_url('/src/js/admin/admin-employees.js') ?>"></script>
 <?= $this->endSection() ?>

@@ -19,26 +19,9 @@
             <hr>
             <br>
         </div>
-        <div class="list">
+        <div class="list d-flex flex-column gap-5">
 
         </div>
-        <!-- <div style="width: 90%;">
-            <div class="users">
-                <table id="users" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th scope="col">Description</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Sub Category</th>
-                            <th scope="col">Available</th>
-                        </tr>
-                    </thead>
-                    <tbody class="list">
-
-                    </tbody>
-                </table>
-            </div>
-        </div> -->
     </div>
 </div>
 <script>
