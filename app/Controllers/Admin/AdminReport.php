@@ -23,6 +23,13 @@ class AdminReport extends BaseController
         return view('admin/report');
     }
 
+    /**
+     Function: DISPLAY PREVIEW FROM FILTERS
+     * Description: this function display the data base from what the admin choose
+     *              in the filter page as prview of what will be the content of the 
+     *              pdf.
+     * @return view
+     */
     public function display_preview(){
 
         $from_date =  $this->request->getPost('from_date');
@@ -46,6 +53,13 @@ class AdminReport extends BaseController
         return view('components/results', $data);
     }
 
+    /**
+     Function : CREATE PDF
+     * Description: This is the process of making the pdf just like the display preview 
+     *              it just return a pdf file using dompdf from html, admin can download the 
+     *              file.
+     * @return pdf
+     */
     public function create_pdf(){
 
         $from_date =  $this->request->getPost('from_date');
@@ -69,10 +83,12 @@ class AdminReport extends BaseController
             'date_today'  => date('F d, Y g:i A', strtotime('now'))
         ];
 
-
+        //html with data
         $html = view('components/reportPdf', $data);
 
+        //parse or process the html to pdf
         $this->pdf->loadHtml($html);
+        //paper size
         $this->pdf->setPaper('A4', 'portrait');
         $this->pdf->render();
         $this->pdf->stream('test.pdf', ["Attachment" => 0]);

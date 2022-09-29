@@ -86,6 +86,7 @@ class UserAppointmentModel extends Model
             ->select('*')
             ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
             ->where('user_id', $user_id)
+            ->where('is_passed', 'false')
             ->get();
 
         return $query->getResultObject();

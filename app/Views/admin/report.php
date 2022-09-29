@@ -47,22 +47,21 @@
             <div class="col">
                 <select class="form-select" aria-label="Default select example" id="social_pos" name="social_pos">
                     <option selected value="All">All</option>
-                    <option value="farmer">Farmers</option>
-                    <option value="fisherfolk">FisherFolks</option>
-                    <option value="barangay">Barangay Official</option>
-                    <option value="regional">Regional Staff</option>
-                    <option value="private">Private Sector</option>
+                    <option value="Farmer">Farmers</option>
+                    <option value="Fisherfolk">FisherFolks</option>
+                    <option value="Barangay Official">Barangay Official</option>
+                    <option value="Regional Staff">Regional Staff</option>
+                    <option value="Business Owner">Private Sector</option>
                 </select>
             </div>
             <div class="col">
                 <select class="form-select" aria-label="Default select example" id="purpose" name="purpose">
                     <option selected value="All">All</option>
-                    <option value="certification">Certitification</option>
-                    <option value="f_registration">Fisherfolks Registration</option>
-                    <option value="insurance">Insurance</option>
-                    <option value="f_inputs">Farm Inputs</option>
-                    <option value="e_request">Event Request</option>
-                    <option value="b_registration">Boat Registration</option>
+                    <option value="RSBSA (Registry System for Basic Sector in Agriculture)">RSBSA (Registry System for Basic Sector in Agriculture)</option>
+                    <option value="Registration of Municipal Fisherfolks">Registration of Municipal Fisherfolks</option>
+                    <option value="Processing of Crop Insurance (PCIC Program)">Processing of Crop Insurance (PCIC Program)</option>
+                    <option value="Distribution of Farm Inputs">Distribution of Farm Inputs</option>
+                    <option value="Boat Registration">Boat Registration</option>
                 </select>
             </div>
             <div class="col">

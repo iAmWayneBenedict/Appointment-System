@@ -70,7 +70,13 @@
 
                 <div class="mb-1">
                     <label for="social_pos" class="form-label">Social Position</label>
-                    <input type="text" class="form-control" id="social_pos" name="social_pos" placeholder="Social Position">
+                    <select class="form-select" name="social_pos" id="social_pos">
+                            <option value="Farmer">Farmers</option>
+                            <option value="Fisherfolk">FisherFolks</option>
+                            <option value="Barangay Official">Barangay Official</option>
+                            <option value="Regional Staff">Regional Staff</option>
+                            <option value="Business Owner">Business Owner</option>
+                        </select>
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>
