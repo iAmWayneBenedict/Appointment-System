@@ -32,7 +32,10 @@
             </nav>
         </div>
         <div class="scanner-container">
-            <video id="preview"></video>
+            <div>
+                <div id="reader" style="width: 500px; height:500px"></div>
+            </div>
+            <!-- <video id="preview"></video> -->
             <input type="text" class="data my-3">
             <div class="employees">
                 <table id="employees" class="table table-striped" style="width:100%">
@@ -49,15 +52,15 @@
             </div>
         </div>
     </div>
-
-    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <!-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script>
         $(document).ready(function() {
             const url = document.querySelector("meta[name = base_url]").getAttribute('content')
-            const QR_scanner = new Instascan.Scanner({
-                video: document.querySelector('#preview'),
-                mirror: true
-            });
+            // const QR_scanner = new Instascan.Scanner({
+            //     video: document.querySelector('#preview'),
+            //     mirror: true
+            // });
 
             $(".qr-con").addClass("d-none")
 
@@ -114,23 +117,14 @@
             //     display_employees();
             // }, 1000)
 
-            Instascan.Camera.getCameras().then(function(cameras) {
-
-                if (cameras.length > 0) {
-                    QR_scanner.start(cameras[0])
-                } else {
-                    alert('No cameras found');
-                }
-            }).catch(function(e) {
-                console.error(e);
-            });
-
-            QR_scanner.addListener('scan', function(data) {
+            function onScanSuccess(decodedText, decodedResult) {
+                // handle the scanned code as you like, for example:
+                // console.log(`Code matched = ${decodedText}`, decodedResult);
                 const secret = "/.,;[]+_-*$#@12~|";
-                let bytes = CryptoJS.AES.decrypt(data, secret);
+                let bytes = CryptoJS.AES.decrypt(decodedText, secret);
                 let id = bytes.toString(CryptoJS.enc.Utf8);
                 console.log(JSON.parse(id));
-                $('.data').val(data);
+                $('.data').val(id);
 
                 $.ajax({
                     type: "post",
@@ -161,7 +155,75 @@
                         display_employees(res);
                     }
                 });
-            });
+            }
+
+            function onScanFailure(error) {
+                // handle scan failure, usually better to ignore and keep scanning.
+                // for example:
+                console.warn(`Code scan error = ${error}`);
+            }
+
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", {
+                    fps: 10,
+                    qrbox: {
+                        width: 250,
+                        height: 250
+                    }
+                },
+                /* verbose= */
+                false);
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+
+            // Instascan.Camera.getCameras().then(function(cameras) {
+
+            //     if (cameras.length > 0) {
+            //         QR_scanner.start(cameras[0])
+            //     } else {
+            //         alert('No cameras found');
+            //     }
+            // }).catch(function(e) {
+            //     console.error(e);
+            // });
+
+            // QR_scanner.addListener('scan', function(data) {
+            //     const secret = "/.,;[]+_-*$#@12~|";
+            //     let bytes = CryptoJS.AES.decrypt(data, secret);
+            //     let id = bytes.toString(CryptoJS.enc.Utf8);
+            //     console.log(JSON.parse(id));
+            //     $('.data').val(data);
+
+            //     $.ajax({
+            //         type: "post",
+            //         url: `${url}/scanner/track-employee`,
+            //         data: {
+            //             emp_ID: id
+            //         },
+            //         dataType: "json",
+            //         success: function(res) {
+            //             const Toast = Swal.mixin({
+            //                 toast: true,
+            //                 position: 'top-end',
+            //                 showConfirmButton: false,
+            //                 timer: 3000,
+            //                 timerProgressBar: true,
+            //                 didOpen: (toast) => {
+            //                     toast.addEventListener('mouseenter', Swal.stopTimer)
+            //                     toast.addEventListener('mouseleave', Swal.resumeTimer)
+            //                 }
+            //             })
+
+            //             Toast.fire({
+            //                 icon: 'success',
+            //                 title: res.msg
+            //             })
+
+            //             // update employees after scan
+            //             display_employees(res);
+            //         }
+            //     });
+            // });
 
 
             function display_employees(res = undefined) {

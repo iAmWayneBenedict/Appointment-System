@@ -135,7 +135,7 @@
                                 </div>
                                 <div class="">
                                     <label for="des" class="form-label">Short Description</label>
-                                    <textarea class="form-control" name="des" id="des" cols="30" rows="10" placeholder="Other Concerns"></textarea>
+                                    <textarea class="form-control" name="des" id="des" cols="30" rows="10" placeholder="Short Description"></textarea>
                                 </div>
                             </div>
                         </div>
