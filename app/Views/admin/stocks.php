@@ -115,21 +115,21 @@
 
                                 <div class="">
                                     <label for="quantity" class="form-label">Quantity</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
+                                    <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
                                 <div class="">
                                     <label for="allocated" class="form-label">Allocated</label>
-                                    <input type="number" class="form-control" id="allocated" name="allocated" placeholder="Allocated" required>
+                                    <input type="text" class="form-control" id="allocated" name="allocated" placeholder="Allocated" required>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
                             </div>
                             <div class="flex-fill">
                                 <div class="">
-                                    <label for="available" class="form-label">Sub Category</label>
-                                    <input type="number" class="form-control" id="avail-c" name="available" placeholder="Sub Category" readonly>
+                                    <label for="available" class="form-label">Available</label>
+                                    <input type="number" class="form-control" id="avail-c" name="available" placeholder="Available" readonly>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
@@ -195,16 +195,72 @@
         display_stock();
         // }, 5000);
 
-        var quantity
-        var allocated
+        let quantity = 0
+        let allocated = 0
+        $("#quantity").on('keydown keyup', handleComputeAvailable);
+        $("#allocated").on('keydown keyup', handleComputeAvailable);
 
-        $("#quantity, #allocated").on("keyup change", function() {
-            quantity = $('#quantity').val();
-            allocated = $('#allocated').val();
-            set_val();
-        });
+        function handleComputeAvailable() {
+            let input = $(this).val().split("")
+            let inputLength = input.length - 1
+            let data = 0;
+            let specialChars = /[ `!@#$%^&*()_\=\[\]{};':"\\|,.<>\/?~]/;
+            let letters = /[a-zA-Z]/;
+
+            if (letters.test(input[inputLength]) || specialChars.test(input[inputLength])) {
+                input.pop()
+                $(this).val(input.join(''))
+            }
+
+            // new input length
+            inputLength = $(this).val().length - 1
+            if ($(this).val().includes('-')) {
+                if ($(this).val()[0] !== '-' && $(this).val()[inputLength] !== '-') {
+                    data = eval($(this).val())
+                    $('button[value=Add], button[value=Update]').removeClass('disabled')
+                } else {
+                    $('button[value=Add], button[value=Update]').addClass('disabled')
+                }
+            } else if ($(this).val().includes('+')) {
+                if ($(this).val()[0] !== '+' && $(this).val()[inputLength] !== '+') {
+                    data = eval($(this).val())
+                    $('button[value=Add], button[value=Update]').removeClass('disabled')
+                } else {
+                    $('button[value=Add], button[value=Update]').addClass('disabled')
+                }
+            } else {
+                $('button[value=Add], button[value=Update]').removeClass('disabled')
+                data = parseInt($(this).val())
+            }
+
+            if (data < 0) {
+                $(this).next().removeClass('d-none')
+                $(this).next().text('Input cannot be less than 0')
+                $('button[value=Add], button[value=Update]').attr('disabled', true)
+            } else {
+                $(this).next().addClass('d-none')
+                $('button[value=Add], button[value=Update]').removeAttr('disabled')
+
+                if (this.id === 'allocated') {
+                    allocated = data;
+                } else {
+                    quantity = data
+                }
+                set_val();
+            }
+        }
 
         function set_val() {
+            // console.log(quantity, allocated)
+            let data = quantity - allocated
+            if (data < 0) {
+                $('#avail-c').next().removeClass('d-none')
+                $('#avail-c').next().text('Input cannot be less than 0')
+                $('button[value=Add], button[value=Update]').attr('disabled', true)
+            } else {
+                $('#avail-c').next().addClass('d-none')
+                $('button[value=Add], button[value=Update]').removeAttr('disabled')
+            }
             return $('#avail-c').val(quantity - allocated)
         }
 
@@ -218,7 +274,6 @@
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(response) {
-                    console.log(response)
                     location.reload()
                 }
             });
@@ -231,7 +286,6 @@
                 url: `${url}/admin/dashboard/get-all-stocks`,
                 async: true,
                 success: function(response) {
-                    console.log(response)
                     $('.stock-list').html(response)
 
                     // after population of tbody
@@ -252,6 +306,9 @@
                             async: true,
                             success: function(res) {
                                 $('.update').html(res)
+                                $("#quantity, #allocated").each(function() {
+                                    $(this).on('keydown keyup', handleComputeAvailable)
+                                });
                             }
                         });
                     });

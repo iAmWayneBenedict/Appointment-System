@@ -63,6 +63,7 @@
             </div>
         </form>
     </div>
+
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -453,7 +454,7 @@
                 formdata.delete('concern')
             }
 
-            const user_type = 000 //guest
+            const user_type = 000
             $.ajax({
                 type: "post",
                 url: `${url}/appointments/${user_type}/submit-appointment`,
@@ -462,23 +463,40 @@
                 contentType: false,
                 cache: false,
                 dataType: "json",
-                success: function(response) {
-                    if (response.code == 0) {
-                        console.log(response.errors);
-                        return;
-                    }
+                beforeSend: function() {
+                    // Show image container
+                    //show loading gif
+                    console.log("please wait....");
 
-                    alert(response.msg)
-                    console.log(response)
-                    location.reload();
+                    $("#appointment-submit").attr('disabled', 'disabled')
+                    $("#appointment-submit").val('Please Wait......')
+                },
+                success: function(response) {
+                    setTimeout(function() {
+                        if (response.code == 0) {
+                            var msg = []; //hold all error messages
+
+                            //loop error message and push to array
+                            $.each(response.errors, function(key, val) {
+                                msg.push(`${val}`)
+                            });
+
+                            alert(msg.join('\n')) //sweet alert
+                            $("#appointment-submit").removeAttr('disabled');
+                            $("#appointment-submit").val('SUBMIT');
+                            return;
+                        }
+
+                        alert(response.msg)
+                        console.log(response)
+                        location.reload()
+                    }, 2000)
                 }
             });
 
-            //see outgoing data inside from formdata
-            //note for development only
-            for (var val of formdata) {
-                console.log(`${val[0]}: ${val[1]}`)
-            }
+            // for (var val of formdata) {
+            //     console.log(`${val[0]}: ${val[1]}`)
+            // }
 
         });
     });

@@ -2,13 +2,13 @@
     <h4><?= ucfirst($stocks->sub_category) ?> Stocks</h4>
     <div class="">
         <label for="quantity" class="form-label">Available to Clients</label>
-        <input type="number" class="form-control" id="quantity" name="quantity" value="<?= $stocks->available ?>">
+        <input type="text" class="form-control" id="quantity" name="quantity" value="<?= $stocks->available ?>">
         <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
             message!</span><br>
     </div>
     <div class="">
         <label for="allocated" class="form-label">Allocated</label>
-        <input type="number" class="form-control" id="allocated" name="allocated" value="<?= $stocks->allocated ?>">
+        <input type="text" class="form-control" id="allocated" name="allocated" value="<?= $stocks->allocated ?>">
         <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
             message!</span><br>
     </div>

@@ -36,7 +36,7 @@
                 <div id="reader" style="width: 500px; height:500px"></div>
             </div>
             <!-- <video id="preview"></video> -->
-            <input type="text" class="data my-3">
+            <input type="text" hidden class="data my-3">
             <div class="employees">
                 <table id="employees" class="table table-striped" style="width:100%">
                     <thead>
@@ -116,6 +116,10 @@
             // setInterval(() => {
             //     display_employees();
             // }, 1000)
+            let lastScannedResult = '';
+            setInterval(() => {
+                lastScannedResult = ''
+            }, 5000)
 
             function onScanSuccess(decodedText, decodedResult) {
                 // handle the scanned code as you like, for example:
@@ -123,8 +127,12 @@
                 const secret = "/.,;[]+_-*$#@12~|";
                 let bytes = CryptoJS.AES.decrypt(decodedText, secret);
                 let id = bytes.toString(CryptoJS.enc.Utf8);
-                console.log(JSON.parse(id));
                 $('.data').val(id);
+
+                if (lastScannedResult === id) return;
+
+                lastScannedResult = id;
+                console.log(id)
 
                 $.ajax({
                     type: "post",
@@ -159,8 +167,6 @@
 
             function onScanFailure(error) {
                 // handle scan failure, usually better to ignore and keep scanning.
-                // for example:
-                console.warn(`Code scan error = ${error}`);
             }
 
             let html5QrcodeScanner = new Html5QrcodeScanner(

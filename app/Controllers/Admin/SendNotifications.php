@@ -31,8 +31,8 @@ class SendNotifications extends BaseController
     }
 
     /**
-     * function: this is for one by one manual sending sms
-     * @return boolean  
+     Function: this is for one by one manual sending sms
+     * @return json 
      */
     public function send_sms()
     {

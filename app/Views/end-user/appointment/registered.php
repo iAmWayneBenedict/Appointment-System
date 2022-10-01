@@ -71,7 +71,11 @@
                             <input type="text" disabled class="form-control selected-date" id="selected-date" name="selected-date">
                         </div>
                     </div>
-                    <input type="submit" class="btn btn-primary mt-5" value="SUBMIT">
+                    <div class="mb-4">
+                        <label for="remarks" class="form-label">Remarks</label>
+                        <textarea class="form-control" name="remarks" id="remarks" cols="30" rows="5" placeholder="Remarks"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-primary mt-5" id="appointment-submit" value="SUBMIT">
                 </div>
             </form>
         </div>
@@ -477,21 +481,40 @@
                 contentType: false,
                 cache: false,
                 dataType: "json",
-                success: function(response) {
-                    if (response.code == 0) {
-                        console.log(response);
-                        return;
-                    }
+                beforeSend: function() {
+                    // Show image container
+                    //show loading gif
+                    console.log("please wait....");
 
-                    alert(response.msg)
-                    console.log(response)
+                    $("#appointment-submit").attr('disabled', 'disabled')
+                    $("#appointment-submit").val('Please Wait......')
+                },
+                success: function(response) {
+                    setTimeout(function() {
+                        if (response.code == 0) {
+                            var msg = []; //hold all error messages
+
+                            //loop error message and push to array
+                            $.each(response.errors, function(key, val) {
+                                msg.push(`${val}`)
+                            });
+
+                            alert(msg.toString()) //sweet alert
+                            $("#appointment-submit").removeAttr('disabled');
+                            $("#appointment-submit").val('SUBMIT');
+                            return;
+                        }
+
+                        alert(response.msg)
+                        console.log(response)
+                        location.reload()
+                    }, 2000)
                 }
             });
 
-
-            for (var val of formdata) {
-                console.log(`${val[0]}: ${val[1]}`)
-            }
+            // for (var val of formdata) {
+            //     console.log(`${val[0]}: ${val[1]}`)
+            // }
 
         });
     });

@@ -1,9 +1,12 @@
 <?php
 $index = 0;
-$newData = [];
-foreach ($incharge_data as $data) {
-    array_push($newData, $data['incharge_to']);
-}
+$newData = [
+    'RSBSA (Registry System for Basic Sector in Agriculture)',
+    'Registration of Municipal Fisherfolks',
+    'Processing of Crop Insurance (PCIC Program)',
+    'Distribution of Farm Inputs',
+    'Boat Registration'
+];
 foreach (array_unique($newData) as $data) {
 ?>
 

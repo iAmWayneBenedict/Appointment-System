@@ -112,7 +112,7 @@ class ManageAppointment extends BaseController
     }
 
     /**
-     *Function: REVIEW APPOINTMENT
+     Function: REVIEW APPOINTMENT
      * Description: Display spesific data of appointments base what admin choose
      *              to review
      * @param appointment_id : 
@@ -136,7 +136,6 @@ class ManageAppointment extends BaseController
      */
     public function get_appointment_details($appointment_id = NULL)
     {
-
         if ($appointment_id != NULL) {
             $data['appointment'] = $this->manage_appointment->get_appointment_info($appointment_id);
             $data['incharge'] = $this->manage_appointment->get_approved_appointments($data['appointment']->purpose);
@@ -151,6 +150,16 @@ class ManageAppointment extends BaseController
      */
     public function approve_appointment()
     {
+        //prevent inserting more than one
+        $validate = $this->validate([
+            'id' =>[
+                'rules' => 'is_unique[approved_appointments.set_appointment_id]'
+            ]
+        ]);
+
+        if(!$validate){
+            return;
+        }
 
         $appointment_id = $this->request->getPost('id');
         $appointment_data = $this->manage_appointment->get_appointment_info($appointment_id);

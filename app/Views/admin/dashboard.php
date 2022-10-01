@@ -136,7 +136,7 @@
 
         <div class="my-5">
             <h4>Generate Report for this Month</h4>
-            <a href="#" class="btn btn-primary">Generate Report</a>
+            <a href="<?= base_url('/admin/dashboard/report') ?>" class="btn btn-primary">Generate Report</a>
         </div>
     </div>
 </div>

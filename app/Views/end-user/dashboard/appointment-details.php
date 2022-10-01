@@ -71,16 +71,11 @@
 
                             </div>
                         </div>
-                        <?php
-                        if ($isOtherPurpose) {
-                        ?>
-                            <div class="mb-4">
-                                <label for="concern" class="form-label">Other Concerns</label>
-                                <textarea class="form-control" name="concern" id="concern" cols="30" rows="10" disabled><?= $pending[0]->purpose ?></textarea>
-                            </div>
-                        <?php
-                        }
-                        ?>
+                        <div class="mb-4">
+                            <label for="concern" class="form-label">Other Concerns</label>
+                            <textarea class="form-control" name="concern" id="concern" cols="30" rows="10" disabled><?= $isOtherPurpose ? $pending[0]->purpose : '' ?></textarea>
+                        </div>
+
                         <div class="">
                             <label for="sched" class="form-label">Schedule</label><br>
                             <input type="text" hidden class="form-control" id="sched" name="sched">
@@ -508,15 +503,6 @@
             let selectedDate = `${global_year}-${month}-${day} ${hour}:${minutes}`
             let datetime = hour > 12 ? 'pm' : 'am';
 
-            // $.ajax({
-            //     type: "get",
-            //     url: `${url}/user/dashboard/get-incharge-employee/${purpose}`,
-            //     // dataType: "json",
-            //     success: function(response) {
-            //         console.log(response)
-            //     }
-            // });
-
             // redefine elements
             $('#sched').val(selectedDate)
             $('.selected-date').val(`${currentDayOfTheWeekName}, ${convertMonthToName(month-1)} ${parseInt(day)}, ${global_year} ${hour % 12}:${minutes} ${datetime}`)
@@ -530,8 +516,8 @@
 
             if ($('#purpose').val() == 'other') {
                 $('#concern').prop('disabled', false);
-                // $('#concern').parent().removeClass('d-none')
-                // $('.person-incharge-con').parent().addClass('d-none')
+                $('#concern').parent().removeClass('d-none')
+                $('.person-incharge-con').parent().addClass('d-none')
                 $('.person-incharge-con').html("")
                 return;
             }

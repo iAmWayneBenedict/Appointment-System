@@ -77,6 +77,7 @@ $routes->group('user', static function ($routes) {
     });
 });
 
+//appointment routes
 $routes->group('appointments', static function ($routes) {
     $routes->get('guest-user', 'End_Users\ClientAppointment::guest_client');
     $routes->post('(:num)/submit-appointment', 'End_Users\ClientAppointment::create_appointment/$1');
@@ -140,7 +141,6 @@ $routes->group('admin', static function ($routes) {
         $routes->get('report', 'Admin\AdminReport::report_template');
         $routes->post('preview', 'Admin\AdminReport::display_preview');
         $routes->post('generate-pdf', 'Admin\AdminReport::create_pdf');
-        // $routes->get('incre', 'Admin\AdminReport::test_incre');
     });
 });
 
@@ -156,7 +156,7 @@ $routes->group('scanner', static function ($routes) {
 //routes for cron job
 $routes->get('client-incoming-appointment', 'Admin\ManageAppointment::sms_incoming_appointment');
 $routes->get('removed-passed-appointment', 'Admin\ManageAppointment::removed_passed_appointments');
-$routes->get('checke-reschedule-appoointment', 'Admin\ManageAppointment::check_resched_appointment');
+$routes->get('check-reschedule-appointment', 'Admin\ManageAppointment::check_resched_appointment');
 
 /*
  * --------------------------------------------------------------------
