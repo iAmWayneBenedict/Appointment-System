@@ -78,6 +78,7 @@
                         <label for="show-password">Show Password</label>
                     </div>
                     <input class="btn btn-primary mt-5" type="submit" value="Change">
+                    <button class="btn btn-danger mt-5" id="delete">DELETE ACCOUNT</button>
             </form>
         </div>
     </div>
@@ -138,6 +139,47 @@
                 }
             });
 
+        });
+
+        $('#delete').click(function (e) { 
+            e.preventDefault();
+            Swal.fire({
+            title: 'Account Deactivation',
+            text: "Are you sure?!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, continue!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: "get",
+                    url: `${base_url}/user/my-account/deactivate-account`,
+                    dataType: 'json',
+                    success: function (response) {
+                        if(response.code == 0 ){
+                            Swal.fire(
+                                'Server Error!',
+                                response.msg,
+                                'error'
+                            )
+                        }
+                        else if(response.code == 1){
+                            Swal.fire(
+                                'DeActivated!',
+                                'You cannot access your account anymore.',
+                                'success'
+                            ).then(() => {
+                                window.location.href = `${base_url}`
+                            })
+                        }
+                    }
+                });
+               
+            }
+            })
         });
 
         $

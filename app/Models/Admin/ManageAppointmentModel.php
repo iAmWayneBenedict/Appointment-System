@@ -14,7 +14,7 @@ class ManageAppointmentModel extends Model
     }
 
     /**
-     * Function: Retrieve
+     Function: GET PENDING APPOINTMENTs
      * Description: get all pending appointment is database
      * @return data: array of objects
      */
@@ -32,7 +32,7 @@ class ManageAppointmentModel extends Model
     }
 
     /**
-     * Function: Retrieve
+     Function: Retrieve
      * Description: get all approved appointment is database
      * @return data: array of objects
      */
@@ -50,7 +50,7 @@ class ManageAppointmentModel extends Model
     }
 
     /**
-     * Function: Retrieve
+     Function: GET APPOINTMENT INFO
      * Description: get appointment informations affected only one row
      * @return data: array of object 1 row only
      */
@@ -66,7 +66,7 @@ class ManageAppointmentModel extends Model
     }
 
     /**
-     * Function: Insert, Delete
+     Function: MOVED TO APPROVED
      * Description: Insert the approved appointmnet into Dabase and 
      *              delete it on pending table
      * @return bool
@@ -91,7 +91,7 @@ class ManageAppointmentModel extends Model
     }
 
     /**
-     * Function: Delete appointment
+     Function: REMOVE APPOINTMENT
      * Description: pemanent delete an appointment into Database
      *              it can be use for rejecting and mark as done appointment  
      * @return bool
@@ -106,6 +106,28 @@ class ManageAppointmentModel extends Model
         return true;
     }
 
+    /**
+     Function: REMOVED APPROVED APPOINTMENTS {DELETE}
+     * Description: remove the appointment into aprroved table so it can be access as approved
+     *              it means that the appointment is done canceled or passed
+     * @return bool
+     */
+    public function remove_approved_appointment($appointment_id)
+    {
+
+        $this->db_conn->table('approved_appointments')
+            ->where('set_appointment_id', $appointment_id)
+            ->delete();
+
+        return true;
+    }
+
+    /**
+     Function: GET ALL APPROVED APPOINTMENTS {RETRIEVE}
+     * Description: retieve all the approved appointments stored in the table
+     *              it is use to display and or access the data of set appointments
+     * @return array:data : array of objects appointment data
+     */
     public function get_all_approved_appointments()
     {
 
@@ -119,7 +141,13 @@ class ManageAppointmentModel extends Model
         return $data;
     }
 
-    public function get_approved_appointments($purpose)
+    /**
+     Function: GET INCHARGE EMPLOYEE
+     * Descriptiom : retrieve incharage employe for every purpose in appointment
+     *               one purpose can have many employee
+     * @return array:data : array of objects
+     */
+    public function get_incharge_employee($purpose)
     {
 
         $query = $this->db_conn->table('employee')
@@ -133,6 +161,11 @@ class ManageAppointmentModel extends Model
         return $data;
     }
 
+    /**
+     Function: GET RESCHED APPOINTMENTs
+     * Description: this will retrieve rescheduled appointments in the table
+     * @return array:data
+     */
     public function get_resched_appointments()
     {
 
@@ -147,6 +180,11 @@ class ManageAppointmentModel extends Model
         return $data;
     }
 
+    /**
+     Function: GUEST PASSED APPOINTMENTS
+     * Description: retrived passed appointments of guest since guest cannot reschedule
+     *              their appointments
+     */
     public function guest_passed_appointments()
     {
 
@@ -163,7 +201,7 @@ class ManageAppointmentModel extends Model
     }
 
     /**
-     * Function: Retrieve
+     Function: GET UPCOMING APPOINTMENTS
      * Descreption: get appointments that already approved and eqals
      *              to 2 hoours advance date, it is to limit the data incoming to
      *              controller insteads of fetching all data
@@ -182,11 +220,18 @@ class ManageAppointmentModel extends Model
         return $query->getResultObject();
     }
 
+    /**
+     Function: GET PASSED APPOINTMENTS
+     * Description: retried passed appointments, diffent from reschedule since passed
+     *              appointments are appointmnets that unattended by clients after 5 hours
+     *              it only gets or read appointments that are passed 5 hours after the schedule
+     * @return array:data objects
+     */
     public function get_passed_appointment()
     {
 
-        $time =  date('Y-m-d H', strtotime('-5 hours'));     //current time -1 day
-        $time2 =  date('Y-m-d H', strtotime('-6 hours'));   //current time -2 days
+        $time =  date('Y-m-d H', strtotime('-5 hours'));     //current time -5 hours
+        $time2 =  date('Y-m-d H', strtotime('-6 hours'));   //current time -6 hours
 
         $query = $this->db_conn->table('approved_appointments')
             ->select('*')
@@ -199,15 +244,9 @@ class ManageAppointmentModel extends Model
         return $query->getResultObject();
     }
 
-    private function approved_resched_status($appointment_id)
-    {
-
-        $this->db_conn->table('approved_appointments')
-            ->where('set_appointment_id', $appointment_id)
-            ->delete();
-    }
-
-    //update approved is_passed to true if appointment already passed 1 hour
+    /**
+     Function: SET PASSED
+     */
     public function set_passed($appointment_id)
     {
         $this->db_conn->table('approved_appointments')
@@ -215,20 +254,5 @@ class ManageAppointmentModel extends Model
             ->update([
                 'is_passed' => 'true'
             ]);
-    }
-
-    public function reschedule_appointment($appointment_id, $new_schedule)
-    {
-
-        $this->db_conn->table('set_appointments')
-            ->where('id', $appointment_id)
-            ->update([
-                'schedule' => $new_schedule
-            ]);
-
-        $this->insert_to_resched($appointment_id, $new_schedule);
-        $this->approved_resched_status($appointment_id);
-
-        return true;
     }
 }

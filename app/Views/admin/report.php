@@ -105,6 +105,16 @@
 
         $(()=> {
             const url = document.querySelector("meta[name = base_url]").getAttribute("content");
+
+            //check if from input is empty then disabled the "to" input
+            setInterval(() => {
+                if($('.from').val() == ''){
+                    $('#datepicker2').attr('disabled', 'disabled')
+                }else{
+                    $('#datepicker2').removeAttr('disabled')
+                }
+            },1000);
+
             $('#prev').click(function (e) { 
                 e.preventDefault();
                 var data = {

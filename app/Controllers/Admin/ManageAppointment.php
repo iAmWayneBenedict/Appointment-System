@@ -138,7 +138,7 @@ class ManageAppointment extends BaseController
     {
         if ($appointment_id != NULL) {
             $data['appointment'] = $this->manage_appointment->get_appointment_info($appointment_id);
-            $data['incharge'] = $this->manage_appointment->get_approved_appointments($data['appointment']->purpose);
+            $data['incharge'] = $this->manage_appointment->get_incharge_employee($data['appointment']->purpose);
             return view('components/view-appointment-details', $data);
         }
     }
@@ -252,19 +252,15 @@ class ManageAppointment extends BaseController
      */
     public function mark_as_done($appointment_id = NULL)
     {
-        $info = $this->manage_appointment->get_appointment_info($appointment_id);
 
         $data = [
-            'schedule'    => $info->schedule,
-            'client_name' => $info->name,
-            'social_pos'  => $info->social_pos,
-            'purpose'     => $info->purpose,
-            'state'       => 'done'
+            'appointment_id'  => $appointment_id,
+            'state'           => 'done'
         ];
 
         AdminReportModel::insert_report($data);
 
-        $this->manage_appointment->remove_appointment($appointment_id);
+        $this->manage_appointment->remove_approved_appointment($appointment_id);
         session()->setFlashdata('done', 'Appointment Is Done');
         return redirect()->back();
     }
@@ -408,13 +404,27 @@ class ManageAppointment extends BaseController
 
         foreach ($all_approved_appointments as $approved) {
             if (strtotime($approved->schedule) < strtotime('-3 day')) {
-                $this->manage_appointment->remove_appointment($approved->id);
+
+                $data = [
+                    'appointment_id'  => $approved->id,
+                    'state'           => 'passed'
+                ];
+        
+                AdminReportModel::insert_report($data);
+                $this->manage_appointment->remove_approved_appointment($approved->id);
             }
         }
 
         foreach ($guest_passed_appointments as $guest) {
             if (strtotime($guest->schedule) < strtotime('-3 day')) {
-                $this->manage_appointment->remove_appointment($guest->id);
+
+                $data = [
+                    'appointment_id'  => $guest->id,
+                    'state'           => 'passed'
+                ];
+        
+                AdminReportModel::insert_report($data);
+                $this->manage_appointment->remove_approved_appointment($guest->id);
             }
         }
     }

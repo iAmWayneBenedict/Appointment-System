@@ -89,9 +89,15 @@ class ManageAccount extends BaseController
         ]);
     }
 
+    /**
+     Function: DEACTIVATE USER ACCOUNT
+     * description: instead of permanently deleteling user account, the system retains
+     *              user account by just only deactivating it to protect  importtant
+     *              information from other table that connected to user.
+     */
     function delete_user($user_code_id)
     {
-        $this->userModel->delete_user($user_code_id);
+        $this->userModel->deactivate_admin_side($user_code_id);
     }
 
     /**
@@ -142,6 +148,25 @@ class ManageAccount extends BaseController
         return json_encode([
             'code' => 1,
             'msg' => 'Password Updated'
+        ]);
+    }
+
+    public function deactivate_account(){
+
+        $user_id = $this->session->get('id');
+
+        if(!$this->userModel->deactivate($user_id)){
+            return json_encode([
+                'code' => 0,
+                'msg'  => 'Please try again later'
+            ]);
+        } 
+
+        $user_sessions = ['id', 'logged_in'];
+        $this->session->destroy($user_sessions);
+
+        return json_encode([
+            'code' => 1
         ]);
     }
 }

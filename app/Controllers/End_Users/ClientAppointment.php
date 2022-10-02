@@ -9,6 +9,7 @@ use App\Models\EmployeeModel;
 use CodeIgniter\I18n\Time;
 use App\Models\Admin\AdminReportModel;
 use App\Models\Admin\ManageAppointmentModel;
+use App\Libraries\FilterText;
 
 class ClientAppointment extends BaseController
 {
@@ -18,6 +19,7 @@ class ClientAppointment extends BaseController
     protected $session;
     protected $validation;
     protected $time;
+    protected $filter;
 
     function __construct()
     {
@@ -28,6 +30,7 @@ class ClientAppointment extends BaseController
         $this->session = \Config\Services::session();
         $this->validation = \Config\Services::validation();
         $this->time = new Time();
+        $this->filter = new FilterText();
     }
 
     public function registered_client()
@@ -43,6 +46,7 @@ class ClientAppointment extends BaseController
         return view('end-user/appointment/guest');
     }
 
+    // TODO: use "remark" as input name for post submitting form
     public function create_appointment($user_type = false)
     {
 
@@ -88,6 +92,13 @@ class ClientAppointment extends BaseController
         $social_pos = $this->request->getPost('social_pos');
         $purpose = $this->request->getPost('purpose');
         $schedule = $this->request->getPost('sched');
+
+        //filter remarks
+        $remark = $this->request->getPost('remark');
+        if(!empty($remark)){
+            $remark = $this->filter->filtertext($remark);
+        }
+
 
         //get current date
         $now = $this->time->now();
@@ -135,6 +146,7 @@ class ClientAppointment extends BaseController
             'social_pos' => $social_pos,
             'purpose' => $purpose,
             'schedule' => $formated_sched,
+            'remarks'   => $remark,
             'user_type' => $_user
         ];
 
@@ -150,6 +162,18 @@ class ClientAppointment extends BaseController
             'code' => 1,
             'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment"
         ]);
+    }
+
+    /**
+     Fucntion: DELETE APPOINTMENT
+     * Description: appointment that ony pending can be fully remove in the DB
+     */
+    public function delete_appointment($appointment_id){
+
+        $this->userAppointment->delete_appointment($appointment_id);
+
+        session()->setFlashdata('success', 'Appointment Removed');
+        return redirect('user/dashboard');
     }
 
     /**
@@ -205,6 +229,8 @@ class ClientAppointment extends BaseController
      *              Data client can modify such as schedule, purpose and contact Number
      * @return json:respone 
      */
+
+     // TODO : add remark input/text area on edit appointment
     public function edit_appointment()
     {
 
@@ -234,6 +260,12 @@ class ClientAppointment extends BaseController
         $contact_number = $this->request->getPost('c_number');
         $purpose = $this->request->getPost('purpose');
         $schedule = $this->request->getPost('sched');
+
+        //filter remarks
+        $remark = $this->request->getPost('remark');
+        if(!empty($remark)){
+            $remark = $this->filter->filtertext($remark);
+        }
 
         //get current date
         $now = $this->time->now();
@@ -266,6 +298,7 @@ class ClientAppointment extends BaseController
             'contact_number' => $contact_number,
             'purpose' => $purpose,
             'schedule' => $formated_sched,
+            'remarks'  => $remark
         ];
 
         if (!$this->userAppointment->update_appointment($current_user, $data)) {
@@ -290,7 +323,7 @@ class ClientAppointment extends BaseController
     }
 
     /**
-     * Function: Reschedule
+     Function: Reschedule
      * Description: Recieve and process the new appointment schedule
      * @return json response
      */
@@ -342,8 +375,14 @@ class ClientAppointment extends BaseController
     //delete appointment base from ID
     public function delete_passed_apointment($appointment_id = NULL)
     {
+        $mng = new ManageAppointmentModel();
+        $data = [
+            'appointment_id'  => $appointment_id,
+            'state'           => 'passed'
+        ];
 
-        $this->userAppointment->delete_appointment($appointment_id);
+        AdminReportModel::insert_report($data);
+        $mng->remove_approved_appointment($appointment_id);
 
         session()->setFlashdata('success', 'Passed Appointment Removed');
         return redirect('user/dashboard');
@@ -354,29 +393,23 @@ class ClientAppointment extends BaseController
     {
 
         $mng = new ManageAppointmentModel();
-        $info = $mng->get_appointment_info($appointment_id);
-
         $data = [
-            'schedule'    => $info->schedule,
-            'client_name' => $info->name,
-            'social_pos'  => $info->social_pos,
-            'purpose'     => $info->purpose,
-            'state'       => 'done'
+            'appointment_id'  => $appointment_id,
+            'state'           => 'done'
         ];
 
         AdminReportModel::insert_report($data);
-
-        $this->userAppointment->delete_appointment($appointment_id);
+        $mng->remove_approved_appointment($appointment_id);
 
         session()->setFlashdata('success', 'Passed Appointment Removed');
         return redirect('user/dashboard');
     }
 
     /**
-     Function: Cancel Appointment
-     * Description: client appointment cancel for both pending and approved
+     Function: CANCEL APPOINTMENT
+     * Description: client appointment cancel approved
      *              appointment, if the client cancel the appointment it will remove 
-     *              database and  include it on report
+     *              from approved table and  include it on report
      * @param appointment_id : appointment unique identification
      * @return session : flash reminder
      */
@@ -384,21 +417,15 @@ class ClientAppointment extends BaseController
     {
 
         $mng = new ManageAppointmentModel();
-        $info = $mng->get_appointment_info($appointment_id);
-
         $data = [
-            'schedule'    => $info->schedule,
-            'client_name' => $info->name,
-            'social_pos'  => $info->social_pos,
-            'purpose'     => $info->purpose,
-            'state'       => 'canceled'
+            'appointment_id'  => $appointment_id,
+            'state'           => 'canceled'
         ];
 
         AdminReportModel::insert_report($data);
+        $mng->remove_approved_appointment($appointment_id);
 
-        $this->userAppointment->delete_appointment($appointment_id);
-
-        session()->setFlashdata('success', 'Appointment Canceles');
+        session()->setFlashdata('success', 'Appointment Canceled');
         return redirect('user/dashboard');
     }
 
