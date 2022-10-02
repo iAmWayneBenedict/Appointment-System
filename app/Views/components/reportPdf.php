@@ -104,7 +104,7 @@
                     ?>
                         <tr>
                             <td><?= $result['schedule']?></td>
-                            <td><?= $result['client_name']?></td>
+                            <td><?= $result['name']?></td>
                             <td><?= $result['social_pos']?></td>
                             <td><?= $result['purpose']?></td>
                             <td><?= $result['state']?></td>

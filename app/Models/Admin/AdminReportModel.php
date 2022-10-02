@@ -42,8 +42,8 @@ class AdminReportModel extends Model
             $conditions['state'] = $state;
         }
 
-        $query = $this->db_conn->table('appointment_report_data')
-            ->select("DATE_FORMAT(schedule, '%M %e, %Y %l:%i %p') as schedule, client_name, social_pos, purpose, state")
+        $query = $this->db_conn->table('appointment_report')
+            ->select("DATE_FORMAT(schedule, '%M %e, %Y %l:%i %p') as schedule, name, social_pos, purpose, state")
             ->where($conditions);
 
         if($from_date != NULL){
@@ -80,11 +80,12 @@ class AdminReportModel extends Model
         return true;
     }
 
+
     public static function insert_report($data){
 
         $db = \Config\Database::connect();
-        $db->table('appointment_report_data')
+        $db->table('report_data')
             ->insert($data);
-   }
+    }
 
 }

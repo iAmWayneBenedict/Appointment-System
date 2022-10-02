@@ -39,15 +39,29 @@
                             <td><?= $user['social_pos'] ?></td>
 
                             <!-- remove user btn -->
-                            <td>
-                                <button type="button" class="btn btn-danger delete-user-btn" value="<?= $user['code_id'] ?>">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
-                                        <polyline points="3 6 5 6 21 6"></polyline>
-                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                    </svg>
-                                    <span class="ms-2">Remove</span>
-                                </button>
-                            </td>
+                    <?php
+                        if($user['account_stats'] == 1){
+                    ?>
+                         <td>
+                            <button type="button" class="btn btn-danger delete-user-btn" value="<?= $user['code_id'] ?>">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                                <span class="ms-2">Remove</span>
+                            </button>
+                        </td>
+                    <?php
+                        }else{
+                    ?>
+                        <td>
+                            <button type="button" class="btn btn-secondary disable" disabled>
+                                <span class="ms-2">Deactivated</span>
+                            </button>
+                        </td>
+                    <?php
+                        }
+                    ?>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -86,7 +100,7 @@
                         success: function(res) {
                             Swal.fire(
                                 "Deleted",
-                                "You have successfully deleted a user",
+                                "You have successfully deactivated a user",
                                 "success"
                             );
                             location.reload()

@@ -31,6 +31,22 @@ class OnAppNotification {
 
     }
 
+    public function send_bulk_notification(array $to_ids, $message){
+
+        foreach($to_ids as $id){
+            $data = [
+                'user_id' => $id,
+                'message' => $message
+            ];
+
+            $this->notif_model->insert_message($data);
+        }
+       
+
+        return true;
+
+    }
+
     public function already_read($notification_id){
         $this->notif_model->update_status($notification_id);
     }

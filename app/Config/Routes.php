@@ -66,6 +66,7 @@ $routes->group('user', static function ($routes) {
         $routes->get('approved-appointment', 'End_Users\ClientAppointment::approved_appointment');
         $routes->get('appointment-summary/(:num)', 'End_Users\ClientAppointment::approved_appointment/$1');
         $routes->get('all-appointments', 'Admin\ManageAppointment::get_set_appointments');
+        $routes->get('remove-appointment/(:any)', 'End_Users\ClientAppointment::delete_appointment/$1');
 
         $routes->get('stocks-monitor', 'Admin\StocksController::stocks_monitor');
         $routes->get('get-all-release-dates', 'Admin\StocksController::get_all_release_dates');
@@ -79,6 +80,7 @@ $routes->group('user', static function ($routes) {
         $routes->get('/', 'End_Users\ManageAccount::account_page');
         $routes->post('update', 'End_Users\ManageAccount::update_account');
         $routes->post('password-update', 'End_Users\ManageAccount::update_password');
+        $routes->get('deactivate-account', 'End_Users\ManageAccount::deactivate_account');
     });
 });
 
