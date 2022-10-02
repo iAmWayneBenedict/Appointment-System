@@ -91,21 +91,23 @@ class SendNotifications extends BaseController
         //make array of contact numbes only selected from user data
         $numbers_only = array_column($user_data, 'contact_number');
 
-        //chunk or devide numbers_only array into 10 elements every index
-        $all_contacts = array_chunk($numbers_only, 10);
+        $responses = $this->send_sms->sendBulkSMS($numbers_only, $message);
+
+        //chunk or devide numbers_only array into 10 elements every index 2d array
+        // $all_contacts = array_chunk($numbers_only, 10);
 
         //convert chunk array into string separated with comma
         // send bulk messages
-        $responses = [];
-        foreach ($all_contacts as $contacts) {
+        // $responses = [];
+        // foreach ($all_contacts as $contacts) {
 
-            $str_numbers = implode(',', $contacts);
-            //ouput example: "0912345678, 0912353458" 
+        //     $str_numbers = implode(',', $contacts);
+        //     //ouput example: "0912345678, 0912353458" 
 
-            $response = $this->send_sms->sendSMS($str_numbers, $message);
-            array_push($responses, $response);
-            sleep(5);
-        }
+        //     $response = $this->send_sms->sendSMS($str_numbers, $message);
+        //     array_push($responses, $response);
+        //     sleep(5);
+        // }
 
         return json_encode($responses);
     }

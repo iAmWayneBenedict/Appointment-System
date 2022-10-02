@@ -75,4 +75,22 @@ class OneWaySMS
 
         return $send;
     }
+
+    public function sendBulkSMS(array $contact_numbers, $message){
+
+        $responses = []; //this will hold all response of api
+
+        //chunk or devide numbers_only array into 10 elements every index 2d array
+        $all_contact_numbers = array_chunk($contact_numbers, 10);
+
+        foreach($all_contact_numbers as $contact_number){
+
+            $str_number_by_10 = implode(',', $contact_number);
+
+            $response = $this->sendSMS($str_number_by_10, $message);
+            array_push($responses, $response);
+        }
+
+        return $responses;
+    }
 }

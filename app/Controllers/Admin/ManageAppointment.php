@@ -318,7 +318,8 @@ class ManageAppointment extends BaseController
 
             //on app notification
             $this->appNotif->sent_app_notification($result->user_id, $message);
-            //enable this sms later ⬇⬇⬇⬇⬇⬇
+            
+            //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
             //$sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
 
@@ -365,7 +366,7 @@ class ManageAppointment extends BaseController
             //on app notification
             $this->appNotif->sent_app_notification($approved->user_id, $message);
 
-            //enable this sms later ⬇⬇⬇⬇⬇⬇
+            //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
             //$sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
 

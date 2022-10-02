@@ -21,7 +21,7 @@ class NotificationsModel extends Model
     public function get_user_data(){
 
         $query = $this->db_connect->table('users')
-            ->select('name, contact_number, email')
+            ->select('id, name, contact_number, email')
             ->get();
 
         $users_data = $query->getResultArray();
