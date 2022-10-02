@@ -31,6 +31,17 @@ class ManageAppointmentModel extends Model
         return $data;
     }
 
+    public function get_set_appointments()
+    {
+        $query = $this->db_conn->table('set_appointments')
+            ->select('schedule')
+            ->get();
+
+        $data = $query->getResultObject(); //object access using ->col_name
+
+        return $data;
+    }
+
     /**
      * Function: Retrieve
      * Description: get all approved appointment is database

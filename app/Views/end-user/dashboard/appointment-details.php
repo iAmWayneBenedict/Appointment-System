@@ -406,7 +406,7 @@
             } else {
                 nextDate = new Date(date.getFullYear(), date.getMonth() + 1, 1);
             }
-            console.log(nextDate.getFullYear())
+
             setCalendarTitle(convertMonthToName(nextDate.getMonth()), nextDate.getMonth())
 
             $(this).attr('disabled', true)

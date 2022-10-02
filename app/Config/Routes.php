@@ -65,9 +65,14 @@ $routes->group('user', static function ($routes) {
         $routes->get('pending-appointment', 'End_Users\ClientAppointment::pending_appointment');
         $routes->get('approved-appointment', 'End_Users\ClientAppointment::approved_appointment');
         $routes->get('appointment-summary/(:num)', 'End_Users\ClientAppointment::approved_appointment/$1');
+        $routes->get('all-appointments', 'Admin\ManageAppointment::get_set_appointments');
 
         $routes->get('stocks-monitor', 'Admin\StocksController::stocks_monitor');
         $routes->get('get-all-release-dates', 'Admin\StocksController::get_all_release_dates');
+
+        $routes->get('notifications', 'End_Users\UserController::notifications');
+        $routes->get('get-notifications', 'End_Users\UserController::get_notifications');
+        $routes->get('already-read/(:num)', 'End_Users\UserController::already_read/$1');
     });
 
     $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {

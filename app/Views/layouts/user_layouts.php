@@ -51,11 +51,16 @@
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">
             <div class="d-flex">
-                <a href="#" class="btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
+                <a href="<?= base_url('/user/dashboard/notifications') ?>" class="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNotification" aria-controls="offcanvasScrolling">
+                    <div class="position-relative" style="width: fit-content;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="position-absolute top-0 start-100 translate-middle bg-danger rounded-circle d-none notif-alert" style="padding:.35rem">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                    </div>
                 </a>
             </div>
             <a class="nav-link text-danger text-uppercase ms-3" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/logout') ?>">Log out</a>
@@ -159,11 +164,16 @@
                 <span class=""></span>
             </button>
 
-            <a href="#" class="btn notification-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
-                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                </svg>
+            <a href="<?= base_url('/user/dashboard/notifications') ?>" class="btn">
+                <div class="position-relative" style="width: fit-content;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="position-absolute top-0 start-100 translate-middle bg-danger rounded-circle d-none notif-alert" style="padding:.35rem">
+                        <span class="visually-hidden">New alerts</span>
+                    </span>
+                </div>
             </a>
         </div>
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="--bs-offcanvas-width: 100%;">
@@ -197,7 +207,7 @@
                         <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/stocks-monitor') ?>">Stocks Monitor</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="#">Notifications</a>
+                        <a class="nav-link text-dark text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/notifications') ?>">Notifications</a>
                     </li>
                     <li class="nav-item mt-5">
                         <a class="nav-link text-danger text-uppercase" style="font-weight: 700;" aria-current="page" href="<?= base_url('/user/dashboard/logout') ?>">Log out</a>
@@ -209,11 +219,47 @@
 
     <?= $this->renderSection('content') ?>
 
-
+    <!-- <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasNotification" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <h5 class="offcanvas-title fw-semibold" id="offcanvasScrollingLabel">NOTIFICATIONS</h5>
+            <div class="mt-5 d-flex flex-column">
+                <div class="list-group">
+                    <div class="list-group-item position-relative border-0 d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            Good Afternoon, Sydney Pepito Your Appointment had been approved With Appointment id : 31 Scheduled on : October 05, 2022 7:15 AM Purpose : Processing of Crop Insurance (PCIC Program)
+                        </div>
+                        <span class="position-absolute translate-middle bg-primary rounded-circle" style="top:20%; right:5%;padding:.35rem">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                    </div>
+                    <div class="list-group-item position-relative border-0 d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            Good Afternoon, Sydney Pepito Your Appointment had been approved With Appointment id : 31 Scheduled on : October 05, 2022 7:15 AM Purpose : Processing of Crop Insurance (PCIC Program)
+                        </div>
+                        <span class="position-absolute translate-middle bg-primary rounded-circle" style="top:20%; right:5%;padding:.35rem">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                    </div>
+                    <div class="list-group-item position-relative border-0 d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            Good Afternoon, Sydney Pepito Your Appointment had been approved With Appointment id : 31 Scheduled on : October 05, 2022 7:15 AM Purpose : Processing of Crop Insurance (PCIC Program)
+                        </div>
+                        <span class="position-absolute translate-middle bg-primary rounded-circle" style="top:20%; right:5%;padding:.35rem">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
     <script>
         $(() => {
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+            const url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
             let currentUrl = window.location.pathname.split('/')
             $("#side-nav-toggler").click(toggleSideNav)
@@ -252,6 +298,21 @@
                 }
             }
 
+
+            // get notifications 
+            $.ajax({
+                type: "get",
+                url: `${url}/user/dashboard/get-notifications`,
+                dataType: "json",
+                success: function(response) {
+                    let hasUnreadNotif = response.notifications.some((element) => parseInt(element.status) === 0)
+                    if (hasUnreadNotif) {
+                        $('.notif-alert').each(function() {
+                            $(this).removeClass('d-none')
+                        })
+                    }
+                }
+            });
         })
     </script>
 </body>

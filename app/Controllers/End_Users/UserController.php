@@ -9,6 +9,7 @@ use App\Libraries\OneWaySMS;
 use App\Controllers\BaseController;
 use App\Controllers\End_Users\ClientAppointment;
 use App\Models\Appointment\UserAppointmentModel;
+use App\Models\OnAppNotifModel;
 
 class UserController extends BaseController
 {
@@ -25,6 +26,7 @@ class UserController extends BaseController
         $this->send_sms = new OneWaySMS();
         $this->client_appointment = new ClientAppointment();
         $this->userAppointment = new UserAppointmentModel();
+        $this->notifications = new OnAppNotifModel();
         $this->session = \Config\Services::session();
         // $this->number_formater = new NumberFormater();
     }
@@ -42,6 +44,28 @@ class UserController extends BaseController
         $data['user_informations'] = $this->user_model->get_user_info($user_id);
 
         return view('end-user/reminder', $data);
+    }
+
+    public function notifications()
+    {
+        $user_id = $this->session->get('id');
+
+        $data['notifications'] = $this->notifications->get_notifications($user_id);
+
+        return view('end-user/dashboard/notifications', $data);
+    }
+    public function get_notifications()
+    {
+        $user_id = $this->session->get('id');
+
+        $data['notifications'] = $this->notifications->get_notifications($user_id);
+
+        return json_encode($data);
+    }
+
+    public function already_read($id)
+    {
+        $this->notifications->update_status($id);
     }
 
     /**

@@ -111,6 +111,24 @@ class ManageAppointment extends BaseController
         }
     }
 
+    public function get_set_appointments()
+    {
+        $data = $this->manage_appointment->get_set_appointments();
+
+        if ($data) {
+            return json_encode([
+                'code' => 1,
+                'data' => $data,
+                'msg' => "Successfully retrieved data"
+            ]);
+        } else {
+            return json_encode([
+                'code' => 1,
+                'msg' => "Cannot retrieve data",
+            ]);
+        }
+    }
+
     /**
      Function: REVIEW APPOINTMENT
      * Description: Display spesific data of appointments base what admin choose
@@ -152,12 +170,12 @@ class ManageAppointment extends BaseController
     {
         //prevent inserting more than one
         $validate = $this->validate([
-            'id' =>[
+            'id' => [
                 'rules' => 'is_unique[approved_appointments.set_appointment_id]'
             ]
         ]);
 
-        if(!$validate){
+        if (!$validate) {
             return;
         }
 

@@ -11091,6 +11091,14 @@ td.active {
   color: white;
 }
 
+.notif-body {
+  display: inline-block;
+  width: 25rem;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
 .center-con {
   display: flex;
   justify-content: center;
