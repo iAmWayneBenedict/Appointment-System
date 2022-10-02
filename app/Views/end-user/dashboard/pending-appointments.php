@@ -38,12 +38,13 @@
                                 <!-- employee name and role -->
 
                                 <div>
-                                    <h5 class="card-title m-0 fw-semibold font-recoleta"><?= $employee_incharge ?></h5>
-                                    <p class="card-text"><?= $employee->designation ?></p>
+                                    <h5 class="card-title m-0 fw-semibold"><?= $employee_incharge ? $employee_incharge : 'Municipal Agriculture Office' ?></h5>
+                                    <p class="card-text"><?= $employee_incharge ? $employee->designation : '' ?></p>
                                 </div>
                             </div>
                             <?php
-                            if ($employee_incharge_counter - 1) {
+                            $employee_incharge = '';
+                            if ($employee_incharge_counter - 1 > 0) {
                             ?>
                                 <small class="fw-semibold text-primary">and <?= $employee_incharge_counter - 1 ?> other people</small>
                             <?php

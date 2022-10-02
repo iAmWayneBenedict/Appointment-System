@@ -29,7 +29,7 @@
 			"rotation": "0"
 		}
 	},
-	"cornersSquareOptions": { "type": "extra-rounded", "color": "#5c61f3", "gradient": null },
+	"cornersSquareOptions": { "type": "extra-rounded", "color": "#000000", "gradient": null },
 	"cornersSquareOptionsHelper": {
 		"colorType": { "single": true, "gradient": false },
 		"gradient": {

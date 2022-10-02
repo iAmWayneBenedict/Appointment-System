@@ -77,7 +77,7 @@ class ManageAppointment extends BaseController
             ]);
         } else {
             return json_encode([
-                'code' => 1,
+                'code' => 0,
                 'msg' => "Cannot retrieve data",
             ]);
         }
@@ -98,6 +98,24 @@ class ManageAppointment extends BaseController
         // print_r($data);
         // echo '<pre>';
         if ($data['pending']) {
+            return json_encode([
+                'code' => 1,
+                'data' => $data,
+                'msg' => "Successfully retrieved data"
+            ]);
+        } else {
+            return json_encode([
+                'code' => 1,
+                'msg' => "Cannot retrieve data",
+            ]);
+        }
+    }
+
+    public function get_set_appointments()
+    {
+        $data = $this->manage_appointment->get_set_appointments();
+
+        if ($data) {
             return json_encode([
                 'code' => 1,
                 'data' => $data,
@@ -152,12 +170,12 @@ class ManageAppointment extends BaseController
     {
         //prevent inserting more than one
         $validate = $this->validate([
-            'id' =>[
+            'id' => [
                 'rules' => 'is_unique[approved_appointments.set_appointment_id]'
             ]
         ]);
 
-        if(!$validate){
+        if (!$validate) {
             return;
         }
 
@@ -318,7 +336,7 @@ class ManageAppointment extends BaseController
 
             //on app notification
             $this->appNotif->sent_app_notification($result->user_id, $message);
-            
+
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
             //$sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
@@ -410,7 +428,7 @@ class ManageAppointment extends BaseController
                     'appointment_id'  => $approved->id,
                     'state'           => 'passed'
                 ];
-        
+
                 AdminReportModel::insert_report($data);
                 $this->manage_appointment->remove_approved_appointment($approved->id);
             }
@@ -423,7 +441,7 @@ class ManageAppointment extends BaseController
                     'appointment_id'  => $guest->id,
                     'state'           => 'passed'
                 ];
-        
+
                 AdminReportModel::insert_report($data);
                 $this->manage_appointment->remove_approved_appointment($guest->id);
             }

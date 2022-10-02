@@ -20,7 +20,7 @@
             foreach ($myAppointment as $appointment) {
                 $index++
         ?>
-                <form action="" method="post" class="form-submit" style="width:30rem">
+                <form action="" method="post" class="form-submit" style="width:30rem" data-id="<?= $index ?>">
                     <div class="pb-3 d-flex justify-content-between">
                         <h1 class="font-recoleta fw-bold">Appointment ID #<?= $appointment->id ?></h1>
                         <input type="text" class="form-control" name="id" value="<?= $appointment->id ?>" id="id" hidden>
@@ -35,8 +35,8 @@
                     </div>
                     <div class="">
                         <label for="new-sched" class="form-label">Reschedule</label><br>
-                        <input type="text" hidden class="form-control" id="new-sched" name="new-sched" required>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $index ?>">
+                        <input type="text" hidden class="form-control resched" id="new-sched" name="new-sched" required>
+                        <button type="button" class="btn btn-primary select-date-btn" data-bs-toggle="modal" data-bs-target="#calendarModal">
                             Select Date
                         </button>
                         <br>
@@ -51,108 +51,6 @@
                         <a href="<?= base_url("user/dashboard/delete-passed-appointment/{$appointment->id}") ?>" class="btn btn-danger">Remove</a>
                         <a href="<?= base_url("user/dashboard/delete1-passed-appointment/{$appointment->id}") ?>" class="btn btn-success">Already Done</a>
                     </div>
-
-                    <!-- modal -->
-                    <div class="modal fade" id="exampleModal<?= $index ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Choose a date</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body d-flex justify-content-center">
-                                    <div class="calendar flex-fill" style="max-width: 25rem;">
-                                        <div class="calendar-grid m-0 p-0 calendar-set-appointment">
-                                            <div class="w-full">
-                                                <div class="d-flex justify-content-between">
-                                                    <button type="button" class="btn prev-month">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
-                                                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                                                            <polyline points="12 19 5 12 12 5"></polyline>
-                                                        </svg>
-                                                    </button>
-                                                    <h3 class="fw-semibold calendar-title">January</h3>
-                                                    <button type="button" class="btn next-month">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
-                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                            <polyline points="12 5 19 12 12 19"></polyline>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="calendar-con">
-                                                <table class="table table-borderless">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Sun</th>
-                                                            <th scope="col">Mon</th>
-                                                            <th scope="col">Tue</th>
-                                                            <th scope="col">Wed</th>
-                                                            <th scope="col">Thu</th>
-                                                            <th scope="col">Fri</th>
-                                                            <th scope="col">Sat</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="days-entries">
-
-                                                    </tbody>
-                                                </table>
-                                                <div class="d-flex flex-column align-items-center">
-                                                    <div style="width: fit-content;">
-                                                        <h4 class="fw-semibold">Time</h4>
-                                                    </div>
-                                                    <div class="d-flex gap-3 align-items-center" style="max-width: 15rem;">
-                                                        <select class="form-select text-center hour">
-                                                            <option value="07">7</option>
-                                                            <option value="08">8</option>
-                                                            <option value="09">9</option>
-                                                            <option value="10">10</option>
-                                                            <option value="11">11</option>
-                                                            <option value="13">1</option>
-                                                            <option value="14">2</option>
-                                                            <option value="15">3</option>
-                                                        </select>
-                                                        <span>:</span>
-                                                        <select class="form-select text-center minutes">
-                                                            <option value="00">00</option>
-                                                            <option value="15">15</option>
-                                                            <option value="30">30</option>
-                                                            <option value="45">45</option>
-                                                        </select>
-                                                        <div class="datetime">
-                                                            pm
-                                                        </div>
-                                                    </div>
-                                                    <!-- <div class="spinner-border text-primary mt-3" style="width: 20px; height: 20px" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                    <div class="alert text-danger py-2" role="alert">
-                                        <small>asd</small>
-                                    </div> -->
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer d-flex justify-content-between">
-                                    <div>
-                                        <small><b>Legend:</b></small>
-                                        <div class="d-flex align-items-center" role="alert">
-                                            <span class="bg-danger rounded-circle" style="width: 10px; height: 10px;"></span>
-                                            <small class="ms-2">
-                                                Cannot set appointment
-                                            </small>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary save-date-btn">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </form>
 
             <?php
@@ -164,11 +62,129 @@
             </div>
         <?php } ?>
     </div>
+    <!-- modal -->
+    <div class="modal fade" id="calendarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Choose a date</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <div class="calendar flex-fill" style="max-width: 25rem;">
+                        <div class="calendar-grid m-0 p-0 calendar-set-appointment">
+                            <div class="w-full">
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn prev-month">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                                            <polyline points="12 19 5 12 12 5"></polyline>
+                                        </svg>
+                                    </button>
+                                    <h3 class="fw-semibold calendar-title">January</h3>
+                                    <button type="button" class="btn next-month">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="calendar-con">
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sun</th>
+                                            <th scope="col">Mon</th>
+                                            <th scope="col">Tue</th>
+                                            <th scope="col">Wed</th>
+                                            <th scope="col">Thu</th>
+                                            <th scope="col">Fri</th>
+                                            <th scope="col">Sat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="days-entries">
+
+                                    </tbody>
+                                </table>
+                                <div class="d-flex flex-column align-items-center">
+                                    <div style="width: fit-content;">
+                                        <h4 class="fw-semibold">Time</h4>
+                                    </div>
+                                    <div class="d-flex gap-3 align-items-center" style="max-width: 15rem;">
+                                        <select class="form-select text-center hour">
+                                            <option value="07">7</option>
+                                            <option value="08">8</option>
+                                            <option value="09">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="13">1</option>
+                                            <option value="14">2</option>
+                                            <option value="15">3</option>
+                                        </select>
+                                        <span>:</span>
+                                        <select class="form-select text-center minutes">
+                                            <option value="00">00</option>
+                                            <option value="15">15</option>
+                                            <option value="30">30</option>
+                                            <option value="45">45</option>
+                                        </select>
+                                        <div class="datetime">
+                                            pm
+                                        </div>
+                                    </div>
+                                    <!-- <div class="spinner-border text-primary mt-3" style="width: 20px; height: 20px" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <div class="alert text-danger py-2" role="alert">
+                                        <small>asd</small>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <div>
+                        <small><b>Legend:</b></small>
+                        <div class="d-flex align-items-center" role="alert">
+                            <span class="bg-danger rounded-circle" style="width: 10px; height: 10px;"></span>
+                            <small class="ms-2">
+                                Cannot set appointment
+                            </small>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary save-date-btn">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="<?= base_url('/src/js/calendar.js') ?>"></script>
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute("content");
+        let global_clicked_id = 0
+        $(".select-date-btn").each(function() {
+            $(this).click(function() {
+                global_clicked_id = $(this).parents('form').data('id')
+            })
+
+        })
+
+        $('.save-date-btn').click(function() {
+            $('.form-submit').each(function() {
+                if ($(this).data('id') !== global_clicked_id) {
+                    $(this).find('.selected-date-con').addClass('d-none')
+                    $(this).find('.resched').val('')
+                    $(this).find('.selected-date').val('')
+                }
+            })
+        })
 
         $('.form-submit').each(function() {
             $(this).submit(function(e) {

@@ -112,25 +112,6 @@
                                     <line x1="3" y1="10" x2="21" y2="10"></line>
                                 </svg>
                                 <span class="ms-2">
-                                    Appointments Calendar
-                                </span>
-                            </div>
-                            </span>
-                            <div class="card-body">
-                                <p class="card-text">No appointments today</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pe-5">
-                        <div class="card mb-3">
-                            <div class="card-header text-bg-primary d-flex align-items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                                <span class="ms-2">
                                     Calendar Legend
                                 </span>
                             </div>
@@ -155,7 +136,7 @@
 
         <div class="my-5">
             <h4>Generate Report for this Month</h4>
-            <a href="#" class="btn btn-primary">Generate Report</a>
+            <a href="<?= base_url('/admin/dashboard/report') ?>" class="btn btn-primary">Generate Report</a>
         </div>
     </div>
 </div>
@@ -283,14 +264,14 @@
                         if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
                             hasStocksReleaseDate = true
                             hasStocksReleaseAlert = true
-                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
+                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
                         }
                     }
 
                     if (hasStocksReleaseDate) continue;
                     // Date today
 
-                    currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                    currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></a></td>'
 
                 } else {
                     let hasStocksReleaseDate = false;
@@ -304,14 +285,14 @@
                         if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
                             hasStocksReleaseDate = true
                             hasStocksReleaseAlert = true
-                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
+                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
                         }
                     }
 
                     if (hasStocksReleaseDate) continue;
                     // Date today
 
-                    currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                    currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></a></td>'
 
                 }
 

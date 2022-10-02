@@ -331,7 +331,7 @@ class ClientAppointment extends BaseController
     {
 
         $appointment_id = $this->request->getPost('id');
-        $new_sched = $this->request->getPost('new-sched');
+        $new_sched = $this->request->getPost('new_sched');
 
         //get current date
         $now = $this->time->now();

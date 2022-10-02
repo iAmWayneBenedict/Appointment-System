@@ -119,6 +119,9 @@
                 async: true,
                 success: function(response) {
                     let rawData = JSON.parse(response)
+                    if (rawData.code === 0)
+                        return
+
                     let approvedData = JSON.parse(response).data.approved
                     let approvedLength = approvedData.length
                     let getAllDates = [];
