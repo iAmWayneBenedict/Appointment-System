@@ -1,15 +1,9 @@
-<?= $this->extend('layouts/user_layouts') ?>
+<?= $this->extend('layouts/layout') ?>
 <?= $this->section('content') ?>
 <div class="main-content">
     <div>
         <div class="pb-5">
-            <h3 class="font-recoleta fw-bold">Appointment Registration</h3>
-            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= base_url('/user/dashboard/') ?>">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Appointment Registration</li>
-                </ol>
-            </nav>
+            <h3 class="font-recoleta fw-bold">Guest Appointment Registration</h3>
         </div>
     </div>
     <div class="main">
@@ -44,6 +38,10 @@
                         <label for="c_number" class="form-label">Contact number</label>
                         <input type="text" class="form-control" name="c_number" id="c_number" placeholder="Contact Number">
                     </div>
+
+                </div>
+
+                <div class="d-flex flex-column flex-fill">
                     <div class="pb-3">
                         <label for="purpose" class="form-label">Purpose</label>
                         <select class="form-select" name="purpose" id="purpose">
@@ -56,10 +54,6 @@
                             <option value="other">Other</option>
                         </select>
                     </div>
-
-                </div>
-
-                <div class="d-flex flex-column flex-fill">
                     <div class="pb-1">
                         <h6 class="mb-3">Person(s) in-charge of purpose</h6>
                         <div class="person-incharge-con">

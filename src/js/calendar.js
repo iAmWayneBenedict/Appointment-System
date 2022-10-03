@@ -25,7 +25,7 @@ $(() => {
 		// get employee incharge based on selected purpose
 		$.ajax({
 			type: "get",
-			url: `${url}/user/dashboard/all-appointments`,
+			url: `${url}/user/all-appointments`,
 			success: function (response) {
 				let data = JSON.parse(response).data;
 				for (const value of data) {
@@ -516,7 +516,7 @@ $(() => {
 		// get employee incharge based on selected purpose
 		$.ajax({
 			type: "get",
-			url: `${url}/user/dashboard/get-incharge-employee/${purpose}`,
+			url: `${url}/user/get-incharge-employee/${purpose}`,
 			// dataType: "json",
 			success: function (response) {
 				let data = JSON.parse(response);

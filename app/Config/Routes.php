@@ -48,10 +48,12 @@ $routes->group('user', static function ($routes) {
     $routes->post('register-user', 'End_Users\UserController::register_user');
     $routes->post('login-user', 'End_Users\UserLoginController::login_user');
 
+    $routes->get('all-appointments', 'Admin\ManageAppointment::get_set_appointments');
+    $routes->get('get-incharge-employee/(:any)', 'Employee\Employee::get_incharge_employee/$1');
+
     $routes->group('dashboard', ['filter' => 'userLoginFilter'], static function ($routes) {
         $routes->get('/', 'End_Users\UserController::dashboard');
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
-        $routes->get('get-incharge-employee/(:any)', 'Employee\Employee::get_incharge_employee/$1');
         $routes->get('logout', 'End_Users\UserLoginController::logout_user');
         $routes->get('set-appointment', 'End_Users\ClientAppointment::registered_client');
         $routes->get('passed-appointment', 'End_Users\ClientAppointment::get_passed_appointment');
@@ -65,7 +67,6 @@ $routes->group('user', static function ($routes) {
         $routes->get('pending-appointment', 'End_Users\ClientAppointment::pending_appointment');
         $routes->get('approved-appointment', 'End_Users\ClientAppointment::approved_appointment');
         $routes->get('appointment-summary/(:num)', 'End_Users\ClientAppointment::approved_appointment/$1');
-        $routes->get('all-appointments', 'Admin\ManageAppointment::get_set_appointments');
         $routes->get('remove-appointment/(:any)', 'End_Users\ClientAppointment::delete_appointment/$1');
 
         $routes->get('stocks-monitor', 'Admin\StocksController::stocks_monitor');
