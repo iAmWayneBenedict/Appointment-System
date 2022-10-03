@@ -1,17 +1,12 @@
 $(document).ready(function () {
 	const base_url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
-	$("#generate-id").click(function (e) {
-		e.preventDefault();
-		$.ajax({
-			type: "get",
-			url: `${base_url}/user/generate-id`,
-			success: function (response) {
-				$("#user_id").html(response);
-				$("#generate-id").remove();
-				$("#submit").removeClass("d-none");
-			},
-		});
+	$.ajax({
+		type: "get",
+		url: `${base_url}/user/generate-id`,
+		success: function (response) {
+			$("#user_id").html(response);
+		},
 	});
 
 	$("#user-form").submit(function (e) {

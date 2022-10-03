@@ -229,7 +229,7 @@ $(() => {
 						"</div></a></td>";
 				} else {
 					currentWeek +=
-						'<td class="active"><a role="button" class="text-decoration-none day text-dark"><div><h6>' +
+						'<td class="active"><a role="button" aria-disabled="true" class="disabled text-decoration-none day text-danger"><div><h6>' +
 						days +
 						"</h6>" +
 						"</div></a></td>";
