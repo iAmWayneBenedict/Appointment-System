@@ -62,6 +62,7 @@
         </div>
         <div class="my-5">
             <h4>Calendar of Events</h4>
+            <button type="button" class="btn btn-primary">Holiday</button>
             <div class="d-flex">
                 <div class="calendar flex-fill">
                     <div class="calendar-grid dashboard m-0">

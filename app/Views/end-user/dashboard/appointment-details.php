@@ -92,7 +92,7 @@
                         <div class="mt-5 d-flex justify-content-end gap-3">
                             <input type="hidden" name="id" class="pending_id" value="<?= $pending[0]->id; ?>">
                             <input type="submit" class="btn btn-primary" value="UPDATE">
-                            <input type="button" class="btn btn-danger"  id='remove' value="REMOVE">
+                            <input type="button" class="btn btn-danger" id='remove' value="REMOVE">
                         </div>
                     </div>
                 </form>
@@ -178,7 +178,7 @@
                         </div>
                         <div class="mt-5 d-flex justify-content-end gap-3">
                             <input type="hidden" name="id" class="pending_id" value="<?= $approved[0]->id; ?>">
-                            <input type="button" class="btn btn-danger"  id='cancel' value="CANCEL">
+                            <input type="button" class="btn btn-danger" id='cancel' value="CANCEL">
                         </div>
                     </div>
                 </form>
@@ -531,7 +531,7 @@
 
             $.ajax({
                 type: "get",
-                url: `${url}/user/dashboard/get-incharge-employee/${purpose}`,
+                url: `${url}/user/get-incharge-employee/${purpose}`,
                 // dataType: "json",
                 success: function(response) {
                     let data = JSON.parse(response);
@@ -597,41 +597,41 @@
 
         });
 
-        $('#cancel').click(function (e) { 
+        $('#cancel').click(function(e) {
             e.preventDefault();
             var id = $('.pending_id').val()
             Swal.fire({
-            title: 'Are you sure?',
-            text: "Your Appointment will be Canceled!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Continue!'
+                title: 'Are you sure?',
+                text: "Your Appointment will be Canceled!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Continue!'
             }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = `${url}/user/dashboard/cancel-appointment/${id}`
-            }
+                if (result.isConfirmed) {
+                    window.location.href = `${url}/user/dashboard/cancel-appointment/${id}`
+                }
             })
         });
 
-        $('#remove').click(function (e) { 
+        $('#remove').click(function(e) {
             e.preventDefault();
             var id = $('.pending_id').val()
             Swal.fire({
-            title: 'Are you sure?',
-            text: "Your Appointment will be Deleted!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Continue!'
+                title: 'Are you sure?',
+                text: "Your Appointment will be Deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Continue!'
             }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = `${url}/user/dashboard/remove-appointment/${id}`
-            }
+                if (result.isConfirmed) {
+                    window.location.href = `${url}/user/dashboard/remove-appointment/${id}`
+                }
             })
-            
+
         });
     });
 </script>
