@@ -46,7 +46,7 @@ class ClientAppointment extends BaseController
         return view('end-user/appointment/guest');
     }
 
-    // TODO: use "remark" as input name for post submitting form
+    
     public function create_appointment($user_type = false)
     {
 
@@ -150,17 +150,17 @@ class ClientAppointment extends BaseController
             'user_type' => $_user
         ];
 
-        if (!$this->userAppointment->insert_appointment($data)) {
+        $response = $this->userAppointment->insert_appointment($data);
+        if (!$response['bool']) {
             return json_encode([
                 'code' => 0,
                 'errors' => 'Sorry!, Please make a try later, Something went worng in our server'
             ]);
         }
 
-        AdminReportModel::increment_appointment_made();
         return json_encode([
             'code' => 1,
-            'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment"
+            'msg' => "Appointment Updated\nPlease wait for a Text message for an update on your appointment \n Appointment ID: {$response['id']}"
         ]);
     }
 
@@ -231,7 +231,6 @@ class ClientAppointment extends BaseController
      * @return json:respone 
      */
 
-    // TODO : add remark input/text area on edit appointment
     public function edit_appointment()
     {
 
@@ -302,7 +301,8 @@ class ClientAppointment extends BaseController
             'remarks'  => $remark
         ];
 
-        if (!$this->userAppointment->update_appointment($current_user, $data)) {
+        $response = $this->userAppointment->update_appointment($current_user, $data);
+        if (!$response['bool']) {
             return json_encode([
                 'code' => 0,
                 'errors' => 'Sorry!, Please make a try later, Something went worng in our server'
@@ -311,7 +311,7 @@ class ClientAppointment extends BaseController
 
         return json_encode([
             'code' => 1,
-            'msg' => "Appointment Updated\nPlease wait for a Text message for an update on your appointment"
+            'msg' => "Appointment Updated\nPlease wait for a Text message for an update on your appointment \n Appointment ID: {$response['id']}"
         ]);
     }
 

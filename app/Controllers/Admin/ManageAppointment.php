@@ -199,7 +199,11 @@ class ManageAppointment extends BaseController
         $message .= "Purpose : {$appointment_data->purpose}";
 
         //on app notification
-        $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
+        //TODO: FIX all like this
+        if($appointment_data->user_id != NULL){
+            $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
+        }
+        
 
         //enable this sms later ⬇⬇⬇⬇⬇⬇
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
@@ -242,7 +246,9 @@ class ManageAppointment extends BaseController
         $message .= "Please Select another date and time schedule for your appointment";
 
         //on app notification
-        $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
+        if($appointment_data->user_id != NULL){
+            $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
+        }
         //enable this sms later ⬇⬇⬇⬇⬇⬇
 
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
@@ -335,8 +341,10 @@ class ManageAppointment extends BaseController
             $message .= "Appointment ID: {$result->id}";
 
             //on app notification
-            $this->appNotif->sent_app_notification($result->user_id, $message);
-
+            if($result->user_id != NULL){
+                $this->appNotif->sent_app_notification($result->user_id, $message);
+            }
+            
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
             //$sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
@@ -382,7 +390,9 @@ class ManageAppointment extends BaseController
             $message .= "Appointment ID: {$approved->id}";
 
             //on app notification
-            $this->appNotif->sent_app_notification($approved->user_id, $message);
+            if($approved->user_id != NULL){
+                $this->appNotif->sent_app_notification($approved->user_id, $message);
+            }
 
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
