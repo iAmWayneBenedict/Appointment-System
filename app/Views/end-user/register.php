@@ -24,15 +24,36 @@
                     </span>
                 </div>
                 <br />
-                <!-- generate user id button -->
-                <button id="generate-id" class="btn btn-primary mt-3 rounded-5">Generate User Id</button>
-                <br />
 
-                <!-- name -->
+                <!-- first name -->
 
                 <div class="mb-1">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
+                </div>
+
+                <!-- middle name -->
+                <div class="mb-1">
+                    <label for="mname" class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" id="mname" name="mname" placeholder="Middle Name">
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
+                </div>
+
+                <!-- last name -->
+                <div class="mb-1">
+                    <label for="lname" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
+                </div>
+
+                <!-- suffix -->
+                <div class="mb-1">
+                    <label for="suffix" class="form-label">Suffix</label>
+                    <input type="text" class="form-control" id="suffix" name="suffix" placeholder="Suffix">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>
@@ -71,12 +92,12 @@
                 <div class="mb-1">
                     <label for="social_pos" class="form-label">Social Position</label>
                     <select class="form-select" name="social_pos" id="social_pos">
-                            <option value="Farmer">Farmers</option>
-                            <option value="Fisherfolk">FisherFolks</option>
-                            <option value="Barangay Official">Barangay Official</option>
-                            <option value="Regional Staff">Regional Staff</option>
-                            <option value="Business Owner">Business Owner</option>
-                        </select>
+                        <option value="Farmer">Farmers</option>
+                        <option value="Fisherfolk">FisherFolks</option>
+                        <option value="Barangay Official">Barangay Official</option>
+                        <option value="Regional Staff">Regional Staff</option>
+                        <option value="Business Owner">Business Owner</option>
+                    </select>
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>

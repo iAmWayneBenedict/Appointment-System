@@ -1,7 +1,8 @@
 {
 	"dependencies": {
 		"bootstrap": "^5.2.0-beta1",
-		"bootstrap-icons": "^1.8.3"
+		"bootstrap-icons": "^1.8.3",
+		"date-holidays": "^3.16.7"
 	},
 	"name": "appointment-system",
 	"description": "Appointment System for Municipal Agriculture Office of Bato",

@@ -95,7 +95,7 @@ class ClientAppointment extends BaseController
 
         //filter remarks
         $remark = $this->request->getPost('remark');
-        if(!empty($remark)){
+        if (!empty($remark)) {
             $remark = $this->filter->filtertext($remark);
         }
 
@@ -119,10 +119,10 @@ class ClientAppointment extends BaseController
 
         // return json_encode([$currentTime, $subtractedTime, ]);
         $schedDate = date('Y-m-d', strtotime($parseTimeSched));
-        if ($schedDate <= $subtractedTime) {
+        if ($currentTime >= $subtractedTime) {
             return json_encode([
                 'code' => 0,
-                'errors'  => 'Appointment should be 3 days or more before schedule'
+                'errors'  => ['Appointment should be 3 days or more before schedule']
             ]);
         }
 
@@ -168,7 +168,8 @@ class ClientAppointment extends BaseController
      Fucntion: DELETE APPOINTMENT
      * Description: appointment that ony pending can be fully remove in the DB
      */
-    public function delete_appointment($appointment_id){
+    public function delete_appointment($appointment_id)
+    {
 
         $this->userAppointment->delete_appointment($appointment_id);
 
@@ -230,7 +231,7 @@ class ClientAppointment extends BaseController
      * @return json:respone 
      */
 
-     // TODO : add remark input/text area on edit appointment
+    // TODO : add remark input/text area on edit appointment
     public function edit_appointment()
     {
 
@@ -263,7 +264,7 @@ class ClientAppointment extends BaseController
 
         //filter remarks
         $remark = $this->request->getPost('remark');
-        if(!empty($remark)){
+        if (!empty($remark)) {
             $remark = $this->filter->filtertext($remark);
         }
 

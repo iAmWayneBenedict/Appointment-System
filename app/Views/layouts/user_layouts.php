@@ -51,7 +51,7 @@
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">
             <div class="d-flex">
-                <a href="<?= base_url('/user/dashboard/notifications') ?>" class="btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNotification" aria-controls="offcanvasScrolling">
+                <a href="<?= base_url('/user/dashboard/notifications') ?>" class="btn">
                     <div class="position-relative" style="width: fit-content;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
                             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -300,19 +300,21 @@
 
 
             // get notifications 
-            $.ajax({
-                type: "get",
-                url: `${url}/user/dashboard/get-notifications`,
-                dataType: "json",
-                success: function(response) {
-                    let hasUnreadNotif = response.notifications.some((element) => parseInt(element.status) === 0)
-                    if (hasUnreadNotif) {
-                        $('.notif-alert').each(function() {
-                            $(this).removeClass('d-none')
-                        })
+            setInterval(() => {
+                $.ajax({
+                    type: "get",
+                    url: `${url}/user/dashboard/get-notifications`,
+                    dataType: "json",
+                    success: function(response) {
+                        let hasUnreadNotif = response.notifications.some((element) => parseInt(element.status) === 0)
+                        if (hasUnreadNotif) {
+                            $('.notif-alert').each(function() {
+                                $(this).removeClass('d-none')
+                            })
+                        }
                     }
-                }
-            });
+                });
+            }, 5000)
         })
     </script>
 </body>

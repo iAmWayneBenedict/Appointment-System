@@ -17,8 +17,16 @@
             <form action="" method="post" class="d-flex flex-md-row flex-column align-items justify-content-between gap-5" id="form-submit">
                 <div class="flex-fill">
                     <div class="pb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="name" class="form-control" id="name" name="name" placeholder="Name" value="<?= $userData->name; ?>" readonly>
+                        <label for="fname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Name" value="<?= $userData->fname; ?>" readonly>
+                    </div>
+                    <div class="pb-3">
+                        <label for="lname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Name" value="<?= $userData->lname; ?>" readonly>
+                    </div>
+                    <div class="pb-3">
+                        <label for="suffix" class="form-label">Suffix</label>
+                        <input type="text" class="form-control" id="suffix" name="suffix" placeholder="Name" value="<?= $userData->suffix; ?>" readonly>
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>
@@ -130,7 +138,6 @@
                                     </div>
                                     <div class="d-flex gap-3 align-items-center" style="max-width: 15rem;">
                                         <select class="form-select text-center hour">
-                                            <option value="07">7</option>
                                             <option value="08">8</option>
                                             <option value="09">9</option>
                                             <option value="10">10</option>
@@ -138,6 +145,7 @@
                                             <option value="13">1</option>
                                             <option value="14">2</option>
                                             <option value="15">3</option>
+                                            <option value="15">4</option>
                                         </select>
                                         <span>:</span>
                                         <select class="form-select text-center minutes">
@@ -222,8 +230,7 @@
                             return;
                         }
 
-                        alert(response.msg)
-                        console.log(response)
+                        // alert(response.msg)
                         location.reload()
                     }, 2000)
                 }
