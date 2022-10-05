@@ -96,11 +96,17 @@ class UserController extends BaseController
                     'required' => 'This is important'
                 ]
             ],
+            'fname' => [
+                'rules' => 'required|alpha_space'
+            ],
+            'mname' => [
+                'rules' => 'required|alpha_space'
+            ],
+            'lname' => [
+                'rules' => 'required|alpha_space'
+            ],
             'email' => [
                 'rules' => 'permit_empty|valid_email|is_unique[users.email]'
-            ],
-            'name' => [
-                'rules' => 'required|alpha_space'
             ],
             'address' => [
                 'rules' => 'required'
@@ -142,20 +148,24 @@ class UserController extends BaseController
         // get the inputed data from the register form page 
         // arranged to an array for inserting to database
         $c_number = $this->request->getPost('number');
-        $name = $this->request->getPost('name');
+        $fname = $this->request->getPost('fname');
+        $mname = $this->request->getPost('mname');
+        $lname = $this->request->getPost('lname');
         $social_pos = $this->request->getPost('social_pos');
 
         $user_data = [
             'code_id'           => $this->request->getPost('user_id'),
-            'name'              => $name,
+            'fname'             => ucwords($fname),
+            'mname'             => ucwords($mname),
+            'lname'             => ucwords($lname),
             'address'           => $this->request->getPost('address'),
             'contact_number'    => $c_number,
             'email'             => $this->request->getPost('email'),
-            'social_pos'          => $social_pos,
+            'social_pos'        => $social_pos,
             'password'          => $password
         ];
 
-        $message = "Pangalan: {$name}\n";
+        $message = "Pangalan: {$fname} {$mname} {$lname}\n";
         $message .= "Ang iyong userid: {$generated_code} \n";
         $message .= "ito ay importante dahil kailangan ito sa pag login sa inyong account";
 
@@ -175,7 +185,7 @@ class UserController extends BaseController
 
         return json_encode([
             'code' => 1,
-            'msg' => "We sent a message to your number: {$c_number}",
+            'msg' => "We sent a message to your number: {$c_number} \n {$message}",
             // 'sms_res' => $sms_response['message']
         ]);
     }

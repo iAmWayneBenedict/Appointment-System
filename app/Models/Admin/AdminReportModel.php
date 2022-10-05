@@ -30,6 +30,8 @@ class AdminReportModel extends Model
     public function get_report_data($from_date, $to_date, $social_pos, $purpose, $state)
     {
 
+        $query = $this->db_conn->table('appointment_report');
+
         $conditions = [];
 
         if($social_pos !='All'){
@@ -41,25 +43,47 @@ class AdminReportModel extends Model
         if($state != 'All'){
             $conditions['state'] = $state;
         }
-
-        $query = $this->db_conn->table('appointment_report')
-            ->select("DATE_FORMAT(schedule, '%M %e, %Y %l:%i %p') as schedule, name, social_pos, purpose, state")
-            ->where($conditions);
-
         if($from_date != NULL){
-            $query->where("DATE_FORMAT(schedule, '%Y-%m') >=", $from_date);
+            $conditions["DATE_FORMAT(schedule, '%Y-%m') >="] = $from_date;
 
             if($to_date != NULL){
-                $query->where("DATE_FORMAT(schedule, '%Y-%m') <=", $to_date);
+                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = $to_date;
             }else{
-                $query->where("DATE_FORMAT(schedule, '%Y-%m') <=", $from_date);
+                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = $from_date;
             }
         }
-        unset($conditions);
-        $data['results'] = $query->get()->getResultArray();
-        $data['count'] = $query->countAllResults();
+
+       
+        $all_result = $query->select("DATE_FORMAT(schedule, '%M %e, %Y %l:%i %p') as schedule, name, social_pos, purpose, state")
+            ->where($conditions);
+
+        
+        $data['results'] = $all_result->get()->getResultArray();
+
+        $data['count'] = [
+            'all' => $query->where($conditions)->countAllResults(),
+            'pending_canceled' => $query->where($conditions)->like('state', 'pending canceled')->countAllResults(),
+            'approved_canceled' => $query->where($conditions)->like('state', 'approved canceled')->countAllResults(),
+            'done' => $query->where($conditions)->like('state', 'done')->countAllResults(),
+            'walkin' => $query->where($conditions)->like('state', 'walk in')->countAllResults(),
+            'reject' => $query->where($conditions)->like('state', 'rejected')->countAllResults(),
+            'pass' => $query->where($conditions)->like('state', 'passed')->countAllResults(),
+        ];
+
+        $state = [
+            'pending_canceled' => $query->where('state', 'pending canceled')->countAllResults(),
+            'approved_canceled' => $query->where('state', 'approved canceled')->countAllResults(),
+            'done' => $query->where('state', 'done')->countAllResults(),
+            'walkin' => $query->where('state', 'walk in')->countAllResults(),
+            'reject' => $query->where('state', 'rejected')->countAllResults(),
+            'pass' => $query->where('state', 'passed')->countAllResults(),
+        ];
+        
+        $data['states'] = $state;
         return $data;
     }
+
+
 
     //Function: Just simply get all appointments recieve by the system
     public function get_total_appointments(){
@@ -86,6 +110,8 @@ class AdminReportModel extends Model
         $db = \Config\Database::connect();
         $db->table('report_data')
             ->insert($data);
+
+        return true;
     }
 
 }

@@ -47,7 +47,7 @@
             <div class="col">
                 <select class="form-select" aria-label="Default select example" id="social_pos" name="social_pos">
                     <option selected value="All">All</option>
-                    <option value="Farmer">Farmers</option>
+                    <option value="Farmers">Farmers</option>
                     <option value="Fisherfolk">FisherFolks</option>
                     <option value="Barangay Official">Barangay Official</option>
                     <option value="Regional Staff">Regional Staff</option>
@@ -67,8 +67,12 @@
             <div class="col">
                 <select class="form-select" aria-label="Default select example" id="state" name="state">
                     <option selected value="All">All</option>
-                    <option value="canceled">Canceled</option>
+                    <option value="pending canceled">Pending Canceled</option>
+                    <option value="approved canceled">Approved Canceled</option>
                     <option value="done">Done</option>
+                    <option value="walk in">Walk In</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="passed">Passed</option>
                 </select>
             </div>
             <div class="col">
@@ -103,6 +107,11 @@
             minViewMode: "months"
         });
 
+        $(document).on('change', '.from, .to, #social_pos, #purpose, #state', function (e) { 
+            e.preventDefault();
+            $('#print').addClass('d-none')
+        });
+
         $(()=> {
             const url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
@@ -125,6 +134,7 @@
                     'state' : $('#state').val()
                 }
 
+                // alert($('#state').val());
                 $.ajax({
                     type: "post",
                     url: `${url}/admin/dashboard/preview`,
