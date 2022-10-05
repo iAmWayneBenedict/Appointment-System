@@ -17,16 +17,8 @@
             <form action="" method="post" class="d-flex flex-md-row flex-column align-items justify-content-between gap-5" id="form-submit">
                 <div class="flex-fill">
                     <div class="pb-3">
-                        <label for="fname" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Name" value="<?= $userData->fname; ?>" readonly>
-                    </div>
-                    <div class="pb-3">
-                        <label for="lname" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Name" value="<?= $userData->lname; ?>" readonly>
-                    </div>
-                    <div class="pb-3">
-                        <label for="suffix" class="form-label">Suffix</label>
-                        <input type="text" class="form-control" id="suffix" name="suffix" placeholder="Name" value="<?= $userData->suffix; ?>" readonly>
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= $userData->name; ?>" readonly>
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>
@@ -80,8 +72,8 @@
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label for="remarks" class="form-label">Remarks</label>
-                        <textarea class="form-control" name="remarks" id="remarks" cols="30" rows="5" placeholder="Remarks"></textarea>
+                        <label for="remark" class="form-label">Remarks</label>
+                        <textarea class="form-control" name="remark" id="remark" cols="30" rows="5" placeholder="Remarks"></textarea>
                     </div>
                     <input type="submit" class="btn btn-primary mt-5" id="appointment-submit" value="SUBMIT">
                 </div>
@@ -145,7 +137,7 @@
                                             <option value="13">1</option>
                                             <option value="14">2</option>
                                             <option value="15">3</option>
-                                            <option value="15">4</option>
+                                            <option value="16">4</option>
                                         </select>
                                         <span>:</span>
                                         <select class="form-select text-center minutes">
@@ -196,7 +188,6 @@
                 formdata.set('purpose', $('#concern').val());
                 formdata.delete('concern')
             }
-
             const user_type = 001
             $.ajax({
                 type: "post",
@@ -230,7 +221,7 @@
                             return;
                         }
 
-                        // alert(response.msg)
+                        alert(response.msg)
                         location.reload()
                     }, 2000)
                 }

@@ -117,31 +117,33 @@ class UserModel extends Model
         $query = $this->db_conn->table($this->table)
             ->select('id, code_id, password')
             ->where('code_id', $data_arr['code_id'])
-            ->where('account_stats', 0)
+            ->where('account_stats', 1)
             ->get();
         $data = $query->getRow(); //object
         return $data;
     }
 
-    public function deactivate($user_id){
+    public function deactivate($user_id)
+    {
 
         $this->db_conn->table($this->table)
             ->where('id', $user_id)
             ->update([
-                'account_stats' => 1
+                'account_stats' => 0
             ]);
-        
-            return true;
+
+        return true;
     }
 
-    public function deactivate_admin_side($user_code_id){
+    public function deactivate_admin_side($user_code_id)
+    {
 
         $this->db_conn->table($this->table)
             ->where('code_id', $user_code_id)
             ->update([
-                'account_stats' => 1
+                'account_stats' => 0
             ]);
-        
-            return true;
+
+        return true;
     }
 }

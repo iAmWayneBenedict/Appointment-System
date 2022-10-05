@@ -2,7 +2,6 @@
 
 namespace App\Controllers\End_Users;
 
-use App\Models\UserModel;
 use App\Libraries\NumberFormater;
 use App\Libraries\OneWaySMS;
 
@@ -10,6 +9,7 @@ use App\Controllers\BaseController;
 use App\Controllers\End_Users\ClientAppointment;
 use App\Models\Appointment\UserAppointmentModel;
 use App\Models\OnAppNotifModel;
+use App\Models\UserModel;
 
 class UserController extends BaseController
 {
@@ -159,16 +159,16 @@ class UserController extends BaseController
         $message .= "Ang iyong userid: {$generated_code} \n";
         $message .= "ito ay importante dahil kailangan ito sa pag login sa inyong account";
 
-        // $sms_response = $this->send_sms->sendSMS($c_number, $message);
+        $sms_response = $this->send_sms->sendSMS($c_number, $message);
 
         //if sms is not sent execute this code
-        // if($sms_response['code'] == 0 ){
-        //     return json_encode([
-        //         'code' => 3,
-        //         'msg' => 'You cant Register right now, please try again later',
-        //         'sms_res' => $sms_response['message']
-        //     ]); 
-        // }
+        if ($sms_response['code'] == 0) {
+            return json_encode([
+                'code' => 3,
+                'msg' => 'You cant Register right now, please try again later',
+                'sms_res' => $sms_response['message']
+            ]);
+        }
 
         //insert user data into Database
         $this->user_model->insert($user_data);
@@ -187,6 +187,7 @@ class UserController extends BaseController
 
         $user_id = $this->session->get('id');
         $data['myAppointment'] = $this->userAppointment->get_passed_appointment($user_id);
+        $data['user'] = $this->user_model->get_user_info($user_id);
         return view('end-user/dashboard/dashboard', $data);
     }
     public function employee_status()

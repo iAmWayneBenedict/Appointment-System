@@ -110,7 +110,7 @@
                 data: formdata,
                 dataType: "json",
                 success: function(response) {
-                    console.log(response) //this should ba an alert
+                    alert(response.msg) //this should ba an alert
 
                     if (response.code == 1 || response.code == 0) {
                         $(this).trigger('reset');
@@ -141,44 +141,43 @@
 
         });
 
-        $('#delete').click(function (e) { 
+        $('#delete').click(function(e) {
             e.preventDefault();
             Swal.fire({
-            title: 'Account Deactivation',
-            text: "Are you sure?!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, continue!'
+                title: 'Account Deactivation',
+                text: "Are you sure?!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, continue!'
             }).then((result) => {
-            if (result.isConfirmed) {
+                if (result.isConfirmed) {
 
-                $.ajax({
-                    type: "get",
-                    url: `${base_url}/user/my-account/deactivate-account`,
-                    dataType: 'json',
-                    success: function (response) {
-                        if(response.code == 0 ){
-                            Swal.fire(
-                                'Server Error!',
-                                response.msg,
-                                'error'
-                            )
+                    $.ajax({
+                        type: "get",
+                        url: `${base_url}/user/my-account/deactivate-account`,
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.code == 0) {
+                                Swal.fire(
+                                    'Server Error!',
+                                    response.msg,
+                                    'error'
+                                )
+                            } else if (response.code == 1) {
+                                Swal.fire(
+                                    'DeActivated!',
+                                    'You cannot access your account anymore.',
+                                    'success'
+                                ).then(() => {
+                                    window.location.href = `${base_url}`
+                                })
+                            }
                         }
-                        else if(response.code == 1){
-                            Swal.fire(
-                                'DeActivated!',
-                                'You cannot access your account anymore.',
-                                'success'
-                            ).then(() => {
-                                window.location.href = `${base_url}`
-                            })
-                        }
-                    }
-                });
-               
-            }
+                    });
+
+                }
             })
         });
 

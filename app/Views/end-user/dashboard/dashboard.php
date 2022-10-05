@@ -2,8 +2,17 @@
 <?= $this->section('content') ?>
 <div class="main-content mb-5">
     <div class="greetings mt-4">
-        <h1>Good morning</h1>
-        <h1>User</h1>
+
+        <h1>Good <?php
+                    if (date("H:i") < '12:00')
+                        echo 'morning';
+                    else if (date("H:i") >= '12:00' && date("H:i") < '18:00')
+                        echo 'afternoon';
+                    else
+                        echo 'evening';
+
+                    ?></h1>
+        <h1><?= $user->name ?></h1>
     </div>
     <a href="<?= base_url("/user/dashboard/set-appointment") ?>" class="add-appointment-btn btn btn-primary my-5 center-vertical" style="width:fit-content">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">

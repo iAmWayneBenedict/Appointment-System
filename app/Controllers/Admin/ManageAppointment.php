@@ -199,7 +199,9 @@ class ManageAppointment extends BaseController
         $message .= "Purpose : {$appointment_data->purpose}";
 
         //on app notification
-        $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
+        if ($appointment_data->user_id != NULL) {
+            $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
+        }
 
         //enable this sms later ⬇⬇⬇⬇⬇⬇
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);

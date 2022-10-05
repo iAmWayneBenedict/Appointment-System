@@ -71,16 +71,24 @@ $(() => {
 				}
 			}
 		}
+
+		console.log(dateFlags);
 	}
 
 	$(".hour option").each(function () {
 		timeFlags.push({
 			time: $(this).val(),
+			minutes: [],
 			flags: 0,
 		});
 	});
 
 	function populateTimeFlags(date) {
+		for (const iterator of timeFlags) {
+			iterator.flags = 0;
+			iterator.minutes = [];
+		}
+
 		for (const iterator of dateFlags) {
 			if (
 				iterator.month === date.month &&
@@ -89,6 +97,7 @@ $(() => {
 			) {
 				for (const iterator2 of timeFlags) {
 					if (iterator.hours === iterator2.time) {
+						iterator2.minutes.push(iterator.minutes);
 						iterator2.flags++;
 					}
 				}
@@ -99,10 +108,6 @@ $(() => {
 	function handleConflictingDates(isChanged = false) {
 		handleConflictingHours(isChanged);
 		handleConflictingMinutes();
-
-		for (const iterator of timeFlags) {
-			iterator.flags = 0;
-		}
 	}
 
 	function handleConflictingHours(isChanged) {
@@ -124,7 +129,7 @@ $(() => {
 				}
 			}
 		});
-
+		// console.log(timeFlags, 1);
 		if (!isChanged) {
 			$(".hour option").each(function () {
 				if (!$(this).attr("disabled")) {
@@ -167,19 +172,22 @@ $(() => {
 			$(this).removeClass("text-danger");
 			$(this).removeAttr("selected");
 		});
-
+		// console.log(timeFlags);
 		for (const iterator of timeFlags) {
-			// console.log(iterator)
 			if (iterator.flags) {
 				let counter = 1;
-				$(".minutes option").each(function () {
-					if (counter <= iterator.flags && $(".hour").val() === iterator.time) {
-						$(this).attr("disabled", true);
-						$(this).addClass("text-danger");
-						$(this).attr("selected", true);
+				if (counter <= iterator.flags && $(".hour").val() === iterator.time) {
+					iterator.minutes.map((element) => {
+						$(".minutes option").each(function () {
+							if ($(this).val() === element) {
+								$(this).attr("disabled", true);
+								$(this).addClass("text-danger");
+								$(this).attr("selected", true);
+							}
+						});
 						counter++;
-					}
-				});
+					});
+				}
 			}
 		}
 

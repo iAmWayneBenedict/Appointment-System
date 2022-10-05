@@ -197,8 +197,12 @@
 
         let quantity = 0
         let allocated = 0
-        $("#quantity").on('keydown keyup', handleComputeAvailable);
-        $("#allocated").on('keydown keyup', handleComputeAvailable);
+        $("#quantity").each(function() {
+            $(this).on('keydown keyup', handleComputeAvailable)
+        });
+        $("#allocated").each(function() {
+            $(this).on('keydown keyup', handleComputeAvailable);
+        })
 
         function handleComputeAvailable() {
             let input = $(this).val().split("")
@@ -232,6 +236,7 @@
                 $('button[value=Add], button[value=Update]').removeClass('disabled')
                 data = parseInt($(this).val())
             }
+            console.log(data)
 
             if (data < 0) {
                 $(this).next().removeClass('d-none')
@@ -240,7 +245,7 @@
             } else {
                 $(this).next().addClass('d-none')
                 $('button[value=Add], button[value=Update]').removeAttr('disabled')
-
+                console.log(this.id)
                 if (this.id === 'allocated') {
                     allocated = data;
                 } else {
