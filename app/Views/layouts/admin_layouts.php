@@ -23,7 +23,7 @@
     if (session()->has('done')) {
     ?>
         <script>
-            alert(<?= session('done') ?>)
+            alert('<?= session('done') ?>')
         </script>
     <?php
     }

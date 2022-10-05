@@ -113,7 +113,6 @@
                                     </div>
                                     <div class="d-flex gap-3 align-items-center" style="max-width: 15rem;">
                                         <select class="form-select text-center hour">
-                                            <option value="07">7</option>
                                             <option value="08">8</option>
                                             <option value="09">9</option>
                                             <option value="10">10</option>
@@ -121,6 +120,7 @@
                                             <option value="13">1</option>
                                             <option value="14">2</option>
                                             <option value="15">3</option>
+                                            <option value="16">4</option>
                                         </select>
                                         <span>:</span>
                                         <select class="form-select text-center minutes">

@@ -25,38 +25,45 @@
                 </div>
                 <br />
 
+                <div class="mb-1">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
+                </div>
+
                 <!-- first name -->
 
-                <div class="mb-1">
+                <!-- <div class="mb-1">
                     <label for="fname" class="form-label">First Name</label>
                     <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
-                </div>
+                </div> -->
 
                 <!-- middle name -->
-                <div class="mb-1">
+                <!-- <div class="mb-1">
                     <label for="mname" class="form-label">Middle Name</label>
                     <input type="text" class="form-control" id="mname" name="mname" placeholder="Middle Name">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
-                </div>
+                </div> -->
 
                 <!-- last name -->
-                <div class="mb-1">
+                <!-- <div class="mb-1">
                     <label for="lname" class="form-label">Last Name</label>
                     <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
-                </div>
+                </div> -->
 
                 <!-- suffix -->
-                <div class="mb-1">
+                <!-- <div class="mb-1">
                     <label for="suffix" class="form-label">Suffix</label>
                     <input type="text" class="form-control" id="suffix" name="suffix" placeholder="Suffix">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
-                </div>
+                </div> -->
 
                 <!-- address -->
 
@@ -81,8 +88,8 @@
 
                 <!-- phone number -->
                 <div class="mb-1">
-                    <label for="number" class="form-label">Phone number</label>
-                    <input type="text" class="form-control" id="number" name="number" placeholder="number | 09">
+                    <label for="c_number" class="form-label">Contact number <small class="ms-2 text-secondary"><span class="text-danger">*</span> 09xx xxx xxxx</small></label>
+                    <input type="text" class="form-control" id="number" name="number" placeholder="Contact Number">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>
@@ -129,7 +136,7 @@
 
                 <!-- submit button -->
 
-                <input type="submit" value="Register" id="submit" class="d-none btn btn-primary mt-3 rounded-5">
+                <input type="submit" value="Register" id="submit" class="btn btn-primary mt-3 rounded-5">
 
                 <!-- register option -->
 

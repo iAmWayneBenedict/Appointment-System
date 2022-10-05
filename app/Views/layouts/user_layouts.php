@@ -219,42 +219,6 @@
 
     <?= $this->renderSection('content') ?>
 
-    <!-- <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasNotification" aria-labelledby="offcanvasScrollingLabel">
-        <div class="offcanvas-header justify-content-end">
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <h5 class="offcanvas-title fw-semibold" id="offcanvasScrollingLabel">NOTIFICATIONS</h5>
-            <div class="mt-5 d-flex flex-column">
-                <div class="list-group">
-                    <div class="list-group-item position-relative border-0 d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            Good Afternoon, Sydney Pepito Your Appointment had been approved With Appointment id : 31 Scheduled on : October 05, 2022 7:15 AM Purpose : Processing of Crop Insurance (PCIC Program)
-                        </div>
-                        <span class="position-absolute translate-middle bg-primary rounded-circle" style="top:20%; right:5%;padding:.35rem">
-                            <span class="visually-hidden">New alerts</span>
-                        </span>
-                    </div>
-                    <div class="list-group-item position-relative border-0 d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            Good Afternoon, Sydney Pepito Your Appointment had been approved With Appointment id : 31 Scheduled on : October 05, 2022 7:15 AM Purpose : Processing of Crop Insurance (PCIC Program)
-                        </div>
-                        <span class="position-absolute translate-middle bg-primary rounded-circle" style="top:20%; right:5%;padding:.35rem">
-                            <span class="visually-hidden">New alerts</span>
-                        </span>
-                    </div>
-                    <div class="list-group-item position-relative border-0 d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                            Good Afternoon, Sydney Pepito Your Appointment had been approved With Appointment id : 31 Scheduled on : October 05, 2022 7:15 AM Purpose : Processing of Crop Insurance (PCIC Program)
-                        </div>
-                        <span class="position-absolute translate-middle bg-primary rounded-circle" style="top:20%; right:5%;padding:.35rem">
-                            <span class="visually-hidden">New alerts</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <script>
         $(() => {
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')

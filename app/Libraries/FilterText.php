@@ -18,11 +18,11 @@ class FilterText
 
     function filtertext(string $text)
     {
-
         $filterCount = sizeof($this->swearwords);
         for ($i = 0; $i < $filterCount; $i++) {
-            $text = preg_replace('/\b' . $this->swearwords[$i] .
-                '\b/ie', "str_repeat('*',strlen('$0'))", $text);
+            $text = preg_replace_callback('/\b' . $this->swearwords[$i] . '\b/i', function ($matches) {
+                return str_repeat('*', strlen($matches[0]));
+            }, $text);
         }
         return $text;
     }

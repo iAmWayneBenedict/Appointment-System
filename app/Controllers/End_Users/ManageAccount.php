@@ -97,7 +97,7 @@ class ManageAccount extends BaseController
      */
     function delete_user($user_code_id)
     {
-        $this->userModel->deactivate_admin_side($user_code_id);
+        return $this->userModel->deactivate_admin_side($user_code_id);
     }
 
     /**
@@ -151,16 +151,17 @@ class ManageAccount extends BaseController
         ]);
     }
 
-    public function deactivate_account(){
+    public function deactivate_account()
+    {
 
         $user_id = $this->session->get('id');
 
-        if(!$this->userModel->deactivate($user_id)){
+        if (!$this->userModel->deactivate($user_id)) {
             return json_encode([
                 'code' => 0,
                 'msg'  => 'Please try again later'
             ]);
-        } 
+        }
 
         $user_sessions = ['id', 'logged_in'];
         $this->session->destroy($user_sessions);
