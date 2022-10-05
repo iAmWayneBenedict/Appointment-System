@@ -241,14 +241,12 @@ class ManageAppointmentModel extends Model
     public function get_passed_appointment()
     {
 
-        $time =  date('Y-m-d H', strtotime('-5 hours'));     //current time -5 hours
-        $time2 =  date('Y-m-d H', strtotime('-6 hours'));   //current time -6 hours
+        $time =  date('Y-m-d H', strtotime('-5 hours'));     //current time -5 hours 
 
         $query = $this->db_conn->table('approved_appointments')
             ->select('*')
             ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
             ->where("DATE_FORMAT(schedule, '%Y-%m-%d %H') <=", $time)
-            ->where("DATE_FORMAT(schedule, '%Y-%m-%d %H') >", $time2)
             ->where('user_type', 'Registered')
             ->get();
 

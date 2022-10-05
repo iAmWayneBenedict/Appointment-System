@@ -49,10 +49,15 @@ class UserAppointmentModel extends Model
             ]);
 
         if (!$pending) {
-            return false;
+            return [
+                'bool' => false
+            ];
         }
 
-        return true;
+        return [
+            'id' => $last_id,
+            'bool' => true
+        ];
     }
 
     public function update_appointment($user_id, array $data)
@@ -62,7 +67,18 @@ class UserAppointmentModel extends Model
             ->where('user_id', $user_id)
             ->update($data);
 
-        return true;
+        $appointment_id = $this->database->table('set_appointments')->where('user_id', $user_id)->get()->getRow();
+
+        if (!$appointment_id) {
+            return [
+                'bool' => false
+            ];
+        }
+
+        return [
+            'id' => $appointment_id->id,
+            'bool' => true
+        ];
     }
 
     //retrieve client's pending appointment
