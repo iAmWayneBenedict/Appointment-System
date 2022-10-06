@@ -199,13 +199,12 @@ class ManageAppointment extends BaseController
         $message .= "Purpose : {$appointment_data->purpose}";
 
         //on app notification
-        //TODO: FIX all like this
-        if ($appointment_data->user_id != NULL) {
+        if($appointment_data->user_id != NULL){
             $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
         }
 
 
-        //enable this sms later ⬇⬇⬇⬇⬇⬇
+        //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
         //if sms is not sent execute this code
@@ -233,23 +232,33 @@ class ManageAppointment extends BaseController
     {
 
         $appointment_id = $this->request->getPost('id');
+        $remarks = $this->request->getPost('remark');
         $appointment_data = $this->manage_appointment->get_appointment_info($appointment_id);
 
-        if (!$this->manage_appointment->remove_appointment($appointment_id)) {
+        $data = [
+            'appointment_id'  => $appointment_id,
+            'state'           => 'rejected'
+        ];
+
+        if(!AdminReportModel::insert_report($data)){
             return json_encode([
                 'code' => 0,
                 'msg' => 'System can\'t process right now'
             ]);
         }
 
+        //removed the appointment from pending table
+        $this->manage_appointment->removed_pending_appointment($appointment_id);
+            
         $message = "{$this->greet->greet()} {$appointment_data->name} Your Appointment had been rejected \n";
-        $message .= "Please Select another date and time schedule for your appointment";
+        $message .= "Reason : {$remarks}";
 
         //on app notification
         if ($appointment_data->user_id != NULL) {
             $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
         }
-        //enable this sms later ⬇⬇⬇⬇⬇⬇
+        
+        //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 

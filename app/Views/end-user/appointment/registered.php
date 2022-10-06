@@ -17,8 +17,12 @@
             <form action="" method="post" class="d-flex flex-md-row flex-column align-items justify-content-between gap-5" id="form-submit">
                 <div class="flex-fill">
                     <div class="pb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= $userData->name; ?>" readonly>
+                        <label for="fname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Name" value="<?= $userData->fname; ?>" readonly>
+                    </div>
+                    <div class="pb-3">
+                        <label for="lname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Name" value="<?= $userData->lname; ?>" readonly>
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>

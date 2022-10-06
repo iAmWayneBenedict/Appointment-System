@@ -171,7 +171,15 @@ class ClientAppointment extends BaseController
     public function delete_appointment($appointment_id)
     {
 
-        $this->userAppointment->delete_appointment($appointment_id);
+        $mng = new ManageAppointmentModel();
+        $data = [
+            'appointment_id'  => $appointment_id,
+            'state'           => 'passed'
+        ];
+
+        AdminReportModel::insert_report($data);
+        $mng->remove_approved_appointment($appointment_id);
+
 
         session()->setFlashdata('success', 'Appointment Removed');
         return redirect('user/dashboard');

@@ -17,17 +17,19 @@ $(document).ready(function () {
 			$("#c_password").next().removeClass("d-none");
 			$("#c_password").next().text("Password not match");
 
-			return;
 		} else {
 			$("#c_password").next().addClass("d-none");
 		}
-		console.log($("#social_pos").val());
+
+		console.log($("#fname").val());
 		$.ajax({
 			type: "post",
 			url: `${base_url}/user/register-user`,
 			data: {
 				user_id: $("#user_id").text(),
-				name: $("#name").val(),
+				fname: $("#fname").val(),
+				mname: $("#mname").val(),
+				lname: $("#lname").val(),
 				address: $("#address").val(),
 				email: $("#email").val(),
 				number: $("#number").val(),
@@ -47,8 +49,9 @@ $(document).ready(function () {
 					$.each(res.errors, function (key, val) {
 						$(`#${key}`).next().text(val).removeClass("d-none");
 					});
-					return;
-				} else if (res.code == 1) {
+				}
+				
+				if (res.code == 1) {
 					console.log(res.sms_res);
 					Swal.fire({
 						icon: "success",
@@ -60,8 +63,10 @@ $(document).ready(function () {
 					return;
 				}
 
-				console.log(res.sms_res);
-				Swal.fire("Sorry", res.msg, "error");
+				if(res.code == 3){
+					console.log(res.sms_res);
+					Swal.fire("Sorry", res.msg, "error");
+				}
 			},
 			complete: function (data) {
 				// Hide image container

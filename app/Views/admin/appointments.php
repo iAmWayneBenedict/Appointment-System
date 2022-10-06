@@ -79,6 +79,7 @@
                 success: function(response) {
                     $('#review').html(response)
 
+                    //approved
                     $('.approve').click(function(e) {
                         e.preventDefault();
                         $.ajax({
@@ -111,36 +112,49 @@
                         });
                     });
 
+                    //reject
                     $('.reject').click(function(e) {
                         e.preventDefault();
-                        $.ajax({
-                            type: "post",
-                            url: `${url}/admin/dashboard/reject`,
-                            data: {
-                                id: id
-                            },
-                            dataType: "json",
-                            success: function(res) {
-                                console.log(res)
 
-                                if (res.code == 0) {
-                                    alert(res.msg)
-                                    return;
-                                }
+                        $('.modal').modal('hide');
+                        modbox.prompt({
+                        body: 'Reject Remarks',
+                        input: {
+                            required: true,
+                        }
+                        })
+                        .then(response => 
+                            $.ajax({
+                                type: "post",
+                                url: `${url}/admin/dashboard/reject`,
+                                data: {
+                                    id: id,
+                                    remark: response
+                                },
+                                dataType: "json",
+                                success: function(res) {
+                                    console.log(res)
 
-                                Swal.fire({
-                                    text: res.msg,
-                                    icon: 'success',
-                                    confirmButtonColor: '#3085d6',
-                                    confirmButtonText: 'Ok'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        location.reload(); //reload page after success
+                                    if (res.code == 0) {
+                                        alert(res.msg)
+                                        return;
                                     }
-                                })
 
-                            }
-                        });
+                                    Swal.fire({
+                                        text: res.msg,
+                                        icon: 'success',
+                                        confirmButtonColor: '#3085d6',
+                                        confirmButtonText: 'Ok'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.reload(); //reload page after success
+                                        }
+                                    })
+
+                                }
+                            }) 
+                        );
+
                     });
                 }
             });

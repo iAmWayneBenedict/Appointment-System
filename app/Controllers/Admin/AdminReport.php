@@ -47,8 +47,10 @@ class AdminReport extends BaseController
         );
 
         $data['results'] = $results['results'];
+        $data['state'] = $results['states'];
         $data['total_appointment'] = $this->report_model->get_total_appointments();
         $data['from_result'] = $results['count'];
+        // $data['test'] = $results['test'];
 
         return view('components/results', $data);
     }
@@ -78,8 +80,9 @@ class AdminReport extends BaseController
 
         $data = [
             'results'     => $results['results'],
-            'total_appointment' => $this->report_model->get_total_appointments(),
+            'state'       => $results['states'],
             'from_result' => $results['count'],
+            'total_appointment' => $this->report_model->get_total_appointments(),
             'date_today'  => date('F d, Y g:i A', strtotime('now'))
         ];
 

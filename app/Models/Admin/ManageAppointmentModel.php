@@ -94,9 +94,7 @@ class ManageAppointmentModel extends Model
             return false;
         }
 
-        $this->db_conn->table('pending_appointments')
-            ->where('set_appointment_id', $appointment_id)
-            ->delete();
+        $this->removed_pending_appointment($appointment_id);
 
         return true;
     }
@@ -127,6 +125,19 @@ class ManageAppointmentModel extends Model
     {
 
         $this->db_conn->table('approved_appointments')
+            ->where('set_appointment_id', $appointment_id)
+            ->delete();
+
+        return true;
+    }
+
+    /**
+     Function: REMOVED PENDING APPOITMENT
+     * description: appointment is just removed from pending table
+     */
+    public function removed_pending_appointment($appointment_id){
+
+        $this->db_conn->table('pending_appointments')
             ->where('set_appointment_id', $appointment_id)
             ->delete();
 

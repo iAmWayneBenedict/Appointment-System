@@ -42,25 +42,17 @@
                 </div> -->
 
                 <!-- middle name -->
-                <!-- <div class="mb-1">
-                    <label for="mname" class="form-label">Middle Name</label>
+                <div class="mb-1">
+                    <label for="mname" class="form-label">Complete Middle Name</label>
                     <input type="text" class="form-control" id="mname" name="mname" placeholder="Middle Name">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div> -->
 
                 <!-- last name -->
-                <!-- <div class="mb-1">
-                    <label for="lname" class="form-label">Last Name</label>
+                <div class="mb-1">
+                    <label for="lname" class="form-label">Last Name <i class="text-primary">(ex. Dela Cruz jr)</i></label>
                     <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
-                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
-                        message!</span><br>
-                </div> -->
-
-                <!-- suffix -->
-                <!-- <div class="mb-1">
-                    <label for="suffix" class="form-label">Suffix</label>
-                    <input type="text" class="form-control" id="suffix" name="suffix" placeholder="Suffix">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div> -->
@@ -68,7 +60,7 @@
                 <!-- address -->
 
                 <div class="mb-1">
-                    <label for="address" class="form-label">Address</label>
+                    <label for="address" class="form-label">Address <i class="text-primary">(Zone Barangay, Municipality)</i></label>
                     <input type="text" class="form-control" id="address" name="address" placeholder="Address">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
@@ -88,8 +80,8 @@
 
                 <!-- phone number -->
                 <div class="mb-1">
-                    <label for="c_number" class="form-label">Contact number <small class="ms-2 text-secondary"><span class="text-danger">*</span> 09xx xxx xxxx</small></label>
-                    <input type="text" class="form-control" id="number" name="number" placeholder="Contact Number">
+                    <label for="number" class="form-label">Phone number (09xxxxxxxxx)</label>
+                    <input type="text" class="form-control" id="number" name="number" placeholder="number | 09xxxxxxxxx">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>
@@ -112,7 +104,8 @@
                 <!-- password -->
 
                 <div class="mb-1">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">Password</label><br>
+                    <i class="text-primary">Password must atleast 6 characters, include uppercase, lowercase and number</i>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
