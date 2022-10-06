@@ -67,7 +67,8 @@ class ManageAppointment extends BaseController
             'contact_number' => $c_number,
             'social_pos' => $social_pos,
             'purpose' => $purpose,
-            'schedule' => $formated_sched
+            'schedule' => $formated_sched,
+            'user_type' => 'walkin'
         ];
 
         $this->manage_appointment->insert_walkin($data);

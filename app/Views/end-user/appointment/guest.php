@@ -231,7 +231,7 @@
                                 msg.push(`${val}`)
                             });
 
-                            alert(msg.toString()) //sweet alert
+                            alert(msg.join('\n')) //sweet alert
                             $("#appointment-submit").removeAttr('disabled');
                             $("#appointment-submit").val('SUBMIT');
                             return;

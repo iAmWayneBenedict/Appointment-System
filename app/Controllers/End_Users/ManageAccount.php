@@ -42,8 +42,17 @@ class ManageAccount extends BaseController
     {
 
         $validate = $this->validate([
-            'name' => [
-                'rules' => 'required'
+            'fname' => [
+                'label' => 'First Name',
+                'rules' => 'required|alpha_space'
+            ],
+            'mname' => [
+                'label' => 'Middle Name',
+                'rules' => 'required|alpha_space'
+            ],
+            'lname' => [
+                'label' => 'Last Name',
+                'rules' => 'required|alpha_space'
             ],
             'address' => [
                 'label' => 'address',
@@ -63,14 +72,19 @@ class ManageAccount extends BaseController
         ]);
 
         if (!$validate) {
-            return json_encode($this->validation->getErrors());
+            return json_encode([
+                'code' => 3,
+                'msg' => $this->validation->getErrors()
+            ]);
         }
 
         $user_id = $this->session->get('id');
 
         $data = [
-            'name'           => $this->request->getPost('name'),
-            'address'        => $this->request->getPost('address'),
+            'fname'          => ucwords($this->request->getPost('fname')),
+            'mname'          => ucwords($this->request->getPost('mname')),
+            'lname'          => ucwords($this->request->getPost('lname')),
+            'address'        => ucwords($this->request->getPost('address')),
             'contact_number' => $this->request->getPost('c_number'),
             'email'          => $this->request->getPost('email'),
             'social_pos'     => $this->request->getPost('social_pos'),
