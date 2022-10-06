@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="calendar-con">
-                                <table class="table table-borderless">
+                                <table class="calendar-table table table-borderless">
                                     <thead>
                                         <tr>
                                             <th scope="col">Sun</th>

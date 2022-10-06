@@ -72,6 +72,7 @@
                     <span class="ps-3 icon-label">Pending Appointments</span>
                 </a>
 
+
                 <!-- Approved Appointments -->
 
                 <a class="flex-sm-fill nav-link text-dark" href="<?= base_url('/admin/dashboard/approved-appointments') ?>">
@@ -82,36 +83,39 @@
                     <span class="ps-3 icon-label">Approved Appointments</span>
                 </a>
 
-                <!-- Users -->
+                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] === 'admin') { ?>
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/dashboard/users") ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span class="ps-3 icon-label">Users</span>
-                </a>
+                    <!-- Users -->
 
-                <!-- Employees -->
+                    <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/dashboard/users") ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="ps-3 icon-label">Users</span>
+                    </a>
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/dashboard/employees") ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
-                    <span class="ps-3 icon-label">Employees</span>
-                </a>
+                    <!-- Employees -->
 
-                <!-- Send Message -->
+                    <a class="flex-sm-fill nav-link text-dark" href="<?= base_url("/admin/dashboard/employees") ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        <span class="ps-3 icon-label">Employees</span>
+                    </a>
 
-                <a class="flex-sm-fill nav-link text-dark" href="<?= base_url('/admin/dashboard/send-message') ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    <span class="ps-3 icon-label">Send Message</span>
-                </a>
+                    <!-- Send Message -->
+
+                    <a class="flex-sm-fill nav-link text-dark" href="<?= base_url('/admin/dashboard/send-message') ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        <span class="ps-3 icon-label">Send Message</span>
+                    </a>
+                <?php } ?>
 
                 <!-- Stocks Management -->
 

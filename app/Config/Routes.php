@@ -95,6 +95,7 @@ $routes->group('admin', static function ($routes) {
     $routes->get('/', 'Admin\Admin::login');
     $routes->post('admin-login', 'Admin\Admin::admin_login');
     $routes->post('verify-admin', 'Admin\Admin::verify_admin');
+    $routes->get('get-holidays', 'Admin\HolidaysController::get_holidays');
 
     $routes->group('dashboard', ['filter' => 'adminLoginFilter'], static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
@@ -149,6 +150,9 @@ $routes->group('admin', static function ($routes) {
         $routes->get('report', 'Admin\AdminReport::report_template');
         $routes->post('preview', 'Admin\AdminReport::display_preview');
         $routes->post('generate-pdf', 'Admin\AdminReport::create_pdf');
+
+        // holidays
+        $routes->post('set-holiday', 'Admin\HolidaysController::set_holidays');
     });
 });
 

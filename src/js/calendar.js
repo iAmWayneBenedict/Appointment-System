@@ -45,10 +45,11 @@ $(() => {
 		});
 	}
 
-	$("#select-date").click(function () {
+	$("#select-date, .select-date-btn").click(function () {
 		let month = convertMonthToNumber($(".calendar-title").text()) + 1;
 		handleConflictingDay(month);
 		handleFullyBooked();
+		getHolidays();
 	});
 
 	function handleConflictingDay(month) {
@@ -71,8 +72,6 @@ $(() => {
 				}
 			}
 		}
-
-		console.log(dateFlags);
 	}
 
 	$(".hour option").each(function () {
@@ -199,6 +198,53 @@ $(() => {
 		});
 	}
 
+	function getHolidays() {
+		$.ajax({
+			type: "get",
+			url: `${url}/admin/get-holidays`,
+			async: true,
+			dataType: "json",
+			success: function (response) {
+				// $(".submit-holiday").prev().click()
+				console.log(1);
+
+				$("table.calendar-table td a").each(function () {
+					for (let i = 0; i < response.length; i++) {
+						if ($(this).hasClass("disabled")) continue;
+
+						let holidayFrom = new Date(response[i].holiday_from);
+						let holidayTo = new Date(response[i].holiday_to);
+						let month = convertMonthToNumber($(".calendar-title").text());
+						// console.log($(this).find('h6'));
+						if (holidayTo == "Invalid Date") {
+							if (
+								month === holidayFrom.getMonth() &&
+								holidayFrom.getDate() === parseInt($(this).find("h6").text())
+							) {
+								$(this).attr("aria-disabled", true);
+								$(this).addClass("disabled");
+								$(this).removeClass("text-dark");
+								$(this).addClass("text-danger");
+								continue;
+							}
+						}
+
+						if (
+							month === holidayFrom.getMonth() &&
+							holidayTo.getDate() >= parseInt($(this).find("h6").text()) &&
+							holidayFrom.getDate() <= parseInt($(this).find("h6").text())
+						) {
+							$(this).attr("aria-disabled", true);
+							$(this).addClass("disabled");
+							$(this).removeClass("text-dark");
+							$(this).addClass("text-danger");
+						}
+					}
+				});
+			},
+		});
+	}
+
 	function populateCalendar([dayOfTheWeek, lastDayOfTheMonth], month, year) {
 		$(".days-entries").html("");
 
@@ -317,6 +363,7 @@ $(() => {
 
 		handleConflictingDay(convertMonthToNumber(selectedMonth) + 1);
 		handleFullyBooked();
+		getHolidays();
 	});
 
 	$(".next-month").click(function () {
@@ -348,6 +395,7 @@ $(() => {
 
 		handleConflictingDay(convertMonthToNumber(selectedMonth) + 1);
 		handleFullyBooked();
+		getHolidays();
 	});
 
 	setCalendarTitle(convertMonthToName(date.getMonth()), date.getMonth());

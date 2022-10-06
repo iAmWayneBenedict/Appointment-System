@@ -62,7 +62,7 @@
         </div>
         <div class="my-5">
             <h4>Calendar of Events</h4>
-            <button type="button" class="btn btn-primary">Holiday</button>
+            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#holidayModal">Holiday</button>
             <div class="d-flex">
                 <div class="calendar flex-fill">
                     <div class="calendar-grid dashboard m-0">
@@ -84,7 +84,7 @@
                                 </select>
                             </div>
                         </center>
-                        <table class="table table-borderless">
+                        <table class="calendar-table table table-borderless">
                             <thead>
                                 <tr>
                                     <th scope="col">Sun</th>
@@ -134,13 +134,45 @@
                 </div>
             </div>
         </div>
+        <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] === 'admin') { ?>
+            <div class="my-5">
+                <h4>Generate Report for this Month</h4>
+                <a href="<?= base_url('/admin/dashboard/report') ?>" class="btn btn-primary">Generate Report</a>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+<div class="modal fade" id="holidayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="holiday_from" class="form-label">Holiday From</label>
+                    <input name="holiday_from" class="form-control" required id="holiday_from" type="datetime-local">
+                </div>
 
-        <div class="my-5">
-            <h4>Generate Report for this Month</h4>
-            <a href="<?= base_url('/admin/dashboard/report') ?>" class="btn btn-primary">Generate Report</a>
+                <div class="mb-3">
+                    <label for="holiday_to" class="form-label">Holiday To</label>
+                    <input name="holiday_to" class="form-control" id="holiday_to" type="datetime-local">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="description" class="form-control" required id="description" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary submit-holiday">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
+
+
 
 <script>
     $(() => {
@@ -153,15 +185,38 @@
                 $(this).addClass("selected")
             }
         })
-        // populateCalendar(getDate(date.getMonth()), date.getMonth())
-        getStocksReleaseData()
 
-        function getStocksReleaseData(controlledDate = undefined) {
+        $('.submit-holiday').click(function() {
+            let holiday_from = $('#holiday_from').val()
+            let holiday_to = $('#holiday_to').val()
+            let description = $('#description').val()
+
+            $.ajax({
+                type: "post",
+                url: `${url}/admin/dashboard/set-holiday`,
+                data: {
+                    holiday_from,
+                    holiday_to,
+                    description
+                },
+                dataType: "json",
+                success: function(response) {
+                    alert(response.msg)
+                    location.reload()
+                }
+            });
+        })
+
+        // populateCalendar(getDate(date.getMonth()), date.getMonth())
+        getEventDates()
+
+        function getEventDates(controlledDate = undefined) {
             $.ajax({
                 type: 'get',
                 url: `${url}/admin/dashboard/get-all-release-dates`,
                 async: true,
                 success: function(response) {
+                    getHolidays()
                     let rawData = JSON.parse(response)
                     console.log(rawData)
                     let stocksReleaseData = JSON.parse(response).data
@@ -193,6 +248,42 @@
                             getAllDates
                         })
                     }
+                }
+            });
+        }
+
+
+
+        function getHolidays() {
+            $.ajax({
+                type: 'get',
+                url: `${url}/admin/get-holidays`,
+                async: true,
+                dataType: 'json',
+                success: function(response) {
+                    // $(".submit-holiday").prev().click()
+                    $('table.calendar-table td span div').each(function() {
+                        for (let i = 0; i < response.length; i++) {
+                            let holidayFrom = new Date(response[i].holiday_from)
+                            let holidayTo = new Date(response[i].holiday_to)
+                            let month = convertMonthToNumber($('#month').val())
+
+                            if (holidayTo == "Invalid Date") {
+                                if (month === holidayFrom.getMonth() && holidayFrom.getDate() === parseInt($(this).first().text())) {
+                                    console.log(1)
+                                    $(this).append(holidayHTMLTemplate(response[i].description))
+                                    continue
+                                }
+                            }
+
+                            if (month === holidayFrom.getMonth() && holidayTo.getDate() >= parseInt($(this).first().text()) && holidayFrom.getDate() <= parseInt($(this).first().text())) {
+
+                                $(this).append(holidayHTMLTemplate(response[i].description))
+                            }
+                        }
+
+                    })
+
 
                 }
             });
@@ -229,6 +320,10 @@
             return `<span class="release-alert">${description}</span>`
         }
 
+        function holidayHTMLTemplate(description) {
+            return `<span class="holiday-alert">${description}</span>`
+        }
+
         function populateCalendar([firstDay, lastUTCDay], month, stocksReleaseData = undefined) {
             $('.days-entries').html('')
 
@@ -248,11 +343,41 @@
                 }
             }
 
+            let isHolidayClosed = false;
+
             let stocksReleaseDates = stocksReleaseData.getAllDates
             let stocksDescriptions = stocksReleaseData.getAllDescription
             // populate the remaining weeks
             for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
                 if (date.getUTCDate() === days && date.getMonth() === month) {
+                    // let isHoliday = false;
+                    // for (let i = 0; i < holidays.length; i++) {
+                    //     let holidayFrom = new Date(holidays[i].holiday_from)
+                    //     let holidayTo = new Date(holidays[i].holiday_to)
+
+                    //     if (holidayTo == 'Invalid Date') {
+                    //         isHolidayClosed = true;
+                    //         continue;
+                    //     }
+
+                    //     if (holidayTo.getMonth() === month && holidayTo.getDate() === days) {
+                    //         isHoliday = true
+                    //         isHolidayClosed = true;
+                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
+                    //         currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
+                    //         continue;
+                    //     }
+
+                    //     if (holidayFrom.getMonth() === month && holidayFrom.getDate() === days) {
+
+                    //         isHoliday = true
+                    //         isHolidayClosed = false;
+                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
+                    //         currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
+                    //     }
+                    // }
+
+                    // if (isHoliday) continue;
 
                     let hasStocksReleaseDate = false;
                     let hasStocksReleaseAlert = false;
@@ -265,16 +390,50 @@
                         if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
                             hasStocksReleaseDate = true
                             hasStocksReleaseAlert = true
-                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
+                            currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></span></td>'
                         }
                     }
 
                     if (hasStocksReleaseDate) continue;
                     // Date today
 
-                    currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></a></td>'
+
+
+                    currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
 
                 } else {
+                    // let isHoliday = false;
+                    // for (let i = 0; i < holidays.length; i++) {
+                    //     let holidayFrom = new Date(holidays[i].holiday_from)
+                    //     let holidayTo = new Date(holidays[i].holiday_to)
+
+                    //     if (holidayTo == 'Invalid Date') {
+                    //         isHolidayClosed = true;
+                    //         continue;
+                    //     }
+
+                    //     // break
+                    //     if (holidayTo.getMonth() === month && holidayTo.getDate() >= days && holidayFrom.getDate() <= days) {
+                    //         isHoliday = true
+                    //         isHolidayClosed = true;
+                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
+                    //         currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
+                    //         console.log(holidayTo.getDate(), days)
+                    //         console.log("break")
+                    //         break;
+                    //     }
+
+                    //     if (holidayFrom.getMonth() === month && holidayFrom.getDate() === days) {
+
+                    //         isHoliday = true
+                    //         isHolidayClosed = false;
+                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
+                    //         currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
+                    //     }
+                    // }
+
+                    // if (isHoliday) continue;
+
                     let hasStocksReleaseDate = false;
                     let hasStocksReleaseAlert = false;
                     for (let i = 0; i < stocksReleaseDates.length; i++) {
@@ -286,14 +445,14 @@
                         if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
                             hasStocksReleaseDate = true
                             hasStocksReleaseAlert = true
-                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
+                            currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></span></td>'
                         }
                     }
 
                     if (hasStocksReleaseDate) continue;
                     // Date today
 
-                    currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                    currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
 
                 }
 
@@ -337,7 +496,7 @@
 
             console.log()
             // getApprovedData([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
-            getStocksReleaseData([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
+            getEventDates([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
         })
     })
 </script>

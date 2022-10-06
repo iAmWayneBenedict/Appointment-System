@@ -11,8 +11,8 @@
             </ol>
         </nav>
     </div>
-    <div style="width: 90%;">
-        <table class="table table-striped" id="pending">
+    <div class="mb-5" style="width: 90%;">
+        <table class="table table-striped" data-paging="false" id=" pending">
             <thead>
                 <tr>
                     <th scope="col">ID</th>

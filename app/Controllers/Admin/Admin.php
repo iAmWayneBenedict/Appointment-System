@@ -52,14 +52,17 @@ class Admin extends BaseController
 
         $admin_data = $this->admin_model->get_admin();
 
-        if ($admin_data->password == $admin_password) {
 
-            $this->session->set([
-                'admin' => $admin_data->user_name,
-                'logged_in' => TRUE
-            ]);
+        foreach ($admin_data as $admin) {
+            if ($admin->password == $admin_password) {
 
-            return redirect()->to('admin/dashboard');
+                $this->session->set([
+                    'admin' => $admin->user_name,
+                    'logged_in' => TRUE
+                ]);
+
+                return redirect()->to('admin/dashboard');
+            }
         }
 
         $this->session->setFlashdata('invalid', 'Invalid Password');
@@ -73,11 +76,13 @@ class Admin extends BaseController
 
         $admin_data = $this->admin_model->get_admin();
 
-        if ($admin_data->password == $admin_password) {
+        foreach ($admin_data as $admin) {
+            if ($admin->password == $admin_password) {
 
-            return json_encode([
-                "status" => "success",
-            ]);
+                return json_encode([
+                    "status" => "success",
+                ]);
+            }
         }
 
         return json_encode([
