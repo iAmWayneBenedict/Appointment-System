@@ -14,6 +14,33 @@ class ManageAppointmentModel extends Model
     }
 
     /**
+     Function: INSERT WALKIN APPOINTMENT
+     * Description: Insert walkin appointment to set_appointment and report_data table
+     * @return boolean
+     */
+    public function insert_walkin(array $data){
+        
+        $conn = $this->db_conn;
+
+        $conn->table('set_appointments')
+            ->insert($data);
+        
+        $last_id = $this->db_conn->insertID();
+
+        if(!$conn){
+            return false;
+        }
+
+        $conn->table('report_data')
+            ->insert([
+                'appointment_id' => $last_id,
+                'state' => 'walk in'
+            ]);
+        
+        return true;
+    }
+
+    /**
      Function: GET PENDING APPOINTMENTs
      * Description: get all pending appointment is database
      * @return data: array of objects

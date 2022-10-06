@@ -29,6 +29,52 @@ class ManageAppointment extends BaseController
         $this->appNotif = new OnAppNotification();
     }
 
+    //TODO: remove this after modal is created 
+    public function test_modal(){
+        return view('components/walkin_appointment');
+    }
+
+    /**
+     Function: INSERT WALKIN APPOINTMENT
+     * Description: this is to insert record of walkin appointments that did not
+     *              use the system to make an appointment, and for the purpose of 
+     *              managing appointment it should be recorded
+     */
+    public function insert_walkin_appointment(){
+
+        $name = $this->request->getPost('name');
+        $address = $this->request->getPost('address');
+        $social_pos = $this->request->getPost('social_pos');
+
+        $c_number = $this->request->getPost('c_number');
+        $purpose = $this->request->getPost('purpose');
+        $schedule = $this->request->getPost('selected-date');
+
+        if(empty($schedule)){
+            $formated_sched = date('Y-m-d H:i:s', strtotime('now'));
+        }
+        else{
+            $formated_sched = date('Y-m-d H:i:s', strtotime($schedule));
+        }
+
+        if(empty($address)){
+           $address = 'not specefied';
+        }
+
+        $data = [
+            'name' => $name,
+            'address' => $address,
+            'contact_number' => $c_number,
+            'social_pos' => $social_pos,
+            'purpose' => $purpose,
+            'schedule' => $formated_sched
+        ];
+
+        $this->manage_appointment->insert_walkin($data);
+
+        return json_encode(['code' => 1]);
+    }
+
     /**
      Function: PENDING APPOINTMENTS DISPLAY
      * Description: Display all the pending appointments into views

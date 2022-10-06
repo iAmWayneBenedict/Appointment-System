@@ -24,7 +24,7 @@
                     </div>
                     <div class="pb-3">
                         <label for="name" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" name="name" value="<?= $userData->name ?>" id="name" placeholder="Full Name">
+                        <input type="text" class="form-control" name="name" value="<?= $userData->fname ?>" id="name" placeholder="Full Name">
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>

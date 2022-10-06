@@ -108,17 +108,17 @@
             <section class="row1">
                 <table style="margin-bottom: 15px;">
                 <tr>
-                    <td colspan="6">From Results : <?= $from_result['all']?></td>
+                    <td colspan="6">Summary from Results : <?= $from_result['all']?></td>
                 </tr>
                 <tr id="foot" style="width: 100%;">
-                    <td colspan="2">Pending Canceled <b>:</b> <?= $state['pending_canceled'] ?></td>
-                    <td colspan="2">Approved Canceled<b>:</b> <?= $state['approved_canceled'] ?></td>
-                    <td colspan="2">Passed<b>:</b> <?= $state['pass'] ?></td>
+                    <td colspan="2">Pending Canceled <b>:</b> <?= $from_result['pending_canceled'] ?></td>
+                    <td colspan="2">Approved Canceled<b>:</b> <?= $from_result['approved_canceled'] ?></td>
+                    <td colspan="2">Passed<b>:</b> <?= $from_result['pass'] ?></td>
                 </tr>
                 <tr id="foot">   
-                    <td colspan="2">Done <b>:</b> <?= $state['done'] ?></td>
-                    <td colspan="2">Walkin <b>:</b> <?= $state['walkin'] ?></td>
-                    <td colspan="2">Rejected <b>:</b> <?= $state['reject'] ?></td>
+                    <td colspan="2">Done <b>:</b> <?= $from_result['done'] ?></td>
+                    <td colspan="2">Walkin <b>:</b> <?= $from_result['walkin'] ?></td>
+                    <td colspan="2">Rejected <b>:</b> <?= $from_result['reject'] ?></td>
                 </tr>
                </table>
             </section>
@@ -149,7 +149,9 @@
                 </table>
             </section> 
             <section class="row1">
-            <table style="margin-top: 15px;">
+            
+            <hr style="margin-top: 20px; border: 0.5px solid rgb(0,0,0, 0.5);">
+            <table style="margin-top: 1px;">
                 <tr>
                     <td colspan="6">All appointments made : <?= $total_appointment?></td>
                 </tr>

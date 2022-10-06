@@ -125,6 +125,10 @@ $routes->group('admin', static function ($routes) {
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
         $routes->get('complete/(:any)', 'Admin\ManageAppointment::mark_as_done/$1');
+        $routes->post('insert-walkin', 'Admin\ManageAppointment::insert_walkin_appointment');
+
+        //TODO: removed this after modal
+        $routes->get('insert-appointment', 'Admin\ManageAppointment::test_modal');
 
         //employee
         $routes->post('add-employee', 'Employee\EmployeeScanner::add_employee');
