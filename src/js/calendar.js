@@ -205,9 +205,6 @@ $(() => {
 			async: true,
 			dataType: "json",
 			success: function (response) {
-				// $(".submit-holiday").prev().click()
-				console.log(1);
-
 				$("table.calendar-table td a").each(function () {
 					for (let i = 0; i < response.length; i++) {
 						if ($(this).hasClass("disabled")) continue;

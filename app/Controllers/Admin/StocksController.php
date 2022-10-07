@@ -70,6 +70,14 @@ class StocksController extends BaseController
         return view('components/stock_list', $data);
     }
 
+    public function get_all_stock()
+    {
+
+        $data['stocks'] = $this->stock_model->get_all_stocks();
+
+        return json_encode($data);
+    }
+
     public function display_update_form($stock_id = NULL)
     {
 
@@ -216,4 +224,6 @@ class StocksController extends BaseController
         session()->setFlashdata('invalid', 'Please try again later');
         return redirect()->back();
     }
+
+    //TODO: create a method for inserting data in stocks_availed table
 }

@@ -60,6 +60,52 @@
     ?>
     <!-- Button trigger modal -->
     <div class="my-5">
+        <h3>Register Recipient Stocks</h3>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRecipientModal">
+            Register Recipient Stock
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addRecipientModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Register Recipient of Stocks</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <label for="stock_id" class="form-label">Social Position</label>
+                        <select class="form-select" name="stock_id" id="stock_id">
+                            <!-- list of stocks insert here -->
+                        </select>
+                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                            message!</span><br>
+                    </div>
+                    <div class="">
+                        <label for="avail_by" class="form-label">Received By</label>
+                        <input type="text" class="form-control" id="avail_by" name="avail_by" placeholder="Received By" required>
+                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                            message!</span><br>
+                    </div>
+                    <div class="">
+                        <label for="quantity_availed" class="form-label">Quantity Availed</label>
+                        <input type="number" class="form-control" id="quantity_availed" name="quantity_availed" placeholder="Quantity Availed" required>
+                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                            message!</span><br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary submit-register-recipient-stocks">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <div class="my-5">
         <h3>Add Stocks</h3>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStocksModal">
             Add Stock
@@ -195,6 +241,27 @@
         display_stock();
         // }, 5000);
 
+        $.ajax({
+            type: "get",
+            url: `${url}/admin/dashboard/get-all-stock`,
+            async: true,
+            dataType: 'json',
+            success: function(response) {
+                response.stocks.map((data) => {
+                    $("#stock_id").append(`
+                        <option value="${data.id}">${data.sub_category}</option>
+                    `)
+                })
+            }
+        });
+
+        $('.submit-register-recipient-stocks').click(function() {
+            let stock_id = $('#stock_id').val()
+            let avail_by = $('#avail_by').val()
+            let quantity_availed = $('#quantity_availed').val()
+            console.log(stock_id, avail_by, quantity_availed)
+        })
+
         let quantity = 0
         let allocated = 0
         $("#quantity").each(function() {
@@ -236,7 +303,6 @@
                 $('button[value=Add], button[value=Update]').removeClass('disabled')
                 data = parseInt($(this).val())
             }
-            console.log(data)
 
             if (data < 0) {
                 $(this).next().removeClass('d-none')

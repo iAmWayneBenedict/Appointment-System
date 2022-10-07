@@ -60,6 +60,10 @@
                 </div>
             </div>
         </div>
+        <div>
+            <h4>Walk in Clients</h4>
+            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#walkinModal">Walk in</button>
+        </div>
         <div class="my-5">
             <h4>Calendar of Events</h4>
             <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#holidayModal">Holiday</button>
@@ -167,6 +171,62 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary submit-holiday">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="walkinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Walk-in Clients</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="post">
+                    <div class="mb-1">
+                        <label for="name" class="form-label">Name</label>
+                        <input name="name" class="form-control" required id="name" type="text">
+                    </div>
+                    <div class="mb-1">
+                        <label for="address" class="form-label">Address</label>
+                        <input name="address" class="form-control" required id="address" type="text">
+                    </div>
+                    <div class="mb-1">
+                        <label for="social_pos" class="form-label">Social Position</label>
+                        <select class="form-select" name="social_pos" id="social_pos">
+                            <option value="Farmer">Farmers</option>
+                            <option value="Fisherfolk">FisherFolks</option>
+                            <option value="Barangay Official">Barangay Official</option>
+                            <option value="Regional Staff">Regional Staff</option>
+                            <option value="Business Owner">Business Owner</option>
+                        </select>
+                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                            message!</span>
+                    </div>
+                    <div class="mb-1">
+                        <label for="purpose" class="form-label">Purpose</label>
+                        <select class="form-select" name="purpose" id="purpose">
+                            <option value="RSBSA (Registry System for Basic Sector in Agriculture)">RSBSA (Registry System for Basic Sector in Agriculture)</option>
+                            <option value="Registration of Municipal Fisherfolks">Registration of Municipal Fisherfolks</option>
+                            <option value="Processing of Crop Insurance (PCIC Program)">Processing of Crop Insurance (PCIC Program)</option>
+                            <option value="Distribution of Farm Inputs">Distribution of Farm Inputs</option>
+                            <option value="Boat Registration">Boat Registration</option>
+                            <option value="Stocks">Stocks</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-1">
+                        <label for="holiday_from" class="form-label">Holiday From</label>
+                        <input name="holiday_from" class="form-control" required id="holiday_from" type="datetime-local">
+                    </div>
+
+                    <div class="modal-footer mt-5">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

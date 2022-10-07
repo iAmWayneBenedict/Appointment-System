@@ -13,7 +13,7 @@
         </div>
     </div>
     <!-- basic updates please put placeholer-->
-    <div class="d-flex flex-column flex-md-row me-md-4">
+    <div class="d-flex flex-column flex-md-row me-md-4 mb-5">
         <div class="flex-fill me-md-3 me-lg-5" style="max-width: 40rem;">
             <form action="" method="post" id="acc-form">
                 <div class="d-flex flex-column">
@@ -23,8 +23,16 @@
                         <input type="text" class="form-control" name="user-id" value="<?= $userData->code_id ?>" id="user-id" placeholder="User ID" disabled>
                     </div>
                     <div class="pb-3">
-                        <label for="name" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" name="name" value="<?= $userData->name ?>" id="name" placeholder="Full Name">
+                        <label for="fname" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="fname" value="<?= $userData->fname ?>" id="fname" placeholder="Full Name">
+                    </div>
+                    <div class="pb-3">
+                        <label for="mname" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="mname" value="<?= $userData->mname ?>" id="mname" placeholder="Full Name">
+                    </div>
+                    <div class="pb-3">
+                        <label for="lname" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="lname" value="<?= $userData->lname ?>" id="lname" placeholder="Full Name">
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>
