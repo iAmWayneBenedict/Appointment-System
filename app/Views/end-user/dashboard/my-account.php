@@ -22,17 +22,19 @@
                         <label for="user-id" class="form-label">User ID</label>
                         <input type="text" class="form-control" name="user-id" value="<?= $userData->code_id ?>" id="user-id" placeholder="User ID" disabled>
                     </div>
-                    <div class="pb-3">
-                        <label for="fname" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" name="fname" value="<?= $userData->fname ?>" id="fname" placeholder="Full Name">
+                    <div class="row pb-3">
+                        <div class="form-group col-md-6">
+                            <label for="fname" class="form-label">First Name</label>
+                            <input type="text" class="form-control" name="fname" value="<?= $userData->fname ?>" id="fname" placeholder="First Name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="lname" class="form-label">Middle Name</label>
+                            <input type="text" class="form-control" name="mname" value="<?= $userData->mname ?>" id="mname" placeholder="Middle Name">
+                        </div>
                     </div>
                     <div class="pb-3">
-                        <label for="mname" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" name="mname" value="<?= $userData->mname ?>" id="mname" placeholder="Full Name">
-                    </div>
-                    <div class="pb-3">
-                        <label for="lname" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" name="lname" value="<?= $userData->lname ?>" id="lname" placeholder="Full Name">
+                        <label for="mname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="lname" value="<?= $userData->lname ?>" id="lname" placeholder="Last Name">
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>
@@ -118,10 +120,24 @@
                 data: formdata,
                 dataType: "json",
                 success: function(response) {
-                    alert(response.msg) //this should ba an alert
 
+                    //this should ba an aler
                     if (response.code == 1 || response.code == 0) {
+                        alert(response.msg)
                         $(this).trigger('reset');
+                        if (response.code == 1) {
+                            location.reload();
+                        }
+                    }
+
+                    if (response.code == 3) {
+                        var msg = []; //hold all error messages
+                        //loop error message and push to array
+                        $.each(response.msg, function(key, val) {
+                            msg.push(`${val}`)
+                        });
+
+                        alert(msg.join('\n')) //sweet alert
                     }
                 }
             });

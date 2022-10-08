@@ -17,12 +17,8 @@
             <form action="" method="post" class="d-flex flex-md-row flex-column align-items justify-content-between gap-5" id="form-submit">
                 <div class="flex-fill">
                     <div class="pb-3">
-                        <label for="fname" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Name" value="<?= $userData->fname; ?>" readonly>
-                    </div>
-                    <div class="pb-3">
-                        <label for="lname" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Name" value="<?= $userData->lname; ?>" readonly>
+                        <label for="fname" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Name" value="<?= $userData->fname.' '.$userData->lname; ?>" readonly>
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>
@@ -34,7 +30,7 @@
                     </div>
                     <div class="pb-3">
                         <label for="c_number" class="form-label">Contact number</label>
-                        <input type="text" class="form-control" name="c_number" value="<?= $userData->contact_number; ?>" id="c_number" placeholder="Contact Number" readonly>
+                        <input type="text" class="form-control" name="c_number" value="<?= $userData->contact_number; ?>" id="c_number" placeholder="Contact Number">
                     </div>
                     <div class="pb-3">
                         <label for="purpose" class="form-label">Purpose</label>
@@ -219,7 +215,7 @@
                                 msg.push(`${val}`)
                             });
 
-                            alert(msg.toString()) //sweet alert
+                            alert(msg.join('\n')) //sweet alert
                             $("#appointment-submit").removeAttr('disabled');
                             $("#appointment-submit").val('SUBMIT');
                             return;
