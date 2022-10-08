@@ -28,9 +28,9 @@
         </div>
     </div>
     <hr>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
-            <tr>
+            <tr class="table-warning">
                 <th>Schedule</th>
                 <th>Client</th>
                 <th>Purpose</th>
@@ -42,7 +42,7 @@
         <?php
             foreach($results as $result){
         ?>
-            <tr>
+            <tr class="table-success">
                 <td><?= $result['schedule']?></td>
                 <td><?= $result['name'] ?></td>
                 <td><?= $result['purpose']?></td>

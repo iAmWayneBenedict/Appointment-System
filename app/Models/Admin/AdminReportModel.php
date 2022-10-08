@@ -83,8 +83,6 @@ class AdminReportModel extends Model
         return $data;
     }
 
-
-
     //Function: Just simply get all appointments recieve by the system
     public function get_total_appointments(){
 
@@ -112,6 +110,45 @@ class AdminReportModel extends Model
             ->insert($data);
 
         return true;
+    }
+
+    public function sget_report_data($from_date, $to_date, $sub_cat)
+    {
+
+        $query = $this->db_conn->table('stock_report');
+
+        $conditions = [];
+
+        if($sub_cat !='All'){
+            $conditions['sub_category'] = $sub_cat;
+        }
+        if($from_date != NULL){
+            $conditions["DATE_FORMAT(date, '%Y-%m') >="] = $from_date;
+
+            if($to_date != NULL){
+                $conditions["DATE_FORMAT(date, '%Y-%m') <="] = $to_date;
+            }else{
+                $conditions["DATE_FORMAT(date, '%Y-%m') <="] = $from_date;
+            }
+        }
+
+       
+        $all_result = $query->select("DATE_FORMAT(date, '%M %e, %Y %l:%i %p') as date, sub_category, per_type, avail_by, quantity_availed")
+            ->where($conditions);
+
+        
+        $data['sresults'] = $all_result->get()->getResultArray();
+        return $data;
+    }
+
+    public function count_stocks(){
+
+        $data = $this->db_conn->table('stocks')
+            ->select('*')
+            ->get()
+            ->getResultArray();
+
+        return $data;
     }
 
 }

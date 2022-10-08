@@ -59,8 +59,9 @@ class StocksController extends BaseController
     public function display_stocks()
     {
 
-        $data['stocks'] = $this->stock_model->get_all_stocks();
-        return json_encode($data);
+        $data = $this->stock_model->get_all_stocks();
+        $subcats = array_column($data, 'sub_category');
+        return json_encode($subcats); 
     }
 
     public function get_all_stocks()
@@ -99,7 +100,7 @@ class StocksController extends BaseController
 
         $this->stock_model->update_stock($stock_id, $stock_data);
         session()->setFlashdata('success', 'Updated');
-        return redirect()->back();
+        return redirect('admin/dashboard/stock-management');
     }
 
     public function delete_stock($stock_id = NULL)

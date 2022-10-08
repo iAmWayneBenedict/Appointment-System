@@ -97,5 +97,53 @@ class AdminReport extends BaseController
         $this->pdf->stream('test.pdf', ["Attachment" => 0]);
     }
 
+    public function sdisplay_preview(){
+
+        $from_date =  $this->request->getPost('sfrom');
+        $to_date  =  $this->request->getPost('sto');
+        $sub_cat = $this->request->getPost('sub_cats');
+
+        $results = $this->report_model->sget_report_data(
+            $from_date,
+            $to_date,
+            $sub_cat
+        );
+
+        $data['sresults'] = $results['sresults'];
+        $data['stocks'] = $this->report_model->count_stocks();
+        // $data['test'] = $results['test'];
+
+        return view('components/sresults', $data);
+    }
+
+    public function screate_pdf(){
+
+        $from_date =  $this->request->getPost('sfrom');
+        $to_date  =  $this->request->getPost('sto');
+        $sub_cat = $this->request->getPost('sub_cats');
+
+        $results = $this->report_model->sget_report_data(
+            $from_date,
+            $to_date,
+            $sub_cat
+        );
+
+        $data = [
+            'sresults'     => $results['sresults'],
+            'stocks' => $this->report_model->count_stocks(),
+            'date_today'  => date('F d, Y g:i A', strtotime('now'))
+        ];
+
+        //html with data
+        $html = view('components/sreportPdf', $data);
+
+        //parse or process the html to pdf
+        $this->pdf->loadHtml($html);
+        //paper size
+        $this->pdf->setPaper('A4', 'portrait');
+        $this->pdf->render();
+        $this->pdf->stream('test.pdf', ["Attachment" => 0]);
+    }
+
      
 }

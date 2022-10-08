@@ -156,6 +156,10 @@ $routes->group('admin', static function ($routes) {
         $routes->get('report', 'Admin\AdminReport::report_template');
         $routes->post('preview', 'Admin\AdminReport::display_preview'); 
         $routes->post('generate-pdf', 'Admin\AdminReport::create_pdf');
+        $routes->post('spreview', 'Admin\AdminReport::sdisplay_preview'); 
+        $routes->post('sgenerate-pdf', 'Admin\AdminReport::screate_pdf');
+        $routes->get('get-subcats', 'Admin\StocksController::display_stocks');
+
     });
 });
 
