@@ -72,6 +72,13 @@ class StocksModel extends Model
             ->where('id', $stock_id)
             ->update($stock_data);
 
+        $stock_info = $this->get_a_stock($stock_id);
+
+        $this->db_conn->table('stocks')
+            ->set('total_quantity', $stock_info->available + $stock_info->allocated)
+            ->where('id', $stock_id)
+            ->update();
+
         return true;
     }
 
@@ -104,5 +111,35 @@ class StocksModel extends Model
             ]);
 
         return true;
+    }
+
+    public function claiming_stock(array $data, $stock_id, $deduct){
+
+        $query1 = $this->db_conn->table('stocks_availed')
+            ->insert($data);
+
+        $quantity = $data['quantity_availed'];
+
+        if($query1){
+            if($deduct == 'allocated') {
+                $this->db_conn->table('stocks')
+                    ->set('allocated', 'allocated-'.$quantity, false)
+                    ->set('total_quantity', 'total_quantity-'.$quantity, false)
+                    ->where('id', $stock_id)
+                    ->update();
+                return true;
+            }
+
+            $this->db_conn->table('stocks')
+                ->set('available', 'available-'.$quantity, false)
+                ->set('total_quantity', 'total_quantity-'.$quantity, false)
+                ->where('id', $stock_id)
+                ->update();
+            
+            return true;
+        }
+
+        return false;
+        
     }
 }

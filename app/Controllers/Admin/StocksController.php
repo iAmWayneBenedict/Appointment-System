@@ -43,7 +43,8 @@ class StocksController extends BaseController
             'total_quantity'    => $this->request->getPost('quantity'),
             'allocated'         => $this->request->getPost('allocated'),
             'available'         => $this->request->getPost('available'),
-            'description'       => $this->request->getPost('des')
+            'description'       => $this->request->getPost('des'),
+            'per_type'          => $this->request->getPost('per_type')
         ];
 
         if (!$this->stock_model->insert_stock($stock_data)) {
@@ -75,6 +76,11 @@ class StocksController extends BaseController
 
         $data['stocks'] = $this->stock_model->get_a_stock($stock_id);
         return view('components/update-stock', $data);
+    }
+
+    public function display_claim_form($stock_id = NULL){
+        $data['stocks'] = $this->stock_model->get_a_stock($stock_id);
+        return view('components/claimed-by', $data);
     }
 
     /**
@@ -152,6 +158,7 @@ class StocksController extends BaseController
             $message = "{$this->greet->greet()}, This is Agriculture office of Bato \n";
             $message .= "Update Stock Release for {$stock_data->category} : {$stock_data->sub_category} \n";
             $message .= "Release Date: {$r_date}, available stocks: {$stock_data->available}";
+            $message .= "Given as: {$stock_data->per_type}";
 
 
             $user_data = $this->notif_model->get_user_data();
@@ -215,5 +222,31 @@ class StocksController extends BaseController
 
         session()->setFlashdata('invalid', 'Please try again later');
         return redirect()->back();
+    }
+
+    public function insert_availer(){
+        
+        $data = [
+            'stock_id'   => $this->request->getPost('id'),
+            'avail_by'   => $this->request->getPost('claim_by'),
+            'quantity_availed' => $this->request->getPost('quantity')
+        ];
+
+        $deduct = $this->request->getPost('deduct');
+        
+        $res = $this->stock_model->claiming_stock($data, $data['stock_id'], $deduct);
+
+        if(!$res){
+            return json_encode([
+                'code' => 0,
+                'msg' => 'Please try Again Later'
+            ]);
+        }
+
+        return json_encode([
+            'code' => 1,
+            'msg' => 'Stock Claimer Inserted'
+        ]);
+
     }
 }
