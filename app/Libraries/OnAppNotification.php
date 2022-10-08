@@ -64,5 +64,16 @@ class OnAppNotification {
         // return $data;
 
     }
+
+    //TODO : admin notification
+
+    public function notify_admin($message){
+        return $this->notif_model->admin_insert_message($message);
+    }
+
+    public function get_admin_messages(){
+        $data_msg = $this->notif_model->admin_get_notification();
+        return $data_msg;
+    }
     
 }

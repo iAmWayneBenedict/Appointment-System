@@ -18,7 +18,7 @@
                 <div class="flex-fill">
                     <div class="pb-3">
                         <label for="fname" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Name" value="<?= $userData->fname.' '.$userData->lname; ?>" readonly>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= $userData->fname.' '.$userData->lname; ?>" readonly>
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>

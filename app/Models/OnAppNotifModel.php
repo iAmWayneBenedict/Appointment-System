@@ -27,6 +27,7 @@ class OnAppNotifModel extends Model
         return true;
     }
 
+
     /**
      * Function: Update
      * Description: Update the status of message this will indicate the if the message
@@ -65,5 +66,60 @@ class OnAppNotifModel extends Model
         
         $data = $query->getResultObject();
         return $data;
+    }
+
+    /**
+     * // TODO: This admin notify
+     PART: ADMIN--------------------------------------->
+     */
+
+    public function admin_insert_message($message){
+        $this->db_conn->table('adminApp_notification')
+            ->insert([
+                'message' => $message
+            ]);
+        
+        return true;
+    }
+
+    public function admin_get_notification(){
+
+        $data = $this->db_conn->table('adminApp_notification')
+            ->select('*')
+            ->get();
+        
+        $messages = $data->getResultObject();
+        return $messages;
+    }
+
+    public function update_status_admin($notification_id){
+
+        $this->db_conn->table('adminApp_notification')
+            ->where('id', $notification_id)
+            ->update([
+                'is_read' => 1
+            ]);
+            
+        return true;
+    }
+
+    /**
+     Function: DELETE ON APP MESSAGES
+     * description:  this function delete messages from table that are
+     *               30 days old
+     */
+    public function delete_onapp_messages(){
+
+        //delete messages from client side
+        $this->db_conn->table($this->table)
+            ->where('sent_date < now() - interval 30 DAY')
+            ->delete();
+
+        //delete messages from admin side
+        $this->db_conn->table('adminApp_notification')
+            ->where('c_date < now() - interval 30 DAY')
+            ->delete();
+        
+        return true;
     }
 }

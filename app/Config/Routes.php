@@ -146,10 +146,13 @@ $routes->group('admin', static function ($routes) {
         $routes->get('get-all-release-dates', 'Admin\StocksController::get_all_release_dates');
         $routes->post('set-release-date', 'Admin\StocksController::set_release');
         $routes->post('update-release-date', 'Admin\StocksController::update_release');
+        $routes->get('display-claim/(:any)', 'Admin\StocksController::display_claim_form/$1');
+        $routes->post('insert-claimer', 'Admin\StocksController::insert_availer');
+
 
         //report
         $routes->get('report', 'Admin\AdminReport::report_template');
-        $routes->post('preview', 'Admin\AdminReport::display_preview');
+        $routes->post('preview', 'Admin\AdminReport::display_preview'); 
         $routes->post('generate-pdf', 'Admin\AdminReport::create_pdf');
 
         // holidays
@@ -166,10 +169,23 @@ $routes->group('scanner', static function ($routes) {
     $routes->match(['get', 'post'], 'get-employee', 'Employee\EmployeeScanner::get_employee');
 });
 
-//routes for cron job
+
+
+/**
+   TITLE: CRON JOB CALLS
+ * description: this routes below will be use for cronjob it each of them has 
+ *              assigned time to be exuted from cron
+ * 
+ * client-incoming-appointment : every 1 hour
+ * removed-passed-appointment: every 12 am
+ * check-reschedule-appointment: every 1 hour
+ * delete-messages : once a month or every 26th of the month
+ * 
+ */
 $routes->get('client-incoming-appointment', 'Admin\ManageAppointment::sms_incoming_appointment');
 $routes->get('removed-passed-appointment', 'Admin\ManageAppointment::removed_passed_appointments');
 $routes->get('check-reschedule-appointment', 'Admin\ManageAppointment::check_resched_appointment');
+$routes->get('delete-messages', 'Notifications::delete_after_30_days');
 
 /*
  * --------------------------------------------------------------------

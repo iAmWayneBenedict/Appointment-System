@@ -174,6 +174,18 @@
                             </div>
                             <div class="flex-fill">
                                 <div class="">
+                                    <label for="per_type" class="form-label">Allocated</label>
+                                    <select class="form-select" name="per_type" id="per_type">
+                                        <option value="per kilo" selected>Per Kilo</option>
+                                        <option value="per sack">Per Sack</option>
+                                        <option value="per piece">Per Piece</option>
+                                        <option value="per sachet">Per Sachet</option>
+                                        <option value="Any">Any</option>
+                                    </select>
+                                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                                        message!</span><br>
+                                </div>
+                                <div class="">
                                     <label for="available" class="form-label">Available</label>
                                     <input type="number" class="form-control" id="avail-c" name="available" placeholder="Available" readonly>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
@@ -224,6 +236,17 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="update-sched"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal for claim-by -->
+    <div class="modal fade" id="claimBy" tabindex="-1" aria-labelledby="claimeby" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 50%;">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="claimby-form">
+                    </div>
                 </div>
             </div>
         </div>
@@ -398,22 +421,70 @@
                         });
                     });
 
-                    $('.remove-stock').click(function(event) {
-                        event.preventDefault()
-                        let deleteURL = this.href
 
-                        Swal.fire({
-                            title: "Are you sure?",
-                            text: "You won't be able to revert this!",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#ff0000",
-                            cancelButtonColor: "#d0d0d0d",
-                            confirmButtonText: "Yes, delete it!",
-                        }).then((result) => {
-                            location.href = deleteURL;
+                    $('.claim-form').click(function(e) {
+                        e.preventDefault();
+                        var stock_id = $(this).attr('value');
+
+                        $.ajax({
+                            type: "get",
+                            url: `${url}/admin/dashboard/display-claim/${stock_id}`,
+                            async: true,
+                            success: function(res) {
+                                $('.claimby-form').html(res)
+
+                                $('#claimed-form').submit(function (e) { 
+                                    e.preventDefault();
+                                    
+                                    $.ajax({
+                                        type: "post",
+                                        url: `${url}/admin/dashboard/insert-claimer`,
+                                        data: {
+                                            id: stock_id,
+                                            claim_by: $('#claim_by').val(),
+                                            quantity: $('#quantity_availed').val(),
+                                            deduct  : $('#deduct').val()
+                                        },
+                                        dataType: "json",
+                                        beforeSend: function (){
+                                            //loader
+                                        },
+                                        success: function (response) {
+                                            const res = response.code == 1 ? response.msg : response.msg;
+                                            alert(res)
+                                            location.reload()
+                                            
+                                        },
+                                        error: function (xhr){
+                                            alert("Error occured.please try again");
+                                            console.log(xhr.statusText + ':' + xhr.responseText)
+                                        },
+                                        complete: function (){
+                                            //hide loader
+                                        }
+                                    });
+                                });
+                            }
                         });
-                    })
+                    });
+
+
+                    // $('.remove-stock').click(function(event) {
+                    //     event.preventDefault()
+                    //     let deleteURL = this.href
+
+                    //     Swal.fire({
+                    //         title: "Are you sure?",
+                    //         text: "You won't be able to revert this!",
+                    //         icon: "warning",
+                    //         showCancelButton: true,
+                    //         confirmButtonColor: "#ff0000",
+                    //         cancelButtonColor: "#d0d0d0d",
+                    //         confirmButtonText: "Yes, delete it!",
+                    //     }).then((result) => {
+                    //         location.href = deleteURL;
+                    //     });
+                    // })
 
                 }
             });

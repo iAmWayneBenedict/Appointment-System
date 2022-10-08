@@ -10,6 +10,7 @@ use CodeIgniter\I18n\Time;
 use App\Models\Admin\AdminReportModel;
 use App\Models\Admin\ManageAppointmentModel;
 use App\Libraries\FilterText;
+use App\Libraries\OnAppNotification;
 
 class ClientAppointment extends BaseController
 {
@@ -20,6 +21,7 @@ class ClientAppointment extends BaseController
     protected $validation;
     protected $time;
     protected $filter;
+    protected $app_notif;
 
     function __construct()
     {
@@ -31,6 +33,7 @@ class ClientAppointment extends BaseController
         $this->validation = \Config\Services::validation();
         $this->time = new Time();
         $this->filter = new FilterText();
+        $this->app_notif = new OnAppNotification;
     }
 
     public function registered_client()
@@ -174,7 +177,7 @@ class ClientAppointment extends BaseController
         $mng = new ManageAppointmentModel();
         $data = [
             'appointment_id'  => $appointment_id,
-            'state'           => 'passed'
+            'state'           => 'pending canceled'
         ];
 
         AdminReportModel::insert_report($data);
@@ -424,11 +427,23 @@ class ClientAppointment extends BaseController
      */
     public function cancel_appointment($appointment_id = NULL)
     {
+        $notify_admin = "";
+        $approved = $this->userAppointment->get_approved_appointment($appointment_id);
+
+        foreach($approved as $data){
+            $date = date_create($data->schedule);
+            $sched = date_format($date, 'F d, Y g:i A');
+
+            $notify_admin .= "{$data->name} has been canceled the appointment ";
+            $notify_admin .= "Schedule on: {$sched} with appointment id : {$data->id}";
+        }
+
+        $this->app_notif->notify_admin($notify_admin);
 
         $mng = new ManageAppointmentModel();
         $data = [
             'appointment_id'  => $appointment_id,
-            'state'           => 'canceled'
+            'state'           => 'approved canceled'
         ];
 
         AdminReportModel::insert_report($data);

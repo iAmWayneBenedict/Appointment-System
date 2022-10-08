@@ -10,7 +10,7 @@ foreach ($stocks as $stock) {
         <td>
             <button id="update" class="show-update btn btn-primary" value="<?= $stock->id ?>" data-bs-toggle="modal" data-bs-target="#updateStocksModal">Update</button>
             <button id="release" class="release-form btn btn-success" value="<?= $stock->id ?>" data-bs-toggle="modal" data-bs-target="#releaseStocksModal">Set Release</button>
-            <a href="<?= base_url("admin/dashboard/delete-a-stock/{$stock->id}") ?>" class="btn btn-danger remove-stock">DELETE</a>
+            <button id="claim" class="claim-form btn btn-warning" value="<?= $stock->id ?>" data-bs-toggle="modal" data-bs-target="#claimBy">Claim</button>
         </td>
     </tr>
 <?php
