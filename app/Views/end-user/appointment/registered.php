@@ -214,9 +214,14 @@
                             $("#appointment-submit").val('SUBMIT');
                             return;
                         }
+                        Swal.fire(
+                            'Success!',
+                            response.msg,
+                            'success'
+                        ).then(() => {
 
-                        alert(response.msg)
-                        location.reload()
+                            location.reload()
+                        })
                     }, 2000)
                 }
             });

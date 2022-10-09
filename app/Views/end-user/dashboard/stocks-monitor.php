@@ -19,7 +19,7 @@
             <hr>
             <br>
         </div>
-        <div class="list d-flex flex-column gap-5">
+        <div class="list d-flex flex-wrap justify-content-center gap-5">
 
         </div>
     </div>
@@ -28,7 +28,9 @@
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
-        displayStocksRelease()
+        setInterval(() => {
+            displayStocksRelease()
+        }, 1000)
 
         function displayStocksRelease() {
             $.ajax({
