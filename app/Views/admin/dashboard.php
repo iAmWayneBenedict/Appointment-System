@@ -184,21 +184,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" class="d-flex flex-md-row flex-column align-items justify-content-between gap-5" id="walk-submit">
+                <form action="" method="post" class="d-flex flex-md-row flex-column align-items justify-content-between gap-5" id="walkin-submit">
                     <div class="flex-fill">
-                        <div class="pb-1">
+                        <div class="pb-3">
                             <h6>Status</h6>
                             <p class="btn btn-success rounded-5">Walkin</p>
                         </div>
-                        <div class="pb-1">
+                        <div class="pb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="name" class="form-control" id="name" name="name" placeholder="Name" required>
                         </div>
-                        <div class="pb-1">
+                        <div class="pb-3">
                             <label for="address" class="form-label">Address</label>
                             <input type="text" class="form-control" name="address" id="address" placeholder="address">
                         </div>
-                        <div class="pb-1">
+                        <div class="pb-3">
                             <label for="social_pos" class="form-label">Social Position</label>
                             <select class="form-select" name="social_pos" id="social_pos">
                                 <option value="Farmer">Farmers</option>
@@ -208,11 +208,11 @@
                                 <option value="Business Owner">Business Owner</option>
                             </select>
                         </div>
-                        <div class="pb-1">
+                        <div class="pb-3">
                             <label for="c_number" class="form-label">Contact number</label>
                             <input type="text" class="form-control" name="c_number" id="c_number" placeholder="Contact Number" required>
                         </div>
-                        <div class="pb-1">
+                        <div class="pb-3">
                             <label for="purpose" class="form-label">Purpose</label>
                             <select class="form-select" name="purpose" id="purpose">
                                 <option value="RSBSA (Registry System for Basic Sector in Agriculture)">RSBSA (Registry System for Basic Sector in Agriculture)</option>
@@ -224,12 +224,12 @@
                                 <option value="other">Other</option>
                             </select>
                         </div>
-                        <div class="pb-1">
+                        <div class="pb-3">
                             <label for="selected-date" class="form-label">Selected Date</label><br>
                             <input type="datetime-local" class="form-control" id="selected-date" name="selected-date">
                         </div>
-                        <div class="pb-1 d-flex justify-content-end mt-3">
-                            <input type="submit" class="btn btn-primary" value="INSERT">
+                        <div class="pb-3">
+                            <input type="submit" class="btn btn-warning" value="INSERT">
                         </div>
                     </div>
                 </form>

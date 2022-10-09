@@ -243,7 +243,6 @@ class StocksController extends BaseController
         ];
 
         $deduct = $this->request->getPost('deduct');
-
         $res = $this->stock_model->claiming_stock($data, $data['stock_id'], $deduct);
 
         if (!$res) {

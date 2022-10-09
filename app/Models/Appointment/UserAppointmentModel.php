@@ -60,14 +60,14 @@ class UserAppointmentModel extends Model
         ];
     }
 
-    public function update_appointment($user_id, array $data)
+    public function update_appointment($id, array $data)
     {
 
         $this->database->table('set_appointments')
-            ->where('user_id', $user_id)
+            ->where('id', $id)
             ->update($data);
 
-        $appointment_id = $this->database->table('set_appointments')->where('user_id', $user_id)->get()->getRow();
+        $appointment_id = $this->database->table('set_appointments')->where('id', $id)->get()->getRow();
 
         if (!$appointment_id) {
             return [

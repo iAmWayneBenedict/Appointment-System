@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -20,7 +20,8 @@ class OnAppNotifModel extends Model
      * @param array_data : this is the message body to been by clients
      * @return boolean true or false
      */
-    public function insert_message(array $data){
+    public function insert_message(array $data)
+    {
 
         $this->db_conn->table($this->table)
             ->insert($data);
@@ -34,7 +35,8 @@ class OnAppNotifModel extends Model
      *              is already read or not
      * @param nootification_id : unique number per message
      */
-    public function update_status($notification_id){
+    public function update_status($notification_id)
+    {
 
         $this->db_conn->table($this->table)
             ->where('id', $notification_id)
@@ -49,7 +51,8 @@ class OnAppNotifModel extends Model
      * description: This is to permanently delete app notification
      * @param nootification_id : unique number per message
      */
-    public function delete_notification($notification_id){
+    public function delete_notification($notification_id)
+    {
 
         $this->db_conn->table($this->table)
             ->where('id', $notification_id)
@@ -57,13 +60,14 @@ class OnAppNotifModel extends Model
         return true;
     }
 
-    public function get_notifications($client_id){
+    public function get_notifications($client_id)
+    {
 
         $query = $this->db_conn->table($this->table)
             ->select('*')
             ->where('user_id', $client_id)
             ->get();
-        
+
         $data = $query->getResultObject();
         return $data;
     }
@@ -73,33 +77,36 @@ class OnAppNotifModel extends Model
      PART: ADMIN--------------------------------------->
      */
 
-    public function admin_insert_message($message){
+    public function admin_insert_message($message)
+    {
         $this->db_conn->table('adminApp_notification')
             ->insert([
                 'message' => $message
             ]);
-        
+
         return true;
     }
 
-    public function admin_get_notification(){
+    public function admin_get_notification()
+    {
 
         $data = $this->db_conn->table('adminApp_notification')
             ->select('*')
             ->get();
-        
+
         $messages = $data->getResultObject();
         return $messages;
     }
 
-    public function update_status_admin($notification_id){
+    public function update_status_admin($notification_id)
+    {
 
         $this->db_conn->table('adminApp_notification')
             ->where('id', $notification_id)
             ->update([
                 'is_read' => 1
             ]);
-            
+
         return true;
     }
 
@@ -108,7 +115,8 @@ class OnAppNotifModel extends Model
      * description:  this function delete messages from table that are
      *               30 days old
      */
-    public function delete_onapp_messages(){
+    public function delete_onapp_messages()
+    {
 
         //delete messages from client side
         $this->db_conn->table($this->table)
@@ -119,7 +127,7 @@ class OnAppNotifModel extends Model
         $this->db_conn->table('adminApp_notification')
             ->where('c_date < now() - interval 30 DAY')
             ->delete();
-        
+
         return true;
     }
 }

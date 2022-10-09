@@ -33,7 +33,20 @@
     ?>
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">
-            <div class="flex">
+            <div class="d-flex">
+                <div class="d-flex">
+                    <a href="<?= base_url('/admin/dashboard/notifications') ?>" class="btn">
+                        <div class="position-relative" style="width: fit-content;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            <span class="position-absolute top-0 start-100 translate-middle bg-danger rounded-circle d-none notif-alert" style="padding:.35rem">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                        </div>
+                    </a>
+                </div>
                 <a href="#" class="btn text-danger fw-bold">
                     LOGOUT
                 </a>
@@ -140,6 +153,7 @@
 
     <script>
         $(() => {
+            const url = document.querySelector("meta[name = base_url]").getAttribute("content");
             let currentUrl = window.location.pathname.split('/')
 
             $('.side-nav nav .nav-link').each((index, el) => {
@@ -164,6 +178,24 @@
                     $('.left-main-nav').children().find('img').attr('src', baseUrl + "/src/img/Logo Center.svg")
                 }
             }
+
+            // get notifications 
+            setInterval(() => {
+                $.ajax({
+                    type: "get",
+                    url: `${url}/admin/dashboard/get-notifications`,
+                    dataType: "json",
+                    success: function(response) {
+                        let hasUnreadNotif = response.notifications.some((element) => parseInt(element.is_read) === 0)
+                        if (hasUnreadNotif) {
+                            $('.notif-alert').each(function() {
+                                $(this).removeClass('d-none')
+                            })
+                        }
+                    }
+
+                });
+            }, 5000)
         })
     </script>
 </body>

@@ -40,6 +40,9 @@ $routes->get('/', 'Home::home');
 // $routes->post('/test-sms', 'Home::test_sms');
 
 
+$routes->get('/employee-incharge', 'Admin\Admin::get_incharge_employee');
+
+
 $routes->group('user', static function ($routes) {
     $routes->get('register', 'End_Users\UserController::index');
     $routes->get('login', 'End_Users\UserLoginController::index', ['filter' => 'userIsLoggedIn']);
@@ -111,6 +114,9 @@ $routes->group('admin', static function ($routes) {
         $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
         $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms'); //this should be post(get for testing)
         $routes->post('send-email', 'Admin\SendNotifications::send_email');
+        $routes->get('notifications', 'Admin\Admin::admin_notifications');
+        $routes->get('already-read/(:num)', 'Admin\Admin::update_notifications/$1');
+        $routes->get('get-notifications', 'Admin\Admin::get_notifications');
 
         //logout
         $routes->get('logout', 'Admin\Admin::admin_logout');
@@ -126,6 +132,7 @@ $routes->group('admin', static function ($routes) {
         $routes->post('approve', 'Admin\ManageAppointment::approve_appointment');
         $routes->post('reject', 'Admin\ManageAppointment::reject_appointment');
         $routes->get('complete/(:any)', 'Admin\ManageAppointment::mark_as_done/$1');
+        $routes->post('insert-walkin', 'Admin\ManageAppointment::insert_walkin_appointment');
 
         //employee
         $routes->post('add-employee', 'Employee\EmployeeScanner::add_employee');
@@ -152,7 +159,7 @@ $routes->group('admin', static function ($routes) {
 
         //report
         $routes->get('report', 'Admin\AdminReport::report_template');
-        $routes->post('preview', 'Admin\AdminReport::display_preview'); 
+        $routes->post('preview', 'Admin\AdminReport::display_preview');
         $routes->post('generate-pdf', 'Admin\AdminReport::create_pdf');
 
         // holidays

@@ -209,8 +209,8 @@ $(() => {
 					for (let i = 0; i < response.length; i++) {
 						if ($(this).hasClass("disabled")) continue;
 
-						let holidayFrom = new Date(response[i].holiday_from);
-						let holidayTo = new Date(response[i].holiday_to);
+						let holidayFrom = new Date(response[i].from_date);
+						let holidayTo = new Date(response[i].to_date);
 						let month = convertMonthToNumber($(".calendar-title").text());
 						// console.log($(this).find('h6'));
 						if (holidayTo == "Invalid Date") {

@@ -7,6 +7,9 @@ use App\Models\Admin\NotificationsModel;
 use App\Models\Admin\AdminModel;
 use App\Models\Admin\ManageAppointmentModel;
 use App\Models\UserModel;
+use App\Libraries\OnAppNotification;
+use App\Models\OnAppNotifModel;
+use App\Models\EmployeeModel;
 
 class Admin extends BaseController
 {
@@ -21,6 +24,8 @@ class Admin extends BaseController
         $this->admin_model = new AdminModel();
         $this->user_model = new UserModel();
         $this->manage_appointment = new ManageAppointmentModel();
+        $this->on_app_notif = new OnAppNotification();
+        $this->employee_model = new EmployeeModel();
         $this->session = session();
     }
 
@@ -133,5 +138,29 @@ class Admin extends BaseController
         $data['user_data'] = $this->notification->get_user_data();
 
         return view('components/contactSMS-list', $data);
+    }
+
+    public function admin_notifications()
+    {
+        $response['notifications'] = $this->on_app_notif->get_admin_messages();
+        return view('admin/notifications', $response);
+    }
+    public function update_notifications($notification_id)
+    {
+        $response['notifications'] = $this->on_app_notif->update_admin_is_read($notification_id);
+        // return view('admin/notifications', $response);
+        return true;
+    }
+
+    public function get_notifications()
+    {
+        $response['notifications'] = $this->on_app_notif->get_notifications();
+        return json_encode($response);
+    }
+
+    public function get_incharge_employee()
+    {
+        $response = $this->employee_model->get_all_incharge();
+        return json_encode($response);
     }
 }

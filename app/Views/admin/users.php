@@ -22,7 +22,9 @@
                 <thead>
                     <tr>
                         <th scope="col">Code ID</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Middle Name</th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">Address</th>
                         <th scope="col">Email</th>
                         <th scope="col">Identity</th>
@@ -33,7 +35,9 @@
                     <?php foreach ($users as $user) { ?>
                         <tr>
                             <td><?= $user['code_id'] ?></td>
-                            <td><?= $user['name'] ?></td>
+                            <td><?= $user['fname'] ?></td>
+                            <td><?= $user['mname'] ?></td>
+                            <td><?= $user['lname'] ?></td>
                             <td><?= $user['address'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['social_pos'] ?></td>

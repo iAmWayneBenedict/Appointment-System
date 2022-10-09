@@ -58,51 +58,6 @@
     <?php
     }
     ?>
-    <!-- Button trigger modal -->
-    <div class="my-5">
-        <h3>Register Recipient Stocks</h3>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRecipientModal">
-            Register Recipient Stock
-        </button>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="addRecipientModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Register Recipient of Stocks</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="">
-                        <label for="stock_id" class="form-label">Social Position</label>
-                        <select class="form-select" name="stock_id" id="stock_id">
-                            <!-- list of stocks insert here -->
-                        </select>
-                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
-                            message!</span><br>
-                    </div>
-                    <div class="">
-                        <label for="avail_by" class="form-label">Received By</label>
-                        <input type="text" class="form-control" id="avail_by" name="avail_by" placeholder="Received By" required>
-                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
-                            message!</span><br>
-                    </div>
-                    <div class="">
-                        <label for="quantity_availed" class="form-label">Quantity Availed</label>
-                        <input type="number" class="form-control" id="quantity_availed" name="quantity_availed" placeholder="Quantity Availed" required>
-                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
-                            message!</span><br>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary submit-register-recipient-stocks">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Button trigger modal -->
     <div class="my-5">
@@ -193,7 +148,7 @@
                                 </div>
                                 <div class="">
                                     <label for="des" class="form-label">Short Description</label>
-                                    <textarea class="form-control" name="des" id="des" cols="30" rows="10" placeholder="Short Description"></textarea>
+                                    <textarea class="form-control" name="des" id="des" cols="30" rows="5" placeholder="Short Description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -433,33 +388,33 @@
                             success: function(res) {
                                 $('.claimby-form').html(res)
 
-                                $('#claimed-form').submit(function (e) { 
+                                $('#claimed-form').submit(function(e) {
                                     e.preventDefault();
-                                    
+
                                     $.ajax({
                                         type: "post",
                                         url: `${url}/admin/dashboard/insert-claimer`,
                                         data: {
                                             id: stock_id,
                                             claim_by: $('#claim_by').val(),
-                                            quantity: $('#quantity_availed').val(),
-                                            deduct  : $('#deduct').val()
+                                            quantity: $('#quantity_avail').val(),
+                                            deduct: $('#deduct').val()
                                         },
                                         dataType: "json",
-                                        beforeSend: function (){
+                                        beforeSend: function() {
                                             //loader
                                         },
-                                        success: function (response) {
+                                        success: function(response) {
                                             const res = response.code == 1 ? response.msg : response.msg;
                                             alert(res)
                                             location.reload()
-                                            
+
                                         },
-                                        error: function (xhr){
+                                        error: function(xhr) {
                                             alert("Error occured.please try again");
                                             console.log(xhr.statusText + ':' + xhr.responseText)
                                         },
-                                        complete: function (){
+                                        complete: function() {
                                             //hide loader
                                         }
                                     });
