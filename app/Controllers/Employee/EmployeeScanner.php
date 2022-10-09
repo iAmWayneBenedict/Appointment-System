@@ -88,7 +88,7 @@ class EmployeeScanner extends BaseController
 
     public function get_employee_status()
     {
-        $data['employees'] = $this->employee_model->get_all_employees();
+        $data['employees'] = $this->employee_model->get_all_incharge();
         // return json_encode($data);
         return view('components/employee-list-status', $data);
     }

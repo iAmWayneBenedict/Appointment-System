@@ -44,12 +44,12 @@
                         let dayOfTheWeek = convertDayToName(getCurrentDayOfTheWeek(month - 1, day, year))
                         $('.list').append(`
                             <div>
-                                <div class="text-center">
-                                    <h3>${element.description}</h3>
-                                    <p>${dayOfTheWeek}, ${monthName} ${day}, ${year}</p>
-                                </div>
                                 <div class="d-flex justify-content-center gap-3">
                                     <div class="card" style="width: 10rem">
+                                        <div class="text-center">
+                                            <h3>${element.description}</h3>
+                                            <p>${dayOfTheWeek}, ${monthName} ${day}, ${year}</p>
+                                        </div>
                                         <div class="card-body d-flex flex-column align-items-center gap-3">
                                             <div class="dashboard-icon bg-success">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle">
@@ -63,38 +63,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card" style="width: 10rem">
-                                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                                            <div class="dashboard-icon bg-warning">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-check">
-                                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                                    <polyline points="17 11 19 13 23 9"></polyline>
-                                                </svg>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="card-title m-0 text-center">Allocated Stocks</small>
-                                                <h3 class="m-0 text-center">${element.allocated}</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card" style="width: 10rem">
-                                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                                            <div class="dashboard-icon bg-info">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter">
-                                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="d-flex flex-column">
-                                                <small class="card-title m-0 text-center">Total Quantity</small>
-                                                <h3 class="m-0 text-center">${element.total_quantity}</h3>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         `)
-                        console.log(element)
                     }
                 }
             });

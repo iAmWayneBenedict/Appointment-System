@@ -10768,7 +10768,8 @@ body {
   padding-right: 5rem;
 }
 .calendar-grid .table td div {
-  height: 100px;
+  height: 100%;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -10788,6 +10789,11 @@ body {
   border-radius: 5px;
   padding: 0 10px;
 }
+.calendar-grid .table td div .holiday-alert {
+  background-color: rgb(255, 96, 96);
+  border-radius: 5px;
+  padding: 0 10px;
+}
 
 .calendar-set-appointment .table th {
   width: 14.2857142857%;
@@ -10797,6 +10803,7 @@ body {
 }
 .calendar-set-appointment .table td div {
   height: auto !important;
+  min-height: unset;
 }
 
 .calendar-grid.dashboard .table th {

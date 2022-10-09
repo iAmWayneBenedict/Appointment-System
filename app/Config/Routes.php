@@ -40,6 +40,9 @@ $routes->get('/', 'Home::home');
 // $routes->post('/test-sms', 'Home::test_sms');
 
 
+$routes->get('/employee-incharge', 'Admin\Admin::get_incharge_employee');
+
+
 $routes->group('user', static function ($routes) {
     $routes->get('register', 'End_Users\UserController::index');
     $routes->get('login', 'End_Users\UserLoginController::index', ['filter' => 'userIsLoggedIn']);
@@ -95,6 +98,7 @@ $routes->group('admin', static function ($routes) {
     $routes->get('/', 'Admin\Admin::login');
     $routes->post('admin-login', 'Admin\Admin::admin_login');
     $routes->post('verify-admin', 'Admin\Admin::verify_admin');
+    $routes->get('get-holidays', 'Admin\HolidaysController::get_holidays');
 
     $routes->group('dashboard', ['filter' => 'adminLoginFilter'], static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
@@ -110,6 +114,9 @@ $routes->group('admin', static function ($routes) {
         $routes->post('send-sms', 'Admin\SendNotifications::send_sms');
         $routes->get('send-all-sms', 'Admin\SendNotifications::send_bulk_sms'); //this should be post(get for testing)
         $routes->post('send-email', 'Admin\SendNotifications::send_email');
+        $routes->get('notifications', 'Admin\Admin::admin_notifications');
+        $routes->get('already-read/(:num)', 'Admin\Admin::update_notifications/$1');
+        $routes->get('get-notifications', 'Admin\Admin::get_notifications');
 
         //logout
         $routes->get('logout', 'Admin\Admin::admin_logout');
@@ -127,9 +134,6 @@ $routes->group('admin', static function ($routes) {
         $routes->get('complete/(:any)', 'Admin\ManageAppointment::mark_as_done/$1');
         $routes->post('insert-walkin', 'Admin\ManageAppointment::insert_walkin_appointment');
 
-        //TODO: removed this after modal
-        $routes->get('insert-appointment', 'Admin\ManageAppointment::test_modal');
-
         //employee
         $routes->post('add-employee', 'Employee\EmployeeScanner::add_employee');
         $routes->get('get-employee/(:num)', 'Employee\Employee::get_employee/$1');
@@ -141,6 +145,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('stock-management', 'Admin\StocksController::index');
         $routes->post('add-stock', 'Admin\StocksController::add_stock');
         $routes->get('get-all-stocks', 'Admin\StocksController::get_all_stocks');
+        $routes->get('get-all-stock', 'Admin\StocksController::get_all_stock');
         $routes->get('get-a-stock/(:any)', 'Admin\StocksController::display_update_form/$1');
         $routes->post('update-a-stock', 'Admin\StocksController::update_stock');
         $routes->get('delete-a-stock/(:any)', 'Admin\StocksController::delete_stock/$1');
@@ -154,12 +159,15 @@ $routes->group('admin', static function ($routes) {
 
         //report
         $routes->get('report', 'Admin\AdminReport::report_template');
-        $routes->post('preview', 'Admin\AdminReport::display_preview'); 
+        $routes->post('preview', 'Admin\AdminReport::display_preview');
         $routes->post('generate-pdf', 'Admin\AdminReport::create_pdf');
-        $routes->post('spreview', 'Admin\AdminReport::sdisplay_preview'); 
+        $routes->post('spreview', 'Admin\AdminReport::sdisplay_preview');
         $routes->post('sgenerate-pdf', 'Admin\AdminReport::screate_pdf');
         $routes->get('get-subcats', 'Admin\StocksController::display_stocks');
 
+
+        // holidays
+        $routes->post('set-holiday', 'Admin\HolidaysController::set_holidays');
     });
 });
 

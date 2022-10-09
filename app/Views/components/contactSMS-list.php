@@ -7,7 +7,7 @@ foreach ($user_data as $data) {
         <label for="user-contact-<?= $index ?>" style="cursor: pointer;">
             <span class="list-group-item list-group-item-action d-flex border-0 justify-content-between align-items-start">
                 <div class="ms-2 me-auto">
-                    <div class="fw-bold"><?= $data['name'] ?></div>
+                    <div class="fw-bold"><?= $data['fname'] . ' ' . $data['lname'] ?></div>
                     <?= $data['contact_number'] ?>
                 </div>
             </span>

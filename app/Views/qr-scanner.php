@@ -32,7 +32,8 @@
                 <table id="employees" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th scope="col">Employee Name</th>
+                            <th scope="col">Incharge</th>
+                            <th scope="col">Designation</th>
                             <th scope="col">Status</th>
                             <th scope="col">Time</th>
                         </tr>

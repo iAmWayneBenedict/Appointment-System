@@ -7,6 +7,10 @@ $newData = [
     'Distribution of Farm Inputs',
     'Boat Registration'
 ];
+// $newData = [];
+// foreach ($incharge_data as $data) {
+//     array_push($newData, $data['incharge_to']);
+// }
 foreach (array_unique($newData) as $data) {
 ?>
 

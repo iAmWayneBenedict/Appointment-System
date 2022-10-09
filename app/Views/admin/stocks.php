@@ -58,6 +58,7 @@
     <?php
     }
     ?>
+
     <!-- Button trigger modal -->
     <div class="my-5">
         <h3>Add Stocks</h3>
@@ -147,7 +148,7 @@
                                 </div>
                                 <div class="">
                                     <label for="des" class="form-label">Short Description</label>
-                                    <textarea class="form-control" name="des" id="des" cols="30" rows="10" placeholder="Short Description"></textarea>
+                                    <textarea class="form-control" name="des" id="des" cols="30" rows="5" placeholder="Short Description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -218,6 +219,27 @@
         display_stock();
         // }, 5000);
 
+        $.ajax({
+            type: "get",
+            url: `${url}/admin/dashboard/get-all-stock`,
+            async: true,
+            dataType: 'json',
+            success: function(response) {
+                response.stocks.map((data) => {
+                    $("#stock_id").append(`
+                        <option value="${data.id}">${data.sub_category}</option>
+                    `)
+                })
+            }
+        });
+
+        $('.submit-register-recipient-stocks').click(function() {
+            let stock_id = $('#stock_id').val()
+            let avail_by = $('#avail_by').val()
+            let quantity_availed = $('#quantity_availed').val()
+            console.log(stock_id, avail_by, quantity_availed)
+        })
+
         let quantity = 0
         let allocated = 0
         $("#quantity").each(function() {
@@ -259,7 +281,6 @@
                 $('button[value=Add], button[value=Update]').removeClass('disabled')
                 data = parseInt($(this).val())
             }
-            console.log(data)
 
             if (data < 0) {
                 $(this).next().removeClass('d-none')
@@ -367,33 +388,33 @@
                             success: function(res) {
                                 $('.claimby-form').html(res)
 
-                                $('#claimed-form').submit(function (e) { 
+                                $('#claimed-form').submit(function(e) {
                                     e.preventDefault();
-                                    
+
                                     $.ajax({
                                         type: "post",
                                         url: `${url}/admin/dashboard/insert-claimer`,
                                         data: {
                                             id: stock_id,
                                             claim_by: $('#claim_by').val(),
-                                            quantity: $('#quantity_availed').val(),
-                                            deduct  : $('#deduct').val()
+                                            quantity: $('#quantity_avail').val(),
+                                            deduct: $('#deduct').val()
                                         },
                                         dataType: "json",
-                                        beforeSend: function (){
+                                        beforeSend: function() {
                                             //loader
                                         },
-                                        success: function (response) {
+                                        success: function(response) {
                                             const res = response.code == 1 ? response.msg : response.msg;
                                             alert(res)
                                             location.reload()
-                                            
+
                                         },
-                                        error: function (xhr){
+                                        error: function(xhr) {
                                             alert("Error occured.please try again");
                                             console.log(xhr.statusText + ':' + xhr.responseText)
                                         },
-                                        complete: function (){
+                                        complete: function() {
                                             //hide loader
                                         }
                                     });

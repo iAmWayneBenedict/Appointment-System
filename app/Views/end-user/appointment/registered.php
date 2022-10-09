@@ -18,7 +18,7 @@
                 <div class="flex-fill">
                     <div class="pb-3">
                         <label for="fname" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= $userData->fname.' '.$userData->lname; ?>" readonly>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= $userData->fname . ' ' . $userData->lname; ?>" readonly>
                     </div>
                     <div class="pb-3">
                         <label for="address" class="form-label">Address</label>
@@ -35,13 +35,7 @@
                     <div class="pb-3">
                         <label for="purpose" class="form-label">Purpose</label>
                         <select class="form-select" name="purpose" id="purpose">
-                            <option value="RSBSA (Registry System for Basic Sector in Agriculture)">RSBSA (Registry System for Basic Sector in Agriculture)</option>
-                            <option value="Registration of Municipal Fisherfolks">Registration of Municipal Fisherfolks</option>
-                            <option value="Processing of Crop Insurance (PCIC Program)">Processing of Crop Insurance (PCIC Program)</option>
-                            <option value="Distribution of Farm Inputs">Distribution of Farm Inputs</option>
-                            <option value="Boat Registration">Boat Registration</option>
-                            <option value="Stocks">Stocks</option>
-                            <option value="other">Other</option>
+                            <!-- purpose insert here -->
                         </select>
                     </div>
 
@@ -108,7 +102,7 @@
                                 </div>
                             </div>
                             <div class="calendar-con">
-                                <table class="table table-borderless">
+                                <table class="calendar-table table table-borderless">
                                     <thead>
                                         <tr>
                                             <th scope="col">Sun</th>
@@ -227,6 +221,19 @@
                 }
             });
 
+        });
+        console.log(`${url}/employee-incharge`)
+        $.ajax({
+            type: "get",
+            url: `${url}/employee-incharge`,
+            dataType: "json",
+            success: function(response) {
+                response.map((element) => {
+                    $('#purpose').prepend(`<option value="${element.incharge_to}">${element.incharge_to}</option>`)
+                })
+                $('#purpose').append(`<option value="other">Other</option>`)
+                console.log(response)
+            }
         });
     });
 </script>
