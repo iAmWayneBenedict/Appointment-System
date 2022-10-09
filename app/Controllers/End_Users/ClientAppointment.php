@@ -49,7 +49,7 @@ class ClientAppointment extends BaseController
         return view('end-user/appointment/guest');
     }
 
-    
+
     public function create_appointment($user_type = false)
     {
 
@@ -181,7 +181,7 @@ class ClientAppointment extends BaseController
         ];
 
         AdminReportModel::insert_report($data);
-        $mng->remove_approved_appointment($appointment_id);
+        $mng->removed_pending_appointment($appointment_id);
 
 
         session()->setFlashdata('success', 'Appointment Removed');
@@ -271,6 +271,7 @@ class ClientAppointment extends BaseController
         $contact_number = $this->request->getPost('c_number');
         $purpose = $this->request->getPost('purpose');
         $schedule = $this->request->getPost('sched');
+        $id = $this->request->getPost('id');
 
         //filter remarks
         $remark = $this->request->getPost('remark');
@@ -312,7 +313,7 @@ class ClientAppointment extends BaseController
             'remarks'  => $remark
         ];
 
-        $response = $this->userAppointment->update_appointment($current_user, $data);
+        $response = $this->userAppointment->update_appointment($id, $data);
         if (!$response['bool']) {
             return json_encode([
                 'code' => 0,
@@ -430,7 +431,7 @@ class ClientAppointment extends BaseController
         $notify_admin = "";
         $approved = $this->userAppointment->get_approved_appointment($appointment_id);
 
-        foreach($approved as $data){
+        foreach ($approved as $data) {
             $date = date_create($data->schedule);
             $sched = date_format($date, 'F d, Y g:i A');
 

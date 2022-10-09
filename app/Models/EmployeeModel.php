@@ -29,6 +29,7 @@ class EmployeeModel extends Model
         return $employee_data;
     }
 
+
     /**
      * func: update the status of the employee in the database
      * @param $employee_id : int or string (all number) extract from qr code 
@@ -123,7 +124,7 @@ class EmployeeModel extends Model
     {
 
         $query = $this->db_connect->table('emp_incharge')
-            ->select('name, designation, incharge_to')
+            ->select('id, designation, log_time, status, incharge_to')
             ->join('employee', 'employee.id = emp_incharge.emp_id')
             ->get();
 

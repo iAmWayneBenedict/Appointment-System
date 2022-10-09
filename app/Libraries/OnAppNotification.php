@@ -4,7 +4,8 @@ namespace App\Libraries;
 
 use App\Models\OnAppNotifModel;
 
-class OnAppNotification {
+class OnAppNotification
+{
 
     protected $notif_model;
 
@@ -20,7 +21,8 @@ class OnAppNotification {
      * @param message : this is the message body to been by clients
      * @return boolean true or false
      */
-    public function sent_app_notification($to_id, $message){
+    public function sent_app_notification($to_id, $message)
+    {
 
         $data = [
             'user_id' => $to_id,
@@ -28,12 +30,12 @@ class OnAppNotification {
         ];
 
         return $this->notif_model->insert_message($data);
-
     }
 
-    public function send_bulk_notification(array $to_ids, $message){
+    public function send_bulk_notification(array $to_ids, $message)
+    {
 
-        foreach($to_ids as $id){
+        foreach ($to_ids as $id) {
             $data = [
                 'user_id' => $id,
                 'message' => $message
@@ -41,39 +43,53 @@ class OnAppNotification {
 
             $this->notif_model->insert_message($data);
         }
-       
+
 
         return true;
-
     }
 
-    public function already_read($notification_id){
+    public function already_read($notification_id)
+    {
         $this->notif_model->update_status($notification_id);
     }
 
-    public function delete_message($notification_id){
+    public function delete_message($notification_id)
+    {
         $this->notif_model->delete($notification_id);
     }
 
-    public function get_client_notification($client_id = NULL){
+    public function get_client_notification($client_id = NULL)
+    {
 
         $data['notifications'] = $this->notif_model->get_notifications($client_id);
 
-       // return view('notification page or something', $data);
-                        //OR return data only
+        // return view('notification page or something', $data);
+        //OR return data only
         // return $data;
 
     }
 
     //TODO : admin notification
 
-    public function notify_admin($message){
+    public function notify_admin($message)
+    {
         return $this->notif_model->admin_insert_message($message);
     }
 
-    public function get_admin_messages(){
+    public function get_admin_messages()
+    {
         $data_msg = $this->notif_model->admin_get_notification();
         return $data_msg;
     }
-    
+    public function update_admin_is_read($notification_id)
+    {
+        $data_msg = $this->notif_model->update_status_admin($notification_id);
+        return $data_msg;
+    }
+
+    public function get_notifications()
+    {
+        $data = $this->notif_model->admin_get_notification();
+        return $data;
+    }
 }

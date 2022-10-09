@@ -29,18 +29,14 @@ class ManageAppointment extends BaseController
         $this->appNotif = new OnAppNotification();
     }
 
-    //TODO: remove this after modal is created 
-    public function test_modal(){
-        return view('components/walkin_appointment');
-    }
-
     /**
      Function: INSERT WALKIN APPOINTMENT
      * Description: this is to insert record of walkin appointments that did not
      *              use the system to make an appointment, and for the purpose of 
      *              managing appointment it should be recorded
      */
-    public function insert_walkin_appointment(){
+    public function insert_walkin_appointment()
+    {
 
         $name = $this->request->getPost('name');
         $address = $this->request->getPost('address');
@@ -50,15 +46,14 @@ class ManageAppointment extends BaseController
         $purpose = $this->request->getPost('purpose');
         $schedule = $this->request->getPost('selected-date');
 
-        if(empty($schedule)){
+        if (empty($schedule)) {
             $formated_sched = date('Y-m-d H:i:s', strtotime('now'));
-        }
-        else{
+        } else {
             $formated_sched = date('Y-m-d H:i:s', strtotime($schedule));
         }
 
-        if(empty($address)){
-           $address = 'not specefied';
+        if (empty($address)) {
+            $address = 'not specefied';
         }
 
         $data = [
@@ -246,7 +241,7 @@ class ManageAppointment extends BaseController
         $message .= "Purpose : {$appointment_data->purpose}";
 
         //on app notification
-        if($appointment_data->user_id != NULL){
+        if ($appointment_data->user_id != NULL) {
             $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
         }
 
@@ -287,7 +282,7 @@ class ManageAppointment extends BaseController
             'state'           => 'rejected'
         ];
 
-        if(!AdminReportModel::insert_report($data)){
+        if (!AdminReportModel::insert_report($data)) {
             return json_encode([
                 'code' => 0,
                 'msg' => 'System can\'t process right now'
@@ -296,7 +291,7 @@ class ManageAppointment extends BaseController
 
         //removed the appointment from pending table
         $this->manage_appointment->removed_pending_appointment($appointment_id);
-            
+
         $message = "{$this->greet->greet()} {$appointment_data->name} Your Appointment had been rejected \n";
         $message .= "Reason : {$remarks}";
 
@@ -304,7 +299,7 @@ class ManageAppointment extends BaseController
         if ($appointment_data->user_id != NULL) {
             $this->appNotif->sent_app_notification($appointment_data->user_id, $message);
         }
-        
+
         //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
         //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);

@@ -72,6 +72,14 @@ class StocksController extends BaseController
         return view('components/stock_list', $data);
     }
 
+    public function get_all_stock()
+    {
+
+        $data['stocks'] = $this->stock_model->get_all_stocks();
+
+        return json_encode($data);
+    }
+
     public function display_update_form($stock_id = NULL)
     {
 
@@ -79,7 +87,8 @@ class StocksController extends BaseController
         return view('components/update-stock', $data);
     }
 
-    public function display_claim_form($stock_id = NULL){
+    public function display_claim_form($stock_id = NULL)
+    {
         $data['stocks'] = $this->stock_model->get_a_stock($stock_id);
         return view('components/claimed-by', $data);
     }
@@ -225,8 +234,9 @@ class StocksController extends BaseController
         return redirect()->back();
     }
 
-    public function insert_availer(){
-        
+    public function insert_availer()
+    {
+
         $data = [
             'stock_id'   => $this->request->getPost('id'),
             'avail_by'   => $this->request->getPost('claim_by'),
@@ -234,10 +244,9 @@ class StocksController extends BaseController
         ];
 
         $deduct = $this->request->getPost('deduct');
-        
         $res = $this->stock_model->claiming_stock($data, $data['stock_id'], $deduct);
 
-        if(!$res){
+        if (!$res) {
             return json_encode([
                 'code' => 0,
                 'msg' => 'Please try Again Later'
@@ -248,6 +257,5 @@ class StocksController extends BaseController
             'code' => 1,
             'msg' => 'Stock Claimer Inserted'
         ]);
-
     }
 }

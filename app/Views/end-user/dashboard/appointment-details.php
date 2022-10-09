@@ -12,7 +12,8 @@
             </nav>
         </div>
     </div>
-    <?php if (isset($pending)) {
+    <?php
+    if (isset($pending)) {
         $isOtherPurpose = true;
         foreach ($allIncharge as $incharge) {
             if ($incharge->incharge_to === $pending[0]->purpose) {

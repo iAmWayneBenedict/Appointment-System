@@ -13,7 +13,7 @@
         </div>
     </div>
     <!-- basic updates please put placeholer-->
-    <div class="d-flex flex-column flex-md-row me-md-4">
+    <div class="d-flex flex-column flex-md-row me-md-4 mb-5">
         <div class="flex-fill me-md-3 me-lg-5" style="max-width: 40rem;">
             <form action="" method="post" id="acc-form">
                 <div class="d-flex flex-column">
@@ -30,7 +30,7 @@
                         <div class="form-group col-md-6">
                             <label for="lname" class="form-label">Middle Name</label>
                             <input type="text" class="form-control" name="mname" value="<?= $userData->mname ?>" id="mname" placeholder="Middle Name">
-                        </div>         
+                        </div>
                     </div>
                     <div class="pb-3">
                         <label for="mname" class="form-label">Last Name</label>
@@ -120,17 +120,17 @@
                 data: formdata,
                 dataType: "json",
                 success: function(response) {
-                    
-                     //this should ba an aler
+
+                    //this should ba an aler
                     if (response.code == 1 || response.code == 0) {
                         alert(response.msg)
                         $(this).trigger('reset');
-                        if(response.code== 1){
+                        if (response.code == 1) {
                             location.reload();
                         }
                     }
 
-                    if(response.code == 3){
+                    if (response.code == 3) {
                         var msg = []; //hold all error messages
                         //loop error message and push to array
                         $.each(response.msg, function(key, val) {

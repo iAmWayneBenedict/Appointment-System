@@ -60,9 +60,13 @@
                 </div>
             </div>
         </div>
+        <div>
+            <h4>Walk in Clients</h4>
+            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#walkinModal">Walk in</button>
+        </div>
         <div class="my-5">
             <h4>Calendar of Events</h4>
-            <button type="button" class="btn btn-primary">Holiday</button>
+            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#holidayModal">Holiday</button>
             <div class="d-flex">
                 <div class="calendar flex-fill">
                     <div class="calendar-grid dashboard m-0">
@@ -84,7 +88,7 @@
                                 </select>
                             </div>
                         </center>
-                        <table class="table table-borderless">
+                        <table class="calendar-table table table-borderless">
                             <thead>
                                 <tr>
                                     <th scope="col">Sun</th>
@@ -134,13 +138,107 @@
                 </div>
             </div>
         </div>
+        <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] === 'admin') { ?>
+            <div class="my-5">
+                <h4>Generate Report for this Month</h4>
+                <a href="<?= base_url('/admin/dashboard/report') ?>" class="btn btn-primary">Generate Report</a>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+<div class="modal fade" id="holidayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="holiday_from" class="form-label">Holiday From</label>
+                    <input name="holiday_from" class="form-control" required id="holiday_from" type="datetime-local">
+                </div>
 
-        <div class="my-5">
-            <h4>Generate Report for this Month</h4>
-            <a href="<?= base_url('/admin/dashboard/report') ?>" class="btn btn-primary">Generate Report</a>
+                <div class="mb-3">
+                    <label for="holiday_to" class="form-label">Holiday To</label>
+                    <input name="holiday_to" class="form-control" id="holiday_to" type="datetime-local">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="description" class="form-control" required id="description" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary submit-holiday">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="walkinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Walk-in Clients</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="d-flex flex-md-row flex-column align-items justify-content-between gap-5" id="walkin-submit">
+                    <div class="flex-fill">
+                        <div class="pb-3">
+                            <h6>Status</h6>
+                            <p class="btn btn-success rounded-5">Walkin</p>
+                        </div>
+                        <div class="pb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="name" class="form-control" id="name" name="name" placeholder="Name" required>
+                        </div>
+                        <div class="pb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" name="address" id="address" placeholder="address">
+                        </div>
+                        <div class="pb-3">
+                            <label for="social_pos" class="form-label">Social Position</label>
+                            <select class="form-select" name="social_pos" id="social_pos">
+                                <option value="Farmer">Farmers</option>
+                                <option value="Fisherfolk">FisherFolks</option>
+                                <option value="Barangay Official">Barangay Official</option>
+                                <option value="Regional Staff">Regional Staff</option>
+                                <option value="Business Owner">Business Owner</option>
+                            </select>
+                        </div>
+                        <div class="pb-3">
+                            <label for="c_number" class="form-label">Contact number</label>
+                            <input type="text" class="form-control" name="c_number" id="c_number" placeholder="Contact Number" required>
+                        </div>
+                        <div class="pb-3">
+                            <label for="purpose" class="form-label">Purpose</label>
+                            <select class="form-select" name="purpose" id="purpose">
+                                <option value="RSBSA (Registry System for Basic Sector in Agriculture)">RSBSA (Registry System for Basic Sector in Agriculture)</option>
+                                <option value="Registration of Municipal Fisherfolks">Registration of Municipal Fisherfolks</option>
+                                <option value="Processing of Crop Insurance (PCIC Program)">Processing of Crop Insurance (PCIC Program)</option>
+                                <option value="Distribution of Farm Inputs">Distribution of Farm Inputs</option>
+                                <option value="Boat Registration">Boat Registration</option>
+                                <option value="Stocks">Stocks</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="pb-3">
+                            <label for="selected-date" class="form-label">Selected Date</label><br>
+                            <input type="datetime-local" class="form-control" id="selected-date" name="selected-date">
+                        </div>
+                        <div class="pb-3">
+                            <input type="submit" class="btn btn-warning" value="INSERT">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     $(() => {
@@ -153,15 +251,72 @@
                 $(this).addClass("selected")
             }
         })
-        // populateCalendar(getDate(date.getMonth()), date.getMonth())
-        getStocksReleaseData()
 
-        function getStocksReleaseData(controlledDate = undefined) {
+        $('#walkin-submit').submit(function(e) {
+            e.preventDefault();
+
+            const formdata = new FormData($(this)[0]);
+
+            $.ajax({
+                type: "post",
+                url: `${url}/admin/dashboard/insert-walkin`,
+                data: formdata,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                cache: false,
+                beforeSend: function() {
+                    //loader
+                },
+                success: function(response) {
+                    if (response.code == 1) {
+                        alert('Inserted')
+                        location.reload()
+                    } else {
+                        alert('Not Inserted')
+                    }
+                },
+                error: function(xhr) {
+                    alert("Error occured.please try again");
+                    console.log(xhr.statusText + ':' + xhr.responseText)
+                },
+                complete: function() {
+                    //hide loader
+                }
+            });
+        });
+
+        $('.submit-holiday').click(function() {
+            let holiday_from = $('#holiday_from').val()
+            let holiday_to = $('#holiday_to').val()
+            let description = $('#description').val()
+
+            $.ajax({
+                type: "post",
+                url: `${url}/admin/dashboard/set-holiday`,
+                data: {
+                    holiday_from,
+                    holiday_to,
+                    description
+                },
+                dataType: "json",
+                success: function(response) {
+                    alert(response.msg)
+                    location.reload()
+                }
+            });
+        })
+
+        // populateCalendar(getDate(date.getMonth()), date.getMonth())
+        getEventDates()
+
+        function getEventDates(controlledDate = undefined) {
             $.ajax({
                 type: 'get',
                 url: `${url}/admin/dashboard/get-all-release-dates`,
                 async: true,
                 success: function(response) {
+                    getHolidays()
                     let rawData = JSON.parse(response)
                     console.log(rawData)
                     let stocksReleaseData = JSON.parse(response).data
@@ -193,6 +348,42 @@
                             getAllDates
                         })
                     }
+                }
+            });
+        }
+
+
+
+        function getHolidays() {
+            $.ajax({
+                type: 'get',
+                url: `${url}/admin/get-holidays`,
+                async: true,
+                dataType: 'json',
+                success: function(response) {
+                    // $(".submit-holiday").prev().click()
+                    $('table.calendar-table td span div').each(function() {
+                        for (let i = 0; i < response.length; i++) {
+                            let holidayFrom = new Date(response[i].holiday_from)
+                            let holidayTo = new Date(response[i].holiday_to)
+                            let month = convertMonthToNumber($('#month').val())
+
+                            if (holidayTo == "Invalid Date") {
+                                if (month === holidayFrom.getMonth() && holidayFrom.getDate() === parseInt($(this).first().text())) {
+                                    console.log(1)
+                                    $(this).append(holidayHTMLTemplate(response[i].description))
+                                    continue
+                                }
+                            }
+
+                            if (month === holidayFrom.getMonth() && holidayTo.getDate() >= parseInt($(this).first().text()) && holidayFrom.getDate() <= parseInt($(this).first().text())) {
+
+                                $(this).append(holidayHTMLTemplate(response[i].description))
+                            }
+                        }
+
+                    })
+
 
                 }
             });
@@ -229,6 +420,10 @@
             return `<span class="release-alert">${description}</span>`
         }
 
+        function holidayHTMLTemplate(description) {
+            return `<span class="holiday-alert">${description}</span>`
+        }
+
         function populateCalendar([firstDay, lastUTCDay], month, stocksReleaseData = undefined) {
             $('.days-entries').html('')
 
@@ -248,11 +443,41 @@
                 }
             }
 
+            let isHolidayClosed = false;
+
             let stocksReleaseDates = stocksReleaseData.getAllDates
             let stocksDescriptions = stocksReleaseData.getAllDescription
             // populate the remaining weeks
             for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
                 if (date.getUTCDate() === days && date.getMonth() === month) {
+                    // let isHoliday = false;
+                    // for (let i = 0; i < holidays.length; i++) {
+                    //     let holidayFrom = new Date(holidays[i].holiday_from)
+                    //     let holidayTo = new Date(holidays[i].holiday_to)
+
+                    //     if (holidayTo == 'Invalid Date') {
+                    //         isHolidayClosed = true;
+                    //         continue;
+                    //     }
+
+                    //     if (holidayTo.getMonth() === month && holidayTo.getDate() === days) {
+                    //         isHoliday = true
+                    //         isHolidayClosed = true;
+                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
+                    //         currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
+                    //         continue;
+                    //     }
+
+                    //     if (holidayFrom.getMonth() === month && holidayFrom.getDate() === days) {
+
+                    //         isHoliday = true
+                    //         isHolidayClosed = false;
+                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
+                    //         currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
+                    //     }
+                    // }
+
+                    // if (isHoliday) continue;
 
                     let hasStocksReleaseDate = false;
                     let hasStocksReleaseAlert = false;
@@ -265,16 +490,50 @@
                         if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
                             hasStocksReleaseDate = true
                             hasStocksReleaseAlert = true
-                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
+                            currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></span></td>'
                         }
                     }
 
                     if (hasStocksReleaseDate) continue;
                     // Date today
 
-                    currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></a></td>'
+
+
+                    currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
 
                 } else {
+                    // let isHoliday = false;
+                    // for (let i = 0; i < holidays.length; i++) {
+                    //     let holidayFrom = new Date(holidays[i].holiday_from)
+                    //     let holidayTo = new Date(holidays[i].holiday_to)
+
+                    //     if (holidayTo == 'Invalid Date') {
+                    //         isHolidayClosed = true;
+                    //         continue;
+                    //     }
+
+                    //     // break
+                    //     if (holidayTo.getMonth() === month && holidayTo.getDate() >= days && holidayFrom.getDate() <= days) {
+                    //         isHoliday = true
+                    //         isHolidayClosed = true;
+                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
+                    //         currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
+                    //         console.log(holidayTo.getDate(), days)
+                    //         console.log("break")
+                    //         break;
+                    //     }
+
+                    //     if (holidayFrom.getMonth() === month && holidayFrom.getDate() === days) {
+
+                    //         isHoliday = true
+                    //         isHolidayClosed = false;
+                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
+                    //         currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
+                    //     }
+                    // }
+
+                    // if (isHoliday) continue;
+
                     let hasStocksReleaseDate = false;
                     let hasStocksReleaseAlert = false;
                     for (let i = 0; i < stocksReleaseDates.length; i++) {
@@ -286,14 +545,14 @@
                         if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
                             hasStocksReleaseDate = true
                             hasStocksReleaseAlert = true
-                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></a></td>'
+                            currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></span></td>'
                         }
                     }
 
                     if (hasStocksReleaseDate) continue;
                     // Date today
 
-                    currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                    currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
 
                 }
 
@@ -337,7 +596,7 @@
 
             console.log()
             // getApprovedData([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
-            getStocksReleaseData([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
+            getEventDates([getDate(convertMonthToNumber($(this).val())), convertMonthToNumber($(this).val())])
         })
     })
 </script>

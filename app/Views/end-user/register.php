@@ -26,8 +26,8 @@
                 <br />
 
                 <div class="mb-1">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>
@@ -47,20 +47,20 @@
                     <input type="text" class="form-control" id="mname" name="mname" placeholder="Middle Name">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
-                </div> -->
+                </div>
 
                 <!-- last name -->
                 <div class="mb-1">
-                    <label for="lname" class="form-label">Last Name <i class="text-primary">(ex. Dela Cruz jr)</i></label>
+                    <label for="lname" class="form-label">Last Name <small><i class="text-primary">(ex. Dela Cruz jr)</i></small></label>
                     <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
-                </div> -->
+                </div>
 
                 <!-- address -->
 
                 <div class="mb-1">
-                    <label for="address" class="form-label">Address <i class="text-primary">(Zone Barangay, Municipality)</i></label>
+                    <label for="address" class="form-label">Address <small><i class="text-primary">(Zone Barangay, Municipality)</i></small></label>
                     <input type="text" class="form-control" id="address" name="address" placeholder="Address">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
@@ -72,7 +72,7 @@
                 -->
 
                 <div class="mb-1">
-                    <label for="email" class="form-label">Email <i class="text-primary">(optional)</i></label>
+                    <label for="email" class="form-label">Email <small><i class="text-primary">(optional)</i></small></label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email / optional">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
@@ -105,7 +105,7 @@
 
                 <div class="mb-1">
                     <label for="password" class="form-label">Password</label><br>
-                    <i class="text-primary">Password must atleast 6 characters, include uppercase, lowercase and number</i>
+                    <small> <i class="text-primary">Password must atleast 6 characters, include uppercase, lowercase and number</i></small>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
