@@ -124,7 +124,7 @@ class EmployeeModel extends Model
     {
 
         $query = $this->db_connect->table('emp_incharge')
-            ->select('id, designation, log_time, status, incharge_to')
+            ->select('*')
             ->join('employee', 'employee.id = emp_incharge.emp_id')
             ->get();
 
