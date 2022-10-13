@@ -169,6 +169,7 @@ class UserController extends BaseController
         $message .= "Ang iyong userid: {$generated_code} \n";
         $message .= "ito ay importante dahil kailangan ito sa pag login sa inyong account";
 
+        //TODO: enable this later
         // $sms_response = $this->send_sms->sendSMS($c_number, $message);
 
         // // if sms is not sent execute this code

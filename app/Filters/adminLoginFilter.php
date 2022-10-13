@@ -10,8 +10,8 @@ class adminLoginFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        // check if the logged_in session is true and id is set
-        if (!session()->has('admin') and !session()->get('logged_in')) {
+        // check if the alogged_in session is true and id is set
+        if (!session()->has('admin') and !session()->get('alogged_in')) {
             return redirect('admin');
         }
     }

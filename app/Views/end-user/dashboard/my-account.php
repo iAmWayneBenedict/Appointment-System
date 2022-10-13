@@ -158,7 +158,9 @@
                     console.log(response) //this should ba an alert
 
                     if (response.code == 1 || response.code == 0) {
-                        $(this).trigger('reset');
+                        $('#o_password').val('');
+                        $('#n_password').val('');
+                        alert(response.msg)
                     }
 
                     if (response.code == 3) {

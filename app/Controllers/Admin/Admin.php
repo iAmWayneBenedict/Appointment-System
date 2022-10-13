@@ -63,7 +63,7 @@ class Admin extends BaseController
 
                 $this->session->set([
                     'admin' => $admin->user_name,
-                    'logged_in' => TRUE
+                    'alogged_in' => TRUE
                 ]);
 
                 return redirect()->to('admin/dashboard');
@@ -99,7 +99,7 @@ class Admin extends BaseController
     public function admin_logout()
     {
 
-        $admin_session = ['admin', 'user_name'];
+        $admin_session = ['admin', 'alogged_in'];
 
         $this->session->destroy($admin_session);
 

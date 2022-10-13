@@ -47,7 +47,7 @@
                                 <div class="d-flex justify-content-center gap-3">
                                     <div class="card" style="width: 10rem">
                                         <div class="text-center">
-                                            <h3>${element.description}</h3>
+                                            <h3>${element.sub_category}</h3>
                                             <p>${dayOfTheWeek}, ${monthName} ${day}, ${year}</p>
                                         </div>
                                         <div class="card-body d-flex flex-column align-items-center gap-3">
