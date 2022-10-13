@@ -579,7 +579,7 @@ $(() => {
 				$(".person-incharge-con").html("");
 				for (const incharge of data) {
 					$(".person-incharge-con").append(
-						personInChargeCardTemplate(incharge.name, incharge.designation)
+						personInChargeCardTemplate(incharge.name)
 					);
 				}
 			},
@@ -589,10 +589,9 @@ $(() => {
 	}
 
 	// html template for person incharge
-	function personInChargeCardTemplate(name, designation) {
+	function personInChargeCardTemplate(name) {
 		return `<div class="alert alert-info" role="alert">
                         <h6 class="m-0 fw-semibold">${name}</h5>
-                        <small class="m-0">${designation}</small>
                     </div>`;
 	}
 });

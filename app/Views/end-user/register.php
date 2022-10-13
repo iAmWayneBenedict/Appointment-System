@@ -135,8 +135,8 @@
 
                 <center class="my-5">
                     <span>Already have an account?</span>
-                    <a href="<?= base_url("/user/register") ?>" class="text-decoration-none text-primary">
-                        <b>Register</b>
+                    <a href="<?= base_url("/user/login") ?>" class="text-decoration-none text-primary">
+                        <b>Login</b>
                     </a>
                 </center>
             </form>

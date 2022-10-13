@@ -30,7 +30,6 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Role</th>
                     <th scope="col">Options</th>
                 </tr>
             </thead>
@@ -55,13 +54,6 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
-                    </div>
-
-                    <!-- role -->
-
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" name="role" placeholder="Role" required>
                     </div>
 
                     <!-- Incharge to -->

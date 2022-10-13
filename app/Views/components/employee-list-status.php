@@ -10,7 +10,6 @@ foreach ($employees as $employee) {
 ?>
     <tr>
         <td><?= $employee->incharge_to ?></td>
-        <td><?= $employee->designation ?></td>
         <td class="employee-status-cell <?= $employee->status ? "available" : "" ?>">
             <div><?= $status ?></div>
         </td>

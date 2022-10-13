@@ -12,7 +12,7 @@ foreach ($user_data as $data) {
                 </div>
             </span>
         </label>
-        <input type="radio" data-name="<?= $data['name'] ?>" data-number="<?= $data['contact_number'] ?>" hidden name="user-contact" id="user-contact-<?= $index ?>" class="user-contact">
+        <input type="radio" data-name="<?= $data['fname'] ?>" data-number="<?= $data['contact_number'] ?>" hidden name="user-contact" id="user-contact-<?= $index ?>" class="user-contact">
     </div>
 
 <?php

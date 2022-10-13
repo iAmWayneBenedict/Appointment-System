@@ -51,7 +51,7 @@
                     </div>
                     <div class="pb-3">
                         <label for="social_pos" class="form-label">Social Position</label>
-                        <input type="text" class="form-control" name="social_pos" value="<?= $userData->social_pos ?>" id="social_pos" placeholder="Social Position">
+                        <input type="text" class="form-control" name="social_pos" value="<?= $userData->social_pos ?>" id="social_pos" placeholder="Social Position" readonly>
                     </div>
                     <input class="btn btn-primary mt-5" type="submit" value="UPDATE">
                 </div>
@@ -159,6 +159,16 @@
 
                     if (response.code == 1 || response.code == 0) {
                         $(this).trigger('reset');
+                    }
+
+                    if (response.code == 3) {
+                        var msg = []; //hold all error messages
+                        //loop error message and push to array
+                        $.each(response.errors, function(key, val) {
+                            msg.push(`${val}`)
+                        });
+
+                        alert(msg.join('\n')) //sweet alert
                     }
                 }
             });

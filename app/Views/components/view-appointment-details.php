@@ -77,7 +77,6 @@ $sched = date_format($date, 'F d, Y g:i A')
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold"><?= $employee->name ?></div>
-                        <?= $employee->designation ?>
                     </div>
                 </li>
             <?php

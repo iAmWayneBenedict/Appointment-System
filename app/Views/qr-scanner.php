@@ -33,7 +33,6 @@
                     <thead>
                         <tr>
                             <th scope="col">Incharge</th>
-                            <th scope="col">Designation</th>
                             <th scope="col">Status</th>
                             <th scope="col">Time</th>
                         </tr>

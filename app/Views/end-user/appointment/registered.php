@@ -216,7 +216,7 @@
                         }
 
                         alert(response.msg)
-                        location.reload()
+                        window.location.href = `${url}/user/dashboard/pending-appointment`;
                     }, 2000)
                 }
             });

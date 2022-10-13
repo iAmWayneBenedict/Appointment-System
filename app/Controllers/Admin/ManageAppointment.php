@@ -413,8 +413,8 @@ class ManageAppointment extends BaseController
     /**
         Function: CHECKED RESCHED APPOINTMENT
      * Description: This is to notify client of thier passed appointments after 5 hours
-     *              that thier appointment is not being done.
-     *              the system will send sms to them that they need to reschedule
+     *              that thier appointment is unattended the system will send app notification 
+     *              send sms to them that they need to check thier set appointment. 
                     this function will call every hour in cron job
      */
     public function check_resched_appointment()

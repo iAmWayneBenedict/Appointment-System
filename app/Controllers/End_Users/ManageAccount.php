@@ -133,13 +133,16 @@ class ManageAccount extends BaseController
                 'label' => 'New Password',
                 'rules' => 'required|regex_match[^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$]',
                 'errors' => [
-                    'regex_match' => 'Password must atleast 6 characters, include uppercase, lowercase and number'
+                    'regex_match' => 'New password must atleast 6 characters, include uppercase, lowercase and number'
                 ]
             ],
         ]);
 
         if (!$validate) {
-            return json_encode($this->validation->getErrors());
+            return json_encode([
+                'code' => 3,
+                'errors' => $this->validation->getErrors()
+            ]);
         }
 
         $user_id = $this->session->get('id');
@@ -149,7 +152,10 @@ class ManageAccount extends BaseController
         $new_password = password_hash($this->request->getPost('n_password'), PASSWORD_DEFAULT);
 
         if (!password_verify($old_password, $user_data->password)) {
-            return json_encode('Current password not match');
+            return json_encode([
+                'code' => 3,
+                'errors' => ['error' => 'Current Password Not Match']
+            ]);
         }
 
         if (!$this->userModel->update_user_info(['password' => $new_password], $user_id)) {

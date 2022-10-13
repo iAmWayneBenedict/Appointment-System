@@ -129,7 +129,7 @@
                             </div>
                             <div class="flex-fill">
                                 <div class="">
-                                    <label for="per_type" class="form-label">Allocated</label>
+                                    <label for="per_type" class="form-label">Retail</label>
                                     <select class="form-select" name="per_type" id="per_type">
                                         <option value="per kilo" selected>Per Kilo</option>
                                         <option value="per sack">Per Sack</option>
