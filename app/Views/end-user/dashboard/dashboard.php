@@ -26,7 +26,6 @@
 
     <div>
         <?php
-        print_r($_SESSION['id']);
         if ($myAppointment) {
         ?>
             <div class="passed-appointments my-5">
@@ -55,8 +54,6 @@
 
                     foreach ($allIncharge as $employee) {
                         if ($user->purpose !== $employee->incharge_to) continue;
-
-                        $employee_designation = $employee->incharge_to;
                         $employee_designation_counter++;
                     }
             ?>
@@ -69,7 +66,8 @@
                                         <!-- employee name and role -->
 
                                         <div>
-                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_incharge ? $employee_incharge : 'Municipal Agriculture Office' ?></h5>
+                                            <h5 class="card-title m-0 fw-semibold"><?= $employee->designation ? $employee->designation : 'Municipal Agriculture Office' ?></h5>
+                                            <p class="card-text"><?= $employee_designation ? $employee->incharge_to : '' ?></p>
                                         </div>
                                     </div>
                                     <?php

@@ -66,7 +66,9 @@
         </div>
         <div class="my-5">
             <h4>Calendar of Events</h4>
-            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#holidayModal">Holiday</button>
+            <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] === 'admin') { ?>
+                <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#holidayModal">Holiday</button>
+            <?php } ?>
             <div class="d-flex">
                 <div class="calendar flex-fill">
                     <div class="calendar-grid dashboard m-0">

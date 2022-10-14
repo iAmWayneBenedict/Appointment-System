@@ -38,7 +38,8 @@
                                 <!-- employee designatin and incharge to -->
 
                                 <div>
-                                    <h5 class="card-title m-0 fw-semibold"><?= $employee_incharge ? $employee_incharge : 'Municipal Agriculture Office' ?></h5>
+                                    <h5 class="card-title m-0 fw-semibold"><?= $employee->designation ? $employee->designation : 'Municipal Agriculture Office' ?></h5>
+                                    <p class="card-text"><?= $employee_designation ? $employee->incharge_to : '' ?></p>
                                 </div>
                             </div>
                             <?php
