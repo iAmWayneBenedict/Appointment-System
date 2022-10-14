@@ -44,8 +44,8 @@
             <!-- Appointments Card -->
 
             <?php
-            $employee_incharge_counter = 0;
-            $employee_incharge = '';
+            $employee_designation_counter = 0;
+            $employee_designation = '';
 
             $myAppointment = $approved['myAppointment'];
             $allIncharge = $approved['allIncharge'];
@@ -54,9 +54,7 @@
 
                     foreach ($allIncharge as $employee) {
                         if ($user->purpose !== $employee->incharge_to) continue;
-
-                        $employee_incharge = $employee->name;
-                        $employee_incharge_counter++;
+                        $employee_designation_counter++;
                     }
             ?>
                     <div class="col p-0 p-sm-1" data-id="<?= $user->id ?>">
@@ -68,14 +66,15 @@
                                         <!-- employee name and role -->
 
                                         <div>
-                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_incharge ? $employee_incharge : 'Municipal Agriculture Office' ?></h5>
+                                            <h5 class="card-title m-0 fw-semibold"><?= $employee->designation ? $employee->designation : 'Municipal Agriculture Office' ?></h5>
+                                            <p class="card-text"><?= $employee_designation ? $employee->incharge_to : '' ?></p>
                                         </div>
                                     </div>
                                     <?php
-                                    $employee_incharge = '';
-                                    if ($employee_incharge_counter - 1 > 0) {
+                                    $employee_designation = '';
+                                    if ($employee_designation_counter - 1 > 0) {
                                     ?>
-                                        <small class="fw-semibold text-primary">and <?= $employee_incharge_counter - 1 ?> other people</small>
+                                        <small class="fw-semibold text-primary">and <?= $employee_designation_counter - 1 ?> other people</small>
                                     <?php
                                     }
                                     ?>
@@ -127,7 +126,7 @@
                         </div>
                     </div>
                 <?php
-                    $employee_incharge_counter = 0;
+                    $employee_designation_counter = 0;
                 }
             } else {
                 ?>

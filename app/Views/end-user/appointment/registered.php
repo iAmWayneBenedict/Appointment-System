@@ -214,7 +214,11 @@
                             $("#appointment-submit").val('SUBMIT');
                             return;
                         }
-
+                        Swal.fire(
+                            'Success!',
+                            response.msg,
+                            'success'
+                        ).then(() => {})
                         alert(response.msg)
                         window.location.href = `${url}/user/dashboard/pending-appointment`;
                     }, 2000)
