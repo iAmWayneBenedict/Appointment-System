@@ -84,7 +84,6 @@ class EmployeeModel extends Model
 
         $response = $builder->insert([
             'name' => $name,
-            'designation' => $role
         ]);
 
         $last_id = $this->db_connect->insertID();
@@ -124,7 +123,7 @@ class EmployeeModel extends Model
     {
 
         $query = $this->db_connect->table('emp_incharge')
-            ->select('id, designation, log_time, status, incharge_to')
+            ->select('*')
             ->join('employee', 'employee.id = emp_incharge.emp_id')
             ->get();
 
@@ -138,7 +137,6 @@ class EmployeeModel extends Model
 
         $response = $builder->where('id', $id)->update([
             'name' => $name,
-            'designation' => $role
         ]);
 
         $this->delete_employee_incharge($id);
@@ -175,7 +173,7 @@ class EmployeeModel extends Model
     public function get_employee($id)
     {
         $builder = $this->db_connect->table('employee')->join('emp_incharge', 'emp_incharge.emp_id = employee.id', 'left');
-        $query   = $builder->select('id, name, designation, incharge_to')->getWhere(['id' => $id]);
+        $query   = $builder->select('id, name, incharge_to')->getWhere(['id' => $id]);
         $response = $query->getResultArray();
 
         return $response;

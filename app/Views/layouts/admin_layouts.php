@@ -47,7 +47,7 @@
                         </div>
                     </a>
                 </div>
-                <a href="#" class="btn text-danger fw-bold">
+                <a href="<?= base_url('admin/dashboard/logout')?>" class="btn text-danger fw-bold">
                     LOGOUT
                 </a>
             </div>

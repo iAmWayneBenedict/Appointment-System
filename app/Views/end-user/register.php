@@ -73,7 +73,7 @@
 
                 <div class="mb-1">
                     <label for="email" class="form-label">Email <small><i class="text-primary">(optional)</i></small></label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email / optional">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email / optional">
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>
@@ -135,8 +135,8 @@
 
                 <center class="my-5">
                     <span>Already have an account?</span>
-                    <a href="<?= base_url("/user/register") ?>" class="text-decoration-none text-primary">
-                        <b>Register</b>
+                    <a href="<?= base_url("/user/login") ?>" class="text-decoration-none text-primary">
+                        <b>Login</b>
                     </a>
                 </center>
             </form>

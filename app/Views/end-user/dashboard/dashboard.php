@@ -69,8 +69,7 @@
                                         <!-- employee name and role -->
 
                                         <div>
-                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_designation ? $employee_designation : 'Municipal Agriculture Office' ?></h5>
-                                            <p class="card-text"><?= $employee_designation ? $employee->designation : '' ?></p>
+                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_incharge ? $employee_incharge : 'Municipal Agriculture Office' ?></h5>
                                         </div>
                                     </div>
                                     <?php
@@ -166,7 +165,6 @@
                     foreach ($allIncharge as $employee) {
                         if ($user->purpose !== $employee->incharge_to) continue;
 
-                        $employee_designation = $employee->designation;
                         $employee_designation_counter++;
                     }
             ?>

@@ -163,7 +163,7 @@ class ClientAppointment extends BaseController
 
         return json_encode([
             'code' => 1,
-            'msg' => "Appointment Updated\nPlease wait for a Text message for an update on your appointment \n Appointment ID: {$response['id']}"
+            'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment \n Appointment ID: {$response['id']}"
         ]);
     }
 

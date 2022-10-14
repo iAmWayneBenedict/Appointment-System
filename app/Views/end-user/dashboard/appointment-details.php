@@ -293,9 +293,17 @@
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
+        const old_date = $('#selected-date').val();
+        const purpopse = $('#purpose').val();
+
         $('#form-submit').submit(function(e) {
             e.preventDefault();
 
+            //if nothing change do not update
+            if(old_date == $('#selected-date').val() && purpopse == $('#purpose').val()){
+                alert('Nothing to update')
+                return
+            }
 
             const formdata = new FormData($(this)[0]);
             if ($('#purpose').val() == 'other') {

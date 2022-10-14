@@ -247,19 +247,29 @@
             if (data.type === "Send to all") {
 
                 // send to all handler
-                window.location.href = `${url}/admin/dashboard/send-all-sms`
-                // $.ajax({
-                //     type: "post",
-                //     url: `${url}/admin/dashboard/send-all-sms`,
-                //     // async: true,
-                //     data: {
-                //         message: formValues.message,
-                //     },
-                //     dataType: "json",
-                //     success: function(response) {
-                //         console.log(response)
-                //     }
-                // });
+                // window.location.href = `${url}/admin/dashboard/send-all-sms`
+                $.ajax({
+                    type: "get",
+                    url: `${url}/admin/dashboard/send-all-sms`,
+                    // async: true,
+                    data: {
+                        message: formValues.message,
+                    },
+                    dataType: "json",
+                    success: function(response) {
+
+                        response.forEach(element => {
+                            var msg = []; //hold all error messages
+
+                            //loop error message and push to array
+                            $.each(element, function(key, val) {
+                                msg.push(`${val}`)
+                            });
+
+                            alert(msg.join('\n')) //sweet alert
+                        });
+                    }
+                });
             } else {
 
                 // manual send handler
@@ -339,14 +349,28 @@
                 type: "post",
                 url: `${url}/admin/dashboard/send-email`,
                 // async: true,
+                dataType: 'json',
                 data: {
                     email,
                     subject,
                     message
                 },
                 success: function(response) {
+                    // console.log(response)
+                    if (response.code == 0) {
+                        var msg = []; //hold all error messages
 
-                    console.log(response)
+                        //loop error message and push to array
+                        $.each(response.error, function(key, val) {
+                            msg.push(`${val}`)
+                        });
+
+                        alert(msg.join('\n')) //sweet alert
+                        // console.log(msg)
+                        return;
+                    }
+
+                    alert(response.msg);
                 }
             });
         })

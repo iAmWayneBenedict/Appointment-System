@@ -218,10 +218,9 @@
                             'Success!',
                             response.msg,
                             'success'
-                        ).then(() => {
-
-                            location.reload()
-                        })
+                        ).then(() => {})
+                        alert(response.msg)
+                        window.location.href = `${url}/user/dashboard/pending-appointment`;
                     }, 2000)
                 }
             });

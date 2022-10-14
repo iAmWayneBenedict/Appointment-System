@@ -20,7 +20,7 @@
                 <img src="<?= base_url('/src/img/Logo Large.svg') ?>" alt="">
             </a>
             <div class="login-btn">
-                <a href="<?= base_url("/user/login") ?>" class="btn">
+                <a href="" class="btn" aria-disabled="true">
                     <b>LOG IN</b>
                 </a>
             </div>

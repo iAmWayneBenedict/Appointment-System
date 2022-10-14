@@ -40,7 +40,7 @@ class SendNotifications extends BaseController
         $validate = $this->validate([
             'number' => [
                 'label' => 'Contact Number ',
-                'rules' =>  'required'
+                'rules' => 'required|regex_match[/^(09)\d{9}$/]',
             ],
             'message' => [
                 'label' => 'Message Body',
@@ -55,7 +55,7 @@ class SendNotifications extends BaseController
             ]);
         }
 
-        $contact_number  = $this->number_formatter->format_number($this->request->getPost('number'));
+        $contact_number  = $this->request->getPost('number');
         $message = $this->request->getPost('message');
 
         $response = $this->send_sms->sendSMS($contact_number, $message);
@@ -83,7 +83,7 @@ class SendNotifications extends BaseController
             ]);
         }
 
-        $message = $this->request->getPost('message');
+        $message = $this->request->getGet('message');
 
         //get user data
         $user_data = $this->notification_model->get_user_data();
@@ -93,21 +93,6 @@ class SendNotifications extends BaseController
 
         $responses = $this->send_sms->sendBulkSMS($numbers_only, $message);
 
-        //chunk or devide numbers_only array into 10 elements every index 2d array
-        // $all_contacts = array_chunk($numbers_only, 10);
-
-        //convert chunk array into string separated with comma
-        // send bulk messages
-        // $responses = [];
-        // foreach ($all_contacts as $contacts) {
-
-        //     $str_numbers = implode(',', $contacts);
-        //     //ouput example: "0912345678, 0912353458" 
-
-        //     $response = $this->send_sms->sendSMS($str_numbers, $message);
-        //     array_push($responses, $response);
-        //     sleep(5);
-        // }
 
         return json_encode($responses);
     }
@@ -137,7 +122,7 @@ class SendNotifications extends BaseController
         if (!$validate) {
             return json_encode([
                 'code' => 0,
-                'errors' => $this->validation->getErrors()
+                'error' => $this->validation->getErrors()
             ]);
         }
 
@@ -150,7 +135,7 @@ class SendNotifications extends BaseController
         if (!$response) {
             return json_encode([
                 'code' => 0,
-                'msg' => 'Email Not sent'
+                'error' => ['msg' => 'Email not Sent']
             ]);
         }
 
