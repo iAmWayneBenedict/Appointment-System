@@ -237,8 +237,8 @@
                             return;
                         }
 
-                        // alert(response.msg)
-                        location.reload()
+                        alert(response.msg)
+                        // location.reload()
                     }, 2000)
                 }
             });

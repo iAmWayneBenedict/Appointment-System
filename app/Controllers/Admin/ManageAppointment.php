@@ -247,7 +247,7 @@ class ManageAppointment extends BaseController
 
 
         //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
-        //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
+        // $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
         //if sms is not sent execute this code
         // if($sms_response['code'] == 0 ){
@@ -302,9 +302,9 @@ class ManageAppointment extends BaseController
 
         //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
-        //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
+        // $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
-        //if sms is not sent execute this code
+        // if sms is not sent execute this code
         // if($sms_response['code'] == 0 ){
         //     return json_encode([
         //         'code' => 0,
@@ -398,11 +398,12 @@ class ManageAppointment extends BaseController
 
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
-            //$sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
+            // $sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
 
             //if sms is not sent execute this code
+            
             // if($sms_response['code'] == 0 ){
-            //     array_push($res, $sms_response['message'])
+            //     array_push($res, $sms_response['message']);
             // }
 
         }
@@ -447,11 +448,11 @@ class ManageAppointment extends BaseController
 
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
-            //$sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
+            // $sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
 
             //if sms is not sent execute this code
             // if($sms_response['code'] == 0 ){
-            //     array_push($res, $sms_response['message'])
+            //     array_push($res, $sms_response['message']);
             // }
 
             $this->manage_appointment->set_passed($approved->id);

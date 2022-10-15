@@ -28,7 +28,7 @@ class HolidayModel  extends Model
         return $data;
     }
 
-    public function  set_holidays($holiday_from, $holiday_to, $description)
+    public function set_holidays($holiday_from, $holiday_to, $description)
     {
 
         $builder = $this->db_connect->table('holidays');
