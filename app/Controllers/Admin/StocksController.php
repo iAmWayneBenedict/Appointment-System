@@ -179,7 +179,8 @@ class StocksController extends BaseController
 
             //TODO: enable this after 100%
             //send sms
-            $this->sms->sendBulkSMS($numbers_only, $message);
+            // $this->sms->sendBulkSMS($numbers_only, $message);
+
             //send on app
             $this->on_app_notif->send_bulk_notification($user_ids, $message);
 
@@ -222,7 +223,8 @@ class StocksController extends BaseController
 
             //TODO: enable this after 100%
             //send sms
-            $this->sms->sendBulkSMS($numbers_only, $message);
+            // $this->sms->sendBulkSMS($numbers_only, $message);
+
             //send on app
             $this->on_app_notif->send_bulk_notification($user_ids, $message);
 
