@@ -391,13 +391,13 @@ class ManageAppointment extends BaseController
 
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
-            // $sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
+            $sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
 
             //if sms is not sent execute this code
             
-            // if($sms_response['code'] == 0 ){
-            //     array_push($res, $sms_response['message']);
-            // }
+            if($sms_response['code'] == 0 ){
+                array_push($res, $sms_response['message']);
+            }
 
         }
 

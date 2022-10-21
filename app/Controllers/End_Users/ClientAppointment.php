@@ -2,6 +2,7 @@
 
 namespace App\Controllers\End_Users;
 
+use App\Controllers\Admin\AdminReport;
 use App\Controllers\BaseController;
 use App\Models\Appointment\UserAppointmentModel;
 use App\Models\UserModel;
@@ -160,7 +161,8 @@ class ClientAppointment extends BaseController
                 'errors' => 'Sorry!, Please make a try later, Something went worng in our server'
             ]);
         }
-
+        //
+        AdminReportModel::increment_appointment_made();
         return json_encode([
             'code' => 1,
             'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment \n Appointment ID: {$response['id']}"

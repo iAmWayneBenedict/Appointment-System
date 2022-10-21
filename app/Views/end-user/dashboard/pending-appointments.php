@@ -45,7 +45,7 @@
                             $employee_designation = '';
                             if ($employee_designation_counter - 1 > 0) {
                             ?>
-                                <small class="fw-semibold text-primary">and <?= $employee_designation_counter - 1 ?> other people</small>
+                                <small class="fw-semibold text-primary">and <?= $employee_designation_counter - 1 ?> other employee</small>
                             <?php
                             }
                             ?>

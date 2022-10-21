@@ -29,8 +29,6 @@
                     <a href="<?= base_url("/appointments/guest-user") ?>" class="btn btn-primary mt-3 rounded-5 py-2">Guest</a>
 
                     <!-- rediract to admin login -->
-
-                    <a href="<?= base_url('/admin') ?>" class="btn btn-primary mt-3 rounded-5 py-2">Admin</a>
                 </div>
             </div>
         </div>
