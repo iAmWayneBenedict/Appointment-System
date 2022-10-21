@@ -324,7 +324,7 @@ $(() => {
 					}
 				}
 			}
-
+			
 			if (currentDayOfTheWeekName === "Sat") {
 				allDates += openingTR + currentWeek + closingTR;
 				currentWeek = "";

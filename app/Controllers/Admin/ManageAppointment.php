@@ -351,13 +351,6 @@ class ManageAppointment extends BaseController
     public function sms_incoming_appointment()
     {
 
-        $auth = $this->request->getGet('auth');
-        $authKey = 'agriculturist_2022';
-
-        if (empty($auth) || $auth != $authKey) {
-            return 'Someone accessing the url';
-        }
-
         //get current date
         $now = $this->time->now();
 
@@ -421,13 +414,6 @@ class ManageAppointment extends BaseController
     public function check_resched_appointment()
     {
 
-        $auth = $this->request->getGet('auth');
-        $authKey = 'agriculturist_2022';
-
-        if (empty($auth) || $auth != $authKey) {
-            return 'Someone accessing the url';
-        }
-
         $passed_appointments = $this->manage_appointment->get_passed_appointment();
 
         $res = [];
@@ -472,14 +458,7 @@ class ManageAppointment extends BaseController
      */
     public function removed_passed_appointments()
     {
-
-        $auth = $this->request->getGet('auth');
-        $authKey = 'agriculturist_2022';
-
-        if (empty($auth) || $auth != $authKey) {
-            return 'Someone accessing the url';
-        }
-
+        
         $all_approved_appointments = $this->manage_appointment->get_resched_appointments();
         $guest_passed_appointments = $this->manage_appointment->guest_passed_appointments();
 
