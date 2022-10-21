@@ -65,12 +65,12 @@ class UserModel extends Model
             ->get()
             ->getRowArray();
 
-        $id = $query['id'];
-        $add_one = $id + 1;
 
         if (empty($query)) {
             $generated_id = mt_rand(1000, 9999) . 1;
         } else {
+            $id = $query['id'];
+            $add_one = $id + 1;
             $generated_id = mt_rand(1000, 9999) . $add_one;
         }
 
