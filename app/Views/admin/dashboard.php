@@ -158,12 +158,12 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="holiday_from" class="form-label">Holiday From</label>
-                    <input name="holiday_from" class="form-control" required id="holiday_from" type="datetime-local">
+                    <input name="holiday_from" class="form-control" required id="holiday_from" type="date">
                 </div>
 
                 <div class="mb-3">
                     <label for="holiday_to" class="form-label">Holiday To</label>
-                    <input name="holiday_to" class="form-control" id="holiday_to" type="datetime-local">
+                    <input name="holiday_to" class="form-control" id="holiday_to" type="date">
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>

@@ -209,10 +209,9 @@ $(() => {
 					for (let i = 0; i < response.length; i++) {
 						if ($(this).hasClass("disabled")) continue;
 
-						let holidayFrom = new Date(response[i].from_date);
-						let holidayTo = new Date(response[i].to_date);
+						let holidayFrom = new Date(response[i].holiday_from);
+						let holidayTo = new Date(response[i].holiday_to);
 						let month = convertMonthToNumber($(".calendar-title").text());
-						// console.log($(this).find('h6'));
 						if (holidayTo == "Invalid Date") {
 							if (
 								month === holidayFrom.getMonth() &&
@@ -578,9 +577,7 @@ $(() => {
 				$(".person-incharge-con").parent().removeClass("d-none");
 				$(".person-incharge-con").html("");
 				for (const incharge of data) {
-					$(".person-incharge-con").append(
-						personInChargeCardTemplate(incharge.name)
-					);
+					$(".person-incharge-con").append(personInChargeCardTemplate(incharge.name));
 				}
 			},
 		});
