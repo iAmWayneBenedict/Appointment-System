@@ -247,9 +247,9 @@ class ManageAppointment extends BaseController
 
 
         //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
-        //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
+        // $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
-        //if sms is not sent execute this code
+        // if sms is not sent execute this code
         // if($sms_response['code'] == 0 ){
         //     return json_encode([
         //         'code' => 0,
@@ -302,9 +302,9 @@ class ManageAppointment extends BaseController
 
         //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
-        //$sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
+        // $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
-        //if sms is not sent execute this code
+        // if sms is not sent execute this code
         // if($sms_response['code'] == 0 ){
         //     return json_encode([
         //         'code' => 0,
@@ -351,13 +351,6 @@ class ManageAppointment extends BaseController
     public function sms_incoming_appointment()
     {
 
-        $auth = $this->request->getGet('auth');
-        $authKey = 'agriculturist_2022';
-
-        if (empty($auth) || $auth != $authKey) {
-            return 'Someone accessing the url';
-        }
-
         //get current date
         $now = $this->time->now();
 
@@ -398,11 +391,12 @@ class ManageAppointment extends BaseController
 
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
-            //$sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
+            // $sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
 
             //if sms is not sent execute this code
+            
             // if($sms_response['code'] == 0 ){
-            //     array_push($res, $sms_response['message'])
+            //     array_push($res, $sms_response['message']);
             // }
 
         }
@@ -419,13 +413,6 @@ class ManageAppointment extends BaseController
      */
     public function check_resched_appointment()
     {
-
-        $auth = $this->request->getGet('auth');
-        $authKey = 'agriculturist_2022';
-
-        if (empty($auth) || $auth != $authKey) {
-            return 'Someone accessing the url';
-        }
 
         $passed_appointments = $this->manage_appointment->get_passed_appointment();
 
@@ -447,11 +434,11 @@ class ManageAppointment extends BaseController
 
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇
 
-            //$sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
+            // $sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
 
             //if sms is not sent execute this code
             // if($sms_response['code'] == 0 ){
-            //     array_push($res, $sms_response['message'])
+            //     array_push($res, $sms_response['message']);
             // }
 
             $this->manage_appointment->set_passed($approved->id);
@@ -471,14 +458,7 @@ class ManageAppointment extends BaseController
      */
     public function removed_passed_appointments()
     {
-
-        $auth = $this->request->getGet('auth');
-        $authKey = 'agriculturist_2022';
-
-        if (empty($auth) || $auth != $authKey) {
-            return 'Someone accessing the url';
-        }
-
+        
         $all_approved_appointments = $this->manage_appointment->get_resched_appointments();
         $guest_passed_appointments = $this->manage_appointment->guest_passed_appointments();
 

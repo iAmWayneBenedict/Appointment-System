@@ -66,15 +66,14 @@
                                         <!-- employee name and role -->
 
                                         <div>
-                                            <h5 class="card-title m-0 fw-semibold"><?= $employee->designation ? $employee->designation : 'Municipal Agriculture Office' ?></h5>
-                                            <p class="card-text"><?= $employee_designation ? $employee->incharge_to : '' ?></p>
+                                            <h5 class="card-title m-0 fw-semibold"><?= $employee->incharge_to ?></h5>
                                         </div>
                                     </div>
                                     <?php
                                     $employee_designation = '';
                                     if ($employee_designation_counter - 1 > 0) {
                                     ?>
-                                        <small class="fw-semibold text-primary">and <?= $employee_designation_counter - 1 ?> other people</small>
+                                        <small class="fw-semibold text-primary">and <?= $employee_designation_counter - 1 ?> other employee</small>
                                     <?php
                                     }
                                     ?>
