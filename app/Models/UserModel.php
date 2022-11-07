@@ -28,7 +28,7 @@ class UserModel extends Model
     }
 
     /**
-     * Function: Get all User in Database
+        Function: Get all User in Database
      * Description: Use to retrieve all registered user in the database this is for 
      *              admin only to monitor or view all office clients that are registered
      *              to the system
@@ -43,7 +43,12 @@ class UserModel extends Model
         return $query->getResultArray();
     }
 
-
+    /**
+       Function : GENERATE UNIQUE ID
+     * Description: auto generate unique id using 4 digit number concatinate to prev id from
+     *              data 
+     * @return int:genrated_id
+     */
     public function generated_unique_id()
     {
         /**
@@ -60,16 +65,23 @@ class UserModel extends Model
             ->get()
             ->getRowArray();
 
+
         if (empty($query)) {
             $generated_id = mt_rand(1000, 9999) . 1;
         } else {
-            $generated_id = mt_rand(1000, 9999) . $query['id'] + 1;
+            $id = $query['id'];
+            $add_one = $id + 1;
+            $generated_id = mt_rand(1000, 9999) . $add_one;
         }
 
         return $generated_id;
     }
 
-    //retrieve user data
+    /**
+        Function: GET USER INFO
+     * Description : Get users information from database and return to controller
+     *               get user info base from user'd id
+     */
     public function get_user_info($user_id)
     {
 
@@ -110,6 +122,7 @@ class UserModel extends Model
     }
 
     /**
+        Function: LOGIN USERS
      * get the user information for login process
      * return 1 single row(array) data of user
      */

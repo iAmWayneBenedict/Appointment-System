@@ -22,6 +22,7 @@ class NotificationsModel extends Model
     {
         $query = $this->db_connect->table('users')
             ->select('id, fname, lname, contact_number, email')
+            ->where('account_stats', 1)
             ->get();
 
         $users_data = $query->getResultArray();

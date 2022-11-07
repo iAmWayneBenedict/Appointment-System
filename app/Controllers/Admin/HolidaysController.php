@@ -22,6 +22,13 @@ class HolidaysController extends BaseController
         $holiday_to = $this->request->getPost('holiday_to');
         $description = $this->request->getPost('description');
 
+        if(empty($holiday_from) || empty($description)){
+            return json_encode([
+                'code' => 1,
+                'msg' => "Holiday from and Description is Required"
+            ]);
+        }
+
         if (!empty($holiday_to)) {
             $holiday_to = date_format(date_create($holiday_to), 'Y-m-d H:i:s');
         } else {

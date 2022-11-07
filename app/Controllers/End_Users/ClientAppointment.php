@@ -161,6 +161,7 @@ class ClientAppointment extends BaseController
             ]);
         }
 
+        AdminReportModel::increment_appointment_made();
         return json_encode([
             'code' => 1,
             'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment \n Appointment ID: {$response['id']}"
