@@ -127,6 +127,11 @@
                     <label for="show-password">Show Password</label>
                 </div>
 
+                <center class="mt-5" style="font-size: 14px;">
+                    <input type="checkbox" name="data-privacy-agreement" id="data-privacy-agreement">
+                    <span>By checking this, I hereby agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#terms-and-conditions-modal">Terms and Conditions</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacy-policy-modal">Privacy Policy</a></span>
+                </center>
+
                 <!-- submit button -->
 
                 <input type="submit" value="Register" id="submit" class="btn btn-primary mt-3 rounded-5">
@@ -139,9 +144,49 @@
                         <b>Login</b>
                     </a>
                 </center>
+
             </form>
         </div>
     </div>
 </div>
+
+<!-- Terms and Conditions -->
+<div class="modal fade" id="terms-and-conditions-modal" tabindex="-1" aria-labelledby="terms-and-conditions-modal-abel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 50rem;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Terms and Conditions</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?= view("components/data-privacy-template/terms-and-conditions") ?>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacy-policy-modal" tabindex="-1" aria-labelledby="privacy-policy-modal-label" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 50rem;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Privacy Policy</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?= view("components/data-privacy-template/privacy-policy") ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="<?= base_url('/src/js/user/register.js') ?>"></script>
 <?= $this->endSection() ?>

@@ -247,16 +247,16 @@ class ManageAppointment extends BaseController
 
 
         //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇ approved appointment
-        $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
+        // $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
-        // if sms is not sent execute this code
-        if($sms_response['code'] == 0 ){
-            return json_encode([
-                'code' => 0,
-                'msg' => 'SMS Not sent',
-                'sms_res' => $sms_response['message']
-            ]); 
-        }
+        // // if sms is not sent execute this code
+        // if($sms_response['code'] == 0 ){
+        //     return json_encode([
+        //         'code' => 0,
+        //         'msg' => 'SMS Not sent',
+        //         'sms_res' => $sms_response['message']
+        //     ]); 
+        // }
 
         return json_encode([
             'code' => 1,
@@ -302,16 +302,16 @@ class ManageAppointment extends BaseController
 
         //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇ reject appointment
 
-        $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
+        // $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
-        // if sms is not sent execute this code
-        if($sms_response['code'] == 0 ){
-            return json_encode([
-                'code' => 0,
-                'msg' => 'SMS Not sent',
-                'sms_res' => $sms_response['message']
-            ]); 
-        }
+        // // if sms is not sent execute this code
+        // if ($sms_response['code'] == 0) {
+        //     return json_encode([
+        //         'code' => 0,
+        //         'msg' => 'SMS Not sent',
+        //         'sms_res' => $sms_response['message']
+        //     ]);
+        // }
 
         return json_encode([
             'code' => 1,
@@ -391,14 +391,13 @@ class ManageAppointment extends BaseController
 
             //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇ incoming appointment
 
-            $sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
+            // $sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
 
-            //if sms is not sent execute this code
-            
-            if($sms_response['code'] == 0 ){
-                array_push($res, $sms_response['message']);
-            }
+            // //if sms is not sent execute this code
 
+            // if ($sms_response['code'] == 0) {
+            //     array_push($res, $sms_response['message']);
+            // }
         }
 
         return json_encode($res); //array of results
@@ -432,21 +431,20 @@ class ManageAppointment extends BaseController
                 $this->appNotif->sent_app_notification($approved->user_id, $message);
             }
 
-            //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇ check resched appointment
+            // //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇ check resched appointment
 
-            $sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
+            // $sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
 
-            //if sms is not sent execute this code
-            if($sms_response['code'] == 0 ){
-                array_push($res, $sms_response['message']);
-            }
+            // //if sms is not sent execute this code
+            // if ($sms_response['code'] == 0) {
+            //     array_push($res, $sms_response['message']);
+            // }
 
             $this->manage_appointment->set_passed($approved->id);
             return $message;
         }
-        
-        return json_encode($res); 
 
+        return json_encode($res);
     }
 
     /**
@@ -459,7 +457,7 @@ class ManageAppointment extends BaseController
      */
     public function removed_passed_appointments()
     {
-        
+
         $all_approved_appointments = $this->manage_appointment->get_resched_appointments();
         $guest_passed_appointments = $this->manage_appointment->guest_passed_appointments();
 
