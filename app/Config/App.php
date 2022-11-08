@@ -24,7 +24,8 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'https://maob-appointments.site/';
+    public $baseURL = 'http://localhost/Appointment-System/';
+    // public $baseURL = 'https://maob-appointments.site/';
     // public $baseURL = 'https://4d42-112-198-200-57.ap.ngrok.io/Appointment-System';
 
     /**
