@@ -156,7 +156,8 @@ class UserAppointmentModel extends Model
         $this->database->table('approved_appointments')
             ->where('set_appointment_id', $appointment_id)
             ->update([
-                'resched_status' => 1
+                'resched_status' => 1,
+                'is_passed' => true
             ]);
     }
 

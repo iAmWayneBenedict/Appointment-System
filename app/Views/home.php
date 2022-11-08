@@ -9,12 +9,13 @@
     <meta name="base_url" content="<?= base_url() ?>">
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <link rel="icon" href="<?= base_url('/src/img/Bato (CS).png') ?>">
     <title>Appointment System</title>
 </head>
 
 <body>
 
-    <div class="center-con home-cover">
+    <div class="center-con home-cover" style="background-image: url('<?= base_url('src/img/Bato_Municipal_HAll_WTR.webp')?>')">
         <div class="card border-0 p-5" style="width: 30rem; z-index: 5;">
             <div class="card-body">
                 <img src="<?= base_url('/src/img/Logo Center.svg') ?>" alt="">

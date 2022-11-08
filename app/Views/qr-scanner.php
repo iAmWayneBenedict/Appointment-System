@@ -79,6 +79,8 @@
                                 else {
                                     $(".qr-con").removeClass("d-none")
                                     $(".swal2-container").remove()
+                                    $("body").removeClass()
+
                                 }
                             } catch (err) {
                                 Swal.showValidationMessage(

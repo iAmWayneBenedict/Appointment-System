@@ -226,17 +226,35 @@
             });
 
         });
-        console.log(`${url}/employee-incharge`)
+
         $.ajax({
             type: "get",
             url: `${url}/employee-incharge`,
             dataType: "json",
             success: function(response) {
-                response.map((element) => {
-                    $('#purpose').prepend(`<option value="${element.incharge_to}">${element.incharge_to}</option>`)
+                let purposeData = []
+                response.map((value) => {
+                    if (purposeData.length === 0) {
+                        purposeData.push(value.incharge_to)
+                        return
+                    }
+                    let hasSameData = false;
+                    purposeData.map(val => {
+                        if (val === value.incharge_to) {
+                            hasSameData = true
+                            return
+                        }
+                    })
+
+                    if (!hasSameData) {
+                        purposeData.push(value.incharge_to)
+                    }
+                })
+                purposeData.map((element) => {
+                    $('#purpose').prepend(`<option value="${element}">${element}</option>`)
                 })
                 $('#purpose').append(`<option value="other">Other</option>`)
-                console.log(response)
+                $('#purpose').change()
             }
         });
     });

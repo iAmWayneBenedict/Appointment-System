@@ -49,10 +49,15 @@
                             <label for="purpose" class="form-label">Purpose</label>
                             <select class="form-select" name="purpose" id="purpose">
                                 <?php
+                                $filteredData = [];
                                 foreach ($allIncharge as $incharge) {
+                                    array_push($filteredData, $incharge->incharge_to);
+                                }
+                                $filteredData = array_unique($filteredData);
+                                foreach ($filteredData as $value) {
                                 ?>
 
-                                    <option value="<?= $incharge->incharge_to ?>" <?= $pending[0]->purpose === $incharge->incharge_to ? 'selected=selected' : '' ?>><?= $incharge->incharge_to ?></option>
+                                    <option value="<?= $value ?>" <?= $pending[0]->purpose === $value ? 'selected=selected' : '' ?>><?= $value ?></option>
 
                                 <?php
 
@@ -300,7 +305,7 @@
             e.preventDefault();
 
             //if nothing change do not update
-            if(old_date == $('#selected-date').val() && purpopse == $('#purpose').val()){
+            if (old_date == $('#selected-date').val() && purpopse == $('#purpose').val()) {
                 alert('Nothing to update')
                 return
             }

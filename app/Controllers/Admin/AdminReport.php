@@ -91,15 +91,13 @@ class AdminReport extends BaseController
 
         //html with data
         $html = view('components/reportPdf', $data);
-        // $options = $this->pdf->getOptions();
-        // $options->setDefaultFont('Courier');
-        // $this->pdf->setOptions($options);
 
         //parse or process the html to pdf
         $this->pdf->setPaper('A4', 'portrait');
         $this->pdf->loadHtml($html);
         //paper size
         $this->pdf->render();
+         //FIXME : set to one to auto download
         $this->pdf->stream("appointmentReport{$date_now}.pdf", ["Attachment" => 1]);
     }
 
@@ -150,6 +148,7 @@ class AdminReport extends BaseController
         $this->pdf->loadHtml($html);
         //paper size
         $this->pdf->render();
+        //FIXME : set to one to auto download
         $this->pdf->stream("stocksReport_{$date_now}.pdf", ["Attachment" => 1]);
     }
 
