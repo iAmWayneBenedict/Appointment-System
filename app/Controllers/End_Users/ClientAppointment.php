@@ -2,6 +2,7 @@
 
 namespace App\Controllers\End_Users;
 
+use App\Controllers\Admin\AdminReport;
 use App\Controllers\BaseController;
 use App\Models\Appointment\UserAppointmentModel;
 use App\Models\UserModel;

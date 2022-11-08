@@ -66,6 +66,7 @@ class OnAppNotifModel extends Model
         $query = $this->db_conn->table($this->table)
             ->select('*')
             ->where('user_id', $client_id)
+            ->orderBy('id', "DESC")
             ->get();
 
         $data = $query->getResultObject();

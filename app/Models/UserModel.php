@@ -65,7 +65,6 @@ class UserModel extends Model
             ->get()
             ->getRowArray();
 
-
         if (empty($query)) {
             $generated_id = mt_rand(1000, 9999) . 1;
         } else {

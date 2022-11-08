@@ -17,6 +17,7 @@ class AdminReport extends BaseController
         $this->report_model = new AdminReportModel();
         $this->parser = \Config\Services::parser();
         $this->pdf = new \Dompdf\Dompdf(); 
+        // $this->pdf_op = new \Dompdf\Options();
     }
 
     public function report_template(){
@@ -86,15 +87,18 @@ class AdminReport extends BaseController
             'date_today'  => date('F d, Y g:i A', strtotime('now'))
         ];
 
+        $date_now = date('m-d-Y', strtotime('now'));
+
         //html with data
         $html = view('components/reportPdf', $data);
 
         //parse or process the html to pdf
+        $this->pdf->setPaper('A4', 'portrait');
         $this->pdf->loadHtml($html);
         //paper size
-        $this->pdf->setPaper('A4', 'portrait');
         $this->pdf->render();
-        $this->pdf->stream('test.pdf', ["Attachment" => 0]);
+         //FIXME : set to one to auto download
+        $this->pdf->stream("appointmentReport{$date_now}.pdf", ["Attachment" => 1]);
     }
 
     public function sdisplay_preview(){
@@ -134,15 +138,18 @@ class AdminReport extends BaseController
             'date_today'  => date('F d, Y g:i A', strtotime('now'))
         ];
 
+        $date_now = date('m-d-Y', strtotime('now'));
+
         //html with data
         $html = view('components/sreportPdf', $data);
 
         //parse or process the html to pdf
+        $this->pdf->setPaper('A4', 'portrait');
         $this->pdf->loadHtml($html);
         //paper size
-        $this->pdf->setPaper('A4', 'portrait');
         $this->pdf->render();
-        $this->pdf->stream('test.pdf', ["Attachment" => 0]);
+        //FIXME : set to one to auto download
+        $this->pdf->stream("stocksReport_{$date_now}.pdf", ["Attachment" => 1]);
     }
 
      

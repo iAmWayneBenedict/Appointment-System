@@ -10,6 +10,7 @@
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" href="<?= base_url('/src/img/Bato (CS).png') ?>">
     <title>Appointment System</title>
 </head>
 
@@ -20,7 +21,7 @@
                 <img src="<?= base_url('/src/img/Logo Large.svg') ?>" alt="">
             </a>
             <div class="login-btn">
-                <a href="" class="btn" aria-disabled="true">
+                <a href="<?= base_url() ?>" class="btn" aria-disabled="true">
                     <b>LOG IN</b>
                 </a>
             </div>

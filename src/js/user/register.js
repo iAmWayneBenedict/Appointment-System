@@ -16,12 +16,11 @@ $(document).ready(function () {
 		if ($("#c_password").val() !== $("#password").val()) {
 			$("#c_password").next().removeClass("d-none");
 			$("#c_password").next().text("Password not match");
-
+			return
 		} else {
 			$("#c_password").next().addClass("d-none");
 		}
 
-		console.log($("#fname").val());
 		$.ajax({
 			type: "post",
 			url: `${base_url}/user/register-user`,
@@ -42,9 +41,16 @@ $(document).ready(function () {
 				//show loading gif
 				console.log("please wait....");
 				$(".loading").removeClass("d-none");
+				Swal.fire({
+					title: 'Please Wait !',
+					allowOutsideClick: false,
+					onBeforeOpen: () => {
+						Swal.showLoading()
+					},
+				});
 			},
 			success: function (res) {
-				console.log(res);
+				swal.close();
 				if (res.code == 0) {
 					$.each(res.errors, function (key, val) {
 						$(`#${key}`).next().text(val).removeClass("d-none");

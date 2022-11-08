@@ -15,6 +15,7 @@
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="icon" href="<?= base_url('/src/img/Bato (CS).png') ?>">
 
     <!-- specific version -->
     <script src="https://unpkg.com/bootstrap-modbox@1.6.2/dist/bootstrap-modbox.min.js"></script>
@@ -47,7 +48,7 @@
                         </div>
                     </a>
                 </div>
-                <a href="<?= base_url('admin/dashboard/logout')?>" class="btn text-danger fw-bold">
+                <a href="<?= base_url('admin/dashboard/logout') ?>" class="btn text-danger fw-bold">
                     LOGOUT
                 </a>
             </div>

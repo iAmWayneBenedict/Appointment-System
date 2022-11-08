@@ -66,7 +66,7 @@
                                         <!-- employee name and role -->
 
                                         <div>
-                                            <h5 class="card-title m-0 fw-semibold"><?= $employee->incharge_to ?></h5>
+                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_designation_counter ? $employee->name : "Municipal Agriculture Office of Bato" ?></h5>
                                         </div>
                                     </div>
                                     <?php
@@ -174,8 +174,7 @@
                                         <!-- employee designatin and incharge to -->
 
                                         <div>
-                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_designation ? $employee_designation : 'Municipal Agriculture Office' ?></h5>
-                                            <p class="card-text"><?= $employee_designation ? $employee->incharge_to : '' ?></p>
+                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_designation_counter ? $employee->name : "Municipal Agriculture Office of Bato" ?></h5>
                                         </div>
                                     </div>
                                     <?php

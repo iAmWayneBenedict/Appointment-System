@@ -11157,7 +11157,7 @@ td.active {
 .home-cover {
   width: 100%;
   height: 100vh;
-  background-image: url("http://localhost/Appointment-System/src/img/Bato_Municipal_HAll_WTR.webp");
+  /* background-image: url('https://maob-appointments.site/src/img/Bato_Municipal_HAll_WTR.webp'); */
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
