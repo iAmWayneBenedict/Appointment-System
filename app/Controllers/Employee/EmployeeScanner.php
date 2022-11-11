@@ -14,11 +14,13 @@ class EmployeeScanner extends BaseController
 
 
     private $employee_model;
+    private $session;
 
     //Instantiate
     public function __construct()
     {
         $this->employee_model = new EmployeeModel();
+        $this->session = \Config\Services::session();
     }
 
     public function index()
@@ -27,14 +29,18 @@ class EmployeeScanner extends BaseController
         return view('scanner');
     }
 
+    // TODO : Update to server 
+
     public function add_employee()
     {
+        $current_admin = $this->session->get('admin_id');
+
         $name = $this->request->getPost('name');
         $role = $this->request->getPost('role');
 
         $incharge_to = $this->request->getPost('incharge_to');
 
-        $response = $this->employee_model->add_employee($name, $role, $incharge_to);
+        $response = $this->employee_model->add_employee($current_admin, $name, $incharge_to);                   
 
         if ($response == 1) {
             return json_encode([

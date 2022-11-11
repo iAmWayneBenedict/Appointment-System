@@ -221,10 +221,13 @@ class ManageAppointment extends BaseController
             return;
         }
 
+        //TODO : update to server
+        $current_admin = $this->session->get('admin_id');
+
         $appointment_id = $this->request->getPost('id');
         $appointment_data = $this->manage_appointment->get_appointment_info($appointment_id);
 
-        if (!$this->manage_appointment->move_to_approve($appointment_id)) {
+        if (!$this->manage_appointment->move_to_approve($current_admin, $appointment_id)) {
             return json_encode([
                 'code' => 0,
                 'msg' => 'System can\'t process right now'
@@ -249,7 +252,8 @@ class ManageAppointment extends BaseController
         //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇ approved appointment
         // $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
-        // // if sms is not sent execute this code
+        /** if sms is not sent execute this code */
+
         // if($sms_response['code'] == 0 ){
         //     return json_encode([
         //         'code' => 0,
@@ -304,7 +308,8 @@ class ManageAppointment extends BaseController
 
         // $sms_response = $this->send_sms->sendSMS($appointment_data->contact_number, $message);
 
-        // // if sms is not sent execute this code
+        // if sms is not sent execute this code
+
         // if ($sms_response['code'] == 0) {
         //     return json_encode([
         //         'code' => 0,
@@ -393,7 +398,7 @@ class ManageAppointment extends BaseController
 
             // $sms_response = $this->send_sms->sendSMS($result->contact_number, $message);
 
-            // //if sms is not sent execute this code
+            //if sms is not sent execute this code
 
             // if ($sms_response['code'] == 0) {
             //     array_push($res, $sms_response['message']);
@@ -435,7 +440,8 @@ class ManageAppointment extends BaseController
 
             // $sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
 
-            // //if sms is not sent execute this code
+            //if sms is not sent execute this code
+            
             // if ($sms_response['code'] == 0) {
             //     array_push($res, $sms_response['message']);
             // }

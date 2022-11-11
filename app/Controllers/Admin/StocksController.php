@@ -36,8 +36,9 @@ class StocksController extends BaseController
      */
     public function add_stock()
     {
-
+        // TODO : update to server
         $stock_data = [
+            'admin_id'          => $this->session->get('admin_id'),
             'category'          => ucwords($this->request->getPost('category')),
             'sub_category'      => ucwords($this->request->getPost('sub_category')),
             'total_quantity'    => $this->request->getPost('quantity'),
@@ -179,7 +180,8 @@ class StocksController extends BaseController
 
             //TODO: enable this after 100%
             //send sms
-            $this->sms->sendBulkSMS($numbers_only, $message);
+
+            // $this->sms->sendBulkSMS($numbers_only, $message);
 
             //send on app
             $this->on_app_notif->send_bulk_notification($user_ids, $message);
@@ -223,7 +225,7 @@ class StocksController extends BaseController
 
             //TODO: enable this after 100%
             //send sms
-            $this->sms->sendBulkSMS($numbers_only, $message);
+            // $this->sms->sendBulkSMS($numbers_only, $message);
 
             //send on app
             $this->on_app_notif->send_bulk_notification($user_ids, $message);

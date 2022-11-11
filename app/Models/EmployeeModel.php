@@ -69,7 +69,7 @@ class EmployeeModel extends Model
     }
 
     /**
-     * Function: Insert
+       Function: ADD EMPLOYEE
      * Description : Add employee to employee and incharge_to table
      *               every employee have many incharge task it iterate the values
      *               to be inserted in table
@@ -78,11 +78,12 @@ class EmployeeModel extends Model
      * @param incharge_to : array of values
      * @return boolean
      */
-    public function add_employee($name, $role, $incharge_to)
+    public function add_employee($admin_id, $name, $incharge_to)
     {
         $builder = $this->db_connect->table('employee');
 
         $response = $builder->insert([
+            'admin_id' => $admin_id, // TODO : update to server
             'name' => $name,
         ]);
 

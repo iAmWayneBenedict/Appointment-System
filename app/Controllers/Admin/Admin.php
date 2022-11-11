@@ -63,6 +63,7 @@ class Admin extends BaseController
 
                 $this->session->set([
                     'admin' => $admin->user_name,
+                    'admin_id' => $admin->id,
                     'alogged_in' => TRUE
                 ]);
 

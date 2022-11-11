@@ -109,12 +109,13 @@ class ManageAppointmentModel extends Model
      *              delete it on pending table
      * @return bool
      */
-    public function move_to_approve($appointment_id)
+    public function move_to_approve($admin_id, $appointment_id)
     {
-
+        // TODO : update to server
         $approved_query = $this->db_conn->table('approved_appointments')
             ->insert([
-                'set_appointment_id' => $appointment_id
+                'set_appointment_id' => $appointment_id,
+                'admin_id'           => $admin_id
             ]);
 
         if (!$approved_query) {

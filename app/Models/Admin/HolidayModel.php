@@ -16,12 +16,14 @@ class HolidayModel extends Model
         $this->db_connect = \Config\Database::connect();
     }
 
-    public function set_holidays($holiday_from, $holiday_to, $description)
+    //TODO : update to server
+    public function set_holidays($admin_id, $holiday_from, $holiday_to, $description)
     {
 
         $builder = $this->db_connect->table('holidays');
 
         $response = $builder->insert([
+            'admin_id' => $admin_id,
             'holiday_from' => $holiday_from,
             'holiday_to' => $holiday_to,
             'description' => $description

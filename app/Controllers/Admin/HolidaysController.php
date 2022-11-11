@@ -16,8 +16,11 @@ class HolidaysController extends BaseController
         $this->holiday_model = new HolidayModel();
     }
 
+    // TODO : update to server
     public function set_holidays()
     {
+        $current_admin = $this->session->get('admin_id');
+
         $holiday_from = $this->request->getPost('holiday_from');
         $holiday_to = $this->request->getPost('holiday_to');
         $description = $this->request->getPost('description');
@@ -37,7 +40,7 @@ class HolidaysController extends BaseController
 
         $holiday_from = date_format(date_create($holiday_from), 'Y-m-d H:i:s');
 
-        if ($this->holiday_model->set_holidays($holiday_from, $holiday_to, $description)) {
+        if ($this->holiday_model->set_holidays($current_admin, $holiday_from, $holiday_to, $description)) {
             return json_encode([
                 'code' => 1,
                 'msg' => "Success"
