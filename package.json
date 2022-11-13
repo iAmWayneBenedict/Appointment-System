@@ -3,7 +3,7 @@
 		"bootstrap": "^5.2.0-beta1",
 		"bootstrap-icons": "^1.8.3",
 		"bootstrap-modbox": "^1.6.2",
-		"date-holidays": "^3.16.7"
+		"date-holidays": "^3.16.10"
 	},
 	"name": "appointment-system",
 	"description": "Appointment System for Municipal Agriculture Office of Bato",

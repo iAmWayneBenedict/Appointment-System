@@ -50,6 +50,7 @@ $(() => {
 		handleConflictingDay(month);
 		handleFullyBooked();
 		getHolidays();
+		getHolidaysFromApi();
 	});
 
 	function handleConflictingDay(month) {
@@ -241,6 +242,39 @@ $(() => {
 		});
 	}
 
+	async function getHolidaysFromApi() {
+		let response = await fetch(`${url}/src/json/holidays.json`);
+
+		let data = await response.json();
+
+		let date = new Date();
+		let holidays = [];
+		for (const value of data) {
+			if (date.getFullYear() === value.year) holidays = value.data;
+		}
+		$("table.calendar-table td a").each(function () {
+			for (let i = 0; i < holidays.length; i++) {
+				// if ($(this).hasClass("disabled")) continue;
+
+				let holidayFrom = new Date(holidays[i].date);
+				let month = convertMonthToNumber($(".calendar-title").text());
+				if (
+					month === holidayFrom.getMonth() &&
+					holidayFrom.getDate() === parseInt($(this).find("h6").text())
+				) {
+					console.log(holidayFrom.getDate(), parseInt($(this).find("h6").text()));
+					$(this).attr("aria-disabled", true);
+					$(this).addClass("disabled");
+					$(this).removeClass("text-dark");
+					$(this).addClass("text-danger");
+					break;
+				}
+			}
+		});
+	}
+
+	getHolidaysFromApi();
+
 	function populateCalendar([dayOfTheWeek, lastDayOfTheMonth], month, year) {
 		$(".days-entries").html("");
 
@@ -323,7 +357,7 @@ $(() => {
 					}
 				}
 			}
-			
+
 			if (currentDayOfTheWeekName === "Sat") {
 				allDates += openingTR + currentWeek + closingTR;
 				currentWeek = "";
@@ -360,6 +394,7 @@ $(() => {
 		handleConflictingDay(convertMonthToNumber(selectedMonth) + 1);
 		handleFullyBooked();
 		getHolidays();
+		getHolidaysFromApi();
 	});
 
 	$(".next-month").click(function () {
@@ -392,6 +427,7 @@ $(() => {
 		handleConflictingDay(convertMonthToNumber(selectedMonth) + 1);
 		handleFullyBooked();
 		getHolidays();
+		getHolidaysFromApi();
 	});
 
 	setCalendarTitle(convertMonthToName(date.getMonth()), date.getMonth());

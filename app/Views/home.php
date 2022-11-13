@@ -15,7 +15,7 @@
 
 <body>
 
-    <div class="center-con home-cover" style="background-image: url('<?= base_url('src/img/Bato_Municipal_HAll_WTR.webp')?>')">
+    <div class="center-con home-cover" style="background-image: url('<?= base_url('src/img/Bato_Municipal_HAll_WTR.webp') ?>')">
         <div class="card border-0 p-5" style="width: 30rem; z-index: 5;">
             <div class="card-body">
                 <img src="<?= base_url('/src/img/Logo Center.svg') ?>" alt="">

@@ -16,9 +16,18 @@ $(document).ready(function () {
 		if ($("#c_password").val() !== $("#password").val()) {
 			$("#c_password").next().removeClass("d-none");
 			$("#c_password").next().text("Password not match");
-			return
+			return;
 		} else {
 			$("#c_password").next().addClass("d-none");
+		}
+
+		if (!$("#data-privacy-agreement").is(":checked")) {
+			console.log($("#data-privacy-agreement").prev());
+			$("#data-privacy-agreement").prev().prev().removeClass("d-none");
+			$("#data-privacy-agreement").prev().prev().text("Please check the checkbox to proceed");
+			return;
+		} else {
+			$("#data-privacy-agreement").prev().prev().addClass("d-none");
 		}
 
 		$.ajax({
@@ -41,22 +50,17 @@ $(document).ready(function () {
 				//show loading gif
 				console.log("please wait....");
 				$(".loading").removeClass("d-none");
-				Swal.fire({
-					title: 'Please Wait !',
-					allowOutsideClick: false,
-					onBeforeOpen: () => {
-						Swal.showLoading()
-					},
-				});
+				$("#preloader").modal("show");
 			},
 			success: function (res) {
+				$("#preloader").modal("hide");
 				swal.close();
 				if (res.code == 0) {
 					$.each(res.errors, function (key, val) {
 						$(`#${key}`).next().text(val).removeClass("d-none");
 					});
 				}
-				
+
 				if (res.code == 1) {
 					console.log(res.sms_res);
 					Swal.fire({
@@ -69,7 +73,7 @@ $(document).ready(function () {
 					return;
 				}
 
-				if(res.code == 3){
+				if (res.code == 3) {
 					console.log(res.sms_res);
 					Swal.fire("Sorry", res.msg, "error");
 				}
@@ -104,4 +108,8 @@ $(document).ready(function () {
 			$(this).next().addClass("d-none");
 		}
 	});
+
+	// setTimeout(() => {
+	// 	$("#preloader").modal("hide");
+	// }, 1000);
 });
