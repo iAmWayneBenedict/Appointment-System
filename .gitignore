@@ -6,6 +6,7 @@
 app/Config/Database.php
 app/Config/Email.php
 app/Config/SMS.php
+app/Config/App.php
 
 # OS X
 .DS_Store

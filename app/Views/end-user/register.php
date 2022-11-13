@@ -128,13 +128,14 @@
                 </div>
 
                 <center class="mt-5" style="font-size: 14px;">
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error message!</span><br>
                     <input type="checkbox" name="data-privacy-agreement" id="data-privacy-agreement">
                     <span>By checking this, I hereby agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#terms-and-conditions-modal">Terms and Conditions</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacy-policy-modal">Privacy Policy</a></span>
                 </center>
 
                 <!-- submit button -->
 
-                <input type="submit" value="Register" id="submit" class="btn btn-primary mt-3 rounded-5">
+                <input type="submit" value="Register" id="submit" class=" btn btn-primary mt-3 rounded-5">
 
                 <!-- register option -->
 
@@ -187,6 +188,8 @@
     </div>
 </div>
 
+<!-- preloader -->
+<?= view("components/preloader") ?>
 
 <script src="<?= base_url('/src/js/user/register.js') ?>"></script>
 <?= $this->endSection() ?>

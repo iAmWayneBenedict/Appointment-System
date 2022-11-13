@@ -253,6 +253,14 @@
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("DOM ready!");
+        });
+        console.log(1)
+        document.addEventListener("load", () => {
+            console.log("DOM images!");
+        });
+
         $('.col').each(function() {
             $(this).click(function() {
                 location.href = url + "/user/dashboard/appointment-details/" + $(this).data('id')
