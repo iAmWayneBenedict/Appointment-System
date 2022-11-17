@@ -342,7 +342,7 @@ class ManageAppointment extends BaseController
         $current_time = date('Y-m-d', strtotime('now'));
         $schedule_time = date('Y-m-d', strtotime($appointment_data->schedule));
 
-        if($current_time < $schedule_time){
+        if ($current_time < $schedule_time) {
             session()->setFlashdata('warning', 'This Appointment Is not Scheduled Today');
             return redirect()->back();
         }
@@ -455,7 +455,7 @@ class ManageAppointment extends BaseController
             // $sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
 
             //if sms is not sent execute this code
-            
+
             // if ($sms_response['code'] == 0) {
             //     array_push($res, $sms_response['message']);
             // }
@@ -509,29 +509,30 @@ class ManageAppointment extends BaseController
     }
 
     //TODO: Update to server 
-    public function notify_admin_appointments(){
+    public function notify_admin_appointments()
+    {
 
-         //get current date and time
-         $now = $this->time->now();
+        //get current date and time
+        $now = $this->time->now();
 
-         //parse current date to CI time
-         $parseTime = $this->time->parse($now);
- 
-         // add 20 minutes to current time
-         $addTime = $parseTime->addMinutes(20);
-         $newTime = $addTime->toDateTimeString();
- 
-         //format date and time 
-         $advanceCurrentTime = date('Y-m-d H:i', strtotime($newTime));
- 
-         $results = $this->manage_appointment->get_upcoming_appointments($advanceCurrentTime, 'admin');
- 
-         if (empty($results)) {
-             return;
-         }
+        //parse current date to CI time
+        $parseTime = $this->time->parse($now);
 
-         $notify_admin = "";
-         foreach ($results as $result) {
+        // add 20 minutes to current time
+        $addTime = $parseTime->addMinutes(20);
+        $newTime = $addTime->toDateTimeString();
+
+        //format date and time 
+        $advanceCurrentTime = date('Y-m-d H:i', strtotime($newTime));
+
+        $results = $this->manage_appointment->get_upcoming_appointments($advanceCurrentTime, 'admin');
+
+        if (empty($results)) {
+            return;
+        }
+
+        $notify_admin = "";
+        foreach ($results as $result) {
 
             //format the date in SMS for better readability
             $date = date_create($result->schedule);
@@ -539,13 +540,11 @@ class ManageAppointment extends BaseController
 
             $notify_admin .= "An incoming appointment with client {$result->name} ";
             $notify_admin .= "Schedule on: {$sched} 20 minutes from now";
-
         }
 
         return json_encode([
             'title' => 'Incoming Appointment',
-            'message' => $notify_admin 
+            'message' => $notify_admin
         ]);
-
     }
 }

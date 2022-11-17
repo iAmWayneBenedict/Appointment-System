@@ -27,7 +27,8 @@
             </div>
         </div>
     </nav>
-
+    <!-- preloader -->
+    <?= view("components/preloader") ?>
     <?= $this->renderSection('content') ?>
 
     <script type="module" src="<?= base_url('/src/js/app.js') ?>"></script>

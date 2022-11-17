@@ -1,3 +1,7 @@
+body {
+	overflow-x: hidden !important;
+}
+
 .greetings {
 	display: flex;
 	flex-direction: column;
@@ -16,6 +20,14 @@
 
 .font-recoleta {
 	font-family: "Recoleta", sans-serif;
+}
+
+.font-montserrat {
+	font-family: "Montserrat", sans-serif;
+}
+
+.font-inter {
+	font-family: "Inter", sans-serif;
 }
 
 .choose-designation {
@@ -47,4 +59,16 @@
 	white-space: nowrap;
 	overflow: hidden !important;
 	text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 1400px) {
+	.notif-body {
+		max-width: 200rem !important;
+	}
+}
+
+@media screen and (max-width: 1400px) {
+	.notif-body {
+		max-width: 2rem !important;
+	}
 }

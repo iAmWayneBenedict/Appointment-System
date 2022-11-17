@@ -152,10 +152,22 @@
                     </svg>
                     <span class="ps-3 icon-label">Stocks Management</span>
                 </a>
+
+                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] === 'admin') { ?>
+                    <a class="flex-sm-fill nav-link text-dark" href="<?= base_url('/admin/dashboard/report') ?>">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layout">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                            <line x1="9" y1="21" x2="9" y2="9"></line>
+                        </svg>
+                        <span class="ps-3 icon-label">Generate Report</span>
+                    </a>
+                <?php } ?>
             </nav>
         </div>
     </aside>
-
+    <!-- preloader -->
+    <?= view("components/preloader") ?>
     <?= $this->renderSection('content') ?>
 
 
@@ -201,7 +213,6 @@
                             })
                         }
                     }
-
                 });
             }, 5000) 
 

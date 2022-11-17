@@ -93,6 +93,7 @@ class OnAppNotifModel extends Model
 
         $data = $this->db_conn->table('adminApp_notification')
             ->select('*')
+            ->orderBy("c_date", "DESC")
             ->get();
 
         $messages = $data->getResultObject();
