@@ -103,7 +103,11 @@
                             <div class="flex-fill">
                                 <div class="">
                                     <label for="category" class="form-label">Category</label>
-                                    <input type="text" class="form-control" id="category" name="category" placeholder="Category" required>
+                                    <select class="form-select" name="category" id="category">
+                                        <option value="per kilo" selected>Seeds</option>
+                                        <option value="per sack">Fertilizers</option>
+                                        <option value="per sack">Vouchers</option>
+                                    </select>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
@@ -135,7 +139,6 @@
                                         <option value="per sack">Per Sack</option>
                                         <option value="per piece">Per Piece</option>
                                         <option value="per sachet">Per Sachet</option>
-                                        <option value="Any">Any</option>
                                     </select>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>

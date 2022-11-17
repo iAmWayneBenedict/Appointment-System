@@ -28,7 +28,7 @@ class ManageAppointment extends BaseController
         $this->greet = new greetings();
         $this->time = new Time();
         $this->appNotif = new OnAppNotification();
-        $this->session = session();
+        $this->session = \Config\Services::session();
     }
 
     /**
@@ -330,10 +330,22 @@ class ManageAppointment extends BaseController
      FUNCTION: MARK DONE APPOINTMENT
      * use when appointment is done manaually by admin after mark it done
      * the information of appointment will store to database for report purposes
+     * disble when appointment schedule is not today or greater than
      * @param required appointment ID
      */
     public function mark_as_done($appointment_id = NULL)
     {
+
+        $appointment_data = $this->manage_appointment->get_appointment_info($appointment_id);
+
+        //get dates
+        $current_time = date('Y-m-d', strtotime('now'));
+        $schedule_time = date('Y-m-d', strtotime($appointment_data->schedule));
+
+        if ($current_time < $schedule_time) {
+            session()->setFlashdata('warning', 'This Appointment Is not Scheduled Today');
+            return redirect()->back();
+        }
 
         $data = [
             'appointment_id'  => $appointment_id,
@@ -374,7 +386,7 @@ class ManageAppointment extends BaseController
 
         $res = [];
 
-        $resuls = $this->manage_appointment->get_upcoming_appointments($advanceCurrentTime);
+        $resuls = $this->manage_appointment->get_upcoming_appointments($advanceCurrentTime, 'client');
 
         if (empty($resuls)) {
             return;
@@ -494,5 +506,45 @@ class ManageAppointment extends BaseController
                 $this->manage_appointment->remove_approved_appointment($guest->id);
             }
         }
+    }
+
+    //TODO: Update to server 
+    public function notify_admin_appointments()
+    {
+
+        //get current date and time
+        $now = $this->time->now();
+
+        //parse current date to CI time
+        $parseTime = $this->time->parse($now);
+
+        // add 20 minutes to current time
+        $addTime = $parseTime->addMinutes(20);
+        $newTime = $addTime->toDateTimeString();
+
+        //format date and time 
+        $advanceCurrentTime = date('Y-m-d H:i', strtotime($newTime));
+
+        $results = $this->manage_appointment->get_upcoming_appointments($advanceCurrentTime, 'admin');
+
+        if (empty($results)) {
+            return;
+        }
+
+        $notify_admin = "";
+        foreach ($results as $result) {
+
+            //format the date in SMS for better readability
+            $date = date_create($result->schedule);
+            $sched = date_format($date, 'F d, Y g:i A');
+
+            $notify_admin .= "An incoming appointment with client {$result->name} ";
+            $notify_admin .= "Schedule on: {$sched} 20 minutes from now";
+        }
+
+        return json_encode([
+            'title' => 'Incoming Appointment',
+            'message' => $notify_admin
+        ]);
     }
 }

@@ -161,8 +161,7 @@ class ClientAppointment extends BaseController
                 'errors' => 'Sorry!, Please make a try later, Something went worng in our server'
             ]);
         }
-
-        AdminReportModel::increment_appointment_made();
+        
         return json_encode([
             'code' => 1,
             'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment \n Appointment ID: {$response['id']}"

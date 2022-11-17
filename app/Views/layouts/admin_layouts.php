@@ -31,6 +31,13 @@
         </script>
     <?php
     }
+    if (session()->has('warning')){
+    ?>
+        <script>
+            alert('<?= session('warning') ?>')
+        </script>
+    <?php 
+    }
     ?>
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
         <div class="container-fluid flex justify-content-end">
@@ -207,7 +214,23 @@
                         }
                     }
                 });
-            }, 5000)
+            }, 5000) 
+
+            setInterval(() => {
+                //alert message for admin for incoming appointments
+                $.ajax({
+                    type: "get",
+                    url: `${url}/admin/dashboard/upcoming-appointment`,
+                    dataType: "json",
+                    success: function(response) {
+                        Swal.fire(
+                            response.title,
+                            response.message,
+                            'warning'
+                        )
+                    }
+                })
+            }, 59000)
         })
     </script>
 </body>

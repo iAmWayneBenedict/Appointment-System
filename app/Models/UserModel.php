@@ -94,6 +94,24 @@ class UserModel extends Model
         return $data;
     }
 
+     /**
+        Function: GET USER INFO by user Code id
+     * Description : Get users information from database and return to controller
+     *               get user info base from user'd id
+     */
+    public function get_user($user_code_id)
+    {
+
+        $query = $this->db_conn->table($this->table)
+            ->select('*')
+            ->where('code_id', $user_code_id)
+            ->get();
+
+        $data = $query->getRow(); //object
+
+        return $data;
+    }
+
     /**
      * Function: Update Data
      * Description: Udate user's data in database 
@@ -137,6 +155,12 @@ class UserModel extends Model
         return $data;
     }
 
+    /**
+        MANAGE ACCOUNT SECTION
+     */
+
+    //TODO: Update to server
+    
     public function deactivate($user_id)
     {
 
@@ -159,5 +183,26 @@ class UserModel extends Model
             ]);
 
         return true;
+    }
+
+    public function activate_user_account($user_code_id)
+    {
+
+        $this->db_conn->table($this->table)
+            ->where('code_id', $user_code_id)
+            ->update([
+                'account_stats' => 1
+            ]);
+
+        return true;
+    }
+
+    public function perma_delete_account($user_code_id){
+
+        $this->db_conn->table($this->table)
+            ->where('code_id', $user_code_id)
+            ->delete();
+        
+            return true;
     }
 }

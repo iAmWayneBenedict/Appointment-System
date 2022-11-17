@@ -5,6 +5,7 @@ namespace App\Controllers\End_Users;
 use App\Controllers\BaseController;
 
 use App\Models\UserModel;
+use App\Libraries\OneWaySMS;
 use PHPUnit\Util\Json;
 
 class ManageAccount extends BaseController
@@ -14,6 +15,7 @@ class ManageAccount extends BaseController
     protected $session;
     protected $encrypter;
     protected $validation;
+    protected $send_sms;
 
     function __construct()
     {
@@ -22,6 +24,7 @@ class ManageAccount extends BaseController
         $this->session = \Config\Services::session();
         $this->encrypter = \Config\Services::encrypter();
         $this->validation = \Config\Services::validation();
+        $this->send_sms = new OneWaySMS();
     }
 
     //display account page with data
@@ -103,19 +106,48 @@ class ManageAccount extends BaseController
         ]);
     }
 
+    //TODO: Update to server until remove user account fucntion!.
     /**
      Function: DEACTIVATE USER ACCOUNT
      * description: instead of permanently deleteling user account, the system retains
      *              user account by just only deactivating it to protect  importtant
      *              information from other table that connected to user.
      */
-    function delete_user($user_code_id)
-    {
+    function deactivate_user($user_code_id)
+    { 
+        $user_data = $this->userModel->get_user_info($user_code_id);
+        
+        $server = base_url();
+        $message = "Hello Mr/Ms/Mrs {$user_data->name} were informing you that your account in {$server} \n";
+        $message .= "has been diactivated. Please go to the office and state your code_id or name for Reactivation. \n";
+        $message .= "From Agriculrist Office of Bato";
+
+        // TODO: enable this later SMS----------------
+        // $this->send_sms->sendSMS($user_data->contact_number, $message); 
         return $this->userModel->deactivate_admin_side($user_code_id);
     }
 
     /**
-     * Function: Update Password
+     Function: RECACTIVATE USER ACCOUNT
+     * description: admin can reactivate user account if it is deactivated either admin or user
+     */
+    function reActivate_user($user_code_id)
+    {
+        return $this->userModel->activate_user_account($user_code_id);
+    }
+
+    /**
+     Function: TOTALY DELETE USER ACCOUNT
+     * description: admin has only the capality to totaly remove user account in the system
+     *              database and it cannot be reactivated.
+     */
+    function remove_user_account($user_code_id)
+    {
+        return $this->userModel->perma_delete_account($user_code_id);
+    }
+
+    /**
+     Function: Update Password
      * Description: Verify current user password and if true update new password
      *              into database
      * @return json: validation errors

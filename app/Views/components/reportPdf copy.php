@@ -5,12 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial|Helvetica">
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -100,7 +96,7 @@
 <body>
     <div class="content">
     <div class="date">
-        Date: {date_today}
+        Date: <?= $date_today?>
     </div>
     <hr style="height: px; ">
     <div class="page container">
@@ -111,23 +107,21 @@
     <hr style="margin-bottom: 10px;">
         <div class="main">
             <section class="row1">
-                {from_result}
                 <table style="margin-bottom: 15px;">
                 <tr>
-                    <td colspan="6">Summary from Results : {all}</td>
+                    <td colspan="6">Summary from Results : <?= $from_result['all']?></td>
                 </tr>
                 <tr id="foot" style="width: 100%;">
-                    <td colspan="2">Pending Canceled <b>:</b> {pending_canceled}</td>
-                    <td colspan="2">Approved Canceled<b>:</b> {approved_canceled}</td>
-                    <td colspan="2">Passed<b>:</b> {pass}</td>
+                    <td colspan="2">Pending Canceled <b>:</b> <?= $from_result['pending_canceled'] ?></td>
+                    <td colspan="2">Approved Canceled<b>:</b> <?= $from_result['approved_canceled'] ?></td>
+                    <td colspan="2">Passed<b>:</b> <?= $from_result['pass'] ?></td>
                 </tr>
                 <tr id="foot">   
-                    <td colspan="2">Done <b>:</b> {done}</td>
-                    <td colspan="2">Walkin <b>:</b> {walkin}</td>
-                    <td colspan="2">Rejected <b>:</b> {reject}</td>
+                    <td colspan="2">Done <b>:</b> <?= $from_result['done'] ?></td>
+                    <td colspan="2">Walkin <b>:</b> <?= $from_result['walkin'] ?></td>
+                    <td colspan="2">Rejected <b>:</b> <?= $from_result['reject'] ?></td>
                 </tr>
                </table>
-               {/from_result}
             </section>
             <section id="wrapper">
                 <table border="1" cellspacing="0" cellpadding="10" id="data">
@@ -141,15 +135,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {results}
+                    <?php
+                        foreach($results as $result){
+                    ?>
                         <tr>
-                            <td>{schedule}</td>
-                            <td>{name}</td>
-                            <td>{social_pos}</td>
-                            <td>{purpose}</td>
-                            <td>{state}</td>
+                            <td><?= $result['schedule']?></td>
+                            <td><?= $result['name']?></td>
+                            <td><?= $result['social_pos']?></td>
+                            <td><?= $result['purpose']?></td>
+                            <td><?= $result['state']?></td>
                         </tr>
-                    {/results}
+                    <?php } ?>
                     </tbody>
                 </table>
             </section> 
@@ -158,20 +154,18 @@
             <hr style="margin-top: 20px; border: 0.5px solid rgb(0,0,0, 0.5);">
             <table style="margin-top: 1px;">
                 <tr>
-                    <td colspan="6">All appointments made : {total_appointment}</td>
+                    <td colspan="6">All appointments made : <?= $total_appointment?></td>
                 </tr>
-                {state}
                 <tr id="mid" style="width: 100%;">
-                    <td colspan="2">Pending Canceled <b>:</b> {pending_canceled} </td>
-                    <td colspan="2">Approved Canceled<b>:</b> {approved_canceled}</td>
-                    <td colspan="2">Passed<b>:</b> {pass}</td>
+                    <td colspan="2">Pending Canceled <b>:</b> <?= $state['pending_canceled'] ?></td>
+                    <td colspan="2">Approved Canceled<b>:</b> <?= $state['approved_canceled'] ?></td>
+                    <td colspan="2">Passed<b>:</b> <?= $state['pass'] ?></td>
                 </tr>
                 <tr id="mid">   
-                    <td colspan="2">Done <b>:</b> {done}</td>
-                    <td colspan="2">Walkin <b>:</b> {walkin}</td>
-                    <td colspan="2">Rejected <b>:</b> {reject}</td>
+                    <td colspan="2">Done <b>:</b> <?= $state['done'] ?></td>
+                    <td colspan="2">Walkin <b>:</b> <?= $state['walkin'] ?></td>
+                    <td colspan="2">Rejected <b>:</b> <?= $state['reject'] ?></td>
                 </tr>
-                {/state}
                 </table>
             </section>
         </div>
