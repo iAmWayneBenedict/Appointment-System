@@ -19,6 +19,7 @@ class ManageAppointment extends BaseController
     protected $greet;
     protected $time;
     protected $appNotif;
+    protected $session;
 
     function __construct()
     {
@@ -27,6 +28,7 @@ class ManageAppointment extends BaseController
         $this->greet = new greetings();
         $this->time = new Time();
         $this->appNotif = new OnAppNotification();
+        $this->session = session();
     }
 
     /**
@@ -441,7 +443,7 @@ class ManageAppointment extends BaseController
             // $sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
 
             //if sms is not sent execute this code
-            
+
             // if ($sms_response['code'] == 0) {
             //     array_push($res, $sms_response['message']);
             // }

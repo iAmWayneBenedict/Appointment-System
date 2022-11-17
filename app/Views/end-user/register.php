@@ -188,8 +188,5 @@
     </div>
 </div>
 
-<!-- preloader -->
-<?= view("components/preloader") ?>
-
 <script src="<?= base_url('/src/js/user/register.js') ?>"></script>
 <?= $this->endSection() ?>

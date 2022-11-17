@@ -25,7 +25,7 @@ class HolidaysController extends BaseController
         $holiday_to = $this->request->getPost('holiday_to');
         $description = $this->request->getPost('description');
 
-        if(empty($holiday_from) || empty($description)){
+        if (empty($holiday_from) || empty($description)) {
             return json_encode([
                 'code' => 1,
                 'msg' => "Holiday from and Description is Required"
@@ -53,5 +53,12 @@ class HolidaysController extends BaseController
         $result = $this->holiday_model->get_holidays();
 
         return json_encode($result);
+    }
+
+    public function remove_holidays($id)
+    {
+        $result = $this->holiday_model->remove_holidays($id);
+
+        return $result;
     }
 }

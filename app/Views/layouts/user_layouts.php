@@ -217,7 +217,8 @@
             </div>
         </div>
     </nav>
-
+    <!-- preloader -->
+    <?= view("components/preloader") ?>
     <?= $this->renderSection('content') ?>
 
     <script>

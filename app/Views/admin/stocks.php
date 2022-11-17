@@ -140,6 +140,12 @@
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
+                                <div class="d-none">
+                                    <label for="any-type-textbox" class="form-label">Specify type</label>
+                                    <input type="number" class="form-control" id="avail-c" name="any-type-textbox" placeholder="Specify type">
+                                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                                        message!</span><br>
+                                </div>
                                 <div class="">
                                     <label for="available" class="form-label">Available</label>
                                     <input type="number" class="form-control" id="avail-c" name="available" placeholder="Available" readonly>
@@ -247,6 +253,15 @@
         });
         $("#allocated").each(function() {
             $(this).on('keydown keyup', handleComputeAvailable);
+        })
+        $("#per_type").change(function() {
+            if ($(this).val() === "Any") {
+                $(this).parent().next().removeClass("d-none")
+                console.log(2)
+                console.log(2)
+            } else {
+                $(this).parent().next().addClass("d-none")
+            }
         })
 
         function handleComputeAvailable() {

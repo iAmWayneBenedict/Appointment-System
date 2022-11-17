@@ -168,6 +168,7 @@ $routes->group('admin', static function ($routes) {
 
         // holidays
         $routes->post('set-holiday', 'Admin\HolidaysController::set_holidays');
+        $routes->get('remove-holidays/(:num)', 'Admin\HolidaysController::remove_holidays/$1');
     });
 });
 

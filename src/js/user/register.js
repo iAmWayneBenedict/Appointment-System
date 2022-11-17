@@ -22,7 +22,6 @@ $(document).ready(function () {
 		}
 
 		if (!$("#data-privacy-agreement").is(":checked")) {
-			console.log($("#data-privacy-agreement").prev());
 			$("#data-privacy-agreement").prev().prev().removeClass("d-none");
 			$("#data-privacy-agreement").prev().prev().text("Please check the checkbox to proceed");
 			return;
@@ -53,7 +52,9 @@ $(document).ready(function () {
 				$("#preloader").modal("show");
 			},
 			success: function (res) {
-				$("#preloader").modal("hide");
+				setTimeout(() => {
+					$("#preloader").modal("hide");
+				}, 750);
 				swal.close();
 				if (res.code == 0) {
 					$.each(res.errors, function (key, val) {
