@@ -1,0 +1,38 @@
+// $b_month = NULL;
+    // if(!empty($report)){
+    //     $months = []; //store all months here
+    //     $counts = []; //store all count here
+
+    //     foreach($report as $arr){
+    //         foreach($arr as $r => $v){
+                
+    //             if($r == 'Month'){
+    //                 array_push($months, $v);
+    //             }
+                
+    //             if($r == 'count'){
+    //                 array_push($counts, $v);
+    //             }
+    //         }
+    //     }
+
+    //      // find the highest number in count array
+    //     arsort($counts);
+    //     //get the key of the highest count 
+    //     $key = key($counts);
+    //     $b_month = $months[$key];
+    // }
+
+    public function appointments_perMonth($year){
+
+        $db = db_connect();
+
+        // $sql = "SELECT DATE_FORMAT(schedule, '%M') as 'Month', count(*) FROM set_appointments "; 
+        // $sql .= "WHERE EXTRACT(YEAR FROM schedule) = {$year} GROUP BY EXTRACT(month FROM schedule)";
+        // $sql .= "ORDER BY  EXTRACT(YEAR FROM schedule)";
+        $sql = "SELECT DATE_FORMAT(schedule, '%M') as 'Month', count('*') as 'count' FROM set_appointments WHERE EXTRACT(year FROM schedule) = {$year} GROUP BY month(schedule) ORDER BY month(schedule)";
+
+        $data = $db->query($sql);
+
+        return $data->getResultArray();
+    }

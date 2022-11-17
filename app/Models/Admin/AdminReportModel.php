@@ -27,8 +27,19 @@ class AdminReportModel extends Model
      * @param state      : what the outcome of the appointment canceled or done
      * @return array:data: data retrive from database  
      */
-    public function get_report_data($from_date, $to_date, $social_pos, $purpose, $state)
+    public function get_report_data($from_date, $to_date, $social_pos, $purpose, $state, $year)
     {
+        /**
+         * set year to deafualt as current year
+         * and if year is not null then set selected year to submitted year
+         */
+        if(!empty($year)){
+            $selected_year = $year;
+        }else{
+            $selected_year = date('Y', strtotime('now'));
+        }
+
+        // return "{$selected_year}-{$from_date}";
 
         $query = $this->db_conn->table('appointment_report');
 
@@ -43,15 +54,30 @@ class AdminReportModel extends Model
         if($state != 'All'){
             $conditions['state'] = $state;
         }
-        if($from_date != NULL){
-            $conditions["DATE_FORMAT(schedule, '%Y-%m') >="] = $from_date;
+        if($from_date != NULL and !empty($year)){
+            
+            $conditions["DATE_FORMAT(schedule, '%Y-%m') >="] = "{$selected_year}-{$from_date}";
 
             if($to_date != NULL){
-                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = $to_date;
+                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = "{$selected_year}-{$to_date}";
             }else{
-                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = $from_date;
+                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = "{$selected_year}-{$from_date}";
             }
         }
+        elseif($from_date != NULL and empty($year)){
+
+            $conditions["DATE_FORMAT(schedule, '%Y-%m') >="] = "{$selected_year}-{$from_date}";
+
+            if($to_date != NULL){
+                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = "{$selected_year}-{$to_date}";
+            }else{
+                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = "{$selected_year}-{$from_date}";
+            }
+        }
+        else{
+            $conditions["DATE_FORMAT(schedule, '%Y') ="] = $selected_year;
+        }
+
 
        
         $all_result = $query->select("DATE_FORMAT(schedule, '%M %e, %Y %l:%i %p') as schedule, name, social_pos, purpose, state")
@@ -70,38 +96,37 @@ class AdminReportModel extends Model
             'pass' => $query->where($conditions)->like('state', 'passed')->countAllResults(),
         ];
 
-        $state = [
-            'pending_canceled' => $query->where('state', 'pending canceled')->countAllResults(),
+        $state = (array) [
+            "pending_canceled" => $query->where('state', 'pending canceled')->countAllResults(),
             'approved_canceled' => $query->where('state', 'approved canceled')->countAllResults(),
             'done' => $query->where('state', 'done')->countAllResults(),
             'walkin' => $query->where('state', 'walk in')->countAllResults(),
             'reject' => $query->where('state', 'rejected')->countAllResults(),
             'pass' => $query->where('state', 'passed')->countAllResults(),
         ];
+
+        $data['purposes'] = [
+            'RSBSA' => $query->where($conditions)->like('purpose', 'RSBSA (Registry System for Basic Sector in Agriculture)')->countAllResults(),
+            'RMF' => $query->where($conditions)->like('purpose', 'Registration of Municipal Fisherfolks')->countAllResults(),
+            'PCIC' => $query->where($conditions)->like('purpose', 'Processing of Crop Insurance (PCIC Program)')->countAllResults(),
+            'DFI' => $query->where($conditions)->like('purpose', 'Distribution of Farm Inputs')->countAllResults(),
+            'BR' => $query->where($conditions)->like('purpose', 'Boat Registration')->countAllResults(),
+        ];
         
         $data['states'] = $state;
+        $data['analytics'] = $this->get_analytics($selected_year);
         return $data;
     }
 
     //Function: Just simply get all appointments recieve by the system
     public function get_total_appointments(){
 
-        $total = $this->db_conn->table('total_appointment_made')
+        $total = $this->db_conn->table('set_appointments')
             ->select('*')
-            ->get()
-            ->getRow();
+            ->countAllResults();
 
-        return $total->total;
+        return $total;
     }
-
-    public static function increment_appointment_made(){
-        $db = \Config\Database::connect();
-        $db->table('total_appointment_made')
-            ->set('total', 'total+1', FAlSE)
-            ->update();
-        return true;
-    }
-
 
     public static function insert_report($data){
 
@@ -149,6 +174,30 @@ class AdminReportModel extends Model
             ->getResultArray();
 
         return $data;
+    }
+
+    //get appointments per month
+    public function get_analytics($year){
+
+        $query = $this->db_conn->table('set_appointments');
+
+        $condition["DATE_FORMAT(schedule, '%Y')"] = $year ;
+        $data = [
+            'Jan.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '01')->countAllResults(),
+            'Feb.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '02')->countAllResults(),
+            'Mar.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '03')->countAllResults(),
+            'Apr.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '04')->countAllResults(),
+            'May.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '05')->countAllResults(),
+            'Jun.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '06')->countAllResults(),
+            'Jul.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '07')->countAllResults(),
+            'Aug.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '08')->countAllResults(),
+            'Sep.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '09')->countAllResults(),
+            'Oct.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '10')->countAllResults(),
+            'Nov.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '11')->countAllResults(),
+            'Dec.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '12')->countAllResults(),
+        ];
+        return $data;
+
     }
 
 }

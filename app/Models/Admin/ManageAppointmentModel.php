@@ -258,9 +258,19 @@ class ManageAppointmentModel extends Model
      * @param string $advanceDate date format
      * @return array object contains appointment data
      */
-    public function get_upcoming_appointments($advanceDate)
+    public function get_upcoming_appointments($advanceDate, $user)
     {
 
+        if($user == 'admin'){
+            $query = $this->db_conn->table('approved_appointments')
+                ->select('*')
+                ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')
+                ->where("DATE_FORMAT(schedule, '%Y-%m-%d %H:%i')", $advanceDate)
+                ->get();
+            
+            return $query->getResultObject();
+        }
+       
         $query = $this->db_conn->table('approved_appointments')
             ->select('*')
             ->join('set_appointments', 'set_appointments.id = approved_appointments.set_appointment_id')

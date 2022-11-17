@@ -107,7 +107,9 @@ $routes->group('admin', static function ($routes) {
 
         //users
         $routes->get('users', 'Admin\Admin::users');
-        $routes->get('delete-user/(:num)', 'End_Users\ManageAccount::delete_user/$1');
+        $routes->get('deactivate-user/(:num)', 'End_Users\ManageAccount::deactivate_user/$1');
+        $routes->get('reactivate-user/(:num)', 'End_Users\ManageAccount::reActivate_user/$1');
+        $routes->get('delete-user/(:num)', 'End_Users\ManageAccount::remove_user_account/$1');
 
         //notifications
         $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
@@ -117,6 +119,7 @@ $routes->group('admin', static function ($routes) {
         $routes->get('notifications', 'Admin\Admin::admin_notifications');
         $routes->get('already-read/(:num)', 'Admin\Admin::update_notifications/$1');
         $routes->get('get-notifications', 'Admin\Admin::get_notifications');
+        $routes->get('upcoming-appointment', 'Admin\ManageAppointment::notify_admin_appointments');
 
         //logout
         $routes->get('logout', 'Admin\Admin::admin_logout');

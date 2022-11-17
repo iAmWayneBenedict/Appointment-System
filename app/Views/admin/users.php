@@ -23,7 +23,6 @@
                     <tr>
                         <th scope="col">Code ID</th>
                         <th scope="col">First Name</th>
-                        <th scope="col">Middle Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Address</th>
                         <th scope="col">Email</th>
@@ -36,36 +35,46 @@
                         <tr>
                             <td><?= $user['code_id'] ?></td>
                             <td><?= $user['fname'] ?></td>
-                            <td><?= $user['mname'] ?></td>
                             <td><?= $user['lname'] ?></td>
                             <td><?= $user['address'] ?></td>
                             <td><?= $user['email'] ?></td>
                             <td><?= $user['social_pos'] ?></td>
 
                             <!-- remove user btn -->
+                            <td>
                             <?php
+                            //TODO: Update to server
                             if ($user['account_stats'] == 1) {
                             ?>
-                                <td>
-                                    <button type="button" class="btn btn-danger delete-user-btn" value="<?= $user['code_id'] ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
-                                            <polyline points="3 6 5 6 21 6"></polyline>
-                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                        </svg>
-                                        <span class="ms-2">Remove</span>
-                                    </button>
-                                </td>
+                               
+                                <button type="button" class="btn btn-warning deactivate-user-btn" value="<?= $user['code_id'] ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span class="ms-2">DeActivate</span>
+                                </button>
                             <?php
                             } else {
                             ?>
-                                <td>
-                                    <button type="button" class="btn btn-secondary disable" disabled>
-                                        <span class="ms-2">Deactivated</span>
-                                    </button>
-                                </td>
+                                <button type="button" class="btn btn-success activate-user-btn" value="<?= $user['code_id'] ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span class="ms-2">Activate</span>
+                                </button>
                             <?php
                             }
                             ?>
+                                <button type="button" class="btn btn-danger delete-user-btn" value="<?= $user['code_id'] ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span class="ms-2">DELETE</span>
+                                </button>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -76,14 +85,18 @@
 
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script>
+    //TODO: Update to server
     $(document).ready(function() {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
 
         // DataTable initialization
         $('#users').DataTable();
 
+        $('.deactivate-user-btn').click(handleDeactivateClick)
+        $('.activate-user-btn').click(handleActivateClick)
         $('.delete-user-btn').click(handleDeleteClick)
 
+        //perma delete
         function handleDeleteClick() {
             let id = $(this).val();
 
@@ -104,7 +117,75 @@
                         success: function(res) {
                             Swal.fire(
                                 "Deleted",
+                                "You have successfully Deleted a user",
+                                "success"
+                            );
+                            location.reload()
+                        },
+                        error: function(err) {
+                            console.error(err);
+                        },
+                    });
+                }
+            });
+        }
+
+        //Deactivate 
+        function handleDeactivateClick() {
+            let id = $(this).val();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#ff0000",
+                cancelButtonColor: "#d0d0d0d",
+                confirmButtonText: "Proceed",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: `${url}/admin/dashboard/deactivate-user/${id}`,
+                        // dataType: "json",
+                        success: function(res) {
+                            Swal.fire(
+                                "Deactivate",
                                 "You have successfully deactivated a user",
+                                "success"
+                            );
+                            location.reload()
+                        },
+                        error: function(err) {
+                            console.error(err);
+                        },
+                    });
+                }
+            });
+        }
+
+        //Activate User
+        function handleActivateClick() {
+            let id = $(this).val();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#ff0000",
+                cancelButtonColor: "#d0d0d0d",
+                confirmButtonText: "Proceed",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: `${url}/admin/dashboard/reactivate-user/${id}`,
+                        // dataType: "json",
+                        success: function(res) {
+                            Swal.fire(
+                                "Activate",
+                                "You have successfully Activated a user",
                                 "success"
                             );
                             location.reload()

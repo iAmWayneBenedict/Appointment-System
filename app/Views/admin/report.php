@@ -21,7 +21,10 @@
 
     <!-- Bootstrap datepicker JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     <title>Appointment Report</title>
 </head>
 <body>
@@ -33,17 +36,20 @@
         }
     ?>
     <div class="container">
-        <div class="row mb-5">
-            <div class="d-flex justify-content-center m-3">
+        <div class="d-flex justify-content-center m-3">
                 <h3>Appointment Report</h3>
-            </div>
+        </div>
+        <div class="row mb-5">
             <form action="<?= base_url('/admin/dashboard/generate-pdf') ?>" method="post" class="a_form">
                 <div class="row justify-content-md-center m-3">
-                    <div class="col">
-                        <input type="text" class="form-control from" name="from_date" id="datepicker" placeholder="Select Month"/>
+                    <div class="col-1">
+                        <input type="text" class="form-control from" name="from_date" id="datepicker" placeholder="From"/>
                     </div>
-                    <div class="col">
-                        <input type="text" class="form-control to" name="to_date" id="datepicker2" placeholder="To Month"/>
+                    <div class="col-1">
+                        <input type="text" class="form-control to" name="to_date" id="datepicker2" placeholder="To"/>
+                    </div>
+                    <div class="col-1">
+                        <input type="text" class="form-control year" name="year" id="datepicker3" placeholder="Year"/>
                     </div>
                     <div class="col">
                         <select class="form-select" aria-label="Default select example" id="social_pos" name="social_pos">
@@ -94,7 +100,7 @@
 
             <hr>
 
-            <div class="view-data">
+            <div class="view-data" style="background-color: #fbfbeb ;">
                 
             </div>
         </div>
@@ -141,20 +147,25 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         $("#datepicker, .sfrom").datepicker( {
-            format: "yyyy-mm",
+            format: "mm",
             startView: "months", 
             minViewMode: "months"
         });
         $("#datepicker2, .sto").datepicker( {
-            format: "yyyy-mm",
+            format: "mm",
             startView: "months", 
             minViewMode: "months"
         });
+        $("#datepicker3").datepicker( {
+            format: "yyyy",
+            startView: "years", 
+            minViewMode: "years"
+        });
 
-        $(document).on('change keyup', '.from, .to, #social_pos, #purpose, #state', function (e) { 
+        $(document).on('change keyup', '.from, .to, #social_pos, #purpose, #state, .year', function (e) { 
             e.preventDefault();
             $('#print').addClass('d-none')
             $('#prev').show()
@@ -212,7 +223,8 @@
                     'to_date' : $('.to').val(),
                     'social_pos' : $('#social_pos').val(),
                     'purpose': $('#purpose').val(),
-                    'state' : $('#state').val()
+                    'state' : $('#state').val(),
+                    'year' : $('.year').val()
                 }
 
                 // alert($('#state').val());
@@ -269,6 +281,75 @@
             //capitalize first letter
             function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
+            $('#print').click(function (e) { 
+                e.preventDefault();
+                CreatePDFfromHTML();
+                // downloadComponentInPDF();
+            });
+
+            function CreatePDFfromHTML() {
+                var HTML_Width = $(".view-data").width();
+                var HTML_Height = $(".view-data").height();
+                var top_left_margin = 15;
+                var PDF_Width = HTML_Width + (top_left_margin * 2);
+                var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+                var canvas_image_width = HTML_Width;
+                var canvas_image_height = HTML_Height;
+
+                var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+                html2canvas($(".view-data")[0], { scale: '1' }).then(function (canvas) {
+                    var imgData = canvas.toDataURL("image/png", 1.0);
+                    var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                    for (var i = 1; i <= totalPDFPages; i++) { 
+                        pdf.addPage(PDF_Width, PDF_Height);
+                        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+                    }
+                    pdf.save("Your_PDF_Name.pdf");
+                });
+            }
+
+            //try 3
+            function printDocument(){
+                const input = document.getElementsByClassName('view-data');
+                const divHeight = $(".view-data").height();
+                const divWidth = $(".view-data").width();
+                const ratio = divHeight / divWidth;
+
+                html2canvas(input, { scale: '1' }).then((canvas) => {
+                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                    const pdfDOC = new jsPDF("p", "mm", "a4"); //  use a4 for smaller page
+
+                    const width = pdfDOC.interview-dataSize.getWidth();
+                    let height = pdfDOC.internal.pageSize.getHeight();
+                    height = ratio * width;
+
+                    pdfDOC.addImage(imgData, 'JPEG', 0, 0, width - 20, height - 10);
+                    pdfDOC.save('summary.pdf');   //Download the rendered PDF.
+                })
+            }
+
+            //try 2
+            function downloadComponentInPDF(){
+
+                    html2canvas($(".view-data")[0], {scale: '1'}).then((canvas) => {
+                    const componentWidth = $(".view-data").height();
+                    const componentHeight = $(".view-data").height();
+
+                    const orientation = componentWidth >= componentHeight ? 'l' : 'p'
+
+                    const imgData = canvas.toDataURL('image/png', 1.0)
+                    const pdf = new jsPDF("p", "mm", "a4")
+
+                    pdf.internal.pageSize.width = componentWidth
+                    pdf.internal.pageSize.height = componentHeight
+
+                    pdf.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight)
+                    pdf.save('download.pdf')
+                })
             }
 
         })
