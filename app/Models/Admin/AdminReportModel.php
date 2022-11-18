@@ -83,7 +83,7 @@ class AdminReportModel extends Model
         $all_result = $query->select("DATE_FORMAT(schedule, '%M %e, %Y %l:%i %p') as schedule, name, social_pos, purpose, state")
             ->where($conditions);
 
-        
+        //appointment summary
         $data['results'] = $all_result->get()->getResultArray();
 
         $data['count'] = [
@@ -95,7 +95,7 @@ class AdminReportModel extends Model
             'reject' => $query->where($conditions)->like('state', 'rejected')->countAllResults(),
             'pass' => $query->where($conditions)->like('state', 'passed')->countAllResults(),
         ];
-
+         //appointment state
         $state = (array) [
             "pending_canceled" => $query->where('state', 'pending canceled')->countAllResults(),
             'approved_canceled' => $query->where('state', 'approved canceled')->countAllResults(),
@@ -105,6 +105,7 @@ class AdminReportModel extends Model
             'pass' => $query->where('state', 'passed')->countAllResults(),
         ];
 
+        //apointment purposes
         $data['purposes'] = [
             'RSBSA' => $query->where($conditions)->like('purpose', 'RSBSA (Registry System for Basic Sector in Agriculture)')->countAllResults(),
             'RMF' => $query->where($conditions)->like('purpose', 'Registration of Municipal Fisherfolks')->countAllResults(),
@@ -114,6 +115,8 @@ class AdminReportModel extends Model
         ];
         
         $data['states'] = $state;
+        
+        //data for analytics appointments per month
         $data['analytics'] = $this->get_analytics($selected_year);
         return $data;
     }
@@ -182,6 +185,7 @@ class AdminReportModel extends Model
         $query = $this->db_conn->table('set_appointments');
 
         $condition["DATE_FORMAT(schedule, '%Y')"] = $year ;
+        
         $data = [
             'Jan.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '01')->countAllResults(),
             'Feb.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '02')->countAllResults(),
