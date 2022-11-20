@@ -417,7 +417,7 @@
                         toastCount = $(".toast-container").children().length;
                     })
                     $(".toast-container").html(template)
-                    console.log(unreadCounter)
+                    // console.log(unreadCounter)
                     initToast()
                     handleNotifAlertBubble(unreadCounter)
                 }
@@ -458,9 +458,10 @@
                 contentType: false,
                 cache: false,
                 beforeSend: function() {
-                    //loader
+                    $("#preloader").modal("show");
                 },
                 success: function(response) {
+                    $("#preloader").modal("hide");
                     if (response.code == 1) {
                         alert('Inserted')
                         location.reload()
@@ -492,8 +493,17 @@
                     description
                 },
                 dataType: "json",
+                beforeSend: function() {
+                    $("#preloader").modal("show");
+                },
                 success: function(response) {
-                    alert(response.msg)
+                    $("#preloader").modal("hide");
+                    // alert(response.msg)
+                    Swal.fire(
+                        'Error!',
+                        response.msg,
+                        'error'
+                    ).then()
                     location.reload()
                 }
             });
@@ -749,34 +759,7 @@
             // populate the remaining weeks
             for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
                 if (date.getUTCDate() === days && date.getMonth() === month) {
-                    // let isHoliday = false;
-                    // for (let i = 0; i < holidays.length; i++) {
-                    //     let holidayFrom = new Date(holidays[i].holiday_from)
-                    //     let holidayTo = new Date(holidays[i].holiday_to)
 
-                    //     if (holidayTo == 'Invalid Date') {
-                    //         isHolidayClosed = true;
-                    //         continue;
-                    //     }
-
-                    //     if (holidayTo.getMonth() === month && holidayTo.getDate() === days) {
-                    //         isHoliday = true
-                    //         isHolidayClosed = true;
-                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
-                    //         currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
-                    //         continue;
-                    //     }
-
-                    //     if (holidayFrom.getMonth() === month && holidayFrom.getDate() === days) {
-
-                    //         isHoliday = true
-                    //         isHolidayClosed = false;
-                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
-                    //         currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
-                    //     }
-                    // }
-
-                    // if (isHoliday) continue;
 
                     let hasStocksReleaseDate = false;
                     let hasStocksReleaseAlert = false;
@@ -801,37 +784,6 @@
                     currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
 
                 } else {
-                    // let isHoliday = false;
-                    // for (let i = 0; i < holidays.length; i++) {
-                    //     let holidayFrom = new Date(holidays[i].holiday_from)
-                    //     let holidayTo = new Date(holidays[i].holiday_to)
-
-                    //     if (holidayTo == 'Invalid Date') {
-                    //         isHolidayClosed = true;
-                    //         continue;
-                    //     }
-
-                    //     // break
-                    //     if (holidayTo.getMonth() === month && holidayTo.getDate() >= days && holidayFrom.getDate() <= days) {
-                    //         isHoliday = true
-                    //         isHolidayClosed = true;
-                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
-                    //         currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
-                    //         console.log(holidayTo.getDate(), days)
-                    //         console.log("break")
-                    //         break;
-                    //     }
-
-                    //     if (holidayFrom.getMonth() === month && holidayFrom.getDate() === days) {
-
-                    //         isHoliday = true
-                    //         isHolidayClosed = false;
-                    //         let holiday = holidayHTMLTemplate(holidays[i].description)
-                    //         currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + holiday + '</div></span></td>'
-                    //     }
-                    // }
-
-                    // if (isHoliday) continue;
 
                     let hasStocksReleaseDate = false;
                     let hasStocksReleaseAlert = false;

@@ -256,8 +256,13 @@
                         message: formValues.message,
                     },
                     dataType: "json",
+                    beforeSend: function() {
+                        $("#preloader").modal("show");
+                    },
                     success: function(response) {
-
+                        setTimeout(() => {
+                            $("#preloader").modal("hide");
+                        }, 500)
                         response.forEach(element => {
                             var msg = []; //hold all error messages
 
@@ -266,7 +271,12 @@
                                 msg.push(`${val}`)
                             });
 
-                            alert(msg.join('\n')) //sweet alert
+                            // alert(msg.join('\n')) //sweet alert
+                            Swal.fire(
+                                'Error!',
+                                msg.join('\n'),
+                                'error'
+                            ).then()
                         });
                     }
                 });
@@ -279,7 +289,13 @@
                     // async: true,
                     data: data,
                     dataType: "json",
+                    beforeSend: function() {
+                        $("#preloader").modal("show");
+                    },
                     success: function(response) {
+                        setTimeout(() => {
+                            $("#preloader").modal("hide");
+                        }, 500)
                         console.log(response)
                         if (response.code === 1) {
                             const Toast = Swal.mixin({
@@ -355,7 +371,13 @@
                     subject,
                     message
                 },
+                beforeSend: function() {
+                    $("#preloader").modal("show");
+                },
                 success: function(response) {
+                    setTimeout(() => {
+                        $("#preloader").modal("hide");
+                    }, 500)
                     // console.log(response)
                     if (response.code == 0) {
                         var msg = []; //hold all error messages
@@ -365,12 +387,22 @@
                             msg.push(`${val}`)
                         });
 
-                        alert(msg.join('\n')) //sweet alert
+                        // alert(msg.join('\n')) //sweet alert
+                        Swal.fire(
+                            'Error!',
+                            msg.join('\n'),
+                            'error'
+                        ).then()
                         // console.log(msg)
                         return;
                     }
 
-                    alert(response.msg);
+                    // alert(response.msg);
+                    Swal.fire(
+                        'Success!',
+                        response.msg,
+                        'success'
+                    ).then()
                 }
             });
         })

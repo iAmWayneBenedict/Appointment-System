@@ -89,11 +89,19 @@
                                 id: id
                             },
                             dataType: "json",
+                            beforeSend: function() {
+                                $("#preloader").modal("show");
+                            },
                             success: function(res) {
-                                console.log(res)
-
+                                // console.log(res)
+                                $("#preloader").modal("hide");
                                 if (res.code == 0) {
-                                    alert(res.msg)
+                                    // alert(res.msg)
+                                    Swal.fire(
+                                        'Error!',
+                                        res.msg,
+                                        'error'
+                                    ).then()
                                     return;
                                 }
 
@@ -118,42 +126,51 @@
 
                         $('.modal').modal('hide');
                         modbox.prompt({
-                        body: 'Reject Remarks',
-                        input: {
-                            required: true,
-                        }
-                        })
-                        .then(response => 
-                            $.ajax({
-                                type: "post",
-                                url: `${url}/admin/dashboard/reject`,
-                                data: {
-                                    id: id,
-                                    remark: response
-                                },
-                                dataType: "json",
-                                success: function(res) {
-                                    console.log(res)
-
-                                    if (res.code == 0) {
-                                        alert(res.msg)
-                                        return;
-                                    }
-
-                                    Swal.fire({
-                                        text: res.msg,
-                                        icon: 'success',
-                                        confirmButtonColor: '#3085d6',
-                                        confirmButtonText: 'Ok'
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            location.reload(); //reload page after success
-                                        }
-                                    })
-
+                                body: 'Reject Remarks',
+                                input: {
+                                    required: true,
                                 }
-                            }) 
-                        );
+                            })
+                            .then(response =>
+                                $.ajax({
+                                    type: "post",
+                                    url: `${url}/admin/dashboard/reject`,
+                                    data: {
+                                        id: id,
+                                        remark: response
+                                    },
+                                    dataType: "json",
+                                    beforeSend: function() {
+                                        $("#preloader").modal("show");
+                                    },
+                                    success: function(res) {
+                                        $("#preloader").modal("hide");
+                                        // console.log(res)
+
+                                        if (res.code == 0) {
+                                            // alert(res.msg)
+                                            Swal.fire(
+                                                'Error!',
+                                                res.msg,
+                                                'error'
+                                            ).then()
+                                            return;
+                                        }
+
+                                        Swal.fire({
+                                            text: res.msg,
+                                            icon: 'success',
+                                            confirmButtonColor: '#3085d6',
+                                            confirmButtonText: 'Ok'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                location.reload(); //reload page after success
+                                            }
+                                        })
+
+                                    }
+                                })
+                            );
 
                     });
                 }
