@@ -220,9 +220,11 @@
 
                     $("#appointment-submit").attr('disabled', 'disabled')
                     $("#appointment-submit").val('Please Wait......')
+                    $("#preloader").modal("show");
                 },
                 success: function(response) {
                     setTimeout(function() {
+                        $("#preloader").modal("hide");
                         if (response.code == 0) {
                             var msg = []; //hold all error messages
 
@@ -231,13 +233,23 @@
                                 msg.push(`${val}`)
                             });
 
-                            alert(msg.join('\n')) //sweet alert
+                            // alert(msg.join('\n')) //sweet alert
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: msg.join('\n'),
+                            });
                             $("#appointment-submit").removeAttr('disabled');
                             $("#appointment-submit").val('SUBMIT');
                             return;
                         }
 
-                        alert(response.msg)
+                        // alert(response.msg)
+                        Swal.fire({
+                            icon: "success",
+                            title: "Submitted",
+                            text: response.msg,
+                        }).then(_ => location.reload());
                         // location.reload()
                     }, 2000)
                 }
