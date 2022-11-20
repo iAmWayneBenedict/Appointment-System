@@ -123,11 +123,17 @@
 
                     //this should ba an aler
                     if (response.code == 1 || response.code == 0) {
-                        alert(response.msg)
-                        $(this).trigger('reset');
-                        if (response.code == 1) {
-                            location.reload();
-                        }
+                        // alert(response.msg)
+                        Swal.fire(
+                            'Updated!',
+                            response.msg,
+                            'success'
+                        ).then(_ => {
+                            $(this).trigger('reset');
+                            if (response.code == 1) {
+                                location.reload();
+                            }
+                        })
                     }
 
                     if (response.code == 3) {
@@ -138,6 +144,11 @@
                         });
 
                         alert(msg.join('\n')) //sweet alert
+                        Swal.fire(
+                            'Error!',
+                            msg.join('\n'),
+                            'error'
+                        )
                     }
                 }
             });
@@ -157,10 +168,16 @@
                 success: function(response) {
                     console.log(response) //this should ba an alert
 
+
                     if (response.code == 1 || response.code == 0) {
                         $('#o_password').val('');
                         $('#n_password').val('');
                         alert(response.msg)
+                        Swal.fire(
+                            'Updated!',
+                            response.msg,
+                            'success'
+                        )
                     }
 
                     if (response.code == 3) {
@@ -170,7 +187,12 @@
                             msg.push(`${val}`)
                         });
 
-                        alert(msg.join('\n')) //sweet alert
+                        // alert(msg.join('\n')) //sweet alert
+                        Swal.fire(
+                            'Error!',
+                            msg.join('\n'),
+                            'error'
+                        )
                     }
                 }
             });

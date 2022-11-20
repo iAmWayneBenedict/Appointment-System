@@ -115,15 +115,26 @@
                     type: "get",
                     url: `${url}/user/dashboard/get-notifications`,
                     dataType: 'json',
+                    beforeSend: function() {
+                        $(".modal-body").html(
+                            `<div>
+                                <center class="d-flex flex-column justify-content-center align-items-center">
+                                    <video autoplay loop muted width="200" height="100">
+                                        <source src="<?= base_url('/src/preloader/314646847_456547583254457_6577931051243379792_n.mp4') ?>" type="video/mp4">
+                                    </video>
+                                    <p class="pt-3">Loading</p>
+                                </center>
+                            </div>`
+                        )
+                    },
                     success: function(response) {
                         let notif = response.notifications.find((element) => {
                             if (parseInt(element.id) === thisID) {
                                 return element
                             }
-
                             return
                         })
-                        $('.modal-body').text(notif.message)
+                        $('.modal-body').html(notif.message)
                     }
                 });
             })

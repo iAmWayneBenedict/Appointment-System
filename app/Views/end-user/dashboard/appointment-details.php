@@ -306,7 +306,12 @@
 
             //if nothing change do not update
             if (old_date == $('#selected-date').val() && purpopse == $('#purpose').val()) {
-                alert('Nothing to update')
+                Swal.fire(
+                    'Nothing changed!',
+                    'Information provided are not updated',
+                    'info'
+                ).then()
+                // alert('Nothing to update')
                 return
             }
 
@@ -331,8 +336,14 @@
                         return;
                     }
 
-                    alert(response.msg)
-                    console.log(response)
+                    Swal.fire(
+                        'Submitted!',
+                        response.msg,
+                        'success'
+                    ).then()
+
+                    // alert(response.msg)
+                    // console.log(response)
                 }
             });
 
