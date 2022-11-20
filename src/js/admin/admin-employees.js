@@ -55,8 +55,10 @@ $(() => {
 					incharge_to: incharge_to,
 				},
 				dataType: "json",
+
 				success: function (res) {
 					console.log(res);
+
 					// display_employees();
 					location.reload();
 				},
@@ -204,7 +206,11 @@ $(() => {
 					type: "get",
 					url: `${url}/admin/dashboard/delete-employee/${id}`,
 					// dataType: "json",
+					beforeSend: function () {
+						$("#preloader").modal("show");
+					},
 					success: function (res) {
+						$("#preloader").modal("hide");
 						Swal.fire(
 							"Deleted",
 							"You have successfully deleted an employee",
@@ -231,7 +237,13 @@ $(() => {
 			type: "get",
 			url: `${url}/admin/dashboard/get-employee/${id}`,
 			async: true,
+			beforeSend: function () {
+				$("#preloader").modal("show");
+			},
 			success: function (response) {
+				setTimeout(() => {
+					$("#preloader").modal("hide");
+				}, 500);
 				// console.log(response);
 				let data = JSON.parse(response).data;
 
