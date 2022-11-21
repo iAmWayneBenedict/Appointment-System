@@ -463,14 +463,30 @@
                 success: function(response) {
                     $("#preloader").modal("hide");
                     if (response.code == 1) {
-                        alert('Inserted')
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Inserted',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                         location.reload()
                     } else {
-                        alert('Not Inserted')
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'warning',
+                            title: 'Try Again',
+                            showConfirmButton: true,
+                            timer: 2500
+                        })
                     }
                 },
                 error: function(xhr) {
-                    alert("Error occured.please try again");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
                     console.log(xhr.statusText + ':' + xhr.responseText)
                 },
                 complete: function() {
@@ -497,13 +513,13 @@
                     $("#preloader").modal("show");
                 },
                 success: function(response) {
-                    $("#preloader").modal("hide");
-                    // alert(response.msg)
-                    Swal.fire(
-                        'Error!',
-                        response.msg,
-                        'error'
-                    ).then()
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: response.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                     location.reload()
                 }
             });

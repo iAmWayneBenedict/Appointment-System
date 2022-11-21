@@ -232,25 +232,27 @@
                             $.each(response.errors, function(key, val) {
                                 msg.push(`${val}`)
                             });
-
-                            // alert(msg.join('\n')) //sweet alert
+                            
                             Swal.fire({
-                                icon: "error",
-                                title: "Error",
-                                text: msg.join('\n'),
-                            });
+                                icon: 'error',
+                                title: 'Oops...',
+                                html: msg.join('<br>'),
+                            }) //sweet alert
                             $("#appointment-submit").removeAttr('disabled');
                             $("#appointment-submit").val('SUBMIT');
                             return;
                         }
 
-                        // alert(response.msg)
                         Swal.fire({
-                            icon: "success",
-                            title: "Submitted",
-                            text: response.msg,
-                        }).then(_ => location.reload());
-                        // location.reload()
+                            position: 'top-end',
+                            icon: 'success',
+                            title: response.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(()=>{
+                            location.reload()
+                        })
+                       
                     }, 2000)
                 }
             });

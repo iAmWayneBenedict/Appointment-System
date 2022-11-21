@@ -201,10 +201,22 @@
                     dataType: "json",
                     success: function(response) {
                         if (response.code == 500) {
-                            alert(response.msg)
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: response.msg,
+                                showConfirmButton: false,
+                                timer: 2500
+                            })
                             return
                         } else if (response.code == 0) {
-                            alert(response.msg)
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: response.msg,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
                         }
 
                         location.reload()

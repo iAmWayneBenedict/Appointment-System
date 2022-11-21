@@ -271,12 +271,11 @@
                                 msg.push(`${val}`)
                             });
 
-                            // alert(msg.join('\n')) //sweet alert
-                            Swal.fire(
-                                'Error!',
-                                msg.join('\n'),
-                                'error'
-                            ).then()
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                html: msg.join('<br>'),
+                            }) //sweet alert
                         });
                     }
                 });
@@ -387,22 +386,23 @@
                             msg.push(`${val}`)
                         });
 
-                        // alert(msg.join('\n')) //sweet alert
-                        Swal.fire(
-                            'Error!',
-                            msg.join('\n'),
-                            'error'
-                        ).then()
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: msg.join('<br>'),
+                        })
+                         //sweet alert
                         // console.log(msg)
                         return;
                     }
 
-                    // alert(response.msg);
-                    Swal.fire(
-                        'Success!',
-                        response.msg,
-                        'success'
-                    ).then()
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: response.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             });
         })
