@@ -59,6 +59,6 @@ class HolidaysController extends BaseController
     {
         $result = $this->holiday_model->remove_holidays($id);
 
-        return $result;
+        return json_encode(["status" => $result]);
     }
 }

@@ -497,14 +497,14 @@
                     $("#preloader").modal("show");
                 },
                 success: function(response) {
-                    $("#preloader").modal("hide");
+                    setTimeout(_ => $("#preloader").modal("hide"), 500)
                     // alert(response.msg)
                     Swal.fire(
-                        'Error!',
+                        'Success!',
                         response.msg,
-                        'error'
-                    ).then()
-                    location.reload()
+                        'success'
+                    ).then(_ => location.reload())
+
                 }
             });
         })
@@ -600,19 +600,38 @@
 
         $(".submit-remove-holiday").click(function() {
             let selectedHoliday = $('#remove-holiday-field').val()
-            $.ajax({
-                type: 'get',
-                url: `${url}/admin/dashboard/remove-holidays/${selectedHoliday}`,
-                async: true,
-                dataType: 'json',
-                beforeSend: function() {
-                    $("#preloader").modal("show");
-                },
-                success: function(response) {
-                    $("#preloader").modal("hide");
-                    location.reload()
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#ff0000",
+                cancelButtonColor: "#d0d0d0d",
+                confirmButtonText: "Proceed",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'get',
+                        url: `${url}/admin/dashboard/remove-holidays/${selectedHoliday}`,
+                        async: true,
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $("#preloader").modal("show");
+                        },
+                        success: function(response) {
+                            setTimeout(_ => $("#preloader").modal("hide"), 500)
+                            Swal.fire(
+                                "Activate",
+                                "You have successfully Activated a user",
+                                "success"
+                            ).then(_ => location.reload())
+
+                        }
+                    })
                 }
-            })
+            });
+
         })
 
         // populateCalendar(getDate(date.getMonth()), date.getMonth())
