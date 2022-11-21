@@ -15,6 +15,7 @@ class StocksController extends BaseController
     private $sms;
     private $notif_model;
     private $on_app_notif;
+    private $session;
 
     function __construct()
     {
@@ -23,6 +24,7 @@ class StocksController extends BaseController
         $this->sms = new OneWaySMS();
         $this->notif_model = new NotificationsModel();
         $this->on_app_notif = new OnAppNotification();
+        $this->session = \Config\Services::session();
     }
 
     public function index()

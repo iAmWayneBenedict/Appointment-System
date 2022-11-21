@@ -27,14 +27,24 @@
     if (session()->has('done')) {
     ?>
         <script>
-            alert('<?= session('done') ?>')
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '<?= session('done') ?>',
+                showConfirmButton: false,
+                timer: 1500
+            })
         </script>
     <?php
     }
     if (session()->has('warning')){
     ?>
         <script>
-            alert('<?= session('warning') ?>')
+            Swal.fire(
+            'Warning',
+            '<?= session('warning') ?>',
+            'warning'
+            )
         </script>
     <?php 
     }

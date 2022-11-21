@@ -93,17 +93,17 @@
                         return;
                     }
 
-                    alert(response.msg)
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: response.msg,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                     console.log(response)
                     location.reload();
                 }
             });
-
-            //see outgoing data inside from formdata
-            //note for development only
-            for (var val of formdata) {
-                console.log(`${val[0]}: ${val[1]}`)
-            }
 
         });
     });

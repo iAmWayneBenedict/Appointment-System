@@ -36,14 +36,22 @@
     if (session()->has('invalid')) {
     ?>
         <script type="text/javascript">
-            alert('<?= session('invalid') ?>')
+            Swal.fire(
+                'Warning!',
+                '<?= session('invalid') ?>',
+                'warning'
+            )
         </script>
     <?php
     }
     if (session()->has('success')) {
     ?>
         <script type="text/javascript">
-            alert('<?= session('success') ?>')
+            Swal.fire(
+                '',
+                '<?= session('success') ?>',
+                'success'
+            )
         </script>
     <?php
     }

@@ -424,12 +424,24 @@
                                         },
                                         success: function(response) {
                                             const res = response.code == 1 ? response.msg : response.msg;
-                                            alert(res)
+                                            Swal.fire({
+                                                position: 'top-end',
+                                                icon: 'info',
+                                                title: res,
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                            })
                                             location.reload()
 
                                         },
                                         error: function(xhr) {
-                                            alert("Error occured.please try again");
+                                            Swal.fire({
+                                                position: 'top-end',
+                                                icon: 'warning',
+                                                title: 'Try Again',
+                                                showConfirmButton: false,
+                                                timer: 2500
+                                            })
                                             console.log(xhr.statusText + ':' + xhr.responseText)
                                         },
                                         complete: function() {

@@ -211,12 +211,11 @@
                                 msg.push(`${val}`)
                             });
 
-                            // alert(msg.join('\n')) //sweet alert
                             Swal.fire({
-                                icon: "error",
-                                title: "Error",
-                                text: msg.join('\n'),
-                            });
+                                icon: 'error',
+                                title: 'Oops...',
+                                html: msg.join('<br>'),
+                            }) //sweet alert
                             $("#appointment-submit").removeAttr('disabled');
                             $("#appointment-submit").val('SUBMIT');
                             return;
@@ -225,8 +224,9 @@
                             'Success!',
                             response.msg,
                             'success'
-                        ).then(_ => window.location.href = `${url}/user/dashboard/pending-appointment`)
-                        // alert(response.msg)
+                        ).then(() => {
+                            window.location.href = `${url}/user/dashboard/pending-appointment`;
+                        })
                     }, 2000)
                 }
             });

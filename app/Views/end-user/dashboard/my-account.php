@@ -123,12 +123,13 @@
 
                     //this should ba an aler
                     if (response.code == 1 || response.code == 0) {
-                        // alert(response.msg)
-                        Swal.fire(
-                            'Updated!',
-                            response.msg,
-                            'success'
-                        ).then(_ => {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'info',
+                            title: response.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(_ => {
                             $(this).trigger('reset');
                             if (response.code == 1) {
                                 location.reload();
@@ -143,12 +144,11 @@
                             msg.push(`${val}`)
                         });
 
-                        alert(msg.join('\n')) //sweet alert
-                        Swal.fire(
-                            'Error!',
-                            msg.join('\n'),
-                            'error'
-                        )
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: msg.join('<br>'),
+                        }) //sweet alert
                     }
                 }
             });
@@ -172,12 +172,13 @@
                     if (response.code == 1 || response.code == 0) {
                         $('#o_password').val('');
                         $('#n_password').val('');
-                        alert(response.msg)
-                        Swal.fire(
-                            'Updated!',
-                            response.msg,
-                            'success'
-                        )
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'info',
+                            title: response.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
 
                     if (response.code == 3) {
@@ -187,12 +188,11 @@
                             msg.push(`${val}`)
                         });
 
-                        // alert(msg.join('\n')) //sweet alert
-                        Swal.fire(
-                            'Error!',
-                            msg.join('\n'),
-                            'error'
-                        )
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            html: msg.join('<br>'),
+                        }) //sweet alert
                     }
                 }
             });

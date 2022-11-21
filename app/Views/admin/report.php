@@ -303,53 +303,13 @@
                 html2canvas($(".view-data")[0], { scale: '1' }).then(function (canvas) {
                     var imgData = canvas.toDataURL("image/png", 1.0);
                     var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-                    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+                    pdf.addImage(imgData, 'png', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
                     for (var i = 1; i <= totalPDFPages; i++) { 
                         pdf.addPage(PDF_Width, PDF_Height);
-                        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+                        pdf.addImage(imgData, 'png', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
                     }
                     pdf.save("Your_PDF_Name.pdf");
                 });
-            }
-
-            //try 3
-            function printDocument(){
-                const input = document.getElementsByClassName('view-data');
-                const divHeight = $(".view-data").height();
-                const divWidth = $(".view-data").width();
-                const ratio = divHeight / divWidth;
-
-                html2canvas(input, { scale: '1' }).then((canvas) => {
-                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
-                    const pdfDOC = new jsPDF("p", "mm", "a4"); //  use a4 for smaller page
-
-                    const width = pdfDOC.interview-dataSize.getWidth();
-                    let height = pdfDOC.internal.pageSize.getHeight();
-                    height = ratio * width;
-
-                    pdfDOC.addImage(imgData, 'JPEG', 0, 0, width - 20, height - 10);
-                    pdfDOC.save('summary.pdf');   //Download the rendered PDF.
-                })
-            }
-
-            //try 2
-            function downloadComponentInPDF(){
-
-                    html2canvas($(".view-data")[0], {scale: '1'}).then((canvas) => {
-                    const componentWidth = $(".view-data").height();
-                    const componentHeight = $(".view-data").height();
-
-                    const orientation = componentWidth >= componentHeight ? 'l' : 'p'
-
-                    const imgData = canvas.toDataURL('image/png', 1.0)
-                    const pdf = new jsPDF("p", "mm", "a4")
-
-                    pdf.internal.pageSize.width = componentWidth
-                    pdf.internal.pageSize.height = componentHeight
-
-                    pdf.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight)
-                    pdf.save('download.pdf')
-                })
             }
 
         })

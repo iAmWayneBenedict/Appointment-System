@@ -113,12 +113,12 @@ class ManageAccount extends BaseController
      *              user account by just only deactivating it to protect  importtant
      *              information from other table that connected to user.
      */
-    function deactivate_user($user_code_id)
+    public function deactivate_user($user_code_id)
     { 
-        $user_data = $this->userModel->get_user_info($user_code_id);
+        $user_data = $this->userModel->get_user($user_code_id);
         
         $server = base_url();
-        $message = "Hello Mr/Ms/Mrs {$user_data->name} were informing you that your account in {$server} \n";
+        $message = "Hello Mr/Ms/Mrs {$user_data->fname} were informing you that your account in {$server} \n";
         $message .= "has been diactivated. Please go to the office and state your code_id or name for Reactivation. \n";
         $message .= "From Agriculrist Office of Bato";
 

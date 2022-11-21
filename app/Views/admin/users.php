@@ -133,7 +133,7 @@
         //Deactivate 
         function handleDeactivateClick() {
             let id = $(this).val();
-
+            
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
