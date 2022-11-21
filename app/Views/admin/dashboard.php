@@ -469,8 +469,9 @@
                             title: 'Inserted',
                             showConfirmButton: false,
                             timer: 1500
+                        }).then(()=> {
+                            location.reload()
                         })
-                        location.reload()
                     } else {
                         Swal.fire({
                             position: 'top-end',
