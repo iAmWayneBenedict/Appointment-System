@@ -220,6 +220,7 @@
 </div>
 
 <script>
+    //TODO: stocks available not updating..
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
