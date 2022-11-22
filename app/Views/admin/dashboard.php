@@ -469,7 +469,7 @@
                             title: 'Inserted',
                             showConfirmButton: false,
                             timer: 1500
-                        }).then(()=> {
+                        }).then(() => {
                             location.reload()
                         })
                     } else {
@@ -639,8 +639,8 @@
                         success: function(response) {
                             setTimeout(_ => $("#preloader").modal("hide"), 500)
                             Swal.fire(
-                                "Activate",
-                                "You have successfully Activated a user",
+                                "Deleted",
+                                "You have deleted a holiday",
                                 "success"
                             ).then(_ => location.reload())
 
