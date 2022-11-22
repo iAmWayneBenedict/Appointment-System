@@ -4,7 +4,7 @@ $(() => {
 	let global_designation_address = "";
 
 	// datatable initialization
-	let $table = $("#employees").DataTable();
+	// let $table = $("#employees").DataTable();
 
 	$(".add-employee-btn").click(function (event) {
 		$(".add-employee-submit-btn").val("Add");
@@ -135,7 +135,7 @@ $(() => {
 
 	function display_employees() {
 		// destroy table before updating
-		$table.destroy();
+		// $table.destroy();
 
 		$.ajax({
 			type: "get",
@@ -176,14 +176,14 @@ $(() => {
 
 				// after population of tbody
 				// datatable reinitialization
-				$table = $("#employees").DataTable({
-					columnDefs: [
-						{
-							width: "30%",
-							targets: 3,
-						},
-					],
-				});
+				// $table = $("#employees").DataTable({
+				// 	columnDefs: [
+				// 		{
+				// 			width: "30%",
+				// 			targets: 3,
+				// 		},
+				// 	],
+				// });
 			},
 		});
 	}
@@ -210,7 +210,7 @@ $(() => {
 						$("#preloader").modal("show");
 					},
 					success: function (res) {
-						$("#preloader").modal("hide");
+						setTimeout((_) => $("#preloader").modal("hide"), 500);
 						Swal.fire(
 							"Deleted",
 							"You have successfully deleted an employee",
