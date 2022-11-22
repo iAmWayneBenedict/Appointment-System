@@ -104,9 +104,11 @@
                                 <div class="">
                                     <label for="category" class="form-label">Category</label>
                                     <select class="form-select" name="category" id="category">
-                                        <option value="per kilo" selected>Seeds</option>
-                                        <option value="per sack">Fertilizers</option>
-                                        <option value="per sack">Vouchers</option>
+                                        <option value="seeds" selected>Seeds</option>
+                                        <option value="seedlings">Seedlings</option>
+                                        <option value="fertilizers">Fertilizers</option>
+                                        <option value="vouchers">Vouchers</option>
+                                        <option value="pesticides">Pesticides</option>
                                     </select>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
@@ -135,10 +137,12 @@
                                 <div class="">
                                     <label for="per_type" class="form-label">Retail</label>
                                     <select class="form-select" name="per_type" id="per_type">
-                                        <option value="per kilo" selected>Per Kilo</option>
-                                        <option value="per sack">Per Sack</option>
-                                        <option value="per piece">Per Piece</option>
-                                        <option value="per sachet">Per Sachet</option>
+                                        <option value="per kilo" data-entry="seeds-fertilizers" selected>Per Kilo</option>
+                                        <option value="per sack" data-entry="fertilizers">Per Sack</option>
+                                        <option value="per piece" data-entry="vouchers">Per Piece</option>
+                                        <option value="per sachet" data-entry="seeds">Per Sachet</option>
+                                        <option value="per plant" data-entry="seedlings">Per Plant</option>
+                                        <option value="per bottle" data-entry="pesticides">Per Bottle</option>
                                     </select>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
@@ -220,7 +224,6 @@
 </div>
 
 <script>
-    //TODO: stocks available not updating..
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
@@ -251,6 +254,34 @@
             let quantity_availed = $('#quantity_availed').val()
             console.log(stock_id, avail_by, quantity_availed)
         })
+
+        $("#category").change(initCategory)
+
+        initCategory()
+
+        function initCategory() {
+            let categoryValue = $("#category").val()
+
+            $("#per_type").children().each(function() {
+                $(this).removeAttr("selected")
+                $(this).removeAttr("disabled")
+                $(this).removeClass("d-none")
+            })
+
+            $("#per_type").children().each(function() {
+                let {
+                    entry
+                } = $(this).data()
+
+                if (entry.includes(categoryValue)) {
+                    $(this).attr("selected", true)
+                } else {
+                    $(this).addClass("d-none")
+                    $(this).attr("disabled", true)
+
+                }
+            })
+        }
 
         let quantity = 0
         let allocated = 0

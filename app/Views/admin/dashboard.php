@@ -35,7 +35,7 @@
                         ?></h1>
             <h1>Admin</h1>
         </div>
-        <div class="d-flex gap-2 mb-4">
+        <div class="d-flex gap-2 mb-4" id="overview-container">
             <div class="quick-overview rounded-5 px-4 py-2 mt-4" style="background: #cfe1ff; width:fit-content">
                 <b>Here's a quick overview on what's happening.</b>
             </div>
@@ -43,7 +43,7 @@
                 <small class="fw-semibold"><span id="notif-counter-alert">0</span> Unread Notifications</small>
             </div>
             <div class="quick-overview rounded-5 px-4 py-2 mt-4 font-montserrat" style="background: #FFCECE; width:fit-content;">
-                <small class="fw-semibold"><span id="pending-counter-alert">3</span> Pending Appointments</small>
+                <small class="fw-semibold"><span id="pending-counter-alert">0</span> Pending Appointments</small>
             </div>
         </div>
     </div>
@@ -420,9 +420,36 @@
                     // console.log(unreadCounter)
                     initToast()
                     handleNotifAlertBubble(unreadCounter)
+                    overviewChecker()
                 }
 
             });
+        }
+
+        function getPendingLength() {
+            $.ajax({
+                type: "get",
+                url: `${url}/admin/dashboard/get-all-pending-appointments`,
+                dataType: "json",
+                success: function(response) {
+                    // console.log(response)
+                    if (response.code === 0) $("#pending-counter-alert").parent().parent().addClass("d-none")
+                    else $("#pending-counter-alert").text(response.data.pending.length)
+                    overviewChecker()
+                }
+            })
+        }
+
+        getPendingLength()
+
+        function overviewChecker() {
+            if ($("#pending-counter-alert").parent().parent().hasClass("d-none") &&
+                $("#notif-counter-alert").parent().parent().hasClass("d-none")) {
+                $("#overview-container").addClass("d-none")
+            } else {
+                $("#overview-container").removeClass("d-none")
+            }
+
         }
 
         function handleNotifAlertBubble(unreadCounter) {

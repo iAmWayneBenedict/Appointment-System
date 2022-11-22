@@ -126,6 +126,33 @@ class ManageAppointment extends BaseController
             ]);
         }
     }
+    /**
+     Function: GET ALL PENDING APPOINTMENTS
+     * Description: Display all the pending appointments into views
+     * @return JSON with data 
+     */
+
+    public function get_all_pending_appointments()
+    {
+
+        $data['pending'] = $this->manage_appointment->get_pending_appointment();
+
+        // echo '<pre>';
+        // print_r($data);
+        // echo '<pre>';
+        if ($data['pending']) {
+            return json_encode([
+                'code' => 1,
+                'data' => $data,
+                'msg' => "Successfully retrieved data"
+            ]);
+        } else {
+            return json_encode([
+                'code' => 0,
+                'msg' => "Cannot retrieve data",
+            ]);
+        }
+    }
 
     /**
      * Function: Get Events Data

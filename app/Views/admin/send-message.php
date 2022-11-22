@@ -377,7 +377,7 @@
                     setTimeout(() => {
                         $("#preloader").modal("hide");
                     }, 500)
-                    // console.log(response)
+                    console.log(response)
                     if (response.code == 0) {
                         var msg = []; //hold all error messages
 
@@ -391,7 +391,7 @@
                             title: 'Oops...',
                             html: msg.join('<br>'),
                         })
-                         //sweet alert
+                        //sweet alert
                         // console.log(msg)
                         return;
                     }
