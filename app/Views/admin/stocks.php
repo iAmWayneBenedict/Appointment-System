@@ -122,13 +122,13 @@
 
                                 <div class="">
                                     <label for="quantity" class="form-label">Quantity</label>
-                                    <input type="text" class="form-control quantity" id="quantity" name="quantity" placeholder="Quantity" required>
+                                    <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
                                 <div class="">
                                     <label for="allocated" class="form-label">Allocated</label>
-                                    <input type="text" class="form-control allocated" id="allocated" name="allocated" placeholder="Allocated" required>
+                                    <input type="text" class="form-control" id="allocated" name="allocated" placeholder="Allocated" required>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="d-none">
                                     <label for="any-type-textbox" class="form-label">Specify type</label>
-                                    <input type="number" class="form-control" id="type" name="any-type-textbox" placeholder="Specify type">
+                                    <input type="number" class="form-control" id="avail-c" name="any-type-textbox" placeholder="Specify type">
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
@@ -190,8 +190,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="text" class="form-control d-none quantity-update" id="quantity" name="quantity">
-                        <input type="text" class="form-control d-none allocated-update" id="allocated" name="allocated">
                         <button type="button" class="btn btn-transparent" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" value="Update">Save changes</button>
                     </div>
@@ -285,25 +283,23 @@
 
         let quantity = 0
         let allocated = 0
-
-        function initAvailAllo() {
-            $(".quantity").each(function() {
-                $(this).on('keydown keyup', handleComputeAvailable)
-            });
-            $(".allocated").each(function() {
-                $(this).on('keydown keyup', handleComputeAvailable);
-            })
-        }
-
-        initAvailAllo()
+        $("#quantity").each(function() {
+            $(this).on('keydown keyup', handleComputeAvailable)
+        });
+        $("#allocated").each(function() {
+            $(this).on('keydown keyup', handleComputeAvailable);
+        })
+        $("#per_type").change(function() {
+            if ($(this).val() === "Any") {
+                $(this).parent().next().removeClass("d-none")
+                console.log(2)
+                console.log(2)
+            } else {
+                $(this).parent().next().addClass("d-none")
+            }
+        })
 
         function handleComputeAvailable() {
-            if (this.classList.contains("allocated")) {
-
-                quantity = parseInt($(this).parent().prev().children("input").val())
-            } else {
-                allocated = parseInt($(this).parent().next().children("input").val())
-            }
             let input = $(this).val().split("")
             let inputLength = input.length - 1
             let data = 0;
@@ -343,8 +339,8 @@
             } else {
                 $(this).next().addClass('d-none')
                 $('button[value=Add], button[value=Update]').removeAttr('disabled')
-                // console.log(this.id)
-                if (this.classList.contains("allocated")) {
+                console.log(this.id)
+                if (this.id === 'allocated') {
                     allocated = data;
                 } else {
                     quantity = data
@@ -363,13 +359,7 @@
             } else {
                 $('#avail-c').next().addClass('d-none')
                 $('button[value=Add], button[value=Update]').removeAttr('disabled')
-                $(".quantity-update").val(quantity)
-                $(".allocated-update").val(allocated)
             }
-
-            console.log(allocated, quantity)
-
-
             return $('#avail-c').val(quantity - allocated)
         }
 
@@ -415,7 +405,9 @@
                             async: true,
                             success: function(res) {
                                 $('.update').html(res)
-                                initAvailAllo()
+                                $("#quantity, #allocated").each(function() {
+                                    $(this).on('keydown keyup', handleComputeAvailable)
+                                });
                             }
                         });
                     });
