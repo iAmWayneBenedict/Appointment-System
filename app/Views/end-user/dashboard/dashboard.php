@@ -77,6 +77,11 @@
                                     <?php
                                     }
                                     ?>
+                                    <br>
+                                    <div class="fw-semibold position-relative">
+                                        <span class="position-absolute" style="width: 10px; height:10px; border-radius:50%; background:blue; top:7px"></span>
+                                        <span class="ms-4"><?= $user->purpose ?></span>
+                                    </div>
                                 </div>
 
                                 <!-- options button -->
@@ -185,6 +190,11 @@
                                     <?php
                                     }
                                     ?>
+                                    <br>
+                                    <div class="fw-semibold position-relative">
+                                        <span class="position-absolute" style="width: 10px; height:10px; border-radius:50%; background:blue; top:7px"></span>
+                                        <span class="ms-4"><?= $user->purpose ?></span>
+                                    </div>
                                 </div>
 
                                 <!-- options button -->
