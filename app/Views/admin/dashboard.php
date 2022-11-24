@@ -820,6 +820,7 @@
             let stocksReleaseDates = stocksReleaseData.getAllDates
             let stocksDescriptions = stocksReleaseData.getAllDescription
             // populate the remaining weeks
+            console.log(lastUTCDay + firstDay)
             for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
                 if (date.getUTCDate() === days && date.getMonth() === month) {
 
@@ -839,13 +840,9 @@
                         }
                     }
 
-                    if (hasStocksReleaseDate) continue;
-                    // Date today
-
-
-
-                    currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
-
+                    if (!hasStocksReleaseDate) {
+                        currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
+                    }
                 } else {
 
                     let hasStocksReleaseDate = false;
@@ -863,11 +860,10 @@
                         }
                     }
 
-                    if (hasStocksReleaseDate) continue;
-                    // Date today
+                    if (!hasStocksReleaseDate) {
 
-                    currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
-
+                        currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + '</div></span></td>'
+                    }
                 }
 
                 if (j % 7 === 0) {
@@ -882,7 +878,6 @@
 
 
             }
-
             $('.days-entries').append(allDates)
         }
 
