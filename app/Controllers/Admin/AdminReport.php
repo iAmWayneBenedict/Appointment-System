@@ -48,6 +48,8 @@ class AdminReport extends BaseController
             $state,
             $year
         );
+        
+        // return json_encode($from_date);
 
         // return $results;
         $data['results'] = $results['results'];

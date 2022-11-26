@@ -1,10 +1,13 @@
 <?php
     // print_r($report);
 
-    $key_month = NULL;
+    $bussiest = "NONE";
     if(!empty($report)){
         $value = max($report);
-        $key_month = array_search($value, $report);
+        if(!$value == 0){
+            $key_month = array_search($value, $report);
+            $bussiest = date('F',strtotime($key_month));
+        }
     }
 ?>
     <div class="row m-4 rounded-lg justify-content-center" style="background-color: #ffffff !important;">
@@ -37,7 +40,7 @@
                             <b>BUSIEST MONTH</b>
                         </div>
                         <ul class="list-group list-group-flush text-center">
-                            <li class="list-group-item"><?= date('F',strtotime($date_today))?></li>
+                            <li class="list-group-item"><?= $bussiest?></li>
                         </ul>
                     </div>
                 </div>
@@ -49,10 +52,54 @@
     </div>
     <div class="row m-4 rounded-lg" style="background-color: #ffffff !important;">
         <div class="col-6 p-3">
+            <canvas id="myChart2" style="width:100%;max-width:700px"></canvas>
+        </div>
+        <div class="col-6">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-warning">
+                        <th colspan="2" class="p-2">Appointment Purpose</th>
+                    </tr>
+                </thead>
+                <tbody class="results">
+                <?php
+                    foreach($purpose as $key => $val){ 
+                ?>
+                    <tr class="">
+                        <th scope="row"><?= $key ?></th>
+                        <td><?= $val ?></td>
+                    </tr>
+                <?php
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row m-4 rounded-lg" style="background-color: #ffffff !important;">
+        <div class="col-6 p-3">
             <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
         </div>
-        <div class="col-6 p-3">
-            <canvas id="myChart2" style="width:100%;max-width:700px"></canvas>
+        <div class="col-6">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-warning">
+                        <th colspan="2" class="p-2">Appointment State</th>
+                    </tr>
+                </thead>
+                <tbody class="results">
+                <?php
+                    foreach($from_result as $key => $val){ 
+                ?>
+                    <tr class="">
+                        <th scope="row"><?= ucwords($key) ?></th>
+                        <td><?= $val ?></td>
+                    </tr>
+                <?php
+                    }
+                ?>
+                </tbody>
+            </table>
         </div>
     </div>
     <hr>
@@ -87,48 +134,8 @@
     </table>
     <hr>
     <div class="row">
-        <div class="col-6">
-            <table class="table table-bordered">
-                <thead>
-                    <tr class="table-warning">
-                        <th colspan="2" class="p-2">Appointment State</th>
-                    </tr>
-                </thead>
-                <tbody class="results">
-                <?php
-                    foreach($from_result as $key => $val){ 
-                ?>
-                    <tr class="">
-                        <th scope="row"><?= ucwords($key) ?></th>
-                        <td><?= $val ?></td>
-                    </tr>
-                <?php
-                    }
-                ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-6">
-            <table class="table table-bordered">
-                <thead>
-                    <tr class="table-warning">
-                        <th colspan="2" class="p-2">Appointment Purpose</th>
-                    </tr>
-                </thead>
-                <tbody class="results">
-                <?php
-                    foreach($purpose as $key => $val){ 
-                ?>
-                    <tr class="">
-                        <th scope="row"><?= $key ?></th>
-                        <td><?= $val ?></td>
-                    </tr>
-                <?php
-                    }
-                ?>
-                </tbody>
-            </table>
-        </div>
+        
+        
     </div>
     <script type="text/javascript">
         <?php unset($from_result['all'])?>

@@ -40,18 +40,22 @@
                 <h3>Appointment Report</h3>
         </div>
         <div class="row mb-5">
-            <form action="<?= base_url('/admin/dashboard/generate-pdf') ?>" method="post" class="a_form">
+            <form action="<?= base_url('/admin/dashboard/generate-pdf') ?>" method="post" class="a_form" id="a_form">
                 <div class="row justify-content-md-center m-3">
                     <div class="col-1">
+                        <label for="">From:</label>
                         <input type="text" class="form-control from" name="from_date" id="datepicker" placeholder="From"/>
                     </div>
                     <div class="col-1">
+                        <label for="">To:</label>
                         <input type="text" class="form-control to" name="to_date" id="datepicker2" placeholder="To"/>
                     </div>
                     <div class="col-1">
+                        <label for="">Year</label>:
                         <input type="text" class="form-control year" name="year" id="datepicker3" placeholder="Year"/>
                     </div>
                     <div class="col">
+                        <label for="">Social Position:</label>
                         <select class="form-select" aria-label="Default select example" id="social_pos" name="social_pos">
                             <option selected value="All">All</option>
                             <option value="Farmers">Farmers</option>
@@ -62,6 +66,7 @@
                         </select>
                     </div>
                     <div class="col col-lg-2">
+                    <label for="">Purpose:</label>
                         <select class="form-select" aria-label="Default select example" id="purpose" name="purpose">
                             <option selected value="All">All</option>
                             <option value="RSBSA (Registry System for Basic Sector in Agriculture)">RSBSA (Registry System for Basic Sector in Agriculture)</option>
@@ -72,6 +77,7 @@
                         </select>
                     </div>
                     <div class="col">
+                    <label for="">State:</label>
                         <select class="form-select" aria-label="Default select example" id="state" name="state">
                             <option selected value="All">All</option>
                             <option value="pending canceled">Pending Canceled</option>
@@ -83,6 +89,7 @@
                         </select>
                     </div>
                     <div class="col">
+                        <label for="">Actions:</label>
                         <div class="row justify-content-md-center">
                             <div class="col">
                                 <button class="btn btn-warning" id="prev">PreView</button>
@@ -112,17 +119,21 @@
             <form action="<?= base_url('/admin/dashboard/sgenerate-pdf') ?>" method="post" class="s-form">
                 <div class="row d-flex flex-wrap align-items-center m-3">
                     <div class="col">
-                        <input type="text" class="form-control sfrom" name="sfrom_date" id="datepicker" placeholder="Select Month"/>
+                    <label for="">From:</label>
+                        <input type="text" class="form-control sfrom" name="sfrom_date" id="sdatepicker" placeholder="From"/>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control sto" name="sto_date" id="datepicker2" placeholder="To Month"/>
+                    <label for="">To:</label>
+                        <input type="text" class="form-control sto" name="sto_date" id="sdatepicker2" placeholder="To"/>
                     </div>
                     <div class="col sub-cat">
+                    <label for="">Subcategory:</label>
                         <select class="form-select" aria-label="Default select example" id="sub_cats" name="sub_cats">
                             <option selected value="All">All</option>
                         </select>
                     </div>
                     <div class="col">
+                    <label for="">Actions:</label>
                         <div class="row justify-content-md-center">
                             <!-- <div class="col d-flex justify-content-center"> -->
                             <div class="col">
@@ -149,20 +160,31 @@
     </div>
     
     <script>
-        $("#datepicker, .sfrom").datepicker( {
-            format: "mm",
+        $("#datepicker").datepicker( {
+            format: "mm-dd",
             startView: "months", 
-            minViewMode: "months"
+            minViewMode: ""
         });
-        $("#datepicker2, .sto").datepicker( {
-            format: "mm",
+        $("#datepicker2").datepicker( {
+            format: "mm-dd",
             startView: "months", 
-            minViewMode: "months"
+            minViewMode: ""
         });
         $("#datepicker3").datepicker( {
             format: "yyyy",
             startView: "years", 
             minViewMode: "years"
+        });
+
+        $("#sdatepicker, .sfrom").datepicker( {
+            format: "yyyy-mm-dd",
+            startView: "months", 
+            minViewMode: ""
+        });
+        $("#sdatepicker2, .sto").datepicker( {
+            format: "yyyy-mm-dd",
+            startView: "months", 
+            minViewMode: ""
         });
 
         $(document).on('change keyup', '.from, .to, #social_pos, #purpose, #state, .year', function (e) { 
@@ -177,8 +199,12 @@
             $('#sprev').show()
         });
 
+        $(()=> {
+            const url = document.querySelector("meta[name = base_url]").getAttribute("content");
+
         $('#sreset').click(function (e) { 
             e.preventDefault();
+            // $(':input','.sview-data').val('').removeAttr('selected');
             $('.sview-data').empty()
             $('#sprint').addClass('d-none')
             $('#sprev').show()
@@ -187,15 +213,11 @@
 
         $('#reset').click(function (e) { 
             e.preventDefault();
-            $('.a_form').trigger('reset')
+            $('#a_form').trigger("reset")
             $('.view-data').empty()
             $('#print').addClass('d-none')
             $('#prev').show()
         });
-
-
-        $(()=> {
-            const url = document.querySelector("meta[name = base_url]").getAttribute("content");
 
             //check if from input is empty then disabled the "to" input
             setInterval(() => {
@@ -236,6 +258,7 @@
                         $('.view-data').html(response)
                         $('#print').removeClass('d-none')
                         $('#prev').hide()
+                        // console.log(response)
                     }
                 });
             });

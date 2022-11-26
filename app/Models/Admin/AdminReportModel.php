@@ -56,22 +56,22 @@ class AdminReportModel extends Model
         }
         if($from_date != NULL and !empty($year)){
             
-            $conditions["DATE_FORMAT(schedule, '%Y-%m') >="] = "{$selected_year}-{$from_date}";
+            $conditions["DATE_FORMAT(schedule, '%Y-%m-%d') >="] = "{$selected_year}-{$from_date}";
 
             if($to_date != NULL){
-                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = "{$selected_year}-{$to_date}";
+                $conditions["DATE_FORMAT(schedule, '%Y-%m-%d') <="] = "{$selected_year}-{$to_date}";
             }else{
-                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = "{$selected_year}-{$from_date}";
+                $conditions["DATE_FORMAT(schedule, '%Y-%m-%d') <="] = "{$selected_year}-{$from_date}";
             }
         }
         elseif($from_date != NULL and empty($year)){
 
-            $conditions["DATE_FORMAT(schedule, '%Y-%m') >="] = "{$selected_year}-{$from_date}";
+            $conditions["DATE_FORMAT(schedule, '%Y-%m-%d') >="] = "{$selected_year}-{$from_date}";
 
             if($to_date != NULL){
-                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = "{$selected_year}-{$to_date}";
+                $conditions["DATE_FORMAT(schedule, '%Y-%m-%d') <="] = "{$selected_year}-{$to_date}";
             }else{
-                $conditions["DATE_FORMAT(schedule, '%Y-%m') <="] = "{$selected_year}-{$from_date}";
+                $conditions["DATE_FORMAT(schedule, '%Y-%m-%d') <="] = "{$selected_year}-{$from_date}";
             }
         }
         else{
@@ -151,12 +151,12 @@ class AdminReportModel extends Model
             $conditions['sub_category'] = $sub_cat;
         }
         if($from_date != NULL){
-            $conditions["DATE_FORMAT(date, '%Y-%m') >="] = $from_date;
+            $conditions["DATE_FORMAT(date, '%Y-%m-%d') >="] = $from_date;
 
             if($to_date != NULL){
-                $conditions["DATE_FORMAT(date, '%Y-%m') <="] = $to_date;
+                $conditions["DATE_FORMAT(date, '%Y-%m-%d') <="] = $to_date;
             }else{
-                $conditions["DATE_FORMAT(date, '%Y-%m') <="] = $from_date;
+                $conditions["DATE_FORMAT(date, '%Y-%m-%d') <="] = $from_date;
             }
         }
 
@@ -196,9 +196,9 @@ class AdminReportModel extends Model
             'Jul.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '07')->countAllResults(),
             'Aug.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '08')->countAllResults(),
             'Sep.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '09')->countAllResults(),
-            'Oct.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '10')->countAllResults(),
             'Nov.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '11')->countAllResults(),
             'Dec.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '12')->countAllResults(),
+            'Oct.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '10')->countAllResults(),
         ];
         return $data;
 
