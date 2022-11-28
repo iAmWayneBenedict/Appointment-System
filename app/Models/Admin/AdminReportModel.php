@@ -124,7 +124,7 @@ class AdminReportModel extends Model
     //Function: Just simply get all appointments recieve by the system
     public function get_total_appointments(){
 
-        $total = $this->db_conn->table('set_appointments')
+        $total = $this->db_conn->table('appointment_report')
             ->select('*')
             ->countAllResults();
 
