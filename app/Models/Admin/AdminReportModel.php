@@ -196,9 +196,9 @@ class AdminReportModel extends Model
             'Jul.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '07')->countAllResults(),
             'Aug.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '08')->countAllResults(),
             'Sep.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '09')->countAllResults(),
+            'Oct.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '10')->countAllResults(),
             'Nov.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '11')->countAllResults(),
             'Dec.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '12')->countAllResults(),
-            'Oct.' => $query->where($condition)->like("EXTRACT(month FROM schedule)", '10')->countAllResults(),
         ];
         return $data;
 
