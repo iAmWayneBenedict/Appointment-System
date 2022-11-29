@@ -46,13 +46,13 @@
                         let [year, month, day] = element.release_date.split('-')
                         let monthName = convertMonthToName(parseInt(month - 1))
                         let dayOfTheWeek = convertDayToName(getCurrentDayOfTheWeek(month - 1, day, year))
-                        $('.list').append(stocksCardTemplates(element.available, element.category, dayOfTheWeek, monthName, day, year))
+                        $('.list').append(stocksCardTemplates(element.available, element.category, element.name, dayOfTheWeek, monthName, day, year))
                     }
                 }
             });
         }
 
-        function stocksCardTemplates(available, category, dayOfTheWeek, monthName, day, year) {
+        function stocksCardTemplates(available, category, name, dayOfTheWeek, monthName, day, year) {
             let template = "";
             if (category.toLowerCase() === "seedlings") {
                 template = `<div class="stock-card-container p-4 rounded-4" style="max-width: 30rem; min-width: 22rem;background:#84A98C">
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="bottom-stock-card d-flex mt-5 text-white justify-content-between align-items-center">
-                        <h4 class="mb-0 me-3">${category}</h4>
+                        <h4 class="mb-0 me-3">${name}</h4>
                         <span>${dayOfTheWeek}, ${monthName} ${day}, ${year}</span>
                     </div>
                 </div>`
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <div class="bottom-stock-card d-flex mt-5 text-white justify-content-between align-items-center">
-                        <h4 class="mb-0 me-3">${category}</h4>
+                        <h4 class="mb-0 me-3">${name}</h4>
                         <span>${dayOfTheWeek}, ${monthName} ${day}, ${year}</span>
                     </div>
                 </div>`
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="bottom-stock-card d-flex mt-5 text-white justify-content-between align-items-center">
-                        <h4 class="mb-0 me-3">${category}</h4>
+                        <h4 class="mb-0 me-3">${name}</h4>
                         <span>${dayOfTheWeek}, ${monthName} ${day}, ${year}</span>
                     </div>
                 </div>`
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                     <div class="bottom-stock-card d-flex mt-5 text-white justify-content-between align-items-center">
-                        <h4 class="mb-0 me-3">${category}</h4>
+                        <h4 class="mb-0 me-3">${name}</h4>
                         <span>${dayOfTheWeek}, ${monthName} ${day}, ${year}</span>
                     </div>
                 </div>`
@@ -176,7 +176,7 @@
                         </div>
                     </div>
                     <div class="bottom-stock-card d-flex mt-5 text-white justify-content-between align-items-center">
-                        <h4 class="mb-0 me-3">${category}</h4>
+                        <h4 class="mb-0 me-3">${name}</h4>
                         <span>${dayOfTheWeek}, ${monthName} ${day}, ${year}</span>
                     </div>
                 </div>`

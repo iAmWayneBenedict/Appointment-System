@@ -5,7 +5,7 @@ foreach ($stocks as $stock) {
     <tr>
         <td><?= $stock->id ?></td>
         <td><?= $stock->category ?></td>
-        <td><?= $stock->sub_category ?></td>
+        <td><?= $stock->name ?></td>
         <td><?= $total_avail ?></td>
         <td>
             <button id="update" class="show-update btn btn-primary" value="<?= $stock->id ?>" data-bs-toggle="modal" data-bs-target="#updateStocksModal">Update</button>

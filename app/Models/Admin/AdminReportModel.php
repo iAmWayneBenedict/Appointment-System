@@ -148,7 +148,7 @@ class AdminReportModel extends Model
         $conditions = [];
 
         if($sub_cat !='All'){
-            $conditions['sub_category'] = $sub_cat;
+            $conditions['name'] = $sub_cat;
         }
         if($from_date != NULL){
             $conditions["DATE_FORMAT(date, '%Y-%m-%d') >="] = $from_date;
@@ -161,7 +161,7 @@ class AdminReportModel extends Model
         }
 
        
-        $all_result = $query->select("DATE_FORMAT(date, '%M %e, %Y %l:%i %p') as date, sub_category, per_type, avail_by, quantity_availed")
+        $all_result = $query->select("DATE_FORMAT(date, '%M %e, %Y %l:%i %p') as date, name, per_type, avail_by, quantity_availed")
             ->where($conditions);
 
         

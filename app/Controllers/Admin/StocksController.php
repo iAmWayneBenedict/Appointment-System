@@ -42,7 +42,7 @@ class StocksController extends BaseController
         $stock_data = [
             'admin_id'          => $this->session->get('admin_id'),
             'category'          => ucwords($this->request->getPost('category')),
-            'sub_category'      => ucwords($this->request->getPost('sub_category')),
+            'name'      => ucwords($this->request->getPost('sub_category')),
             'total_quantity'    => $this->request->getPost('quantity'),
             'allocated'         => $this->request->getPost('allocated'),
             'available'         => $this->request->getPost('available'),
@@ -63,7 +63,7 @@ class StocksController extends BaseController
     {
 
         $data = $this->stock_model->get_all_stocks();
-        $subcats = array_column($data, 'sub_category');
+        $subcats = array_column($data, 'name');
         return json_encode($subcats); 
     }
 
@@ -169,7 +169,7 @@ class StocksController extends BaseController
             $r_date = date('F j, Y', strtotime($stock_data->release_date));
 
             $message = "{$this->greet->greet()}, This is Agriculture office of Bato \n";
-            $message .= "Update Stock Release for {$stock_data->category} : {$stock_data->sub_category} \n";
+            $message .= "Update Stock Release for {$stock_data->category} : {$stock_data->name} \n";
             $message .= "Release Date: {$r_date}, available stocks: {$stock_data->available}";
             $message .= "Given as: {$stock_data->per_type}";
 
@@ -216,7 +216,7 @@ class StocksController extends BaseController
             $r_date = date('F j, Y', strtotime($stock_data->release_date));
 
             $message = "{$this->greet->greet()}, This is Agriculture office of Bato \n";
-            $message .= "Update Stock Release for {$stock_data->category} : {$stock_data->sub_category} \n";
+            $message .= "Update Stock Release for {$stock_data->category} : {$stock_data->name} \n";
             $message .= "Release Date: {$r_date}, available stocks: {$stock_data->available}";
 
             $user_data = $this->notif_model->get_user_data();

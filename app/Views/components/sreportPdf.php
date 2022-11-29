@@ -115,7 +115,7 @@
                 <table border="1" cellspacing="0" cellpadding="10" id="data">
                     <thead>
                         <tr>
-                            <th><span>Sub Cat.</span></th>
+                            <th><span>Stock Name</span></th>
                             <th><span>Total Quantity</span></th>
                             <th><span>Allocated</span></th>
                             <th><span>Available</span></th>
@@ -127,7 +127,7 @@
                         foreach($stocks as $stock){
                     ?>
                         <tr>
-                            <td><?= $stock['sub_category']?></td>
+                            <td><?= $stock['name']?></td>
                             <td><?= $stock['total_quantity'] ?></td>
                             <td><?= $stock['allocated']?></td>
                             <td><?= $stock['available'] ?></td>
@@ -154,7 +154,7 @@
                         foreach($sresults as $result){
                     ?>
                         <tr>
-                            <td><?= $result['sub_category']?></td>
+                            <td><?= $result['name']?></td>
                             <td><?= $result['avail_by'] ?></td>
                             <td><?= $result['quantity_availed']?></td>
                             <td><?= $result['date'] ?></td>

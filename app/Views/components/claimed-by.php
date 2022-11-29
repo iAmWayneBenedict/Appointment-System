@@ -1,6 +1,6 @@
 <form action="" method="post" id="claimed-form">
     <div class="d-flex justify-content-start">
-        <h3><?= $stocks->sub_category ?></h3>
+        <h3><?= $stocks->name ?></h3>
     </div>
     <div class="row mt-4 d-flex flex-column justify-content-center">
         <div class="form-group">
