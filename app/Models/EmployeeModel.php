@@ -25,7 +25,7 @@ class EmployeeModel extends Model
             ->select('*')
             ->get();
 
-        $employee_data = $query->getResultArray();
+        $employee_data = $query->getResultObject();
         return $employee_data;
     }
 
