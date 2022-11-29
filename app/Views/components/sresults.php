@@ -4,7 +4,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Sub Cat.</th>
+                <th>Stock Name</th>
                 <th>Total Quantity</th>
                 <th>Allocated</th>
                 <th>Available</th>
@@ -16,7 +16,7 @@
             foreach($stocks as $stock){
         ?>
             <tr>
-                <td><?= $stock['sub_category']?></td>
+                <td><?= $stock['name']?></td>
                 <td><?= $stock['total_quantity'] ?></td>
                 <td><?= $stock['allocated']?></td>
                 <td><?= $stock['available'] ?></td>

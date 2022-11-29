@@ -1,0 +1,1 @@
+CREATE OR REPLACE VIEW stock_report AS SELECT stocks.name, stocks.per_type, stocks_availed.avail_by, stocks_availed.quantity_availed, stocks_availed.date FROM stocks_availed JOIN stocks ON stocks.id = stocks_availed.stock_id;

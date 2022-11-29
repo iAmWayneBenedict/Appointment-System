@@ -1,5 +1,5 @@
 <div>
-    <h4><?= ucfirst($stocks->sub_category) ?> Stocks</h4>
+    <h4><?= ucfirst($stocks->name) ?> Stocks</h4>
     <div class="">
         <label for="quantity" class="form-label">Available to Clients</label>
         <input type="text" class="form-control quantity" value="<?= $stocks->available ?>">

@@ -7,7 +7,7 @@ if (isset($stocks->release_date)) {
             <h4>Update Release of Stocks</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <h4><?= ucfirst($stocks->sub_category) ?> Stocks</h4>
+        <h4><?= ucfirst($stocks->name) ?> Stocks</h4>
         <div>
             <label for="r_date" class="form-label">Update Date:</label>
             <input type="date" name="r_date" id="date" class="form-control" required><br>
@@ -26,7 +26,7 @@ if (isset($stocks->release_date)) {
             <h4>Set a release Date</h4>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <h4><?= ucfirst($stocks->sub_category) ?> Stocks</h4>
+        <h4><?= ucfirst($stocks->name) ?> Stocks</h4>
         <div>
             <label for="r_date" class="form-label">Update Date:</label>
             <input type="date" name="r_date" id="date" class="form-control" required><br>

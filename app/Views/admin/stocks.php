@@ -77,7 +77,7 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Category</th>
-                        <th scope="col">Sub Cat.</th>
+                        <th scope="col">Stock Name</th>
                         <th scope="col">Total Stocks</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -114,8 +114,8 @@
                                         message!</span><br>
                                 </div>
                                 <div class="">
-                                    <label for="sub_category" class="form-label">Sub Category</label>
-                                    <input type="text" class="form-control" id="sub_category" name="sub_category" placeholder="Sub Category" required>
+                                    <label for="sub_category" class="form-label">Stock Name</label>
+                                    <input type="text" class="form-control" id="sub_category" name="sub_category" placeholder="Stock Name" required>
                                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                                         message!</span><br>
                                 </div>
@@ -138,9 +138,9 @@
                                     <label for="per_type" class="form-label">Retail</label>
                                     <select class="form-select" name="per_type" id="per_type">
                                         <option value="per kilo" data-entry="seeds-fertilizers" selected>Per Kilo</option>
-                                        <option value="per sack" data-entry="fertilizers">Per Sack</option>
+                                        <option value="per sack" data-entry="seeds-fertilizers">Per Sack</option>
                                         <option value="per piece" data-entry="vouchers">Per Piece</option>
-                                        <option value="per sachet" data-entry="seeds">Per Sachet</option>
+                                        <option value="per sachet" data-entry="seeds-pesticides">Per Sachet</option>
                                         <option value="per plant" data-entry="seedlings">Per Plant</option>
                                         <option value="per bottle" data-entry="pesticides">Per Bottle</option>
                                     </select>
@@ -242,7 +242,7 @@
             success: function(response) {
                 response.stocks.map((data) => {
                     $("#stock_id").append(`
-                        <option value="${data.id}">${data.sub_category}</option>
+                        <option value="${data.id}">${data.name}</option>
                     `)
                 })
             }
