@@ -29,6 +29,17 @@ class EmployeeModel extends Model
         return $employee_data;
     }
 
+    public function get_incharge($empID){
+
+        $query = $this->db_connect->table('emp_incharge')
+            ->select('*')
+            ->where('emp_id', $empID)
+            ->get();
+        
+        $employee_data = $query->getResultObject();
+        return $employee_data;
+    }
+
 
     /**
      * func: update the status of the employee in the database
