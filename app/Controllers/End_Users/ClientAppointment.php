@@ -137,7 +137,9 @@ class ClientAppointment extends BaseController
         $user_id = NULL;
         $_user = 'Guest'; //default, 000
         if ($user_type == 001) {
+            // TODO: tobe fixed after testing
             $user_id = $this->session->get('id');
+            // $user_id = $this->request->getPost('id');
             $_user = 'Registered';
         }
 
@@ -161,7 +163,7 @@ class ClientAppointment extends BaseController
                 'errors' => 'Sorry!, Please make a try later, Something went worng in our server'
             ]);
         }
-        
+
         return json_encode([
             'code' => 1,
             'msg' => "Appointment Sent\nPlease wait for a Text message for an update on your appointment \n Appointment ID: {$response['id']}"

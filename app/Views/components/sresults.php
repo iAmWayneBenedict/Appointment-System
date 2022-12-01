@@ -43,7 +43,7 @@
             foreach($sresults as $result){
         ?>
             <tr>
-                <td><?= $result['sub_category']?></td>
+                <td><?= $result['name']?></td>
                 <td><?= $result['avail_by'] ?></td>
                 <td><?= $result['quantity_availed']?></td>
                 <td><?= $result['date'] ?></td>
