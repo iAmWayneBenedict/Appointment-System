@@ -81,7 +81,9 @@ class ManageAccount extends BaseController
             ]);
         }
 
+        // TODO: to be fixed after testing
         $user_id = $this->session->get('id');
+        // $user_id = $this->request->getPost('id');
 
         $data = [
             'fname'          => ucwords($this->request->getPost('fname')),
@@ -114,9 +116,9 @@ class ManageAccount extends BaseController
      *              information from other table that connected to user.
      */
     public function deactivate_user($user_code_id)
-    { 
+    {
         $user_data = $this->userModel->get_user($user_code_id);
-        
+
         $server = base_url();
         $message = "Hello Mr/Ms/Mrs {$user_data->fname} were informing you that your account in {$server} \n";
         $message .= "has been diactivated. Please go to the office and state your code_id or name for Reactivation. \n";
@@ -177,7 +179,9 @@ class ManageAccount extends BaseController
             ]);
         }
 
+        // TODO: to be fixed after testing
         $user_id = $this->session->get('id');
+        // $user_id = $this->request->getPost('id');
         $user_data = $this->userModel->get_user_info($user_id);
 
         $old_password = $this->request->getPost('o_password');

@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/layout') ?>
 <?= $this->section('content') ?>
 
-<div class="main d-flex justify-content-center mb-5">
+<div class="main d-flex justify-content-center mb-5 p-4">
     <div class="mt-5" style="max-width: 30rem; width: 100%;">
         <form action="" method="post" class="d-flex flex-column" id="form-submit">
             <div class="alert alert-info mb-0" role="alert">
@@ -232,7 +232,7 @@
                             $.each(response.errors, function(key, val) {
                                 msg.push(`${val}`)
                             });
-                            
+
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Oops...',
@@ -249,10 +249,10 @@
                             title: response.msg,
                             showConfirmButton: false,
                             timer: 1500
-                        }).then(()=>{
+                        }).then(() => {
                             location.reload()
                         })
-                       
+
                     }, 2000)
                 }
             });

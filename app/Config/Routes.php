@@ -54,7 +54,9 @@ $routes->group('user', static function ($routes) {
     $routes->get('all-appointments', 'Admin\ManageAppointment::get_set_appointments');
     $routes->get('get-incharge-employee/(:any)', 'Employee\Employee::get_incharge_employee/$1');
 
+    // TODO: To be fixed after testing
     $routes->group('dashboard', ['filter' => 'userLoginFilter'], static function ($routes) {
+        // $routes->group('dashboard', static function ($routes) {
         $routes->get('/', 'End_Users\UserController::dashboard');
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
         $routes->get('logout', 'End_Users\UserLoginController::logout_user');
