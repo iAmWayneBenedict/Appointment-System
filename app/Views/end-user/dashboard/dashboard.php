@@ -50,9 +50,9 @@
             $myAppointment = $approved['myAppointment'];
             $allIncharge = $approved['allIncharge'];
             if ($myAppointment) {
-                $hasFoundEmp = false;
-                $empIncharge = null;
                 foreach ($myAppointment as $user) {
+                    $hasFoundEmp = false;
+                    $empIncharge = null;
 
                     foreach ($allIncharge as $employee) {
                         if ($user->purpose !== $employee->incharge_to) continue;
@@ -166,9 +166,9 @@
             $myAppointment = $pending['myAppointment'];
             $allIncharge = $pending['allIncharge'];
             if ($myAppointment) {
-                $hasFoundEmp = false;
-                $empIncharge = null;
                 foreach ($myAppointment as $user) {
+                    $hasFoundEmp = false;
+                    $empIncharge = null;
 
                     foreach ($allIncharge as $employee) {
                         if ($user->purpose !== $employee->incharge_to) continue;
