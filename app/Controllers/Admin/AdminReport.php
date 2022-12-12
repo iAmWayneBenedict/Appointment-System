@@ -116,7 +116,7 @@ class AdminReport extends BaseController
         //paper size
         $this->pdf->render();
          //FIXME : set to one to auto download
-        $this->pdf->stream("appointmentReport{$date_now}.pdf", ["Attachment" => 0]);
+        $this->pdf->stream("appointmentReport{$date_now}.pdf", ["Attachment" => 1]);
     }
 
     public function sdisplay_preview(){

@@ -10,6 +10,7 @@
         }
     }
 ?>
+<div class="analytics">
     <div class="row m-4 rounded-lg justify-content-center" style="background-color: #ffffff !important;">
         <div class="col-5 m-5">
             <div class="row pl-3 pr-3 pb-4 pt-4">
@@ -102,6 +103,7 @@
             </table>
         </div>
     </div>
+</div>
     <hr>
     <table class="table table-striped">
         <thead>

@@ -37,10 +37,10 @@
     ?>
     <div class="container">
         <div class="d-flex justify-content-center m-3">
-                <h3>Appointment Report</h3>
+            <h3>Appointment Report</h3>
         </div>
         <div class="row mb-5">
-            <form action="<?= base_url('/admin/dashboard/generate-pdf') ?>" method="post" class="a_form" id="a_form">
+            <form action="<?= base_url('/admin/dashboard/generate-pdf') ?>" method="post" class="a_form" id="a_form" style="height: 10rem">
                 <div class="row justify-content-md-center m-3">
                     <div class="col-1">
                         <label for="">From:</label>
@@ -97,12 +97,18 @@
                             <div class="col">
                                 <button class="btn btn-secondary" id="reset">Clear</button>
                             </div>
-                            <div class="col">
-                                <input type="submit" class="btn btn-danger d-none" id="print" value="PRINT">
-                            </div>
                         </div> 
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="button" class="btn btn-danger d-none" id="print" value="Print Analytics">
+                    </div>
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-danger d-none" id="data_" value="Print Summary table">
+                    </div>
+                </div>
+               
             </form>
 
             <hr>
@@ -189,7 +195,7 @@
 
         $(document).on('change keyup', '.from, .to, #social_pos, #purpose, #state, .year', function (e) { 
             e.preventDefault();
-            $('#print').addClass('d-none')
+            $('#print, #data_').addClass('d-none')
             $('#prev').show()
         });
 
@@ -215,7 +221,7 @@
             e.preventDefault();
             $('#a_form').trigger("reset")
             $('.view-data').empty()
-            $('#print').addClass('d-none')
+            $('#print, #data_').addClass('d-none')
             $('#prev').show()
         });
 
@@ -256,7 +262,7 @@
                     data: data,
                     success: function (response) {
                         $('.view-data').html(response)
-                        $('#print').removeClass('d-none')
+                        $('#print, #data_').removeClass('d-none')
                         $('#prev').hide()
                         // console.log(response)
                     }
@@ -313,8 +319,8 @@
             });
 
             function CreatePDFfromHTML() {
-                var HTML_Width = $(".view-data").width();
-                var HTML_Height = $(".view-data").height();
+                var HTML_Width = $(".analytics").width();
+                var HTML_Height = $(".analytics").height();
                 var top_left_margin = 15;
                 var PDF_Width = HTML_Width + (top_left_margin * 2);
                 var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
@@ -323,7 +329,7 @@
 
                 var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
 
-                html2canvas($(".view-data")[0], { scale: '1' }).then(function (canvas) {
+                html2canvas($(".analytics")[0], { scale: '1' }).then(function (canvas) {
                     var imgData = canvas.toDataURL("image/png", 1.0);
                     var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
                     pdf.addImage(imgData, 'png', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
