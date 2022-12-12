@@ -324,6 +324,7 @@
                 } else {
                     $('button[value=Add], button[value=Update]').addClass('disabled')
                 }
+                console.log($(this).val())
             } else if ($(this).val().includes('+')) {
                 if ($(this).val()[0] !== '+' && $(this).val()[inputLength] !== '+') {
                     data = eval($(this).val())
@@ -331,12 +332,13 @@
                 } else {
                     $('button[value=Add], button[value=Update]').addClass('disabled')
                 }
+                console.log($(this).val())
             } else {
                 $('button[value=Add], button[value=Update]').removeClass('disabled')
                 data = parseInt($(this).val())
             }
 
-            if (data < 0) {
+            if (data < 0 && isNaN(data)) {
                 $(this).next().removeClass('d-none')
                 $(this).next().text('Input cannot be less than 0')
                 $('button[value=Add], button[value=Update]').attr('disabled', true)
@@ -357,17 +359,18 @@
             // console.log(quantity, allocated)
             let data = quantity - allocated
             if (data < 0) {
+                console.log(123)
                 $('#avail-c').next().removeClass('d-none')
                 $('#avail-c').next().text('Input cannot be less than 0')
-                $('button[value=Add], button[value=Update]').attr('disabled', true)
+                $('button[value=Add], button[value=Update]').addClass('disabled')
             } else {
                 $('#avail-c').next().addClass('d-none')
-                $('button[value=Add], button[value=Update]').removeAttr('disabled')
+                $('button[value=Add], button[value=Update]').removeClass('disabled')
                 $(".quantity-update").val(quantity)
                 $(".allocated-update").val(allocated)
             }
 
-            console.log(allocated, quantity)
+            console.log(data, !isNaN(data))
 
 
             return $('#avail-c').val(quantity - allocated)
@@ -406,92 +409,10 @@
                         }, ],
                     });
 
-                    $('.show-update').click(function(e) {
-                        e.preventDefault();
-                        var stock_id = $(this).attr('value');
-                        $.ajax({
-                            type: "get",
-                            url: `${url}/admin/dashboard/get-a-stock/${stock_id}`,
-                            async: true,
-                            success: function(res) {
-                                $('.update').html(res)
-                                initAvailAllo()
-                            }
-                        });
-                    });
-
-                    $('.release-form').click(function(e) {
-                        e.preventDefault();
-                        var stock_id = $(this).attr('value');
-
-                        $.ajax({
-                            type: "get",
-                            url: `${url}/admin/dashboard/display-release/${stock_id}`,
-                            async: true,
-                            success: function(res) {
-                                $('.update-sched').html(res)
-                            }
-                        });
-                    });
-
-
-                    $('.claim-form').click(function(e) {
-                        e.preventDefault();
-                        var stock_id = $(this).attr('value');
-
-                        $.ajax({
-                            type: "get",
-                            url: `${url}/admin/dashboard/display-claim/${stock_id}`,
-                            async: true,
-                            success: function(res) {
-                                $('.claimby-form').html(res)
-
-                                $('#claimed-form').submit(function(e) {
-                                    e.preventDefault();
-
-                                    $.ajax({
-                                        type: "post",
-                                        url: `${url}/admin/dashboard/insert-claimer`,
-                                        data: {
-                                            id: stock_id,
-                                            claim_by: $('#claim_by').val(),
-                                            quantity: $('#quantity_avail').val(),
-                                            deduct: $('#deduct').val()
-                                        },
-                                        dataType: "json",
-                                        beforeSend: function() {
-                                            //loader
-                                        },
-                                        success: function(response) {
-                                            const res = response.code == 1 ? response.msg : response.msg;
-                                            Swal.fire({
-                                                position: 'top-end',
-                                                icon: 'info',
-                                                title: res,
-                                                showConfirmButton: false,
-                                                timer: 1500
-                                            })
-                                            location.reload()
-
-                                        },
-                                        error: function(xhr) {
-                                            Swal.fire({
-                                                position: 'top-end',
-                                                icon: 'warning',
-                                                title: 'Try Again',
-                                                showConfirmButton: false,
-                                                timer: 2500
-                                            })
-                                            console.log(xhr.statusText + ':' + xhr.responseText)
-                                        },
-                                        complete: function() {
-                                            //hide loader
-                                        }
-                                    });
-                                });
-                            }
-                        });
-                    });
+                    $(".view-stocks").click(function() {
+                        initButtons()
+                    })
+                    initButtons()
 
 
                     // $('.remove-stock').click(function(event) {
@@ -515,7 +436,94 @@
             });
         }
 
+        function initButtons() {
+            $('.show-update').click(function(e) {
+                e.preventDefault();
+                var stock_id = $(this).attr('value');
+                $.ajax({
+                    type: "get",
+                    url: `${url}/admin/dashboard/get-a-stock/${stock_id}`,
+                    async: true,
+                    success: function(res) {
+                        $('.update').html(res)
+                        initAvailAllo()
+                    }
+                });
+            });
 
+            $('.release-form').click(function(e) {
+                e.preventDefault();
+                var stock_id = $(this).attr('value');
+
+                $.ajax({
+                    type: "get",
+                    url: `${url}/admin/dashboard/display-release/${stock_id}`,
+                    async: true,
+                    success: function(res) {
+                        $('.update-sched').html(res)
+                    }
+                });
+            });
+
+
+            $('.claim-form').click(function(e) {
+                e.preventDefault();
+                var stock_id = $(this).attr('value');
+
+                $.ajax({
+                    type: "get",
+                    url: `${url}/admin/dashboard/display-claim/${stock_id}`,
+                    async: true,
+                    success: function(res) {
+                        $('.claimby-form').html(res)
+
+                        $('#claimed-form').submit(function(e) {
+                            e.preventDefault();
+
+                            $.ajax({
+                                type: "post",
+                                url: `${url}/admin/dashboard/insert-claimer`,
+                                data: {
+                                    id: stock_id,
+                                    claim_by: $('#claim_by').val(),
+                                    quantity: $('#quantity_avail').val(),
+                                    deduct: $('#deduct').val()
+                                },
+                                dataType: "json",
+                                beforeSend: function() {
+                                    //loader
+                                },
+                                success: function(response) {
+                                    const res = response.code == 1 ? response.msg : response.msg;
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'info',
+                                        title: res,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    location.reload()
+
+                                },
+                                error: function(xhr) {
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'warning',
+                                        title: 'Try Again',
+                                        showConfirmButton: false,
+                                        timer: 2500
+                                    })
+                                    console.log(xhr.statusText + ':' + xhr.responseText)
+                                },
+                                complete: function() {
+                                    //hide loader
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        }
     });
 </script>
 <?= $this->endSection() ?>

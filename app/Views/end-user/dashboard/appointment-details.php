@@ -85,7 +85,7 @@
                         <div class="">
                             <label for="sched" class="form-label">Schedule</label><br>
                             <input type="text" hidden class="form-control" id="sched" name="sched" value="<?= $pending[0]->schedule ?>">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <button type="button" class="btn btn-primary select-date-d" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Select Date
                             </button>
                             <br>
@@ -220,7 +220,7 @@
                                 </div>
                             </div>
                             <div class="calendar-con">
-                                <table class="table table-borderless">
+                                <table class="calendar-table table table-borderless">
                                     <thead>
                                         <tr>
                                             <th scope="col">Sun</th>
@@ -262,13 +262,6 @@
                                             pm
                                         </div>
                                     </div>
-                                    <!-- <div class="spinner-border text-primary mt-3" style="width: 20px; height: 20px" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                    <div class="alert text-danger py-2" role="alert">
-                                        <small>asd</small>
-                                    </div> -->
-
                                 </div>
                             </div>
                         </div>
