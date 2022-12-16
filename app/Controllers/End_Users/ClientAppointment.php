@@ -339,7 +339,7 @@ class ClientAppointment extends BaseController
     }
 
     /**
-     Function: Reschedule
+     Function: Reschedule Appointment
      * Description: Recieve and process the new appointment schedule
      * @return json response
      */

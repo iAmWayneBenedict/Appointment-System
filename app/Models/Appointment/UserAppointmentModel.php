@@ -94,7 +94,7 @@ class UserAppointmentModel extends Model
         return $query->getResultObject();
     }
 
-    //retrieve client's approved appointment
+    //retrieve client's approved appointments
     public function get_approved($user_id)
     {
 
@@ -121,7 +121,7 @@ class UserAppointmentModel extends Model
         return $query->getResultObject();
     }
 
-    //retrieve client's approved appointment
+    //retrieve client's approved appointment data
     public function get_approved_appointment($id)
     {
 
@@ -157,7 +157,7 @@ class UserAppointmentModel extends Model
             ->where('set_appointment_id', $appointment_id)
             ->update([
                 'resched_status' => 1,
-                'is_passed' => true
+                'is_passed' => 'false'
             ]);
     }
 
