@@ -383,7 +383,7 @@
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(response) {
-                    location.reload()
+                    // location.reload()
                 }
             });
         });
@@ -471,7 +471,7 @@
                                                 showConfirmButton: false,
                                                 timer: 1500
                                             })
-                                            location.reload()
+                                            // location.reload()
 
                                         },
                                         error: function(xhr) {

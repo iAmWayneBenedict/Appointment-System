@@ -54,7 +54,7 @@ $routes->group('user', static function ($routes) {
     $routes->get('all-appointments', 'Admin\ManageAppointment::get_set_appointments');
     $routes->get('get-incharge-employee/(:any)', 'Employee\Employee::get_incharge_employee/$1');
 
-    $routes->group('dashboard', ['filter' => 'userLoginFilter'], static function ($routes) {
+    $routes->group('dashboard', static function ($routes) {
         $routes->get('/', 'End_Users\UserController::dashboard');
         $routes->get('employee-status', 'End_Users\UserController::employee_status');
         $routes->get('logout', 'End_Users\UserLoginController::logout_user');
@@ -80,7 +80,9 @@ $routes->group('user', static function ($routes) {
         $routes->get('already-read/(:num)', 'End_Users\UserController::already_read/$1');
     });
 
-    $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {
+    // TODO: to be fixed after testing
+    // $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {
+    $routes->group('my-account', static function ($routes) {
         $routes->get('/', 'End_Users\ManageAccount::account_page');
         $routes->post('update', 'End_Users\ManageAccount::update_account');
         $routes->post('password-update', 'End_Users\ManageAccount::update_password');
@@ -100,7 +102,7 @@ $routes->group('admin', static function ($routes) {
     $routes->post('verify-admin', 'Admin\Admin::verify_admin');
     $routes->get('get-holidays', 'Admin\HolidaysController::get_holidays');
 
-    $routes->group('dashboard', ['filter' => 'adminLoginFilter'], static function ($routes) {
+    $routes->group('dashboard', static function ($routes) {
         $routes->get('/', 'Admin\Admin::index');
         $routes->get('employees', 'Admin\Admin::employees');
         $routes->get('send-message', 'Admin\Admin::sendMessage');
