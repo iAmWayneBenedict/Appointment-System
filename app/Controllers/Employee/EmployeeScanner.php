@@ -92,16 +92,17 @@ class EmployeeScanner extends BaseController
         return $response;
     }
 
+    //in scanner
     public function get_employee_status()
     {
-        $data['employees'] = $this->employee_model->get_all_incharge();
+        $data['employees'] = $this->employee_model->get_all_employees();
         // return json_encode($data);
         return view('components/employee-list-status', $data);
     }
 
     public function get_employee_status_user()
     {
-        $data['employees'] = $this->employee_model->get_all_employees();
+        $data['employees'] = $this->arrange_employee();
         // return json_encode($data);
         return view('components/employee-list-status-user', $data);
     }
@@ -111,6 +112,35 @@ class EmployeeScanner extends BaseController
         $data['employees'] = $this->employee_model->get_all_employees();
         // return json_encode($data);
         return view('components/employee-list', $data);
+    }
+
+    /**
+     TITLE: ARRANGE EMPLOYEE DATA
+     * DEs: This is oranize the employee data retrieve
+     *      from database to easily display to the view
+     * @return array_data
+     */
+    public function arrange_employee(){
+        $arrange_data = [];
+        $data = $this->employee_model->get_all_employees();
+
+        foreach($data as $emp){
+            $incharge_to_list = [];
+            foreach($this->employee_model->get_incharge($emp->id) as $incharge_to){
+                array_push($incharge_to_list, $incharge_to->incharge_to);
+            }
+
+            $arrange_data[] = [
+                'name' => $emp->name,
+                'status' => $emp->status,
+                'log_time' => $emp->log_time,
+                'incharge' => $incharge_to_list
+            ];
+        }
+
+        return $arrange_data;
+        // echo '<pre>';
+        // print_r($arrange_data);
     }
 
     /**

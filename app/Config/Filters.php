@@ -26,6 +26,7 @@ class Filters extends BaseConfig
         'userLoginFilter'    => \App\Filters\userLoginFilter::class, // user filter class
         'adminLoginFilter'    => \App\Filters\adminLoginFilter::class, // admin filter class
         'userIsLoggedIn'  => \App\Filters\userIsLoggedIn::class,
+        'maintenanceFilter'  => \App\Filters\maintenanceFilter::class,
 
     ];
 

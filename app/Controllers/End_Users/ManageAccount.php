@@ -82,8 +82,8 @@ class ManageAccount extends BaseController
         }
 
         // TODO: to be fixed after testing
-        // $user_id = $this->session->get('id');
-        $user_id = $this->request->getPost('id');
+        $user_id = $this->session->get('id');
+        // $user_id = $this->request->getPost('id');
 
         $data = [
             'fname'          => ucwords($this->request->getPost('fname')),
@@ -180,8 +180,8 @@ class ManageAccount extends BaseController
         }
 
         // TODO: to be fixed after testing
-        // $user_id = $this->session->get('id');
-        $user_id = $this->request->getPost('id');
+        $user_id = $this->session->get('id');
+        // $user_id = $this->request->getPost('id');
         $user_data = $this->userModel->get_user_info($user_id);
 
         $old_password = $this->request->getPost('o_password');

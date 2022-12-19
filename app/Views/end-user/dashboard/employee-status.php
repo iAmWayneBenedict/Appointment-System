@@ -16,7 +16,8 @@
             <thead>
                 <tr>
                     <!-- <th scope="col">ID</th> -->
-                    <th scope="col">In Charge</th>
+                    <th scope="col">Employee</th>
+                    <th scope="col">Incharge to</th>
                     <th scope="col">Status</th>
                     <th scope="col">Log Time</th>
                 </tr>

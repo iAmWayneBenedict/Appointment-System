@@ -51,9 +51,13 @@
             $allIncharge = $approved['allIncharge'];
             if ($myAppointment) {
                 foreach ($myAppointment as $user) {
+                    $hasFoundEmp = false;
+                    $empIncharge = null;
 
                     foreach ($allIncharge as $employee) {
                         if ($user->purpose !== $employee->incharge_to) continue;
+                        $empIncharge = $hasFoundEmp ? $empIncharge : $employee->name;
+                        $hasFoundEmp = true;
                         $employee_designation_counter++;
                     }
             ?>
@@ -66,7 +70,7 @@
                                         <!-- employee name and role -->
 
                                         <div>
-                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_designation_counter ? $employee->name : "Municipal Agriculture Office of Bato" ?></h5>
+                                            <h5 class="card-title m-0 fw-semibold"><?= $hasFoundEmp ? $empIncharge : "Municipal Agriculture Office of Bato" ?></h5>
                                         </div>
                                     </div>
                                     <?php
@@ -163,10 +167,13 @@
             $allIncharge = $pending['allIncharge'];
             if ($myAppointment) {
                 foreach ($myAppointment as $user) {
+                    $hasFoundEmp = false;
+                    $empIncharge = null;
 
                     foreach ($allIncharge as $employee) {
                         if ($user->purpose !== $employee->incharge_to) continue;
-
+                        $empIncharge = $hasFoundEmp ? $empIncharge : $employee->name;
+                        $hasFoundEmp = true;
                         $employee_designation_counter++;
                     }
             ?>
@@ -179,7 +186,7 @@
                                         <!-- employee designatin and incharge to -->
 
                                         <div>
-                                            <h5 class="card-title m-0 fw-semibold"><?= $employee_designation_counter ? $employee->name : "Municipal Agriculture Office of Bato" ?></h5>
+                                            <h5 class="card-title m-0 fw-semibold"><?= $hasFoundEmp ? $empIncharge : "Municipal Agriculture Office of Bato" ?></h5>
                                         </div>
                                     </div>
                                     <?php

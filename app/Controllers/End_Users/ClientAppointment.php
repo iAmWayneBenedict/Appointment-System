@@ -138,9 +138,9 @@ class ClientAppointment extends BaseController
         $user_id = NULL;
         $_user = 'Guest'; //default, 000
         if ($user_type == 001) {
-            // TODO: to be fixed after testing
-            // $user_id = $this->session->get('id');
-            $user_id = $this->request->getPost('id');
+            // TODO: tobe fixed after testing
+            $user_id = $this->session->get('id');
+            // $user_id = $this->request->getPost('id');
             $_user = 'Registered';
         }
 
@@ -340,7 +340,7 @@ class ClientAppointment extends BaseController
     }
 
     /**
-     Function: Reschedule
+     Function: Reschedule Appointment
      * Description: Recieve and process the new appointment schedule
      * @return json response
      */

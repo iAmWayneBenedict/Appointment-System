@@ -251,8 +251,8 @@ class ManageAppointment extends BaseController
         }
 
         //TODO : update to server
-        // $current_admin = $this->session->get('admin_id');
-        $current_admin = 1;
+        $current_admin = $this->session->get('admin_id');
+        // $current_admin = 1;
 
         $appointment_id = $this->request->getPost('id');
         $appointment_data = $this->manage_appointment->get_appointment_info($appointment_id);
