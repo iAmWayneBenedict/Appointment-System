@@ -131,7 +131,8 @@
 
                         getAllDates.push({
                             month,
-                            day
+                            day,
+                            year
                         })
                     }
 
@@ -213,6 +214,7 @@
                     let hasApprovedDate = false;
                     let hasApprovedAlert = false;
                     for (let i = 0; i < approvedDates.length; i++) {
+                        let approvedDateYear = parseInt(approvedDates[i].year)
                         let approvedDateMonth = parseInt(approvedDates[i].month)
                         let approvedDateDay = parseInt(approvedDates[i].day)
                         let {
@@ -224,7 +226,7 @@
                         let approved = approvedHTMLTemplate(similarCounter, '')
                         if (hasApprovedAlert) break
 
-                        if (approvedDateMonth === month + 1 && approvedDateDay === days) {
+                        if (approvedDateMonth === month + 1 && approvedDateDay === days && date.getFullYear() === approvedDateYear) {
                             hasApprovedDate = true
                             hasApprovedAlert = true
                             currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
@@ -240,6 +242,7 @@
                     let hasApprovedDate = false;
                     let hasApprovedAlert = false;
                     for (let i = 0; i < approvedDates.length; i++) {
+                        let approvedDateYear = parseInt(approvedDates[i].year)
                         let approvedDateMonth = parseInt(approvedDates[i].month)
                         let approvedDateDay = parseInt(approvedDates[i].day)
                         let {
@@ -251,7 +254,7 @@
                         let approved = approvedHTMLTemplate(similarCounter, '')
                         if (hasApprovedAlert) break
 
-                        if (approvedDateMonth === month + 1 && approvedDateDay === days) {
+                        if (approvedDateMonth === month + 1 && approvedDateDay === days && date.getFullYear() === approvedDateYear) {
                             hasApprovedDate = true
                             hasApprovedAlert = true
                             currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'

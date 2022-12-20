@@ -260,6 +260,7 @@
                         $("#preloader").modal("show");
                     },
                     success: function(response) {
+                        console.log(response)
                         setTimeout(() => {
                             $("#preloader").modal("hide");
                         }, 500)
