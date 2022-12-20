@@ -260,23 +260,26 @@
                         $("#preloader").modal("show");
                     },
                     success: function(response) {
+                        console.log(response)
                         setTimeout(() => {
                             $("#preloader").modal("hide");
                         }, 500)
-                        response.forEach(element => {
-                            var msg = []; //hold all error messages
+                        
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
 
-                            //loop error message and push to array
-                            $.each(element, function(key, val) {
-                                msg.push(`${val}`)
-                            });
-
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                html: msg.join('<br>'),
-                            }) //sweet alert
-                        });
+                        Toast.fire({
+                            icon: 'success',
+                        })
                     }
                 });
             } else {
