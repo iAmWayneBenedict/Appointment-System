@@ -108,6 +108,7 @@ class ClientAppointment extends BaseController
         $now = $this->time->now();
         //parse current and given schendule date to CI time
         $parseTimeNow = $this->time->parse($now);
+        // return json_encode(["data" => date_parse_from_format("j:n:Y H:i", $schedule), "d" => $schedule]);
         $parseTimeSched = $this->time->parse($schedule);
 
         // subtract 2 hour(s) to sched time and convert to string

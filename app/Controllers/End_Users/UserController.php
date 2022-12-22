@@ -174,6 +174,7 @@ class UserController extends BaseController
 
         // if sms is not sent execute this code
 
+<<<<<<< HEAD
         if ($sms_response['code'] == 0) {
             return json_encode([
                 'code' => 3,
@@ -181,6 +182,15 @@ class UserController extends BaseController
                 'sms_res' => $sms_response['message']
             ]);
         }
+=======
+        // if ($sms_response['code'] == 0) {
+        //     return json_encode([
+        //         'code' => 3,
+        //         'msg' => 'You cant Register right now, please try again later',
+        //         'sms_res' => $sms_response['message']
+        //     ]);
+        // }
+>>>>>>> one-wayne
 
         //insert user data into Database
         $this->user_model->insert($user_data);
@@ -198,11 +208,16 @@ class UserController extends BaseController
         $data['pending'] = $this->client_appointment->get_pending_appointment();
 
         // TODO: to be fixed after testing
+<<<<<<< HEAD
         $user_id = $this->session->get('id');
         // $user_id = isset($_GET["id"]) ? $_GET["id"] : 1;
+=======
+        // $user_id = $this->session->get('id');
+        $user_id = isset($_GET["id"]) ? $_GET["id"] : 1;
+>>>>>>> one-wayne
         $data['myAppointment'] = $this->userAppointment->get_passed_appointment($user_id);
         $data['user'] = $this->user_model->get_user_info($user_id);
-        return view('end-user/dashboard/dashboard', $data);
+        return view("end-user/dashboard/dashboard", $data);
     }
     public function employee_status()
     {
