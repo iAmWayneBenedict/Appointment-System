@@ -125,7 +125,7 @@ class ManageAccount extends BaseController
         $message .= "From Agriculrist Office of Bato";
 
         // TODO: enable this later SMS----------------
-        $this->send_sms->sendSMS($user_data->contact_number, $message);
+        // $this->send_sms->sendSMS($user_data->contact_number, $message);
         return $this->userModel->deactivate_admin_side($user_code_id);
     }
 

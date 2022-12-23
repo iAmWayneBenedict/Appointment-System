@@ -836,7 +836,7 @@
         }
 
         function getDate(month) {
-            let date = new Date();
+            // let date = new Date();
             let firstDay = new Date(date.getFullYear(), month, 1);
             let lastDay = new Date(date.getFullYear(), month + 1, 0);
 
