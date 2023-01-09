@@ -105,7 +105,14 @@
             <div class="d-flex">
                 <div class="calendar flex-fill">
                     <div class="calendar-grid dashboard m-0" style="padding-right: 2rem;">
-                        <center>
+                        <center class="d-flex justify-content-between" style="cursor: pointer;">
+                            <div class="button prev-year" style="cursor: pointer;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                                Previous Month
+                            </div>
                             <div style="width: fit-content;">
                                 <select class="form-select fs-5 fw-bold border-0 shadow-none" style="cursor: pointer;" id="month">
                                     <option value="January">January</option>
@@ -121,6 +128,13 @@
                                     <option value="November">November</option>
                                     <option value="December">December</option>
                                 </select>
+                            </div>
+                            <div class="button next-year">
+                                Next Month
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
                             </div>
                         </center>
                         <table class="calendar-table table table-borderless">
@@ -370,6 +384,47 @@
             getNotifications()
         }, 5000)
         let toastCount = 0;
+
+        $(".next-year").click(function() {
+            if (date.getMonth() == 11) {
+                date = new Date(date.getFullYear() + 1, 0, 1);
+            } else {
+                date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+            }
+            $('#month').children().each(function() {
+                $(this).removeAttr("selected")
+            })
+            $('#month').children().each(function() {
+                console.log($(this).val(), convertMonthToName(date.getMonth()))
+                if ($(this).val() === convertMonthToName(date.getMonth())) {
+                    $(this).attr("selected", true)
+                    $(this).addClass("selected")
+                }
+            })
+            getEventDates([getDate(convertMonthToNumber($('#month').val())), convertMonthToNumber($('#month').val())])
+        })
+
+        $(".prev-year").click(function() {
+            if (date.getMonth() == 0) {
+                date = new Date(date.getFullYear() - 1, 11, 1);
+            } else {
+                date = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+            }
+            console.log(date)
+            $('#month').children().each(function() {
+                $(this).removeAttr("selected")
+            })
+            $('#month').children().each(function() {
+                console.log($(this).val(), convertMonthToName(date.getMonth()))
+                if ($(this).val() === convertMonthToName(date.getMonth())) {
+                    $(this).attr("selected", true)
+                    $(this).addClass("selected")
+                }
+            })
+
+            getEventDates([getDate(convertMonthToNumber($('#month').val())), convertMonthToNumber($('#month').val())])
+
+        })
 
         function getNotifications() {
             $.ajax({
@@ -701,7 +756,8 @@
 
                         getAllDates.push({
                             month,
-                            day
+                            day,
+                            year
                         })
 
                         getAllDescription.push({
@@ -780,7 +836,7 @@
         }
 
         function getDate(month) {
-            let date = new Date();
+            // let date = new Date();
             let firstDay = new Date(date.getFullYear(), month, 1);
             let lastDay = new Date(date.getFullYear(), month + 1, 0);
 
@@ -828,12 +884,13 @@
                     let hasStocksReleaseDate = false;
                     let hasStocksReleaseAlert = false;
                     for (let i = 0; i < stocksReleaseDates.length; i++) {
+                        let stocksReleaseDateYear = parseInt(stocksReleaseDates[i].year)
                         let stocksReleaseDateMonth = parseInt(stocksReleaseDates[i].month)
                         let stocksReleaseDateDay = parseInt(stocksReleaseDates[i].day)
                         let release = releaseHTMLTemplate(stocksDescriptions[i].description)
                         if (hasStocksReleaseAlert) break
 
-                        if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
+                        if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days && date.getFullYear() === stocksReleaseDateYear) {
                             hasStocksReleaseDate = true
                             hasStocksReleaseAlert = true
                             currentDay += '<td class="active"><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></span></td>'
@@ -848,12 +905,13 @@
                     let hasStocksReleaseDate = false;
                     let hasStocksReleaseAlert = false;
                     for (let i = 0; i < stocksReleaseDates.length; i++) {
+                        let stocksReleaseDateYear = parseInt(stocksReleaseDates[i].year)
                         let stocksReleaseDateMonth = parseInt(stocksReleaseDates[i].month)
                         let stocksReleaseDateDay = parseInt(stocksReleaseDates[i].day)
                         let release = releaseHTMLTemplate(stocksDescriptions[i].description)
                         if (hasStocksReleaseAlert) break
 
-                        if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days) {
+                        if (stocksReleaseDateMonth === month + 1 && stocksReleaseDateDay === days && date.getFullYear() === stocksReleaseDateYear) {
                             hasStocksReleaseDate = true
                             hasStocksReleaseAlert = true
                             currentDay += '<td class=""><span class="text-decoration-none text-dark" style="cursor:default;"><div><h4>' + days + '</h4>' + release + '</div></span></td>'

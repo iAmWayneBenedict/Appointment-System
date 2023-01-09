@@ -172,7 +172,7 @@ class UserController extends BaseController
         // //TODO: enable this later
         // $sms_response = $this->send_sms->sendSMS($c_number, $message);
 
-        // if sms is not sent execute this code
+        // // if sms is not sent execute this code
 
         // if ($sms_response['code'] == 0) {
         //     return json_encode([
@@ -198,11 +198,11 @@ class UserController extends BaseController
         $data['pending'] = $this->client_appointment->get_pending_appointment();
 
         // TODO: to be fixed after testing
-        // $user_id = $this->session->get('id');
-        $user_id = isset($_GET["id"]) ? $_GET["id"] : 1;
+        $user_id = $this->session->get('id');
+        // $user_id = isset($_GET["id"]) ? $_GET["id"] : 1;
         $data['myAppointment'] = $this->userAppointment->get_passed_appointment($user_id);
         $data['user'] = $this->user_model->get_user_info($user_id);
-        return view('end-user/dashboard/dashboard', $data);
+        return view("end-user/dashboard/dashboard", $data);
     }
     public function employee_status()
     {

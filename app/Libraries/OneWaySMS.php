@@ -80,7 +80,8 @@ class OneWaySMS
      TITLE: bulksms plan A
      * 
      * */
-    public function sendBulkSMS(array $contact_numbers, $message){
+    public function sendBulkSMS(array $contact_numbers, $message)
+    {
 
         $responses = []; //this will hold all response from api
         $array_string_numbers = [];
@@ -90,7 +91,7 @@ class OneWaySMS
 
         // convert the array contact_numbers group in 10 into 
         // string then store it in new array
-        foreach($all_contact_numbers as $contact_number){
+        foreach ($all_contact_numbers as $contact_number) {
 
             //convert the array into string
             $str_number_by_10 = implode(',', $contact_number);
@@ -99,7 +100,7 @@ class OneWaySMS
         }
 
         //loop the array_string_numbers and send sms
-        foreach($array_string_numbers as $string_numbers){
+        foreach ($array_string_numbers as $string_numbers) {
 
             $response = $this->sendSMS($string_numbers, $message);
             array_push($responses, $response);
@@ -112,27 +113,27 @@ class OneWaySMS
      TITLE: bulksms plan B
      * 
      * */
-    public function sendBulkSMSv_2(array $contact_numbers, $message){
-        
+    public function sendBulkSMSv_2(array $contact_numbers, $message)
+    {
+
         //holder for numbers that dont send message
         $unsend_numbers = [];
 
         //loop all 
-        foreach($contact_numbers as $contact_number){
+        foreach ($contact_numbers as $contact_number) {
             $response = $this->sendSMS($contact_number, $message);
 
             //if message not sent to this number then retrieve it
-            if($response === 0 ){
+            if ($response === 0) {
                 array_push($unsend_numbers, $contact_number);
             }
         }
 
         //call the function again by itself
-        if (!empty($unsend_numbers)){
+        if (!empty($unsend_numbers)) {
             $this->sendBulkSMSv_2($unsend_numbers, $message);
         }
 
         return;
-
     }
 }

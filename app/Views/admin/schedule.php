@@ -79,14 +79,15 @@
 
 
 
-        if (params.has('month') && params.has('day')) {
+        if (params.has('month') && params.has('day') && params.has('year')) {
             let month = parseInt(params.get('month')) - 1
+            let year = parseInt(params.get('year'))
             $('#month').children().each(function() {
                 if ($(this).val() === convertMonthToName(month)) {
                     $(this).attr("selected", true)
                 }
             })
-            populateCalendar(getDate(month), month)
+            populateCalendar(getDate(month), month, year)
         } else {
             $('#month').children().each(function() {
                 if ($(this).val() === convertMonthToName(date.getMonth())) {
@@ -136,15 +137,15 @@
             return dayOfTheWeek.getDay() + 1;
         }
 
-        function populateCalendar(lastUTCDay, month) {
+        function populateCalendar(lastUTCDay, month, year) {
             populateDaysSelection(lastUTCDay)
             let currentDayOfTheWeek = getCurrentDayOfTheWeek($('#month').val(), $('#days').val())
-            updateDisplayedDate(convertDayToName(currentDayOfTheWeek), convertMonthToName(month), $('#days').val())
+            updateDisplayedDate(convertDayToName(currentDayOfTheWeek), convertMonthToName(month), $('#days').val(), year)
         }
 
-        function updateDisplayedDate(dayOfTheWeek, month, day) {
+        function updateDisplayedDate(dayOfTheWeek, month, day, year) {
             let date = new Date()
-            $('.current-date').html(`${dayOfTheWeek}, ${month} ${day}, ${date.getFullYear()}`)
+            $('.current-date').html(`${dayOfTheWeek}, ${month} ${day}, ${year}`)
             $('.current-day').children().first().html(dayOfTheWeek)
             $('.current-day').children().last().html(day)
         }

@@ -64,7 +64,7 @@ class StocksController extends BaseController
 
         $data = $this->stock_model->get_all_stocks();
         $subcats = array_column($data, 'name');
-        return json_encode($subcats); 
+        return json_encode($subcats);
     }
 
     public function get_all_stocks()
@@ -185,8 +185,8 @@ class StocksController extends BaseController
 
             // $this->sms->sendBulkSMS($numbers_only, $message);
 
-            //send on app
-            $this->on_app_notif->send_bulk_notification($user_ids, $message);
+            // //send on app
+            // $this->on_app_notif->send_bulk_notification($user_ids, $message);
 
             session()->setFlashdata('success', 'Release Date Set');
             return redirect()->back();

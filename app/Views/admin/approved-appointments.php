@@ -14,7 +14,14 @@
     <div class="d-flex">
         <div class="calendar flex-fill">
             <div class="calendar-grid m-0">
-                <center>
+                <center class="d-flex justify-content-between" style="cursor: pointer;">
+                    <div class="button prev-year" style="cursor: pointer;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Previous Month
+                    </div>
                     <div style="width: fit-content;">
                         <select class="form-select fs-5 fw-bold border-0 shadow-none" style="cursor: pointer;" id="month">
                             <option value="January">January</option>
@@ -30,6 +37,13 @@
                             <option value="November">November</option>
                             <option value="December">December</option>
                         </select>
+                    </div>
+                    <div class="button next-year">
+                        Next Month
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
                     </div>
                 </center>
                 <table class="table table-borderless">
@@ -103,6 +117,47 @@
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
         let date = new Date()
 
+        $(".next-year").click(function() {
+            if (date.getMonth() == 11) {
+                date = new Date(date.getFullYear() + 1, 0, 1);
+            } else {
+                date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+            }
+            $('#month').children().each(function() {
+                $(this).removeAttr("selected")
+            })
+            $('#month').children().each(function() {
+                console.log($(this).val(), convertMonthToName(date.getMonth()))
+                if ($(this).val() === convertMonthToName(date.getMonth())) {
+                    $(this).attr("selected", true)
+                    $(this).addClass("selected")
+                }
+            })
+
+            getApprovedData([getDate(convertMonthToNumber($('#month').val())), convertMonthToNumber($('#month').val())])
+        })
+
+        $(".prev-year").click(function() {
+            if (date.getMonth() == 0) {
+                date = new Date(date.getFullYear() - 1, 11, 1);
+            } else {
+                date = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+            }
+            console.log(date)
+            $('#month').children().each(function() {
+                $(this).removeAttr("selected")
+            })
+            $('#month').children().each(function() {
+                console.log($(this).val(), convertMonthToName(date.getMonth()))
+                if ($(this).val() === convertMonthToName(date.getMonth())) {
+                    $(this).attr("selected", true)
+                    $(this).addClass("selected")
+                }
+            })
+
+            getApprovedData([getDate(convertMonthToNumber($('#month').val())), convertMonthToNumber($('#month').val())])
+        })
+
         $('#month').children().each(function() {
             if ($(this).val() === convertMonthToName(date.getMonth())) {
                 $(this).attr("selected", true)
@@ -131,7 +186,8 @@
 
                         getAllDates.push({
                             month,
-                            day
+                            day,
+                            year
                         })
                     }
 
@@ -170,7 +226,7 @@
         }
 
         function getDate(month) {
-            let date = new Date();
+            // let date = new Date();
             let firstDay = new Date(date.getFullYear(), month, 1);
             let lastDay = new Date(date.getFullYear(), month + 1, 0);
 
@@ -207,12 +263,14 @@
 
             let approvedDates = approvedData.getAllDates
             // populate the remaining weeks
-            for (let j = firstDay, days = 1; j <= lastUTCDay + firstDay; j++, days++) {
-                if (date.getUTCDate() === days && date.getMonth() === month) {
+            for (let j = firstDay, days = 1, i = 0; j <= lastUTCDay + firstDay; j++, days++, i++) {
+                // console.log(approvedDates[i]?.year)
+                if (date.getUTCDate() === days && date.getMonth() === month && date.getFullYear() === approvedDates[i]?.year) {
 
                     let hasApprovedDate = false;
                     let hasApprovedAlert = false;
                     for (let i = 0; i < approvedDates.length; i++) {
+                        let approvedDateYear = parseInt(approvedDates[i].year)
                         let approvedDateMonth = parseInt(approvedDates[i].month)
                         let approvedDateDay = parseInt(approvedDates[i].day)
                         let {
@@ -224,22 +282,23 @@
                         let approved = approvedHTMLTemplate(similarCounter, '')
                         if (hasApprovedAlert) break
 
-                        if (approvedDateMonth === month + 1 && approvedDateDay === days) {
+                        if (approvedDateMonth === month + 1 && approvedDateDay === days && date.getFullYear() === approvedDateYear) {
                             hasApprovedDate = true
                             hasApprovedAlert = true
-                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
+                            currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '&year=' + parseInt(approvedDates[i]?.year) + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
                         }
                     }
 
                     if (hasApprovedDate) continue;
                     // Date today
 
-                    currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                    currentDay += '<td class="active"><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '&year=' + parseInt(approvedDates[i]?.year) + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
 
                 } else {
                     let hasApprovedDate = false;
                     let hasApprovedAlert = false;
                     for (let i = 0; i < approvedDates.length; i++) {
+                        let approvedDateYear = parseInt(approvedDates[i].year)
                         let approvedDateMonth = parseInt(approvedDates[i].month)
                         let approvedDateDay = parseInt(approvedDates[i].day)
                         let {
@@ -251,17 +310,17 @@
                         let approved = approvedHTMLTemplate(similarCounter, '')
                         if (hasApprovedAlert) break
 
-                        if (approvedDateMonth === month + 1 && approvedDateDay === days) {
+                        if (approvedDateMonth === month + 1 && approvedDateDay === days && date.getFullYear() === approvedDateYear) {
                             hasApprovedDate = true
                             hasApprovedAlert = true
-                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
+                            currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '&year=' + parseInt(approvedDates[i]?.year) + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + approved + '</div></a></td>'
                         }
                     }
 
                     if (!hasApprovedDate) {
                         // Date today
 
-                        currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
+                        currentDay += '<td class=""><a href="' + url + '/admin/dashboard/approved-appointments/schedule?month=' + (month + 1) + '&day=' + days + '&year=' + parseInt(approvedDates[i]?.year) + '" class="text-decoration-none text-dark"><div><h4>' + days + '</h4>' + '</div></a></td>'
                     }
 
                 }
