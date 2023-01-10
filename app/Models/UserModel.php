@@ -37,8 +37,22 @@ class UserModel extends Model
     public function get_all_users()
     {
         $query = $this->db_conn->table($this->table)
+            ->where('account_stats !=', 2)
             ->get();
 
+
+        return $query->getResultArray();
+    }
+
+    /**
+        GET USERS TO ARCHIVE
+     *  Description: user it not deleted permanently but set it as archive
+     *  and it can viewed by admin for record
+     */
+    public function get_archive_users() {
+        $query = $this->db_conn->table($this->table)
+            ->where('account_stats', 2)
+            ->get();
 
         return $query->getResultArray();
     }
@@ -197,11 +211,19 @@ class UserModel extends Model
         return true;
     }
 
-    public function perma_delete_account($user_code_id){
+    /**
+     Archive user
+     * instead of permanent deleting the user account the system retain it as an archive
+     * but the account is not active anymore for logging in
+     * 2 = archive
+     */
+    public function archive_account($user_code_id){
 
         $this->db_conn->table($this->table)
             ->where('code_id', $user_code_id)
-            ->delete();
+            ->update([
+                'account_stats' => 2
+            ]);
         
             return true;
     }

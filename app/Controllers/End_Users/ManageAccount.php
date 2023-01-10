@@ -143,9 +143,9 @@ class ManageAccount extends BaseController
      * description: admin has only the capality to totaly remove user account in the system
      *              database and it cannot be reactivated.
      */
-    function remove_user_account($user_code_id)
+    function archive_user_account($user_code_id)
     {
-        return $this->userModel->perma_delete_account($user_code_id);
+        return $this->userModel->archive_account($user_code_id);
     }
 
     /**

@@ -43,7 +43,7 @@
                             <!-- remove user btn -->
                             <td>
                                 <?php
-                                //TODO: Update to server
+
                                 if ($user['account_stats'] == 1) {
                                 ?>
 
@@ -67,12 +67,12 @@
                                 <?php
                                 }
                                 ?>
-                                <button type="button" class="btn btn-danger delete-user-btn" value="<?= $user['code_id'] ?>">
+                                <button type="button" class="btn btn-primary delete-user-btn" value="<?= $user['code_id'] ?>">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
                                         <polyline points="3 6 5 6 21 6"></polyline>
                                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                                     </svg>
-                                    <span class="ms-2">DELETE</span>
+                                    <span class="ms-2">Archive</span>
                                 </button>
                             </td>
                         </tr>
@@ -112,12 +112,12 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "get",
-                        url: `${url}/admin/dashboard/delete-user/${id}`,
+                        url: `${url}/admin/dashboard/archive-user/${id}`,
                         // dataType: "json",
                         success: function(res) {
                             Swal.fire(
-                                "Deleted",
-                                "You have successfully Deleted a user",
+                                "Archive",
+                                "Successfully move a user to archive",
                                 "success"
                             );
                             location.reload()

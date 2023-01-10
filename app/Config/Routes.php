@@ -121,7 +121,7 @@ $routes->group("", ['filter' => 'maintenanceFilter'], static function ($routes) 
             $routes->get('users', 'Admin\Admin::users');
             $routes->get('deactivate-user/(:num)', 'End_Users\ManageAccount::deactivate_user/$1');
             $routes->get('reactivate-user/(:num)', 'End_Users\ManageAccount::reActivate_user/$1');
-            $routes->get('delete-user/(:num)', 'End_Users\ManageAccount::remove_user_account/$1');
+            $routes->get('archive-user/(:num)', 'End_Users\ManageAccount::archive_user_account/$1');
 
             //notifications
             $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
