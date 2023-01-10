@@ -11,6 +11,9 @@ app/Config/Email.php
 app/Config/SMS.php
 app/Config/App.php
 
+nginx
+docker-compose.yml
+Dockerfile
 # OS X
 .DS_Store
 .AppleDouble
