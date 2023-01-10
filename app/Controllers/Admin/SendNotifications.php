@@ -91,7 +91,7 @@ class SendNotifications extends BaseController
         //make array of contact numbes only selected from user data
         $numbers_only = array_column($user_data, 'contact_number');
 
-        $responses = $this->send_sms->sendBulkSMS($numbers_only, $message);
+        $responses = $this->send_sms->sendBulkSMSv_2($numbers_only, $message);
 
 
         return json_encode($responses);
