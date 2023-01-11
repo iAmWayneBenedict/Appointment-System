@@ -53,7 +53,6 @@ class AdminReport extends BaseController
 
         // return $results;
         $data['results'] = $results['results'];
-        $data['state'] = $results['states'];
         $data['total_appointment'] = $this->report_model->get_total_appointments();
         $data['from_result'] = $results['count'];
         $data['report'] = $results['analytics'];

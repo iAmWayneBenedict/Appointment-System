@@ -48,8 +48,8 @@
                     </div>
                     <div class="d-flex justify-content-end gap-2">
                         <input type="submit" class="btn btn-primary" value="Resched">
-                        <a href="<?= base_url("user/dashboard/delete-passed-appointment/{$appointment->id}") ?>" class="btn btn-danger">Remove</a>
-                        <a href="<?= base_url("user/dashboard/delete1-passed-appointment/{$appointment->id}") ?>" class="btn btn-success">Already Done</a>
+                        <a href="<?= base_url("user/dashboard/delete-passed-appointment/{$appointment->id}") ?>" class="btn btn-danger">Cancel</a>
+                        <a href="<?= base_url("user/dashboard/delete1-passed-appointment/{$appointment->id}") ?>" class="btn btn-success">Done</a>
                     </div>
                 </form>
 

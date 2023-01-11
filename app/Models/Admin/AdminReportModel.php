@@ -86,23 +86,16 @@ class AdminReportModel extends Model
         //appointment summary
         $data['results'] = $all_result->get()->getResultArray();
 
+        //apppointment state
+        $total = $query->where($conditions)->countAllResults();
         $data['count'] = [
-            'all' => $query->where($conditions)->countAllResults(),
-            'pending_canceled' => $query->where($conditions)->like('state', 'pending canceled')->countAllResults(),
-            'approved_canceled' => $query->where($conditions)->like('state', 'approved canceled')->countAllResults(),
-            'done' => $query->where($conditions)->like('state', 'done')->countAllResults(),
-            'walkin' => $query->where($conditions)->like('state', 'walk in')->countAllResults(),
-            'reject' => $query->where($conditions)->like('state', 'rejected')->countAllResults(),
-            'pass' => $query->where($conditions)->like('state', 'passed')->countAllResults(),
-        ];
-         //appointment state
-        $state = (array) [
-            "pending_canceled" => $query->where('state', 'pending canceled')->countAllResults(),
-            'approved_canceled' => $query->where('state', 'approved canceled')->countAllResults(),
-            'done' => $query->where('state', 'done')->countAllResults(),
-            'walkin' => $query->where('state', 'walk in')->countAllResults(),
-            'reject' => $query->where('state', 'rejected')->countAllResults(),
-            'pass' => $query->where('state', 'passed')->countAllResults(),
+            'total' => $total,
+            'pending_canceled' => $this->get_percentage($total, $query->where($conditions)->like('state', 'pending canceled')->countAllResults()),
+            'approved_canceled' => $this->get_percentage($total, $query->where($conditions)->like('state', 'approved canceled')->countAllResults()),
+            'done' => $this->get_percentage($total, $query->where($conditions)->like('state', 'done')->countAllResults()),
+            'walkin' => $this->get_percentage($total, $query->where($conditions)->like('state', 'walk in')->countAllResults()),
+            'reject' => $this->get_percentage($total, $query->where($conditions)->like('state', 'rejected')->countAllResults()),
+            'pass' => $this->get_percentage($total, $query->where($conditions)->like('state', 'passed')->countAllResults()),
         ];
 
         //apointment purposes
@@ -114,7 +107,6 @@ class AdminReportModel extends Model
             'BR' => $query->where($conditions)->like('purpose', 'Boat Registration')->countAllResults(),
         ];
         
-        $data['states'] = $state;
         
         //data for analytics appointments per month
         $data['analytics'] = $this->get_analytics($selected_year);
@@ -202,6 +194,11 @@ class AdminReportModel extends Model
         ];
         return $data;
 
+    }
+
+    //get the percentage from the total appointment state
+    public function get_percentage($total, $equiv_value){
+        return ($equiv_value / $total) * 100;
     }
 
 }

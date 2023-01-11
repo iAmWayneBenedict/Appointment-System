@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="col-6 align-items-center">
-            <canvas id="myChart3" width="850" height="450"></canvas>
+            <canvas id="myChart3" style="width: 100%;height:100%;"></canvas>
         </div>    
     </div>
     <div class="row m-4 rounded-lg" style="background-color: #ffffff !important;">
@@ -65,6 +65,25 @@
                 <tbody class="results">
                 <?php
                     foreach($purpose as $key => $val){ 
+                        switch ($key) {
+                            case 'RSBSA':
+                                $key = 'Registry System for Basic Sector in Agriculture';
+                                break;
+                            case 'RMF':
+                                $key = 'Registration of Municipal Fisherfolks';
+                                break;
+                            case 'PCIC':
+                                $key = 'Processing of Crop Insurance';
+                                break;
+                            case 'DFI':
+                                $key = 'Distribution of Farm Inputs';
+                                break;
+                            case 'BR':
+                                $key = 'Boat Registration';
+                                break;
+                            default:
+                                break;
+                        }
                 ?>
                     <tr class="">
                         <th scope="row"><?= $key ?></th>
@@ -90,13 +109,22 @@
                 </thead>
                 <tbody class="results">
                 <?php
-                    foreach($from_result as $key => $val){ 
+                    foreach($from_result as $key => $val){
+                        if($key == 'total'){
                 ?>
                     <tr class="">
                         <th scope="row"><?= ucwords($key) ?></th>
                         <td><?= $val ?></td>
                     </tr>
                 <?php
+                        }else{
+                ?>
+                    <tr class="">
+                        <th scope="row"><?= ucwords($key) ?></th>
+                        <td><?= $val ?>%</td>
+                    </tr>
+                <?php
+                        }
                     }
                 ?>
                 </tbody>
@@ -140,16 +168,16 @@
         
     </div>
     <script type="text/javascript">
-        <?php unset($from_result['all'])?>
+        <?php unset($from_result['total'])?>
         var xValues = <?= json_encode(array_keys($from_result))?>;
         var yValues = <?= json_encode(array_values($from_result))?>;
         var barColors = [
-        "#FD0100",
-        "#F76915",
-        "#EEDE04",
-        "#A0D636",
-        "#2FA236",
-        "#333ED4"
+            "#FD0100",
+            "#F76915",
+            "#EEDE04",
+            "#A0D636",
+            "#2FA236",
+            "#333ED4"
         ];
 
         new Chart("myChart", {
@@ -171,7 +199,7 @@
         });
 
         //data sets for Appointment Purposes
-        var xValuesAP = <?= json_encode(array_keys($purpose))?>
+        var xValuesAP = <?= json_encode(array_keys($purpose))?>;
 
         var yValuesAP = <?= json_encode(array_values($purpose))?>
 
@@ -199,7 +227,21 @@
                     stepSize: 1,
                     beginAtZero: true,
                     },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value',
+                        fontStyle: 'bold',
+                        fontColor: '#2596be'
+                    }
                 }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Purpose',
+                        fontStyle: 'bold',
+                        fontColor: '#2596be'
+                    }
+                }]
             },
             }
         });
@@ -230,7 +272,21 @@
                     stepSize: 1,
                     beginAtZero: true,
                     },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value',
+                        fontStyle: 'bold',
+                        fontColor: '#2596be'
+                    }
                 }],
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Year',
+                        fontStyle: 'bold',
+                        fontColor: '#2596be'
+                    }
+                }]
             },
         }
         });
