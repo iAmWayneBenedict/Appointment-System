@@ -434,7 +434,7 @@
 
                                 </tbody>
                             </table>
-                            <div class="d-flex flex-column align-items-center">
+                            <div class="d-flex flex-column align-items-center time-con">
                                 <div style="width: fit-content;">
                                     <h4 class="fw-semibold">Time</h4>
                                 </div>
@@ -508,6 +508,7 @@
                     }))
                 })
             })
+
             $("#holidayModal").css({
                 display: "flex"
             })

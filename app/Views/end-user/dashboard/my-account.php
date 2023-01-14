@@ -36,9 +36,26 @@
                         <label for="mname" class="form-label">Last Name</label>
                         <input type="text" class="form-control" name="lname" value="<?= $userData->lname ?>" id="lname" placeholder="Last Name">
                     </div>
-                    <div class="pb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" name="address" value="<?= $userData->address ?>" id="address" placeholder="Address">
+                    <div class="pb-1">
+                        <label for="municipality" class="form-label">Municipality</label>
+                        <!-- <input type="text" class="form-control" id="municipality" name="municipality" placeholder="Municipality"> -->
+                        <select name="municipality" id="municipality" class="form-control">
+
+                        </select>
+                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                            message!</span><br>
+                    </div>
+
+                    <!-- address -->
+
+                    <div class="pb-1">
+                        <label for="barangay" class="form-label">Barangay</label>
+                        <!-- <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay"> -->
+                        <select name="barangay" id="barangay" class="form-control">
+                            <option value="">--Select Barangay--</option>
+                        </select>
+                        <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                            message!</span><br>
                     </div>
 
                     <div class="pb-3">
@@ -93,6 +110,7 @@
         </div>
     </div>
 </div>
+<script src="<?= base_url('/src/js/address.js') ?>"></script>
 <script>
     $(() => {
         const base_url = document.querySelector("meta[name = base_url]").getAttribute('content');
@@ -113,7 +131,7 @@
             e.preventDefault();
 
             let formdata = $(this).serializeArray();
-
+            // TODO: Update Backend to store municipality and barangay instead of address
             $.ajax({
                 type: "post",
                 url: `${base_url}/user/my-account/update`,

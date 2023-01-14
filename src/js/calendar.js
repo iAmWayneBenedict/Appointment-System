@@ -581,7 +581,23 @@ $(() => {
 	function changeMinutes() {
 		$(".save-date-btn").data("minutes", $(".minutes").val());
 	}
-
+	if (sessionStorage.getItem("modalCurrent")) {
+		$(".time-con").each(function () {
+			$(this).css({
+				display: "none",
+			});
+			$(this).toggleClass("d-flex");
+			$(this).toggleClass("d-none");
+		});
+	} else {
+		$(".time-con").each(function () {
+			$(this).css({
+				display: "flex",
+			});
+			$(this).toggleClass("d-flex");
+			$(this).toggleClass("d-none");
+		});
+	}
 	$(".save-date-btn").click(function () {
 		// get all date values
 		let month = $(".calendar-title").data("month") + 1;
@@ -604,7 +620,7 @@ $(() => {
 			$("input[data-selected-date=" + s.hidden + "]").val(
 				`${currentDayOfTheWeekName}, ${convertMonthToName(month - 1)} ${parseInt(
 					day
-				)}, ${global_year} ${hour % 12}:${minutes} ${datetime}`
+				)}, ${global_year}`
 			);
 		} else {
 			$("#sched").val(selectedDate);
