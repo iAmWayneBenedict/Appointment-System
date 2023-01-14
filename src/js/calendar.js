@@ -285,7 +285,6 @@ $(() => {
 					month === holidayFrom.getMonth() &&
 					holidayFrom.getDate() === parseInt($(this).find("h6").text())
 				) {
-
 					$(this).attr("aria-disabled", true);
 					$(this).addClass("disabled");
 					$(this).removeClass("text-dark");
@@ -408,7 +407,7 @@ $(() => {
 		populateCalendar(
 			getDate(date.getMonth(), date.getFullYear()),
 			date.getMonth(),
-			global_year !== date.getFullYear() ? date.getFullYear() : global_year 
+			global_year !== date.getFullYear() ? date.getFullYear() : global_year
 		);
 		$(".day").each(function () {
 			$(this).click(handleClickDay);
@@ -598,13 +597,24 @@ $(() => {
 
 		// redefine elements
 		$(".selected-date-con").removeClass("d-none");
-		$("#sched").val(selectedDate);
-		$("#new-sched").val(selectedDate);
-		$(".selected-date").val(
-			`${currentDayOfTheWeekName}, ${convertMonthToName(month - 1)} ${parseInt(
-				day
-			)}, ${global_year} ${hour % 12}:${minutes} ${datetime}`
-		);
+
+		if (sessionStorage.getItem("modalCurrent")) {
+			let s = JSON.parse(sessionStorage.getItem("modalCurrent"));
+			$("#" + s.hidden).val(selectedDate);
+			$("input[data-selected-date=" + s.hidden + "]").val(
+				`${currentDayOfTheWeekName}, ${convertMonthToName(month - 1)} ${parseInt(
+					day
+				)}, ${global_year} ${hour % 12}:${minutes} ${datetime}`
+			);
+		} else {
+			$("#sched").val(selectedDate);
+			$("#new-sched").val(selectedDate);
+			$(".selected-date").val(
+				`${currentDayOfTheWeekName}, ${convertMonthToName(month - 1)} ${parseInt(
+					day
+				)}, ${global_year} ${hour % 12}:${minutes} ${datetime}`
+			);
+		}
 		$(this).prev().click();
 	});
 

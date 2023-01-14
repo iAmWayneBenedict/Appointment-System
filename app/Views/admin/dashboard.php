@@ -149,7 +149,7 @@
                                     <th scope="col">Sat</th>
                                 </tr>
                             </thead>
-                            <tbody class="days-entries">
+                            <tbody class="days-entries2">
 
                             </tbody>
                         </table>
@@ -178,12 +178,13 @@
                             <div class="card-body">
                                 <div>
                                     <h5>Add Walk-in Clients</h5>
-                                    <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#walkinModal">Add Walk-in</button>
+                                    <!-- <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#walkinModal">Add Walk-in</button> -->
+                                    <button type="button" class="btn btn-primary mb-4 walkin-modal">Add Walk-in</button>
                                 </div>
                                 <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] === 'admin') { ?>
                                     <h5>Manage Holidays</h5>
                                     <div>
-                                        <button type="button" class="btn btn-outline-success mb-4" data-bs-toggle="modal" data-bs-target="#holidayModal">
+                                        <button type="button" class="btn btn-outline-success mb-4 holiday-modal">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
                                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -255,22 +256,45 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="holidayModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+
+    <div class="bg-white p-5 rounded-4 shadow-lg parent" data-backdrop="false" id="holidayModal" style="display:none;width: 30rem; position:fixed; top:50%;left:50%;transform:translate(-50%,-50%); z-index:100">
+        <div class="modal-dialog modal-dialog-centered" style="width: 100%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Set Holiday</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="holiday_from" class="form-label">Holiday From</label>
-                        <input name="holiday_from" class="form-control" required id="holiday_from" type="date">
+                        <!-- <label for="holiday_from" class="form-label">Holiday From</label>
+                        <input name="holiday_from" class="form-control" required id="holiday_from" type="date"> -->
+                        <label for="sched" class="form-label">Schedule</label><br>
+                        <input type="text" hidden class="form-control" id="holiday_from" name="holiday_from">
+                        <button type="button" id="select-date" class="btn btn-primary select-date" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                            Select Date
+                        </button>
+                        <br>
+                        <br>
+                        <div class="pb-1 selected-date-con d-none">
+                            <label for="selected-date" class="form-label">Selected Date</label><br>
+                            <input type="text" disabled class="form-control selected-date" id="selected-date" data-selected-date="holiday_from" name="selected-date">
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="holiday_to" class="form-label">Holiday To</label>
-                        <input name="holiday_to" class="form-control" id="holiday_to" type="date">
+                        <!-- <label for="holiday_to" class="form-label">Holiday To</label>
+                        <input name="holiday_to" class="form-control" id="holiday_to" type="date"> -->
+                        <label for="sched" class="form-label">Schedule</label><br>
+                        <input type="text" hidden class="form-control" id="holiday_to" name="holiday_to">
+                        <button type="button" id="select-date" class="btn btn-primary select-date" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                            Select Date
+                        </button>
+                        <br>
+                        <br>
+                        <div class="pb-1 selected-date-con d-none">
+                            <label for="selected-date" class="form-label">Selected Date</label><br>
+                            <input type="text" disabled class="form-control selected-date" id="selected-date" data-selected-date="holiday_to" name="selected-date">
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
@@ -278,7 +302,6 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary submit-holiday">Save changes</button>
                 </div>
             </div>
@@ -310,12 +333,12 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="walkinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="bg-white p-5 rounded-4 shadow-lg parent" data-backdrop="false" id="walkinModal" style="display:none;width: 30rem; position:fixed; top:50%;left:50%;transform:translate(-50%,-50%); z-index:100">
+    <div class="modal-dialog modal-dialog-centered" style="width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add Walk-in Clients</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close"></button>
             </div>
             <div class="modal-body">
                 <form action="" method="post" class="d-flex flex-md-row flex-column align-items justify-content-between gap-5" id="walkin-submit">
@@ -359,10 +382,6 @@
                             </select>
                         </div>
                         <div class="pb-3">
-                            <label for="selected-date" class="form-label">Selected Date</label><br>
-                            <input type="datetime-local" class="form-control" id="selected-date" name="selected-date">
-                        </div>
-                        <div class="pb-3">
                             <input type="submit" class="btn btn-warning" value="INSERT">
                         </div>
                     </div>
@@ -371,9 +390,99 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Choose a date</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <div class="calendar flex-fill" style="max-width: 25rem;">
+                    <div class="calendar-grid m-0 p-0 calendar-set-appointment">
+                        <div class="w-full">
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn prev-month">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                                        <polyline points="12 19 5 12 12 5"></polyline>
+                                    </svg>
+                                </button>
+                                <h3 class="fw-semibold calendar-title">January</h3>
+                                <button type="button" class="btn next-month">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="calendar-con">
+                            <table class="calendar-table table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sun</th>
+                                        <th scope="col">Mon</th>
+                                        <th scope="col">Tue</th>
+                                        <th scope="col">Wed</th>
+                                        <th scope="col">Thu</th>
+                                        <th scope="col">Fri</th>
+                                        <th scope="col">Sat</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="days-entries">
 
-
-
+                                </tbody>
+                            </table>
+                            <div class="d-flex flex-column align-items-center">
+                                <div style="width: fit-content;">
+                                    <h4 class="fw-semibold">Time</h4>
+                                </div>
+                                <div class="d-flex gap-3 align-items-center" style="max-width: 15rem;">
+                                    <select class="form-select text-center hour">
+                                        <option value="08">8</option>
+                                        <option value="09">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="13">1</option>
+                                        <option value="14">2</option>
+                                        <option value="15">3</option>
+                                        <option value="15">4</option>
+                                    </select>
+                                    <span>:</span>
+                                    <select class="form-select text-center minutes">
+                                        <option value="00">00</option>
+                                        <option value="15">15</option>
+                                        <option value="30">30</option>
+                                        <option value="45">45</option>
+                                    </select>
+                                    <div class="datetime">
+                                        pm
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <div>
+                    <small><b>Legend:</b></small>
+                    <div class="d-flex align-items-center" role="alert">
+                        <span class="bg-danger rounded-circle" style="width: 10px; height: 10px;"></span>
+                        <small class="ms-2">
+                            Cannot set appointment
+                        </small>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save-date-btn">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute('content')
@@ -383,6 +492,32 @@
         setInterval(() => {
             getNotifications()
         }, 5000)
+
+        $(".walkin-modal").click(function() {
+
+            $("#walkinModal").css({
+                display: "flex"
+            })
+        })
+        $(".holiday-modal").click(function() {
+            $(".select-date").each(function() {
+                $(this).click(function() {
+                    sessionStorage.setItem("modalCurrent", JSON.stringify({
+                        hidden: $(this).parent().find("input[hidden]").attr("id"),
+                        shown: $(this).parent().find("#selected-date").attr("data-selected-date")
+                    }))
+                })
+            })
+            $("#holidayModal").css({
+                display: "flex"
+            })
+        })
+
+        $(".btn-close").click(function() {
+            $(this).parents(".parent").css({
+                display: 'none'
+            })
+        })
         let toastCount = 0;
 
         $(".next-year").click(function() {
@@ -853,7 +988,7 @@
         }
 
         function populateCalendar([firstDay, lastUTCDay], month, stocksReleaseData = undefined) {
-            $('.days-entries').html('')
+            $('.days-entries2').html('')
 
             let allDates = ''
             let isFirstWeekDone = false;
@@ -936,7 +1071,7 @@
 
 
             }
-            $('.days-entries').append(allDates)
+            $('.days-entries2').append(allDates)
         }
 
         function getAppointmentPerDay(stocksReleaseDates, month, day) {
@@ -968,4 +1103,5 @@
     })
 </script>
 
+<script src="<?= base_url("/src/js/calendar.js") ?>"></script>
 <?= $this->endSection() ?>
