@@ -37,16 +37,16 @@
         </script>
     <?php
     }
-    if (session()->has('warning')){
+    if (session()->has('warning')) {
     ?>
         <script>
             Swal.fire(
-            'Warning',
-            '<?= session('warning') ?>',
-            'warning'
+                'Warning',
+                '<?= session('warning') ?>',
+                'warning'
             )
         </script>
-    <?php 
+    <?php
     }
     ?>
     <nav class="container-fluid navbar bg-white px-5 top-main-nav">
@@ -224,7 +224,7 @@
                         }
                     }
                 });
-            }, 5000) 
+            }, 5000)
 
             setInterval(() => {
                 //alert message for admin for incoming appointments

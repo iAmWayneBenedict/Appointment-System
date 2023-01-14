@@ -31,8 +31,25 @@
                     <input type="text" class="form-control" id="suffix" name="suffix" placeholder="Suffix">
                 </div> -->
                 <div class="pb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" name="address" id="address" placeholder="address">
+                    <label for="municipality" class="form-label">Municipality</label>
+                    <!-- <input type="text" class="form-control" id="municipality" name="municipality" placeholder="Municipality"> -->
+                    <select name="municipality" id="municipality" class="form-control">
+
+                    </select>
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
+                </div>
+
+                <!-- address -->
+
+                <div class="pb-3">
+                    <label for="barangay" class="form-label">Barangay</label>
+                    <!-- <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay"> -->
+                    <select name="barangay" id="barangay" class="form-control">
+                        <option value="">--Select Barangay--</option>
+                    </select>
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
                 </div>
                 <div class="pb-3">
                     <label for="social_pos" class="form-label">Social Position</label>
@@ -190,6 +207,7 @@
     </div>
 </div>
 <script src="<?= base_url('/src/js/calendar.js') ?>"></script>
+<script src="<?= base_url('/src/js/address.js') ?>"></script>
 <script>
     $(() => {
         const url = document.querySelector("meta[name = base_url]").getAttribute("content");
@@ -203,7 +221,7 @@
                 formdata.set('purpose', $('#concern').val());
                 formdata.delete('concern')
             }
-
+            // TODO: Update Backend to store municipality and barangay instead of address
             const user_type = 000
             $.ajax({
                 type: "post",

@@ -57,11 +57,27 @@
                         message!</span><br>
                 </div>
 
+                // TODO: Update Backend to store municipality and barangay instead of address
                 <!-- address -->
 
                 <div class="mb-1">
-                    <label for="address" class="form-label">Address <small><i class="text-primary">(Zone Barangay, Municipality)</i></small></label>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+                    <label for="municipality" class="form-label">Municipality</label>
+                    <!-- <input type="text" class="form-control" id="municipality" name="municipality" placeholder="Municipality"> -->
+                    <select name="municipality" id="municipality" class="form-control">
+
+                    </select>
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
+                </div>
+
+                <!-- address -->
+
+                <div class="mb-1">
+                    <label for="barangay" class="form-label">Barangay</label>
+                    <!-- <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay"> -->
+                    <select name="barangay" id="barangay" class="form-control">
+                        <option value="">--Select Barangay--</option>
+                    </select>
                     <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                         message!</span><br>
                 </div>
@@ -189,4 +205,5 @@
 </div>
 
 <script src="<?= base_url('/src/js/user/register.js') ?>"></script>
+<script src="<?= base_url('/src/js/address.js') ?>"></script>
 <?= $this->endSection() ?>
