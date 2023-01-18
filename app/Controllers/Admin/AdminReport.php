@@ -114,7 +114,6 @@ class AdminReport extends BaseController
         $this->pdf->setOptions($option);
         //paper size
         $this->pdf->render();
-         //FIXME : set to one to auto download
         $this->pdf->stream("appointmentReport{$date_now}.pdf", ["Attachment" => 1]);
     }
 
@@ -165,7 +164,6 @@ class AdminReport extends BaseController
         $this->pdf->loadHtml($html);
         //paper size
         $this->pdf->render();
-        //FIXME : set to one to auto download
         $this->pdf->stream("stocksReport_{$date_now}.pdf", ["Attachment" => 1]);
     }
 

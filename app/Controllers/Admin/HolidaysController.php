@@ -16,7 +16,6 @@ class HolidaysController extends BaseController
         $this->holiday_model = new HolidayModel();
     }
 
-    // TODO : update to server
     public function set_holidays()
     {
         $current_admin = $this->session->get('admin_id');

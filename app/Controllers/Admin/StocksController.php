@@ -38,7 +38,6 @@ class StocksController extends BaseController
      */
     public function add_stock()
     {
-        // TODO : update to server
         $stock_data = [
             'admin_id'          => $this->session->get('admin_id'),
             'category'          => ucwords($this->request->getPost('category')),

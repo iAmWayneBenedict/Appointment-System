@@ -231,6 +231,11 @@
 
     <script>
         $(() => {
+           window.onbeforeunload = function(){
+                
+           }
+           
+
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
             const url = document.querySelector("meta[name = base_url]").getAttribute("content");
@@ -289,6 +294,19 @@
                     }
                 });
             }, 5000)
+
+            //update user's log time every 10 seconds
+            setInterval(() => {
+                $.ajax({
+                    type: "GET",
+                    url: `${url}/user/dashboard/online-stats`,
+                    success: function (response) {
+                        
+                    }
+                });
+            }, 10000)
+
+
         })
     </script>
 </body>

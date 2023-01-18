@@ -1,1 +1,5 @@
 CREATE OR REPLACE VIEW stock_report AS SELECT stocks.name, stocks.per_type, stocks_availed.avail_by, stocks_availed.quantity_availed, stocks_availed.date FROM stocks_availed JOIN stocks ON stocks.id = stocks_availed.stock_id;
+
+select `set_appointments`.`schedule` AS `schedule`,`set_appointments`.`name` AS `name`,`set_appointments`.`address` AS `address`,`set_appointments`.`contact_number` AS `contact_number`,`set_appointments`.`social_pos` AS `social_pos`,`set_appointments`.`purpose` AS `purpose`,`report_data`.`state` AS `state` from (`report_data` join `set_appointments` on((`set_appointments`.`id` = `report_data`.`appointment_id`)))
+
+CREATE OR REPLACE VIEW appointment_report AS SELECT set_appointments.schedule, set_appointments.name, set_appointments.municipality, set_appointments.barangay, set_appointments.zone_street, set_appointments.contact_number, set_appointments.social_pos, set_appointments.purpose, report_data.state FROM report_data JOIN set_appointments ON set_appointments.id = report_data.appointment_id

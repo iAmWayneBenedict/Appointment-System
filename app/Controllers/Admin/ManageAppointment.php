@@ -250,7 +250,6 @@ class ManageAppointment extends BaseController
             return;
         }
 
-        //TODO : update to server
         $current_admin = $this->session->get('admin_id');
         // $current_admin = 1;
 
@@ -478,11 +477,11 @@ class ManageAppointment extends BaseController
                 $this->appNotif->sent_app_notification($approved->user_id, $message);
             }
 
-            // //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇ check resched appointment
+            //TODO: enable this sms later ⬇⬇⬇⬇⬇⬇ check resched appointment
 
             // $sms_response = $this->send_sms->sendSMS($approved->contact_number, $message);
 
-            // //if sms is not sent execute this code
+            //if sms is not sent execute this code
 
             // if ($sms_response['code'] == 0) {
             //     array_push($res, $sms_response['message']);
@@ -536,7 +535,6 @@ class ManageAppointment extends BaseController
         }
     }
 
-    //TODO: Update to server 
     public function notify_admin_appointments()
     {
 

@@ -224,6 +224,19 @@
                         }
                     }
                 });
+
+                $.ajax({
+                    type: "get",
+                    url: `${url}/admin/dashboard/users-summary`,
+                    dataType: "json",
+                    success: function(response) {
+                       console.log(response)
+                       $('#online').html(response.online)
+                       $('#registered').html(response.registered)
+                       $('#active').html(response.active)
+                    }
+                });
+
             }, 5000)
 
             setInterval(() => {

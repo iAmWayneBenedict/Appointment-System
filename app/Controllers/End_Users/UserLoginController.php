@@ -55,6 +55,7 @@ class UserLoginController extends BaseController
                 'password' => $this->request->getPost('password')
             ];
 
+            //check if input username is present/existing
             $user_data = $this->userModel->login_users($login_data);
 
             if (empty($user_data)) {
@@ -74,6 +75,8 @@ class UserLoginController extends BaseController
                 'logged_in' => TRUE
             ]);
 
+            $this->userModel->set_online_user($login_data['code_id']);
+
             // it should be user dashboard
             return redirect('user/dashboard');
         }
@@ -83,8 +86,28 @@ class UserLoginController extends BaseController
     {
 
         $user_sessions = ['id', 'logged_in'];
+
+        //set user to inactive before session destroy
+        $this->userModel->set_inActive_user($this->session->get('id'));
+
         $this->session->destroy($user_sessions);
 
         return redirect()->to('/user/login');
+    }
+
+    // update users logtime every 10 seconds, this function is call using ajax
+    public function update_users_logtime(){
+        $user_id = $this->session->get('id');
+
+        $this->userModel->set_online_user(NULL, $user_id);
+    }
+
+    //for cron job
+    public function auto_logout_user(){
+       $inactive_users = $this->userModel->get_inactive_logtime();
+
+       foreach($inactive_users as $users_logtime){
+            $this->userModel->set_inActive_user($users_logtime->id);
+       }
     }
 }

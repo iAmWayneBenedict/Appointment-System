@@ -69,8 +69,6 @@ class OnAppNotification
 
     }
 
-    //TODO : admin notification
-
     public function notify_admin($message)
     {
         return $this->notif_model->admin_insert_message($message);

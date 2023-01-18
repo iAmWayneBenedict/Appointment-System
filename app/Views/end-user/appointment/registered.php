@@ -21,9 +21,18 @@
                         <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="<?= $userData->fname . ' ' . $userData->lname; ?>" readonly>
                     </div>
                     <div class="pb-3">
-                        <label for="address" class="form-label">Address</label>
-                        <input type="text" class="form-control" name="address" value="<?= $userData->address; ?>" id="address" placeholder="address" readonly>
+                        <label for="address" class="form-label">Municipality</label>
+                        <input type="text" class="form-control" name="municipality" value="<?= $userData->municipality; ?>" id="municipality" placeholder="address" readonly>
                     </div>
+                    <div class="pb-3">
+                        <label for="address" class="form-label">Barangay</label>
+                        <input type="text" class="form-control" name="barangay" value="<?= $userData->barangay ?>" id="barangay" placeholder="address" readonly>
+                    </div>
+                    <div class="pb-3">
+                        <label for="address" class="form-label">Zone Street</label>
+                        <input type="text" class="form-control" name="zone" value="<?= $userData->zone_street ?>" id="zone" placeholder="address" readonly>
+                    </div>
+                    
                     <div class="pb-3">
                         <label for="social_pos" class="form-label">Social Position</label>
                         <input type="text" class="form-control" name="social_pos" value="<?= $userData->social_pos; ?>" id="social_pos" placeholder="Social Position" readonly>

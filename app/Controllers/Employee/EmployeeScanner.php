@@ -29,8 +29,6 @@ class EmployeeScanner extends BaseController
         return view('scanner');
     }
 
-    // TODO : Update to server 
-
     public function add_employee()
     {
         $current_admin = $this->session->get('admin_id');

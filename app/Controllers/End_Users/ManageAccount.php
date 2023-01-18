@@ -57,8 +57,16 @@ class ManageAccount extends BaseController
                 'label' => 'Last Name',
                 'rules' => 'required|alpha_space'
             ],
-            'address' => [
-                'label' => 'address',
+            'municipality' => [
+                'label' => 'Municipality',
+                'rules' => 'required'
+            ],
+            'barangay' => [
+                'label' => 'Barangay',
+                'rules' => 'required'
+            ],
+            'zone' => [
+                'label' => 'Zone / Street',
                 'rules' => 'required'
             ],
             'c_number' => [
@@ -81,7 +89,7 @@ class ManageAccount extends BaseController
             ]);
         }
 
-        // TODO: to be fixed after testing
+        
         $user_id = $this->session->get('id');
         // $user_id = $this->request->getPost('id');
 
@@ -89,7 +97,9 @@ class ManageAccount extends BaseController
             'fname'          => ucwords($this->request->getPost('fname')),
             'mname'          => ucwords($this->request->getPost('mname')),
             'lname'          => ucwords($this->request->getPost('lname')),
-            'address'        => ucwords($this->request->getPost('address')),
+            'municipality'   => ucwords(strtolower($this->request->getPost('municipality'))),
+            'barangay'       => ucwords(strtolower($this->request->getPost('barangay'))),
+            'zone_street'    => ucwords(strtolower($this->request->getPost('zone'))),
             'contact_number' => $this->request->getPost('c_number'),
             'email'          => $this->request->getPost('email'),
             'social_pos'     => $this->request->getPost('social_pos'),
@@ -179,7 +189,6 @@ class ManageAccount extends BaseController
             ]);
         }
 
-        // TODO: to be fixed after testing
         $user_id = $this->session->get('id');
         // $user_id = $this->request->getPost('id');
         $user_data = $this->userModel->get_user_info($user_id);

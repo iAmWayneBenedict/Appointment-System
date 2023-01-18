@@ -62,6 +62,12 @@
                     </select>
                 </div>
                 <div class="pb-3">
+                    <label for="zone_street" class="form-label">Zone / Street</label>
+                    <input type="text" class="form-control" id="zone" name="zone" placeholder="Zone or Street">
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
+                </div>
+                <div class="pb-3">
                     <label for="c_number" class="form-label">Contact number <small><span class="text-danger">*</span>09xx xxx xxxx</small></label>
                     <input type="text" class="form-control" name="c_number" id="c_number" placeholder="Contact Number">
                 </div>
@@ -221,7 +227,6 @@
                 formdata.set('purpose', $('#concern').val());
                 formdata.delete('concern')
             }
-            // TODO: Update Backend to store municipality and barangay instead of address
             const user_type = 000
             $.ajax({
                 type: "post",

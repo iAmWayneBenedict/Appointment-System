@@ -35,7 +35,15 @@
                         </div>
                         <div class="pb-3">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" name="address" value="<?= $pending[0]->address; ?>" id="address" placeholder="address" readonly>
+                            <input type="text" class="form-control" name="address" value="<?= $pending[0]->zone_street.' '.$pending[0]->barangay.', '.$pending[0]->municipality; ?>" id="address" placeholder="address" readonly>
+                        </div>
+                        <div class="pb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" name="address" value="<?= $pending[0]->zone_street.' '.$pending[0]->barangay.', '.$pending[0]->municipality; ?>" id="address" placeholder="address" readonly>
+                        </div>
+                        <div class="pb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" name="address" value="<?= $pending[0]->zone_street.' '.$pending[0]->barangay.', '.$pending[0]->municipality; ?>" id="address" placeholder="address" readonly>
                         </div>
                         <div class="pb-3">
                             <label for="social_pos" class="form-label">Social Position</label>
@@ -127,7 +135,7 @@
                         </div>
                         <div class="pb-3">
                             <label for="address" class="form-label">Address</label>
-                            <input type="text" class="form-control" name="address" value="<?= $approved[0]->address; ?>" id="address" placeholder="address" readonly>
+                            <input type="text" class="form-control" name="address" value="<?= $approved[0]->zone_street.' '.$approved[0]->barangay.', '.$approved[0]->municipality; ?>" id="address" placeholder="address" readonly>
                         </div>
                         <div class="pb-3">
                             <label for="social_pos" class="form-label">Social Position</label>

@@ -198,7 +198,11 @@ class AdminReportModel extends Model
 
     //get the percentage from the total appointment state
     public function get_percentage($total, $equiv_value){
-        return ($equiv_value / $total) * 100;
+
+        if($equiv_value != 0)
+            return ($equiv_value / $total) * 100;
+        else
+            return $equiv_value;
     }
 
 }

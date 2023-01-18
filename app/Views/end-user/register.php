@@ -57,7 +57,6 @@
                         message!</span><br>
                 </div>
 
-                // TODO: Update Backend to store municipality and barangay instead of address
                 <!-- address -->
 
                 <div class="mb-1">
@@ -82,6 +81,12 @@
                         message!</span><br>
                 </div>
 
+                <div class="mb-1">
+                    <label for="zone_street" class="form-label">Zone / Street</label>
+                    <input type="text" class="form-control" id="zone" name="zone" placeholder="Zone or Street">
+                    <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
+                        message!</span><br>
+                </div>
                 <!-- 
                     email 
                     *optional

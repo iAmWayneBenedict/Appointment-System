@@ -13,7 +13,9 @@ class UserModel extends Model
         'fname',
         'mname',
         'lname',
-        'address',
+        'municipality',
+        'barangay',
+        'zone_street',
         'contact_number',
         'email',
         'social_pos',
@@ -169,11 +171,59 @@ class UserModel extends Model
         return $data;
     }
 
+    //set user online stats to 1 = indicating active/online
+    public function set_online_user($code_id, $user_id = NULL){
+
+        //get current time
+        $formatted_date = date("Y-m-d H:i:s", strtotime('now'));
+
+        if($user_id != NULL AND $code_id == NULL){ 
+            $this->db_conn->table($this->table)
+                ->where('id', $user_id)
+                ->update([
+                    'online_stats' => 1,
+                    'log_time' => $formatted_date
+                ]);
+        }
+        else{
+            $this->db_conn->table($this->table)
+                ->where('code_id', $code_id)
+                ->update([
+                    'online_stats' => 1,
+                    'log_time' => $formatted_date
+                ]);
+        }
+
+
+       
+    }
+
+    //set user to logout state or inactive state
+    public function set_inActive_user($user_id){
+        $query = $this->db_conn->table($this->table)
+            ->where('id', $user_id)
+            ->update([
+                'online_stats' => 0
+        ]);
+    }
+
+    //get user in the database that have a log_time of less than 1 minute in current time
+    public function get_inactive_logtime(){
+        //get current date then subtract to 1 minute
+        $time =  date('Y-m-d H:i', strtotime('-1 minute'));
+
+        $query = $this->db_conn->table($this->table)
+            ->select('*')
+            ->where("DATE_FORMAT(log_time, '%Y-%m-%d %H:%i') <=", $time)
+            ->where('online_stats', 1)
+            ->get();
+
+        $inactive_logtime = $query->getResultObject();
+        return $inactive_logtime;
+    }
     /**
         MANAGE ACCOUNT SECTION
      */
-
-    //TODO: Update to server
     
     public function deactivate($user_id)
     {
@@ -226,5 +276,34 @@ class UserModel extends Model
             ]);
         
             return true;
+    }
+
+    //count all registered users
+    public function count_all_users(){
+        
+        $query = $this->db_conn->table($this->table)->countAllResults();
+        
+        return $query;
+    }
+
+    //count all active users account
+    public function count_active_users(){
+        
+        $query = $this->db_conn->table($this->table)
+            ->where('account_stats', 1)
+            ->countAllResults();
+        
+        return $query;
+    }
+
+    //count all currently online users
+    public function count_online_users(){
+        
+        $query = $this->db_conn->table($this->table)
+            ->where('account_stats', 1)
+            ->where('online_stats', 1)
+            ->countAllResults();
+        
+        return $query;
     }
 }

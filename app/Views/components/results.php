@@ -282,7 +282,7 @@
                 xAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'Year',
+                        labelString: 'Months',
                         fontStyle: 'bold',
                         fontColor: '#2596be'
                     }

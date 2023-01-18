@@ -22,7 +22,7 @@ $sched = date_format($date, 'F d, Y g:i A')
 
         <div class="">
             <label for="address" class="form-label">Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Address" readonly value="<?= $appointment->address ?>">
+            <input type="text" class="form-control" id="address" name="address" placeholder="Address" readonly value="<?= $appointment->zone_street.' '.$appointment->barangay.','.$appointment->municipality ?>">
             <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                 message!</span><br>
         </div>

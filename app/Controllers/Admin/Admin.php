@@ -118,7 +118,7 @@ class Admin extends BaseController
         return view('admin/users', $response);
     }
 
-    //TODO: archive users
+    //TODO: ARCHIVE user need to be displayed
     public function archive_users(){
         $response['archive'] = $this->user_model->get_archive_users();
         return view('admin/archive-users', $response);

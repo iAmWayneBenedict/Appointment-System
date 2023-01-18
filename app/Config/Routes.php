@@ -59,8 +59,6 @@ $routes->group("", ['filter' => 'maintenanceFilter'], static function ($routes) 
         $routes->get('all-appointments', 'Admin\ManageAppointment::get_set_appointments');
         $routes->get('get-incharge-employee/(:any)', 'Employee\Employee::get_incharge_employee/$1');
 
-        // TODO: To be fixed after testing
-
         $routes->group('dashboard', ['filter' => 'userLoginFilter'], static function ($routes) {
             // $routes->group('dashboard', static function ($routes) {
             // $routes->group('dashboard', static function ($routes) {
@@ -87,8 +85,10 @@ $routes->group("", ['filter' => 'maintenanceFilter'], static function ($routes) 
             $routes->get('notifications', 'End_Users\UserController::notifications');
             $routes->get('get-notifications', 'End_Users\UserController::get_notifications');
             $routes->get('already-read/(:num)', 'End_Users\UserController::already_read/$1');
+
+            //logtime
+            $routes->get('online-stats', 'End_Users\UserLoginController::update_users_logtime');
         });
-        // TODO: To be fixed after testing
         $routes->group('my-account', ['filter' => 'userLoginFilter'], static function ($routes) {
             // $routes->group('my-account', static function ($routes) {
             $routes->get('/', 'End_Users\ManageAccount::account_page');
@@ -110,7 +110,6 @@ $routes->group("", ['filter' => 'maintenanceFilter'], static function ($routes) 
         $routes->post('verify-admin', 'Admin\Admin::verify_admin');
         $routes->get('get-holidays', 'Admin\HolidaysController::get_holidays');
 
-        // TODO: To be fixed after testing
         $routes->group('dashboard', ['filter' => 'adminLoginFilter'],  static function ($routes) {
             // $routes->group('dashboard', static function ($routes) {
             $routes->get('/', 'Admin\Admin::index');
@@ -122,6 +121,7 @@ $routes->group("", ['filter' => 'maintenanceFilter'], static function ($routes) 
             $routes->get('deactivate-user/(:num)', 'End_Users\ManageAccount::deactivate_user/$1');
             $routes->get('reactivate-user/(:num)', 'End_Users\ManageAccount::reActivate_user/$1');
             $routes->get('archive-user/(:num)', 'End_Users\ManageAccount::archive_user_account/$1');
+            $routes->get('users-summary', 'End_Users\UserController::get_realtime_users');
 
             //notifications
             $routes->get('sms-contact', 'Admin\Admin::display_sms_contact');
@@ -216,6 +216,7 @@ $routes->get('client-incoming-appointment', 'Admin\ManageAppointment::sms_incomi
 $routes->get('removed-passed-appointment', 'Admin\ManageAppointment::removed_passed_appointments');
 $routes->get('check-reschedule-appointment', 'Admin\ManageAppointment::check_resched_appointment');
 $routes->get('delete-messages', 'Notifications::delete_after_30_days');
+$routes->get('auto-logout', 'End_Users\UserLoginController::auto_logout_user');
 
 /*
  * --------------------------------------------------------------------

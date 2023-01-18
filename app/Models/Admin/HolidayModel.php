@@ -15,8 +15,7 @@ class HolidayModel extends Model
         //instantiate
         $this->db_connect = \Config\Database::connect();
     }
-
-    //TODO : update to server
+    
     public function set_holidays($admin_id, $holiday_from, $holiday_to, $description)
     {
 

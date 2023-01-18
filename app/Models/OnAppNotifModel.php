@@ -74,13 +74,13 @@ class OnAppNotifModel extends Model
     }
 
     /**
-     * // TODO: This admin notify
+     * 
      PART: ADMIN--------------------------------------->
      */
 
     public function admin_insert_message($message)
     {
-        $this->db_conn->table('adminApp_notification')
+        $this->db_conn->table('adminapp_notification')
             ->insert([
                 'message' => $message
             ]);
@@ -91,7 +91,7 @@ class OnAppNotifModel extends Model
     public function admin_get_notification()
     {
 
-        $data = $this->db_conn->table('adminApp_notification')
+        $data = $this->db_conn->table('adminapp_notification')
             ->select('*')
             ->orderBy("c_date", "DESC")
             ->get();
@@ -103,7 +103,7 @@ class OnAppNotifModel extends Model
     public function update_status_admin($notification_id)
     {
 
-        $this->db_conn->table('adminApp_notification')
+        $this->db_conn->table('adminapp_notification')
             ->where('id', $notification_id)
             ->update([
                 'is_read' => 1
@@ -126,7 +126,7 @@ class OnAppNotifModel extends Model
             ->delete();
 
         //delete messages from admin side
-        $this->db_conn->table('adminApp_notification')
+        $this->db_conn->table('adminapp_notification')
             ->where('c_date < now() - interval 30 DAY')
             ->delete();
 

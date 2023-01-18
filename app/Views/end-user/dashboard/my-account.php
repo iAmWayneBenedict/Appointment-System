@@ -37,7 +37,7 @@
                         <input type="text" class="form-control" name="lname" value="<?= $userData->lname ?>" id="lname" placeholder="Last Name">
                     </div>
                     <div class="pb-1">
-                        <label for="municipality" class="form-label">Municipality</label>
+                        <label for="municipality" class="form-label">Municipality : <b><?= $userData->municipality ?></b></label>
                         <!-- <input type="text" class="form-control" id="municipality" name="municipality" placeholder="Municipality"> -->
                         <select name="municipality" id="municipality" class="form-control">
 
@@ -49,15 +49,18 @@
                     <!-- address -->
 
                     <div class="pb-1">
-                        <label for="barangay" class="form-label">Barangay</label>
+                        <label for="barangay" class="form-label">Barangay : <b><?= $userData->barangay ?></b></label>
                         <!-- <input type="text" class="form-control" id="barangay" name="barangay" placeholder="Barangay"> -->
                         <select name="barangay" id="barangay" class="form-control">
-                            <option value="">--Select Barangay--</option>
+                            <option value=""></option>
                         </select>
                         <span class="text-danger text-center display-8 fw-normal mt-2 d-none alerts">Error
                             message!</span><br>
                     </div>
-
+                    <div class="pb-3">
+                        <label for="zone" class="form-label">Zone / Street</label>
+                        <input type="text" class="form-control" name="zone" value="<?= $userData->zone_street ?>" id="zone" placeholder="Zone / Street">
+                    </div>
                     <div class="pb-3">
                         <label for="c_number" class="form-label">Contact Number</label>
                         <input type="text" class="form-control" name="c_number" value="<?= $userData->contact_number ?>" id="c_number" placeholder="Contact Number">
@@ -131,7 +134,6 @@
             e.preventDefault();
 
             let formdata = $(this).serializeArray();
-            // TODO: Update Backend to store municipality and barangay instead of address
             $.ajax({
                 type: "post",
                 url: `${base_url}/user/my-account/update`,

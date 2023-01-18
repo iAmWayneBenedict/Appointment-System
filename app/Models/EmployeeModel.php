@@ -94,7 +94,7 @@ class EmployeeModel extends Model
         $builder = $this->db_connect->table('employee');
 
         $response = $builder->insert([
-            'admin_id' => $admin_id, // TODO : update to server
+            'admin_id' => $admin_id,
             'name' => $name,
         ]);
 

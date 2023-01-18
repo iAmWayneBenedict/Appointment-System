@@ -108,7 +108,13 @@ class UserController extends BaseController
             'email' => [
                 'rules' => 'permit_empty|valid_email|is_unique[users.email]'
             ],
-            'address' => [
+            'municipality' => [
+                'rules' => 'required'
+            ],
+            'barangay' => [
+                'rules' => 'required'
+            ],
+            'zone' => [
                 'rules' => 'required'
             ],
             'number' => [
@@ -158,7 +164,9 @@ class UserController extends BaseController
             'fname'             => ucwords($fname),
             'mname'             => ucwords($mname),
             'lname'             => ucwords($lname),
-            'address'           => $this->request->getPost('address'),
+            'municipality'      => ucwords(strtolower($this->request->getPost('municipality'))),
+            'barangay'          => ucwords(strtolower($this->request->getPost('barangay'))),
+            'zone_street'       => ucwords(strtolower($this->request->getPost('zone'))),
             'contact_number'    => $c_number,
             'email'             => $this->request->getPost('email'),
             'social_pos'        => $social_pos,
@@ -167,7 +175,7 @@ class UserController extends BaseController
 
         $message = "Pangalan: {$fname} {$mname} {$lname}\n";
         $message .= "Ang iyong userid: {$generated_code} \n";
-        $message .= "ito ay importante dahil kailangan ito sa pag login sa inyong account";
+        $message .= "Gamitin ang user id sa paglogin";
 
         // //TODO: enable this later
         // $sms_response = $this->send_sms->sendSMS($c_number, $message);
@@ -197,13 +205,33 @@ class UserController extends BaseController
         $data['approved'] = $this->client_appointment->get_approved_appointment();
         $data['pending'] = $this->client_appointment->get_pending_appointment();
 
-        // TODO: to be fixed after testing
         $user_id = $this->session->get('id');
         // $user_id = isset($_GET["id"]) ? $_GET["id"] : 1;
         $data['myAppointment'] = $this->userAppointment->get_passed_appointment($user_id);
         $data['user'] = $this->user_model->get_user_info($user_id);
         return view("end-user/dashboard/dashboard", $data);
     }
+
+    /**
+        TITLE: Get overall users and active users and online realtime
+     *  description: this fucntion get all this at once from the model
+     *               so it can be called using ajax to update in realtime in
+     *               the admin display
+     */
+    public function get_realtime_users(){
+        $total_active = $this->user_model->count_active_users();
+        $total_reg_users = $this->user_model->count_all_users();
+        $total_online_users = $this->user_model->count_online_users();
+
+        return json_encode([
+            'active' => $total_active,
+            'registered' => $total_reg_users,
+            'online' => $total_online_users
+        ]);
+    }
+
+
+    ///
     public function employee_status()
     {
         return view('end-user/dashboard/employee-status');

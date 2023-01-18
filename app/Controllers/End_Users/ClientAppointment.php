@@ -59,10 +59,19 @@ class ClientAppointment extends BaseController
                 'label' => 'Name',
                 'rules' => 'required'
             ],
-            'address' => [
-                'label' => 'Complete Address',
+            'municipality' => [
+                'label' => 'Address',
                 'rules' => 'required'
             ],
+            'barangay' => [
+                'label' => 'Address',
+                'rules' => 'required'
+            ],
+            'zone' => [
+                'label' => 'Address',
+                'rules' => 'required'
+            ],
+            
             'c_number' => [
                 'label' => 'Contact Number',
                 'rules' => 'required|regex_match[/^(09)\d{9}$/]',
@@ -91,7 +100,9 @@ class ClientAppointment extends BaseController
 
         //get form data
         $name = $this->request->getPost('name');
-        $address = $this->request->getPost('address');
+        $municipality = $this->request->getPost('municipality');
+        $barangay = $this->request->getPost('barangay');
+        $zone = $this->request->getPost('zone');
         $contact_number = $this->request->getPost('c_number');
         $social_pos = $this->request->getPost('social_pos');
         $purpose = $this->request->getPost('purpose');
@@ -138,7 +149,6 @@ class ClientAppointment extends BaseController
         $user_id = NULL;
         $_user = 'Guest'; //default, 000
         if ($user_type == 001) {
-            // TODO: tobe fixed after testing
             $user_id = $this->session->get('id');
             // $user_id = $this->request->getPost('id');
             $_user = 'Registered';
@@ -148,7 +158,9 @@ class ClientAppointment extends BaseController
         $data = [
             'user_id' => $user_id,
             'name' => $name,
-            'address' => $address,
+            'municipality' => $municipality,
+            'barangay' => $barangay,
+            'zone_street' => $zone,
             'contact_number' => $contact_number,
             'social_pos' => $social_pos,
             'purpose' => $purpose,
