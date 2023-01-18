@@ -121,6 +121,7 @@ $routes->group("", ['filter' => 'maintenanceFilter'], static function ($routes) 
             $routes->get('deactivate-user/(:num)', 'End_Users\ManageAccount::deactivate_user/$1');
             $routes->get('reactivate-user/(:num)', 'End_Users\ManageAccount::reActivate_user/$1');
             $routes->get('archive-user/(:num)', 'End_Users\ManageAccount::archive_user_account/$1');
+            $routes->get('archive', 'Admin\Admin::archive_users');
             $routes->get('users-summary', 'End_Users\UserController::get_realtime_users');
 
             //notifications

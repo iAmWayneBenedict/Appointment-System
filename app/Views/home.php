@@ -14,8 +14,12 @@
 </head>
 
 <body>
-
     <div class="center-con home-cover" style="background-image: url('<?= base_url('src/img/Bato_Municipal_HAll_WTR.webp') ?>')">
+        <div class="position-absolute top-0 left-0 w-100" style="z-index: 100;">
+            <div class="alert alert-warning alert-dismissible fade show text-center marquee" style="user-select: all;" role="alert">
+                <p><strong>Holy guacamole!</strong> You should check in on some of those fields below.</p>
+            </div>
+        </div>
         <div class="card border-0 p-5" style="width: 30rem; z-index: 5;">
             <div class="card-body">
                 <img src="<?= base_url('/src/img/Logo Center.svg') ?>" alt="">
