@@ -46,7 +46,7 @@ $routes->group("", ['filter' => 'maintenanceFilter'], static function ($routes) 
 
 
     $routes->get('/employee-incharge', 'Admin\Admin::get_incharge_employee');
-
+    $routes->get('/announcements', 'Admin\StocksController::get_announcement');
 
     $routes->group('user', static function ($routes) {
         $routes->get('register', 'End_Users\UserController::index');
@@ -172,6 +172,7 @@ $routes->group("", ['filter' => 'maintenanceFilter'], static function ($routes) 
             $routes->post('update-release-date', 'Admin\StocksController::update_release');
             $routes->get('display-claim/(:any)', 'Admin\StocksController::display_claim_form/$1');
             $routes->post('insert-claimer', 'Admin\StocksController::insert_availer');
+
 
 
             //report

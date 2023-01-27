@@ -113,33 +113,66 @@ class StocksModel extends Model
         return true;
     }
 
-    public function claiming_stock(array $data, $stock_id, $deduct){
+    public function claiming_stock(array $data, $stock_id, $deduct)
+    {
 
         $query1 = $this->db_conn->table('stocks_availed')
             ->insert($data);
 
         $quantity = $data['quantity_availed'];
 
-        if($query1){
-            if($deduct == 'allocated') {
+        if ($query1) {
+            if ($deduct == 'allocated') {
                 $this->db_conn->table('stocks')
-                    ->set('allocated', 'allocated-'.$quantity, false)
-                    ->set('total_quantity', 'total_quantity-'.$quantity, false)
+                    ->set('allocated', 'allocated-' . $quantity, false)
+                    ->set('total_quantity', 'total_quantity-' . $quantity, false)
                     ->where('id', $stock_id)
                     ->update();
                 return true;
             }
 
             $this->db_conn->table('stocks')
-                ->set('available', 'available-'.$quantity, false)
-                ->set('total_quantity', 'total_quantity-'.$quantity, false)
+                ->set('available', 'available-' . $quantity, false)
+                ->set('total_quantity', 'total_quantity-' . $quantity, false)
                 ->where('id', $stock_id)
                 ->update();
-            
+
             return true;
         }
 
         return false;
-        
+    }
+
+    public function  set_announcement($message, $stock_id)
+    {
+        $this->db_conn->table('announcements')
+            ->insert([
+                "message" => $message,
+                "stock_id" => $stock_id
+            ]);
+
+        return true;
+    }
+
+    public function  update_announcement($message, $stock_id)
+    {
+        $this->db_conn->table('announcements')->where(["stock_id" => $stock_id])
+            ->update([
+                "message" => $message,
+            ]);
+
+        return true;
+    }
+
+    public function  get_announcement()
+    {
+
+        $admin_query = $this->db_conn->table('announcements')
+            ->select('*')
+            ->get();
+
+        $data = $admin_query->getResultObject(); //object
+
+        return $data;
     }
 }

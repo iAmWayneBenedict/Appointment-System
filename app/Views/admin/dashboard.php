@@ -1104,5 +1104,5 @@
     })
 </script>
 
-<script src="<?= base_url("/src/js/calendar.js") ?>"></script>
+<script src="<?= base_url("/src/js/calendar-admin.js") ?>"></script>
 <?= $this->endSection() ?>

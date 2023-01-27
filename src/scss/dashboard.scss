@@ -65,12 +65,13 @@ body {
 	height: 50px;
 	overflow: hidden;
 	position: relative;
+	gap: 2rem;
 	color: #333;
 }
 
-.marquee p {
+.marquee div {
 	position: absolute;
-	width: 100%;
+	width: 150% !important;
 	height: 100%;
 	margin: 0;
 	text-align: center;
@@ -79,7 +80,22 @@ body {
 	transform: translateX(100%);
 	-moz-animation: scroll-left 2s linear infinite;
 	-webkit-animation: scroll-left 2s linear infinite;
-	animation: scroll-left 20s linear infinite;
+	animation: scroll-left 30s linear infinite;
+}
+
+ul.announcement {
+	list-style: none; /* Remove default bullets */
+}
+
+ul.announcement li::before {
+	content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+	color: red; /* Change the color */
+	font-weight: bold; /* If you want it to be bold */
+	font-size: 2rem;
+	display: inline-block; /* Needed to add space between the bullet and the text */
+	width: 1em; /* Also needed for space (tweak if needed) */
+	margin-left: -1em; /* Also needed for space (tweak if needed) */
+	margin-top: -1em; /* Also needed for space (tweak if needed) */
 }
 
 @-moz-keyframes scroll-left {
@@ -122,5 +138,14 @@ body {
 @media screen and (max-width: 1400px) {
 	.notif-body {
 		max-width: 15rem !important;
+	}
+}
+
+@media screen and (max-width: 1300px) {
+	.announcement-con {
+		display: none;
+	}
+	.announcement-btn {
+		display: flex !important;
 	}
 }
