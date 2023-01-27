@@ -15,11 +15,42 @@
 
 <body>
     <div class="center-con home-cover" style="background-image: url('<?= base_url('src/img/Bato_Municipal_HAll_WTR.webp') ?>')">
-        <div class="position-absolute top-0 left-0 w-100" style="z-index: 100;">
-            <div class="alert alert-warning alert-dismissible fade show text-center marquee" style="user-select: all;" role="alert">
-                <p><strong>Holy guacamole!</strong> You should check in on some of those fields below.</p>
+        <!-- <div class="position-absolute top-0 left-0 w-100" style="z-index: 100;">
+            <div class="alert alert-warning alert-dismissible fade show text-center marquee position-relative" style="user-select: all;" role="alert">
+                <script>
+                    $(() => {
+                        const base_url = document.querySelector("meta[name = base_url]").getAttribute("content");
+                        $.ajax({
+                            type: "get",
+                            url: `${base_url}/announcements`,
+                            success: function(res) {
+                                $(".marquee").html(res)
+                            }
+                        })
+                    })
+                </script>
             </div>
+        </div> -->
+        <div class="position-absolute rounded-3 p-3 announcement-con" style="background-color: rgba(255,255,255,1); top: 10px; left:10px; width:25rem">
+            <h4 class="mt-3 fw-bold">📢 Announcements</h4>
+            <hr>
+            <ul class="d-flex gap-3 flex-column announcement">
+                <script>
+                    $(() => {
+                        const base_url = document.querySelector("meta[name = base_url]").getAttribute("content");
+                        $.ajax({
+                            type: "get",
+                            url: `${base_url}/announcements`,
+                            success: function(res) {
+                                res = res.replaceAll("Good Morning, , This is Agriculture office of Bato \n", "")
+                                $(".announcement").html(res)
+                            }
+                        })
+                    })
+                </script>
+            </ul>
         </div>
+        <button type="button" class="position-absolute btn btn-info top-0 start-0 fs-4 announcement-btn mt-3 ms-3 align-items-center" style="display: none; z-index: 1000;" data-bs-toggle="modal" data-bs-target="#announcementModal">📢 <span class="ms-2 fs-6">Announcements</span></button>
         <div class="card border-0 p-5" style="width: 30rem; z-index: 5;">
             <div class="card-body">
                 <img src="<?= base_url('/src/img/Logo Center.svg') ?>" alt="">
@@ -38,6 +69,38 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="mt-3 fw-bold">📢 Announcements</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="d-flex gap-3 flex-column announcement">
+                        <script>
+                            $(() => {
+                                const base_url = document.querySelector("meta[name = base_url]").getAttribute("content");
+                                $.ajax({
+                                    type: "get",
+                                    url: `${base_url}/announcements`,
+                                    success: function(res) {
+                                        res = res.replaceAll("Good Morning, , This is Agriculture office of Bato \n", "")
+                                        $(".announcement").html(res)
+                                    }
+                                })
+                            })
+                        </script>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="<?= base_url('/src/js/app.js') ?>"></script>
 </body>
 

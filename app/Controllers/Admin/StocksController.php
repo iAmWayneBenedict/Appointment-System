@@ -8,6 +8,7 @@ use App\Libraries\greetings;
 use App\Libraries\OneWaySMS;
 use App\Models\Admin\NotificationsModel;
 use App\Libraries\OnAppNotification;
+use App\Models\Admin\Announcement;
 
 class StocksController extends BaseController
 {
@@ -16,6 +17,7 @@ class StocksController extends BaseController
     private $notif_model;
     private $on_app_notif;
     private $session;
+    protected $announcement;
 
     function __construct()
     {
@@ -24,6 +26,7 @@ class StocksController extends BaseController
         $this->sms = new OneWaySMS();
         $this->notif_model = new NotificationsModel();
         $this->on_app_notif = new OnAppNotification();
+        $this->announcement = new Announcement();
         $this->session = \Config\Services::session();
     }
 
@@ -182,7 +185,9 @@ class StocksController extends BaseController
             //TODO: enable this after 100%
             //send sms
 
-            $this->sms->sendBulkSMSv_2($numbers_only, $message);
+            // $this->sms->sendBulkSMSv_2($numbers_only, $message);
+
+            $this->stock_model->set_announcement($message, $stock_id);
 
             // //send on app
             // $this->on_app_notif->send_bulk_notification($user_ids, $message);
@@ -226,10 +231,12 @@ class StocksController extends BaseController
 
             //TODO: enable this after 100%
             //send sms
-            $this->sms->sendBulkSMSv_2($numbers_only, $message);
+            // $this->sms->sendBulkSMSv_2($numbers_only, $message);
 
             //send on app
-            $this->on_app_notif->send_bulk_notification($user_ids, $message);
+            // $this->on_app_notif->send_bulk_notification($user_ids, $message);
+
+            $this->stock_model->update_announcement($message, $stock_id);
 
             session()->setFlashdata('success', 'Release Date Updated');
             return redirect()->back();
@@ -262,5 +269,12 @@ class StocksController extends BaseController
             'code' => 1,
             'msg' => 'Stock Claimer Inserted'
         ]);
+    }
+
+    public function get_announcement()
+    {
+        $res['announcement'] = $this->stock_model->get_announcement();
+
+        return view("components/announcements", $res);
     }
 }
